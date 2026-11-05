@@ -1,9 +1,12 @@
-import type { Metadata } from 'next';
+import React, { Suspense } from 'react';
+import type { Metadata, Viewport } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
+import { BottomNav } from '@/components/layout/BottomNav';
 import { CartDrawer } from '@/components/layout/CartDrawer';
+import { RetailCartDrawer } from '@/components/cart/RetailCartDrawer';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -15,18 +18,30 @@ const geistMono = Geist_Mono({
   subsets: ['latin'],
 });
 
+export const viewport: Viewport = {
+  themeColor: '#2563eb',
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+};
+
 export const metadata: Metadata = {
-  title: 'KSS Komputer — Spesialis PC Gaming, Workstation & Pricelist Hardware Jakarta',
+  title: 'KSS Komputer — System Integrator PC Rakitan & Hardware Eceran Jakarta',
   description:
-    'Simulasi rakitan PC online real-time dengan cek kompatibilitas socket & daya otomatis, serta pricelist hardware terlengkap di Harco Mangga Dua.',
+    'Pusat PC rakitan jadi siap pakai (gaming, workstation, office), custom configurator kompatibilitas deterministik, konsultasi budget via WhatsApp, dan hardware eceran bergaransi resmi.',
+  manifest: '/manifest.json',
+  icons: {
+    icon: '/globe.svg',
+    apple: '/globe.svg',
+  },
   keywords: [
-    'rakit pc',
-    'simulasi rakitan pc',
-    'katalog harga komputer',
-    'pricelist pc jakarta',
+    'rakit pc jakarta',
     'kss komputer',
-    'rtx 4070 super',
-    'ryzen 7 7800x3d',
+    'simulasi rakitan pc',
+    'pc gaming mangga dua',
+    'konsultasi rakit pc whatsapp',
+    'hardware eceran resmi',
+    'pc workstation ryzen 7000',
   ],
 };
 
@@ -40,11 +55,17 @@ export default function RootLayout({
       lang="id"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-zinc-50 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100 font-sans selection:bg-blue-600 selection:text-white">
-        <Navbar />
+      <body className="min-h-full flex flex-col bg-zinc-50 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100 font-sans selection:bg-blue-600 selection:text-white pb-14 md:pb-0">
+        <Suspense fallback={null}>
+          <Navbar />
+        </Suspense>
         <main className="flex-1 w-full">{children}</main>
         <Footer />
+        <Suspense fallback={null}>
+          <BottomNav />
+        </Suspense>
         <CartDrawer />
+        <RetailCartDrawer />
       </body>
     </html>
   );

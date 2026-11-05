@@ -1,0 +1,171 @@
+// Prisma Schema untuk KSS Komputer (PostgreSQL Production)
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum StockStatus {
+  READY
+  LOW
+  OUT_OF_STOCK
+  PO
+}
+
+enum ProductCategory {
+  CPU
+  MOTHERBOARD
+  COOLER
+  RAM
+  GPU
+  SSD
+  HDD
+  PSU
+  CASE
+  MONITOR
+  PERIPHERAL
+}
+
+enum AccessoryCategory {
+  KEYBOARD
+  MOUSE
+  HEADSET
+  MONITOR
+  CHAIR
+  WEBCAM
+  UPS
+  SPEAKER
+  MOUSEPAD
+  OTHER
+}
+
+model HardwarePart {
+  id                  String          @id @default(cuid())
+  sku                 String          @unique
+  name                String
+  slug                String          @unique
+  brand               String
+  category            ProductCategory
+  costPrice           Int             // Modal rahasia toko
+  sellPrice           Int             // Harga dasar rakitan
+  retailPrice         Int?            // Harga jual eceran
+  isRetailAvailable   Boolean         @default(false)
+  originalPrice       Int?
+  stockStatus         StockStatus     @default(READY)
+  wattage             Int             @default(0)
+  warrantyYears       Int             @default(1)
+  officialDistributor String?
+  specs               Json            // Socket, RAM Type, Dimensions, Chipset, etc.
+  createdAt           DateTime        @default(now())
+  updatedAt           DateTime        @updatedAt
+
+  prebuiltItems       PrebuiltPCItem[]
+
+  @@index([category, brand])
+  @@index([slug])
+}
+
+model PrebuiltPC {
+  id               String           @id @default(cuid())
+  name             String
+  slug             String           @unique
+  tier             String
+  categoryTag      String
+  platform         String
+  description      String
+  highlights       String[]
+  targetResolution String
+  estimatedFps     Json             // [{ game: string, fps: number, settings: string }]
+  assemblyFee      Int              @default(150000)
+  tokopediaUrl     String
+  featured         Boolean          @default(false)
+  warrantyYears    Int              @default(1)
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+
+  items            PrebuiltPCItem[]
+
+  @@index([categoryTag])
+  @@index([slug])
+}
+
+model PrebuiltPCItem {
+  id           String       @id @default(cuid())
+  prebuiltId   String
+  partId       String
+  category     ProductCategory
+  quantity     Int          @default(1)
+
+  prebuilt     PrebuiltPC   @relation(fields: [prebuiltId], references: [id], onDelete: Cascade)
+  part         HardwarePart @relation(fields: [partId], references: [id])
+
+  @@unique([prebuiltId, category, partId])
+}
+
+model Accessory {
+  id                  String            @id @default(cuid())
+  sku                 String            @unique
+  name                String
+  slug                String            @unique
+  brand               String
+  category            AccessoryCategory
+  retailPrice         Int
+  costPrice           Int?
+  originalPrice       Int?
+  stockStatus         StockStatus       @default(READY)
+  warrantyYears       Int               @default(1)
+  officialDistributor String?
+  features            String[]
+  specs               Json?
+  createdAt           DateTime          @default(now())
+  updatedAt           DateTime          @updatedAt
+
+  @@index([category, brand])
+}
+
+model ServicePackage {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  price       Int      @default(0)
+  duration    String
+  description String
+  features    String[]
+  popular     Boolean  @default(false)
+  badge       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model ConsultationQuote {
+  id                 String   @id @default(cuid())
+  quoteCode          String   @unique
+  customerName       String
+  customerWa         String
+  budget             Int
+  usageNeed          String
+  selectedParts      Json     // Array of parts included
+  assemblyFee        Int      @default(150000)
+  finalBundlePrice   Int
+  totalWattage       Int
+  recommendedPsuWatt Int
+  notes              String?
+  validUntil         DateTime
+  status             String   @default("sent") // draft, sent, accepted, expired
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  @@index([quoteCode])
+}
+
+model AdminSetting {
+  id                  String   @id @default("global")
+  globalMarkupPercent Int      @default(12)
+  defaultAssemblyFee  Int      @default(150000)
+  tokopediaStoreUrl   String   @default("https://tk.tokopedia.com/ZSpeToWkH/")
+  updatedAt           DateTime @updatedAt
+}

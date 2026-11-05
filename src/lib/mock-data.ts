@@ -1,4 +1,4 @@
-import { HardwarePart, PrebuiltPC, ServicePackage } from './types';
+import { HardwarePart, PrebuiltPC, ServicePackage, AccessoryItem, ConsultationQuote } from './types';
 import { TOKOPEDIA_OFFICIAL_STORE_URL } from './format';
 
 /**
@@ -1425,5 +1425,180 @@ export const MOCK_SERVICES: ServicePackage[] = [
     ],
     popular: false,
     badge: '100% Gratis',
+  },
+];
+
+/**
+ * Aksesoris & Periferal Komputer KSS Komputer (Dijual Eceran)
+ */
+export const MOCK_ACCESSORIES: AccessoryItem[] = [
+  {
+    id: 'acc-kb-keychron-v1',
+    sku: 'KEYCHRON-V1-KNOB-RED',
+    name: 'Keychron V1 Custom Mechanical Keyboard (QMK/VIA, Red Switch, Knob)',
+    slug: 'keychron-v1-custom-mechanical-keyboard',
+    brand: 'Keychron',
+    category: 'keyboard',
+    retailPrice: 1350000,
+    costPrice: 1100000,
+    stockStatus: 'ready',
+    warrantyYears: 1,
+    officialDistributor: 'PT Synnex Metrodata',
+    features: ['Hot-swappable 5-pin', 'Sound absorbing foam', 'Rotary encoder knob', 'South-facing RGB'],
+    specs: { Layout: '75%', Switch: 'Keychron K Pro Red', Connectivity: 'Type-C Wired' },
+    updatedAt: '2026-11-04',
+  },
+  {
+    id: 'acc-kb-vortex-gt65',
+    sku: 'VORTEXSERIES-GT-65-WIRELESS',
+    name: 'VortexSeries GT-65 Tri-Mode Wireless RGB Mechanical Keyboard',
+    slug: 'vortexseries-gt-65-wireless',
+    brand: 'VortexSeries',
+    category: 'keyboard',
+    retailPrice: 625000,
+    costPrice: 480000,
+    stockStatus: 'ready',
+    warrantyYears: 1,
+    officialDistributor: 'PT Cahaya Distribusi',
+    features: ['Tri-mode (BT 5.0, 2.4Ghz, Wired)', 'Gasket mount structure', 'Pre-lubed switches'],
+    specs: { Layout: '65% Compact', Switch: 'Linear Yellow', Battery: '3000mAh' },
+    updatedAt: '2026-11-04',
+  },
+  {
+    id: 'acc-ms-g-pro-superlight-2',
+    sku: 'LOGI-GPROX-SUPERLIGHT2-BLK',
+    name: 'Logitech G PRO X SUPERLIGHT 2 Lightspeed Wireless Gaming Mouse',
+    slug: 'logitech-g-pro-x-superlight-2-wireless',
+    brand: 'Logitech G',
+    category: 'mouse',
+    retailPrice: 2199000,
+    costPrice: 1850000,
+    originalPrice: 2399000,
+    stockStatus: 'ready',
+    warrantyYears: 2,
+    officialDistributor: 'PT Surya Candra',
+    features: ['60g Ultra-lightweight', 'HERO 2 Sensor 32K DPI', 'LIGHTFORCE Hybrid switches', 'USB-C charging'],
+    specs: { Weight: '60g', Sensor: 'HERO 2', PollingRate: '4000Hz compatible' },
+    updatedAt: '2026-11-04',
+  },
+  {
+    id: 'acc-ms-razer-da-v3-pro',
+    sku: 'RAZER-DAV3-PRO-WHITE',
+    name: 'Razer DeathAdder V3 Pro Ergonomic Wireless Esports Mouse',
+    slug: 'razer-deathadder-v3-pro-wireless',
+    brand: 'Razer',
+    category: 'mouse',
+    retailPrice: 2249000,
+    costPrice: 1900000,
+    stockStatus: 'ready',
+    warrantyYears: 2,
+    officialDistributor: 'PT Astrindo Senayasa',
+    features: ['Focus Pro 30K Optical Sensor', 'Gen-3 Optical switches', '63g Ultra-light'],
+    specs: { Shape: 'Ergonomic Right-Handed', BatteryLife: '90 Hours' },
+    updatedAt: '2026-11-04',
+  },
+  {
+    id: 'acc-hs-hyperx-cloud-3',
+    sku: 'HYPERX-CLOUD3-WIRELESS-BLK',
+    name: 'HyperX Cloud III Wireless Gaming Headset (DTS Headphone:X Spatial)',
+    slug: 'hyperx-cloud-iii-wireless',
+    brand: 'HyperX',
+    category: 'headset',
+    retailPrice: 2350000,
+    costPrice: 1950000,
+    stockStatus: 'ready',
+    warrantyYears: 2,
+    officialDistributor: 'PT Nusantara Jaya Teknologi',
+    features: ['Up to 120 Hours Battery', '53mm Angled Drivers', 'Ultra-clear 10mm mic with LED mute'],
+    specs: { Connection: '2.4GHz Wireless + USB-C', Battery: '120 Hours' },
+    updatedAt: '2026-11-04',
+  },
+  {
+    id: 'acc-mon-aoc-24g4',
+    sku: 'AOC-24G4-FAST-IPS-180HZ',
+    name: 'AOC 24G4 24" Fast IPS 180Hz 0.5ms G-Sync Compatible Gaming Monitor',
+    slug: 'aoc-24g4-fast-ips-180hz',
+    brand: 'AOC',
+    category: 'monitor',
+    retailPrice: 1850000,
+    costPrice: 1550000,
+    stockStatus: 'ready',
+    warrantyYears: 3,
+    officialDistributor: 'PT Mega Komputindo',
+    features: ['Fast IPS Panel 180Hz', '0.5ms MPRT / 1ms GtG', 'HDR10 Support', 'Height adjustable stand'],
+    specs: { Resolution: '1920x1080 (FHD)', RefreshRate: '180Hz', Panel: 'Fast IPS' },
+    updatedAt: '2026-11-04',
+  },
+  {
+    id: 'acc-mon-lg-27gp850',
+    sku: 'LG-27GP850-B-NANOIPS-180',
+    name: 'LG UltraGear 27GP850-B 27" QHD Nano IPS 180Hz (O/C) 1ms Gaming Monitor',
+    slug: 'lg-ultragear-27gp850-qhd-nano-ips',
+    brand: 'LG',
+    category: 'monitor',
+    retailPrice: 4750000,
+    costPrice: 4100000,
+    stockStatus: 'ready',
+    warrantyYears: 3,
+    officialDistributor: 'PT LG Electronics Indonesia',
+    features: ['Nano IPS 1ms response time', 'QHD 2560x1440', 'DCI-P3 98% color gamut', 'NVIDIA G-SYNC Compatible'],
+    specs: { Resolution: '2560x1440 (2K QHD)', RefreshRate: '165Hz (O/C 180Hz)', Panel: 'Nano IPS' },
+    updatedAt: '2026-11-04',
+  },
+  {
+    id: 'acc-ups-apc-bv650i',
+    sku: 'APC-BV650I-MS-EASY-UPS',
+    name: 'APC Easy UPS BV650I-MS 650VA / 375W AVR Universal Sockets',
+    slug: 'apc-easy-ups-bv650i-ms',
+    brand: 'APC by Schneider',
+    category: 'ups',
+    retailPrice: 875000,
+    costPrice: 720000,
+    stockStatus: 'ready',
+    warrantyYears: 2,
+    officialDistributor: 'PT Schneider Electric IT Indonesia',
+    features: ['Automatic Voltage Regulation (AVR)', 'Universal Outlets', 'Surge protection'],
+    specs: { CapacityVA: 650, CapacityWatt: 375, Sockets: '4 Universal' },
+    updatedAt: '2026-11-04',
+  },
+];
+
+export const ACCESSORIES_BY_ID: Record<string, AccessoryItem> = MOCK_ACCESSORIES.reduce(
+  (acc, item) => {
+    acc[item.id] = item;
+    return acc;
+  },
+  {} as Record<string, AccessoryItem>
+);
+
+/**
+ * Contoh Surat Penawaran Konsultasi (Quotation) untuk Admin & Halaman Penawaran
+ */
+export const MOCK_CONSULTATION_QUOTES: ConsultationQuote[] = [
+  {
+    id: 'quote-001',
+    quoteCode: 'KSS-Q-202611-001',
+    customerName: 'Bima Satria',
+    customerWa: '6281298765432',
+    budget: 12000000,
+    usageNeed: 'gaming',
+    selectedParts: [
+      { category: 'cpu', partId: 'cpu-r5-7500f', name: 'AMD Ryzen 5 7500F (6C/12T, Up to 5.0 GHz)', quantity: 1, wattage: 65 },
+      { category: 'motherboard', partId: 'mobo-b650m-hdv', name: 'ASRock B650M-HDV/M.2 (AM5, DDR5, mATX)', quantity: 1, wattage: 40 },
+      { category: 'cooler', partId: 'cooler-ag400', name: 'Deepcool AG400 Single Tower 4 Heatpipe', quantity: 1, wattage: 5 },
+      { category: 'ram', partId: 'ram-ddr5-32-6000', name: 'Kingston FURY Beast DDR5 32GB (2x16GB) 6000MHz CL30', quantity: 1, wattage: 15 },
+      { category: 'gpu', partId: 'gpu-rtx-4060', name: 'ZOTAC GAMING GeForce RTX 4060 8GB Twin Edge', quantity: 1, wattage: 115 },
+      { category: 'ssd', partId: 'ssd-lexar-nm790-1tb', name: 'Lexar NM790 1TB NVMe PCIe Gen 4x4 (Read 7400 MB/s)', quantity: 1, wattage: 8 },
+      { category: 'psu', partId: 'psu-corsair-cx650', name: 'Corsair CX650 650W 80+ Bronze Non-Modular', quantity: 1, wattage: 0 },
+      { category: 'case', partId: 'case-paradox-cube', name: 'Paradox Gaming Cube Glass mATX (Inc 3x ARGB Fan)', quantity: 1, wattage: 10 },
+    ],
+    assemblyFee: 150000,
+    finalBundlePrice: 11950000,
+    totalWattage: 288,
+    recommendedPsuWatt: 550,
+    notes: 'Rekomendasi rakitan AM5 DDR5 terbaik di budget 12 Juta. Siap upgrade hingga Ryzen seri 9000 di masa depan.',
+    validUntil: '2026-11-15',
+    status: 'sent',
+    createdAt: '2026-11-04',
   },
 ];

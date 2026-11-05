@@ -145,3 +145,52 @@ export function generateBuildPlainText(
 
   return lines.join('\n');
 }
+
+export interface ConsultationWAPayload {
+  customerName?: string;
+  budget: number;
+  usageNeed: string;
+  brandPreference?: string;
+  targetResolution?: string;
+  notes?: string;
+}
+
+/**
+ * Generate tautan WhatsApp konsultasi rakitan PC berdasarkan budget & kebutuhan
+ */
+export function generateConsultationWAMessage(
+  phone: string = DEFAULT_WHATSAPP_PHONE,
+  payload: ConsultationWAPayload
+): string {
+  const cleanPhone = phone.replace(/[^0-9]/g, '');
+
+  const lines: string[] = [
+    `*HALO TEKNISI KSS KOMPUTER, SAYA MAU KONSULTASI RAKITAN PC:*`,
+    `━━━━━━━━━━━━━━━━━━━━━━━━━`,
+  ];
+
+  if (payload.customerName) {
+    lines.push(`*Nama Konsumen:* ${payload.customerName}`);
+  }
+
+  lines.push(`*Estimasi Budget:* ${formatIDR(payload.budget)}`);
+  lines.push(`*Kebutuhan Utama:* ${payload.usageNeed}`);
+
+  if (payload.brandPreference) {
+    lines.push(`*Preferensi Platform:* ${payload.brandPreference}`);
+  }
+
+  if (payload.targetResolution) {
+    lines.push(`*Target Resolusi / Monitor:* ${payload.targetResolution}`);
+  }
+
+  if (payload.notes) {
+    lines.push(`*Catatan Khusus:* ${payload.notes}`);
+  }
+
+  lines.push(`━━━━━━━━━━━━━━━━━━━━━━━━━`);
+  lines.push(`Mohon dibuatkan rekomendasi racikan spesifikasi terbaik & seimbang di budget tersebut. Terima kasih!`);
+
+  const message = lines.join('\n');
+  return `https://wa.me/${cleanPhone}?text=${encodeURIComponent(message)}`;
+}

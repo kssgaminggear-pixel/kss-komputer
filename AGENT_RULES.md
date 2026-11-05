@@ -12,11 +12,18 @@ Dokumen ini adalah instruksi operasional mutlak bagi Anda sebagai **Single-Agent
 2. **Kode Komplit Tanpa Placeholder**:
    - **DILARANG KERAS** menulis kode malas seperti `// TODO: implement later`, `// ... rest of the code`, atau `// tambahkan komponen lainnya di sini`.
    - Semua fungsi, data mock, komponen antarmuka, dan validasi harus ditulis utuh dan siap pakai.
-3. **Siklus Eksekusi & Git Workflow**:
+3. **ATURAN MUTLAK CI/CD, GIT PUSH & DEPLOYMENT**:
+   - **DILARANG KERAS** melakukan `git push` atau auto-deploy ke Vercel/Production apabila:
+     1. Pekerjaan/fitur masih dalam pengerjaan (setengah jalan atau belum tuntas).
+     2. Uji kompilasi TypeScript (`tsc --noEmit`) belum lolos dengan 0 error.
+     3. Uji build aplikasi Next.js (`npm run build`) belum dijalankan atau gagal.
+     4. Masih ada checklist `[ ]` di `ROADMAP.md` untuk sub-tugas yang sedang dikerjakan.
+   - **HANYA BOLEH PUSH & DEPLOY** jika seluruh rangkaian uji di atas telah LULUS, TERBUKTI STABIL, dan checklist di `ROADMAP.md` telah divalidasi.
    - Setiap menyelesaikan 1 Fase atau sub-tugas:
-     1. Jalankan `npx tsc --noEmit` dan pastikan 0 error TypeScript.
-     2. Ubah checklist `[ ]` menjadi `[x]` di `ROADMAP.md`.
-     3. Jalankan `git add .`, `git commit -m "..."`, dan `git push origin main`.
+     1. Jalankan `tsc --noEmit` dan pastikan 0 error TypeScript.
+     2. Jalankan `npm run build` dan pastikan build produksi sukses.
+     3. Ubah checklist `[ ]` menjadi `[x]` di `ROADMAP.md`.
+     4. Jalankan `git add .`, `git commit -m "..."`, dan `git push origin main`.
 
 ---
 

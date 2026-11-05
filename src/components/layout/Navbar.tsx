@@ -6,11 +6,10 @@ import { usePathname } from 'next/navigation';
 import {
   Search,
   Cpu,
-  Layers,
   Sparkles,
-  Scale,
+  Layers,
+  Wrench,
   ShoppingBag,
-  FileDown,
   PhoneCall,
   Menu,
   X,
@@ -18,13 +17,13 @@ import {
   ShieldCheck,
   ChevronRight,
   Database,
+  ExternalLink,
+  Headphones,
 } from 'lucide-react';
 import { useBuilderStore } from '@/store/useBuilderStore';
-import { useCompareStore } from '@/store/useCompareStore';
-import { useCartStore } from '@/store/useCartStore';
-import { formatIDR } from '@/lib/format';
+import { useRetailCartStore } from '@/store/useRetailCartStore';
+import { formatIDR, TOKOPEDIA_OFFICIAL_STORE_URL, DEFAULT_WHATSAPP_PHONE } from '@/lib/format';
 import { CommandSearchModal } from '@/components/layout/CommandSearchModal';
-
 import { useHydrated } from '@/lib/useHydrated';
 
 export function Navbar() {
@@ -43,9 +42,8 @@ export function Navbar() {
   // Zustand stores
   const builderPartCount = useBuilderStore((state) => state.getItemCount());
   const builderTotalPrice = useBuilderStore((state) => state.getTotalPrice());
-  const compareCount = useCompareStore((state) => state.products.length);
-  const cartCount = useCartStore((state) => state.getTotalItemsCount());
-  const openCart = useCartStore((state) => state.openCart);
+  const retailCartCount = useRetailCartStore((state) => state.getTotalItemsCount());
+  const openRetailCart = useRetailCartStore((state) => state.openCart);
 
   // Keyboard shortcut Ctrl+K / Cmd+K
   useEffect(() => {
@@ -61,32 +59,36 @@ export function Navbar() {
 
   const navLinks = [
     {
-      href: '/katalog',
-      label: 'Katalog & Pricelist',
-      icon: Layers,
-    },
-    {
-      href: '/simulasi',
-      label: 'Simulasi Rakitan',
-      icon: Cpu,
-      badge: isMounted && builderPartCount > 0 ? `${builderPartCount} Item` : null,
-      subBadge: isMounted && builderTotalPrice > 0 ? formatIDR(builderTotalPrice) : null,
+      href: '/paket-rakitan',
+      label: 'Paket PC Rakitan',
+      icon: Sparkles,
       highlight: true,
     },
     {
-      href: '/paket-rakitan',
-      label: 'Paket PC',
-      icon: Sparkles,
+      href: '/simulasi',
+      label: 'Simulasi & Konsultasi',
+      icon: Cpu,
+      badge: isMounted && builderPartCount > 0 ? `${builderPartCount} Part` : null,
+      subBadge: isMounted && builderTotalPrice > 0 ? formatIDR(builderTotalPrice) : null,
     },
     {
-      href: '/bandingkan',
-      label: 'Bandingkan',
-      icon: Scale,
-      badge: isMounted && compareCount > 0 ? `${compareCount}` : null,
+      href: '/komponen',
+      label: 'Komponen Eceran',
+      icon: Layers,
     },
     {
-      href: '/admin/pricelist',
-      label: 'Admin Pricelist',
+      href: '/aksesoris',
+      label: 'Aksesoris & Gear',
+      icon: Headphones,
+    },
+    {
+      href: '/jasa',
+      label: 'Layanan Jasa',
+      icon: Wrench,
+    },
+    {
+      href: '/admin/pricing',
+      label: 'Admin Portal',
       icon: Database,
     },
   ];
@@ -101,7 +103,7 @@ export function Navbar() {
             <div className="flex items-center gap-4 overflow-hidden">
               <span className="flex items-center gap-1.5 truncate">
                 <span className="inline-block h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-                <span className="font-semibold text-zinc-900 dark:text-zinc-200">Toko Offline Mangga Dua:</span>
+                <span className="font-semibold text-zinc-900 dark:text-zinc-200">Toko Offline Mangga Dua Mall:</span>
                 <span>Buka 10.00 – 18.00 WIB</span>
               </span>
               <span className="hidden lg:flex items-center gap-1 text-zinc-400 dark:text-zinc-600">|</span>
@@ -112,28 +114,30 @@ export function Navbar() {
               <span className="hidden xl:flex items-center gap-1 text-zinc-400 dark:text-zinc-600">|</span>
               <span className="hidden xl:flex items-center gap-1">
                 <ShieldCheck className="h-3 w-3 text-blue-600 dark:text-blue-400" />
-                <span>100% Distributor Resmi ID</span>
+                <span>100% Distributor Resmi Indonesia</span>
               </span>
             </div>
 
-            {/* Sisi Kanan: Download Pricelist & WhatsApp Direct */}
+            {/* Sisi Kanan: Tokopedia Link & WhatsApp Direct */}
             <div className="flex items-center gap-3 shrink-0">
-              <Link
-                href="/katalog"
-                className="hidden sm:inline-flex items-center gap-1 font-medium hover:text-blue-600 dark:hover:text-blue-400"
-              >
-                <FileDown className="h-3 w-3" />
-                <span>Download XLS/PDF</span>
-              </Link>
-              <span className="hidden sm:inline-block text-zinc-300 dark:text-zinc-700">|</span>
               <a
-                href="https://wa.me/6281234567890?text=Halo%20KSS%20Komputer,%20saya%20ingin%20tanya%20stok%20dan%20harga%20terbaru"
+                href={TOKOPEDIA_OFFICIAL_STORE_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 font-mono font-medium text-emerald-700 hover:text-emerald-800 dark:text-emerald-400 dark:hover:text-emerald-300"
+                className="hidden sm:inline-flex items-center gap-1 font-semibold text-emerald-600 hover:text-emerald-700 dark:text-emerald-400"
               >
-                <PhoneCall className="h-3 w-3" />
-                <span>WA Sales: 0812-3456-7890</span>
+                <span>Official Store Tokopedia</span>
+                <ExternalLink className="h-3 w-3" />
+              </a>
+              <span className="hidden sm:inline-block text-zinc-300 dark:text-zinc-700">|</span>
+              <a
+                href={`https://wa.me/${DEFAULT_WHATSAPP_PHONE}?text=Halo%20KSS%20Komputer,%20saya%20ingin%20konsultasi%20rakitan%20PC%20dan%20harga`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 font-mono font-medium text-zinc-700 hover:text-blue-600 dark:text-zinc-300 dark:hover:text-blue-400"
+              >
+                <PhoneCall className="h-3 w-3 text-emerald-500" />
+                <span>WA: 0812-3456-7890</span>
               </a>
             </div>
           </div>
@@ -142,9 +146,9 @@ export function Navbar() {
         {/* 2. MAIN NAVBAR */}
         <div className="mx-auto flex max-w-7xl items-center justify-between px-3 py-2.5 sm:px-4">
           {/* Logo & Brand Identity */}
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-5">
             <Link href="/" className="group flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-sm bg-blue-600 text-white font-mono font-bold text-sm tracking-wider shadow-sm group-hover:bg-blue-700">
+              <div className="flex h-8 w-8 items-center justify-center rounded-sm bg-blue-600 text-white font-mono font-bold text-sm tracking-wider shadow-xs group-hover:bg-blue-700 transition-colors">
                 KSS
               </div>
               <div className="flex flex-col">
@@ -153,11 +157,11 @@ export function Navbar() {
                     KSS KOMPUTER
                   </span>
                   <span className="rounded-sm border border-blue-500/30 bg-blue-500/10 px-1 py-0.2 font-mono text-[9px] font-bold uppercase text-blue-600 dark:text-blue-400">
-                    Pro
+                    System Integrator
                   </span>
                 </div>
                 <span className="text-[10px] font-mono tracking-tight text-zinc-500 dark:text-zinc-400">
-                  Hardware &amp; PC Builder Jakarta
+                  PC Builder &amp; Hardware Eceran
                 </span>
               </div>
             </Link>
@@ -165,17 +169,15 @@ export function Navbar() {
             {/* Desktop Navigation Links */}
             <nav className="hidden lg:flex items-center gap-1">
               {navLinks.map((item) => {
-                const isActive = pathname === item.href;
+                const isActive = pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href));
                 const Icon = item.icon;
                 return (
                   <Link
                     key={item.href}
                     href={item.href}
-                    className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-sm transition-colors ${
+                    className={`inline-flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-semibold rounded-sm transition-colors ${
                       isActive
                         ? 'bg-zinc-200 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-50'
-                        : item.highlight && isMounted && builderPartCount > 0
-                        ? 'bg-blue-50 text-blue-700 hover:bg-blue-100 dark:bg-blue-950/40 dark:text-blue-300 dark:hover:bg-blue-900/50'
                         : 'text-zinc-600 hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-300 dark:hover:bg-zinc-800/70 dark:hover:text-zinc-100'
                     }`}
                   >
@@ -197,33 +199,45 @@ export function Navbar() {
             </nav>
           </div>
 
-          {/* Sisi Kanan: Search Trigger Button + Keranjang Drawer Trigger + Mobile Menu Toggle */}
+          {/* Sisi Kanan: Search Trigger + Tokopedia Button + Cart Drawer Trigger + Mobile Menu Toggle */}
           <div className="flex items-center gap-2">
             {/* Command Search Trigger (Cmd+K / Ctrl+K) */}
             <button
               onClick={() => setIsSearchOpen(true)}
-              className="flex items-center gap-2 rounded-sm border border-zinc-200 bg-zinc-50 px-2.5 py-1.5 text-xs text-zinc-500 hover:border-zinc-300 hover:bg-zinc-100 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-400 dark:hover:border-zinc-700 dark:hover:bg-zinc-800/80 transition-all sm:w-64 justify-between"
-              title="Cari komponen, SKU, atau socket (Ctrl+K)"
+              className="flex items-center gap-2 rounded-sm border border-zinc-200 bg-zinc-50 px-2.5 py-1.5 text-xs text-zinc-500 hover:border-zinc-300 hover:bg-zinc-100 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-400 dark:hover:border-zinc-700 dark:hover:bg-zinc-800/80 transition-all sm:w-56 justify-between"
+              title="Cari komponen, paket PC, atau aksesoris (Ctrl+K)"
             >
               <div className="flex items-center gap-1.5 truncate">
                 <Search className="h-3.5 w-3.5 shrink-0 text-zinc-400" />
-                <span className="truncate">Cari SKU, socket, GPU...</span>
+                <span className="truncate">Cari part, paket, gear...</span>
               </div>
               <kbd className="hidden sm:inline-flex items-center gap-0.5 rounded border border-zinc-300 bg-white px-1 font-mono text-[10px] text-zinc-500 shadow-xs dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-400">
                 <span className="text-xs">⌘</span>K
               </kbd>
             </button>
 
-            {/* Tombol Keranjang Belanja */}
+            {/* Direct Tokopedia Official Store Button */}
+            <a
+              href={TOKOPEDIA_OFFICIAL_STORE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden sm:inline-flex items-center gap-1 rounded-sm bg-[#03AC0E] hover:bg-[#02950c] text-white px-2.5 py-1.5 text-xs font-bold transition-colors shadow-xs"
+              title="Buka Toko Resmi KSS Komputer di Tokopedia"
+            >
+              <span>Tokopedia</span>
+              <ExternalLink className="h-3 w-3" />
+            </a>
+
+            {/* Tombol Keranjang Eceran */}
             <button
-              onClick={openCart}
+              onClick={openRetailCart}
               className="relative inline-flex items-center justify-center rounded-sm border border-zinc-200 bg-white p-2 text-zinc-700 hover:bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-zinc-800"
-              title="Buka Keranjang Belanja"
+              title="Keranjang Belanja Eceran"
             >
               <ShoppingBag className="h-4 w-4" />
-              {isMounted && cartCount > 0 && (
-                <span className="absolute -top-1.5 -right-1.5 flex h-4 min-w-4 items-center justify-center rounded-sm bg-blue-600 px-1 font-mono text-[10px] font-bold text-white">
-                  {cartCount}
+              {isMounted && retailCartCount > 0 && (
+                <span className="absolute -top-1.5 -right-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-emerald-600 px-1 font-mono text-[10px] font-bold text-white">
+                  {retailCartCount}
                 </span>
               )}
             </button>
@@ -244,7 +258,7 @@ export function Navbar() {
           <div className="lg:hidden border-t border-zinc-200 bg-white px-3 py-3 dark:border-zinc-800 dark:bg-zinc-950">
             <nav className="flex flex-col gap-1">
               {navLinks.map((item) => {
-                const isActive = pathname === item.href;
+                const isActive = pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href));
                 const Icon = item.icon;
                 return (
                   <Link
@@ -271,11 +285,22 @@ export function Navbar() {
                   </Link>
                 );
               })}
+              <div className="pt-2">
+                <a
+                  href={TOKOPEDIA_OFFICIAL_STORE_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-2 w-full rounded-sm bg-[#03AC0E] py-2 text-xs font-bold text-white"
+                >
+                  <span>Buka Toko Tokopedia Resmi</span>
+                  <ExternalLink className="h-3.5 w-3.5" />
+                </a>
+              </div>
             </nav>
             <div className="mt-3 pt-3 border-t border-zinc-100 dark:border-zinc-800 flex items-center justify-between text-xs text-zinc-500">
-              <span className="font-mono">Mangga Dua Mall Lt. 4</span>
+              <span className="font-mono">Mangga Dua Mall Lt. 4 No. 12</span>
               <a
-                href="https://wa.me/6281234567890"
+                href={`https://wa.me/${DEFAULT_WHATSAPP_PHONE}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="font-mono font-medium text-emerald-600 dark:text-emerald-400"

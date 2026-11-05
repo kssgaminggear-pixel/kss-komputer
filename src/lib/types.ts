@@ -78,7 +78,9 @@ export interface HardwarePart {
   brand: string;
   category: ProductCategory;
   costPrice: number;              // Modal rahasia toko (hanya tampil di admin)
-  sellPrice: number;              // Harga jual internal dasar
+  sellPrice: number;              // Harga jual internal dasar untuk rakitan
+  retailPrice?: number;           // Harga eceran resmi untuk pembelian komponen lepasan
+  isRetailAvailable?: boolean;    // Apakah komponen ini tersedia untuk dijual eceran
   price: number;                  // Alias untuk sellPrice agar backward-compatible
   originalPrice?: number;         // Harga sebelum diskon promo jika ada
   stockStatus: StockStatus;
@@ -170,4 +172,70 @@ export interface CompatibilityReport {
   totalWattage: number;
   recommendedPsuWatt: number;
   psuHeadroomStatus: 'optimal' | 'tight' | 'insufficient' | 'no_psu';
+}
+
+/**
+ * Kategori & Item Aksesoris / Gaming Gear KSS Komputer
+ */
+export type AccessoryCategory =
+  | 'keyboard'
+  | 'mouse'
+  | 'headset'
+  | 'monitor'
+  | 'chair'
+  | 'webcam'
+  | 'ups'
+  | 'speaker'
+  | 'mousepad'
+  | 'other';
+
+export interface AccessoryItem {
+  id: string;
+  sku: string;
+  name: string;
+  slug: string;
+  brand: string;
+  category: AccessoryCategory;
+  retailPrice: number;            // Harga jual eceran
+  costPrice?: number;             // Modal toko (admin only)
+  originalPrice?: number;         // Harga coret promo
+  stockStatus: StockStatus;
+  warrantyYears: number;
+  officialDistributor?: string;
+  image?: string;
+  features?: string[];
+  specs?: Record<string, string | number>;
+  updatedAt: string;
+}
+
+/**
+ * Kontrak Surat Penawaran (Consultation Quotation) Resmi KSS Komputer
+ */
+export interface ConsultationQuotePartItem {
+  category: ProductCategory;
+  partId: string;
+  name: string;
+  specsSummary?: string;
+  quantity: number;
+  wattage?: number;
+}
+
+export type UsageNeedTag = 'gaming' | 'editing' | 'workstation' | 'office' | 'streaming' | 'other';
+
+export interface ConsultationQuote {
+  id: string;
+  quoteCode: string;              // contoh: KSS-Q-202611-001
+  customerName: string;
+  customerWa: string;
+  budget: number;
+  usageNeed: UsageNeedTag;
+  selectedParts: ConsultationQuotePartItem[];
+  assemblyFee: number;
+  finalBundlePrice: number;       // Harga total penawaran (Zero-part leak)
+  totalWattage: number;
+  recommendedPsuWatt: number;
+  notes?: string;
+  validUntil: string;             // Tanggal kedaluwarsa penawaran
+  status: 'draft' | 'sent' | 'accepted' | 'expired';
+  createdAt: string;
 }
