@@ -1,318 +1,541 @@
-# MASTER BLUEPRINT & EXECUTION ROADMAP — KSS KOMPUTER (WEB & PWA)
+# MASTER BLUEPRINT & EXECUTION ROADMAP — KSS KOMPUTER
 
-Dokumen spesifikasi arsitektur, rincian halaman (Public & Admin), skema database, dan daftar periksa eksekusi bertahap untuk Single-Agent Antigravity. Setiap menyelesaikan satu sub-tugas dan memastikan lolos uji TypeScript (`npx tsc --noEmit`), ubah `[ ]` menjadi `[x]`.
+> **Versi:** 2.0 · **Terakhir diperbarui:** 2026-11-06
+> **Stack:** Next.js 16.4 · React 19 · TypeScript `strict` · Tailwind CSS 4 · Zustand · Prisma · PostgreSQL
+> **Deployment:** Vercel (CLI) → `https://kss-komputer-seven.vercel.app`
+> **Repo:** `github.com/kssgaminggear-pixel/kss-komputer`
 
----
-
-## 1. VISI PRODUK & ATURAN BISNIS INTI (CORE BUSINESS RULES)
-
-1. **Modernized Enterkomputer UI:** Kepadatan informasi tinggi dan navigasi secepat kilat ala `enterkomputer.com`, namun diperbarui dengan desain *Bento Grid*, *Dark/Light Slate Theme*, *Instant Search & Filter*, serta tampilan *Mobile-First PWA*.
-2. **Zero Part-Price Leak pada Rakitan (System Integrator Mode):**
-   - Pada halaman **Katalog Paket PC Rakitan**, **Detail Paket PC**, **Simulasi Rakit PC (`/simulasi`)**, dan **Surat Penawaran (`/penawaran/[code]`)**, sistem **WAJIB MENYEMBUNYIKAN** harga satuan per komponen (`costPrice` maupun `sellPrice` per part).
-   - Yang ditampilkan ke konsumen hanyalah **Harga Total Paket PC Siap Pakai** dan **Delta Price (`+ Rp xxx.xxx` / `- Rp xxx.xxx` / `Standar`)** saat konsumen mengganti/meng-upgrade komponen.
-3. **Transparansi Harga pada Katalog Eceran & Aksesoris:**
-   - Pada halaman **Komponen Eceran (`/komponen`)** dan **Aksesoris (`/aksesoris`)**, sistem menampilkan **Harga Jual Eceran (`retailPrice`)** per item secara normal layaknya toko komputer modern.
-4. **Konsultasi Rakitan via WhatsApp & Smart Quotation:**
-   - Konsumen dapat mengirim form konsultasi (Budget + Kebutuhan) ke WhatsApp Admin.
-   - Admin meracik PC di *Admin Quotation Studio*, dan sistem menerbitkan **Link Web Penawaran & File PDF Resmi** yang berisi daftar spesifikasi lengkap + **1 Harga Total Paket** + tombol Checkout Tokopedia / WhatsApp.
+Dokumen ini adalah **single source of truth** untuk arsitektur, spesifikasi fitur, dan checklist eksekusi proyek KSS Komputer.
+Setiap sub-tugas yang selesai dan lolos `tsc --noEmit` + `npm run build` → ubah `[ ]` → `[x]`.
 
 ---
 
-## 2. TECH STACK & TOOLS
+## DAFTAR ISI
 
-- **Framework:** Next.js 15 (App Router) + React 19 + TypeScript (`strict: true`)
-- **Styling & UI:** Tailwind CSS + `shadcn/ui` + `lucide-react` + `framer-motion` (transisi halus)
-- **State Management:** `zustand` (persist di `localStorage` untuk Builder, Cart, dan Admin Draft)
-- **Database & ORM:** PostgreSQL (Docker / Supabase) + Prisma ORM
-- **Form & Validation:** `react-hook-form` + `zod`
-- **PDF & Print Engine:** `@react-pdf/renderer` / CSS `@media print` khusus Faktur & Surat Penawaran A4
-- **PWA Support:** `manifest.json` + Service Worker untuk instalasi aplikasi di Android/iOS
+1. [Visi Produk & Aturan Bisnis](#1-visi-produk--aturan-bisnis-inti)
+2. [Tech Stack & Dependencies](#2-tech-stack--dependencies)
+3. [Struktur Direktori](#3-struktur-direktori-proyek)
+4. [Skema Database](#4-skema-database)
+5. [Halaman Publik (12 Halaman)](#5-spesifikasi-halaman-publik-12-halaman)
+6. [Admin Panel (10 Sub-Modul)](#6-spesifikasi-admin-panel-10-sub-modul)
+7. [Checklist Eksekusi (Fase 0–11)](#7-checklist-eksekusi)
+8. [Deployment & CI/CD Rules](#8-deployment--cicd-rules)
 
 ---
 
-## 3. STRUKTUR DIREKTORI PROYEK (`src/`)
+## 1. VISI PRODUK & ATURAN BISNIS INTI
+
+### 1.1 Identitas Produk
+
+**KSS Komputer** adalah toko komputer modern (System Integrator) berbasis Jakarta yang menjual:
+- **PC Rakitan Siap Pakai** (Prebuilt)
+- **Jasa Perakitan Custom & Servis**
+- **Komponen PC Eceran & Aksesoris Gaming Gear**
+
+Tampilan web mengusung estetika **Industrial Modern** — kepadatan informasi tinggi ala `enterkomputer.com` yang diperbarui dengan desain *Bento Grid*, *Dark/Light Slate Theme*, *Instant Search & Filter*, serta *Mobile-First PWA*.
+
+### 1.2 Aturan Bisnis Utama
+
+| # | Aturan | Penjelasan |
+|---|--------|------------|
+| **B1** | **Zero Part-Price Leak** | Pada halaman Paket Rakitan, Detail Paket, Simulasi Rakit (`/simulasi`), dan Surat Penawaran (`/penawaran/[code]`) — harga satuan per komponen (`costPrice` / `sellPrice`) **WAJIB DISEMBUNYIKAN**. Hanya tampil **Harga Total Paket** dan **Delta Price** (`+Rp`, `-Rp`, `Standar`). |
+| **B2** | **Transparansi Harga Eceran** | Pada Katalog Komponen (`/komponen`) dan Aksesoris (`/aksesoris`) — tampilkan `retailPrice` per item secara normal. |
+| **B3** | **Delta Pricing** | Saat konsumen upgrade/downgrade part pada konfigurator → tampilkan selisih harga terhadap part bawaan: `[Termasuk]` · `[+ Rp 650.000]` · `[- Rp 250.000]` |
+| **B4** | **Konsultasi via WhatsApp** | Konsumen kirim form konsultasi (Budget + Kebutuhan) → Admin racik PC di *Quotation Studio* → terbitkan Link Web Penawaran & PDF berisi spek lengkap + 1 Harga Total + tombol Checkout Tokopedia / WA. |
+| **B5** | **Multi-Channel** | Tokopedia: `https://tk.tokopedia.com/ZSpeToWkH/` · WhatsApp Admin: auto-format pesan rapi. |
+
+---
+
+## 2. TECH STACK & DEPENDENCIES
+
+### 2.1 Core Stack
+
+| Layer | Teknologi |
+|-------|-----------|
+| **Framework** | Next.js 16.4 (App Router, Turbopack, `cacheComponents`) |
+| **UI Library** | React 19.3 + TypeScript 5 (`strict: true`) |
+| **Styling** | Tailwind CSS 4 + `@tailwindcss/turbopack` |
+| **Component Kit** | `shadcn/ui` (Radix primitives) + `lucide-react` |
+| **Motion** | `framer-motion` (transisi halus, page transitions) |
+| **State** | `zustand` (persist `localStorage` — Builder, Cart, Admin Draft) |
+| **Database** | PostgreSQL (Supabase) + Prisma ORM |
+| **Form + Validation** | `react-hook-form` + `zod` |
+| **PDF Engine** | `@react-pdf/renderer` + CSS `@media print` (Faktur & Surat Penawaran A4) |
+
+### 2.2 DX & Production Tooling
+
+| Kategori | Paket |
+|----------|-------|
+| **Theme** | `next-themes` (dark/light toggle, `class` strategy) |
+| **Toast** | `sonner` (notifikasi non-blocking) |
+| **URL State** | `nuqs` (search params as state — filter, sort, view mode) |
+| **SEO** | `generateMetadata` + `sitemap.ts` + `robots.ts` + Open Graph |
+| **Image** | `next/image` (`sizes`, `priority` LCP, WebP auto) |
+| **Font** | `next/font/google` (Inter + JetBrains Mono — zero CLS) |
+| **PWA** | `manifest.json` + Service Worker (offline shell) |
+| **Lint** | ESLint 9 + `eslint-config-next` |
+| **Env** | `.env.example` + validasi runtime via `zod` |
+| **Bundle** | `@next/bundle-analyzer` (audit dependency bloat) |
+| **Deploy** | Vercel CLI (`vercel deploy --prod`) |
+
+---
+
+## 3. STRUKTUR DIREKTORI PROYEK
 
 ```text
 src/
 ├── app/
+│   ├── layout.tsx                          # Root Layout (ThemeProvider, Navbar, BottomNav, Footer, Toaster)
+│   ├── globals.css                         # Tailwind directives + CSS custom properties
+│   ├── not-found.tsx                       # 404 Global
+│   ├── error.tsx                           # Error Boundary Global (client)
+│   ├── loading.tsx                         # Root Loading Skeleton
+│   ├── sitemap.ts                          # Dynamic XML Sitemap
+│   ├── robots.ts                           # Robots.txt Generator
+│   ├── manifest.ts                         # PWA Web Manifest (dynamic)
+│   │
 │   ├── (public)/
-│   │   ├── page.tsx                        # 1. Homepage (Hero, Quick Budget Filter, Best-Seller Rigs, Accessories, USP)
+│   │   ├── page.tsx                        # 1. Homepage
 │   │   ├── paket-rakitan/
-│   │   │   ├── page.tsx                    # 2. Katalog Paket PC Rakitan Siap Pakai (Filter Budget, CPU, Resolusi)
-│   │   │   └── [slug]/page.tsx             # 3. Detail Paket PC + Quick Spec Upgrader (Delta Price) + FPS Bar
+│   │   │   ├── page.tsx                    # 2. Katalog Paket PC Rakitan
+│   │   │   └── [slug]/page.tsx             # 3. Detail Paket + Quick Spec Upgrader
 │   │   ├── simulasi/
-│   │   │   └── page.tsx                    # 4. Custom PC Configurator (Tanpa Harga Part) + Tab Form Konsultasi WA
+│   │   │   └── page.tsx                    # 4. Custom PC Configurator
 │   │   ├── konsultasi/
-│   │   │   └── page.tsx                    # 5. Wizard Konsultasi Rakitan by Budget & Kebutuhan (Auto WA Generator)
+│   │   │   └── page.tsx                    # 5. Wizard Konsultasi Budget
 │   │   ├── komponen/
-│   │   │   ├── page.tsx                    # 6. Katalog Komponen Eceran (Dual View: Tabel Enterkomputer Modern & Grid)
-│   │   │   └── [slug]/page.tsx             # 7. Detail Komponen Eceran
+│   │   │   ├── page.tsx                    # 6. Katalog Komponen Eceran
+│   │   │   └── [slug]/page.tsx             # 7. Detail Komponen
 │   │   ├── aksesoris/
-│   │   │   └── page.tsx                    # 8. Katalog Aksesoris & Gaming Gear (Monitor, Mouse, Keyboard, Kursi)
+│   │   │   └── page.tsx                    # 8. Katalog Aksesoris & Gaming Gear
 │   │   ├── jasa/
-│   │   │   └── page.tsx                    # 9. Katalog Layanan Jasa Service, Cleaning, Rakit & Form Booking WA
+│   │   │   └── page.tsx                    # 9. Katalog Jasa & Form Booking WA
 │   │   ├── cek-pesanan/
-│   │   │   └── page.tsx                    # 10. Tracking Status Rakit PC / Status Servis dengan Kode Resi Internal
+│   │   │   └── page.tsx                    # 10. Tracking Status Rakit/Servis
 │   │   ├── penawaran/
-│   │   │   └── [code]/page.tsx             # 11. Halaman Surat Penawaran Resmi (Quotation View & Print-to-PDF)
+│   │   │   └── [code]/page.tsx             # 11. Surat Penawaran (Quotation View & Print)
 │   │   └── tentang-kami/
-│   │       └── page.tsx                    # 12. Profil KSS Komputer, Lokasi Toko, Garansi & FAQ
+│   │       └── page.tsx                    # 12. Profil Toko, Garansi, FAQ
+│   │
 │   ├── admin/
-│   │   ├── layout.tsx                      # Sidebar Navigasi Admin, Header Status Toko & Quick Actions
-│   │   ├── page.tsx                        # A1. Dashboard Overview (Statistik Paket, Kuotasi Aktif, Margin Rata-rata)
+│   │   ├── layout.tsx                      # Admin Shell (Sidebar, Header, Auth Gate)
+│   │   ├── page.tsx                        # A1. Dashboard Overview
 │   │   ├── paket-rakitan/
-│   │   │   ├── page.tsx                    # A2. Manajemen Paket PC Rakitan (List, Clone, Toggle Aktif, Edit Link Tokopedia)
-│   │   │   └── [id]/page.tsx               # A3. Editor Paket PC (Pilih Komponen, Hitung HPP Modal vs Harga Jual Paket)
+│   │   │   ├── page.tsx                    # A2. Manajemen Paket PC
+│   │   │   └── [id]/page.tsx               # A3. Editor Paket PC
 │   │   ├── komponen/
-│   │   │   └── page.tsx                    # A4. Manajemen Komponen Hardware & Spesifikasi Kompatibilitas
+│   │   │   └── page.tsx                    # A4. Manajemen Komponen
 │   │   ├── aksesoris/
-│   │   │   └── page.tsx                    # A5. Manajemen Katalog Aksesoris & Gaming Gear
+│   │   │   └── page.tsx                    # A5. Manajemen Aksesoris
 │   │   ├── pricing/
-│   │   │   └── page.tsx                    # A6. Spreadsheet Bulk Pricing (Modal, Markup %, Harga Ecer, Import/Export CSV)
+│   │   │   └── page.tsx                    # A6. Spreadsheet Bulk Pricing
 │   │   ├── quotes/
-│   │   │   ├── page.tsx                    # A7. Daftar Penawaran Konsultasi WA (Draft, Terkirim, Deal, Expired)
-│   │   │   └── buat/page.tsx               # A8. Quotation Studio (Racik Spek sesuai Budget Konsumen + Cetak Link/PDF)
+│   │   │   ├── page.tsx                    # A7. Daftar Penawaran
+│   │   │   └── buat/page.tsx               # A8. Quotation Studio
 │   │   ├── jasa-servis/
-│   │   │   └── page.tsx                    # A9. Manajemen Paket Jasa & Antrean Pengerjaan Rakit/Servis
+│   │   │   └── page.tsx                    # A9. Manajemen Jasa & Antrean
 │   │   └── pengaturan/
-│   │       └── page.tsx                    # A10. Pengaturan Toko (Nomor WA Admin, Link Tokopedia, Biaya Rakit, Kop Surat)
+│   │       └── page.tsx                    # A10. Pengaturan Toko
+│   │
 │   └── api/
-│       ├── catalog/route.ts                # Endpoint Katalog Terfilter (Sanitized tanpa costPrice)
-│       ├── quotes/[code]/route.ts          # Endpoint Pengambilan Data Quotation Publik (Tanpa Harga Per Part)
-│       └── admin/export-import/route.ts    # Endpoint Backup/Restore Data Harga CSV/JSON
+│       ├── catalog/route.ts                # GET Katalog (sanitized, tanpa costPrice)
+│       ├── quotes/[code]/route.ts          # GET Quotation Publik
+│       └── admin/export-import/route.ts    # POST/GET Backup/Restore CSV/JSON
+│
 ├── components/
+│   ├── ui/                                 # shadcn/ui primitives (Button, Dialog, Sheet, etc.)
 │   ├── layout/                             # Navbar, MegaMenu, MobileBottomNav, Footer, FloatingWAButton
-│   ├── home/                               # HeroBanner, BudgetQuickFilter, FeaturedPrebuiltGrid, ServiceHighlights
+│   ├── home/                               # HeroBanner, BudgetQuickFilter, FeaturedGrid, ServiceHighlights
 │   ├── prebuilt/                           # PrebuiltCard, FpsBenchmarkBar, QuickSpecUpgrader, BundleSummaryBox
 │   ├── builder/                            # BuilderSlotRow, PartSelectorDrawer, CompatibilityAlert, StickyTelemetryBar
-│   ├── retail/                             # HighDensityPartTable, RetailPartGrid, RetailFilterSidebar, RetailCartDrawer
+│   ├── retail/                             # HighDensityPartTable, RetailPartGrid, RetailFilterSidebar
 │   ├── quote/                              # QuotationPrintSheet, ConsultationWizardForm
-│   └── admin/                              # SpreadsheetPriceTable, MarginSimulatorCard, AdminPartFormModal
+│   ├── admin/                              # SpreadsheetPriceTable, MarginSimulator, AdminPartFormModal
+│   └── shared/                             # EmptyState, Skeleton, ErrorFallback, SEOHead, PriceTag, StatusBadge
+│
+├── hooks/                                  # Custom React hooks (useMediaQuery, useDebounce, useClickOutside)
+│
 ├── lib/
-│   ├── types.ts                            # Kontrak TypeScript Lengkap
-│   ├── format.ts                           # Formatter IDR, Delta Price, Generator Pesan WA & URL Tokopedia
-│   ├── compatibility.ts                    # Mesin Validasi Socket, RAM, Dimensi Casing, Wattage & Bottleneck
-│   ├── sanitizer.ts                        # Penghapus field costPrice & sellPrice satuan pada payload Rakitan
-│   └── mock-data.ts                        # Database Awal (Komponen, Paket PC, Aksesoris, Jasa, Sample Quotes)
+│   ├── types.ts                            # Kontrak TypeScript lengkap
+│   ├── format.ts                           # formatIDR, formatDeltaIDR, WA message generators
+│   ├── compatibility.ts                    # Validasi Socket, RAM, GPU, Wattage, Bottleneck
+│   ├── sanitizer.ts                        # Strip costPrice/sellPrice dari payload publik
+│   ├── mock-data.ts                        # Data seed (Parts, Paket, Aksesoris, Jasa, Quotes, Tracking)
+│   ├── constants.ts                        # URL Tokopedia, nomor WA, config statis
+│   └── utils.ts                            # cn(), slugify(), clamp(), debounce()
+│
 └── store/
-    ├── useBuilderStore.ts                  # State Simulasi Rakit PC & Quick Upgrader
-    ├── useRetailCartStore.ts               # State Keranjang Belanja Komponen Eceran & Aksesoris
-    ├── useQuoteStore.ts                    # State Manajemen Surat Penawaran (Quotation)
-    └── useAdminStore.ts                    # State Pengaturan Harga, Markup, Katalog & Konfigurasi Toko
+    ├── useBuilderStore.ts                  # State Simulasi Rakit PC
+    ├── useRetailCartStore.ts               # State Keranjang Eceran
+    ├── useQuoteStore.ts                    # State Surat Penawaran
+    ├── useAdminStore.ts                    # State Harga & Konfigurasi Admin
+    ├── useCartStore.ts                     # State Builder Cart
+    └── useCompareStore.ts                  # State Bandingkan Paket PC
 ```
 
 ---
 
-## 4. DESAIN SKEMA DATABASE (`prisma/schema.prisma`)
+## 4. SKEMA DATABASE
 
-- **HardwarePart (Komponen PC):**
-  - `id`, `sku`, `name`, `slug`, `brand`, `category` (CPU, MOBO, RAM, GPU, SSD, HDD, PSU, CASE, COOLER, MONITOR)
-  - `costPrice` (Int - Modal Rahasia Admin)
-  - `bundleBasePrice` (Int - Harga dasar kalkulasi di dalam rakitan, disembunyikan dari publik)
-  - `retailPrice` (Int - Harga jual satuan di halaman `/komponen`)
-  - `isRetailSold` (Boolean - Apakah dijual eceran atau khusus stok rakitan)
-  - `stockStatus` (READY, LIMITED, PREORDER, OUT_OF_STOCK)
-  - `wattage` (Int), `imageUrl`, `tokopediaUrl`
-  - `specs` (JSON: socket, chipset, ramType, formFactor, vram, capacityGb, lengthMm, psuTier)
+### 4.1 Entity-Relationship
 
-- **PrebuiltPC (Paket PC Rakitan Jadi):**
-  - `id`, `code`, `name`, `slug`, `tier` (OFFICE, ESPORTS_1080P, AAA_1080P, CREATOR_1440P, WORKSTATION_4K)
-  - `parts` (Relasi/JSON daftar slot -> partId)
-  - `upgradeOptions` (JSON daftar opsi upgrade cepat per slot untuk Quick Spec Upgrader)
-  - `assemblyFee` (Int), `customMarkupPercent` (Float), `overrideTotalPrice` (Int?)
-  - `fpsBenchmarks` (JSON: `[{ game: "Valorant", resolution: "1080p", fps: 320 }, ...]`)
-  - `tokopediaUrl`, `isFeatured` (Boolean), `isActive` (Boolean)
+```
+HardwarePart ──< PrebuiltPCItem >── PrebuiltPC
+AccessoryItem
+ServicePackage
+ConsultationQuote
+BuildOrderTracking
+AdminSetting
+```
 
-- **AccessoryItem (Aksesoris & Gaming Gear):**
-  - `id`, `sku`, `name`, `slug`, `category` (KEYBOARD, MOUSE, HEADSET, MONITOR, CHAIR, UPS, WEBCAM, NETWORKING)
-  - `costPrice`, `retailPrice`, `stockStatus`, `specsSummary`, `tokopediaUrl`, `imageUrl`
+### 4.2 Model Detail (`prisma/schema.prisma`)
 
-- **ServicePackage (Layanan Jasa):**
-  - `id`, `name`, `slug`, `price`, `estimatedDuration`, `description`, `features` (String[])
+**HardwarePart** — Komponen PC:
+- `id`, `sku`, `name`, `slug`, `brand`
+- `category`: CPU, MOBO, RAM, GPU, SSD, HDD, PSU, CASE, COOLER, MONITOR
+- `costPrice` (Int — Modal rahasia admin)
+- `bundleBasePrice` (Int — Harga kalkulasi dalam rakitan, tersembunyi)
+- `retailPrice` (Int — Harga jual eceran di `/komponen`)
+- `isRetailAvailable` (Boolean — Dijual eceran atau khusus stok rakitan)
+- `stockStatus`: READY, LOW, OUT_OF_STOCK, PO
+- `wattage`, `imageUrl`, `tokopediaUrl`
+- `specs` (JSON: socket, chipset, ramType, formFactor, vram, capacityGb, lengthMm, psuTier)
 
-- **ConsultationQuote (Surat Penawaran Rakitan Konsultasi WA):**
-  - `id`, `quoteCode` (Unik: KSS-2026-XXXX), `customerName`, `customerWa`, `customerBudget`, `usageNeed`
-  - `selectedParts` (JSON daftar komponen rakitan tanpa menampilkan harga satuan di tampilan publik)
-  - `totalCostPrice` (Hanya dilihat Admin), `finalQuotedPrice` (Harga total paket yang tampil ke konsumen)
-  - `adminNotes`, `validUntil`, `tokopediaCustomUrl`, `status` (DRAFT, SENT, APPROVED, EXPIRED)
+**PrebuiltPC** — Paket PC Rakitan:
+- `id`, `code`, `name`, `slug`
+- `tier`: OFFICE, ESPORTS_1080P, AAA_1080P, CREATOR_1440P, WORKSTATION_4K
+- `parts` → relasi `PrebuiltPCItem` (slot → partId)
+- `upgradeOptions` (JSON — opsi upgrade per slot)
+- `assemblyFee`, `customMarkupPercent`, `overrideTotalPrice`
+- `fpsBenchmarks` (JSON: `[{ game, resolution, fps }]`)
+- `tokopediaUrl`, `isFeatured`, `isActive`
 
-- **BuildOrderTracking (Pelacakan Status Rakit/Servis):**
-  - `trackingCode` (TRK-KSS-XXX), `customerName`, `itemTitle`, `currentStage` (PAYMENT_VERIFIED, PARTS_PREPARATION, ASSEMBLING, CABLE_MANAGEMENT, STRESS_TESTING, READY_TO_SHIP), `updatedAt`, `notes`
+**AccessoryItem** — Aksesoris & Gaming Gear:
+- `id`, `sku`, `name`, `slug`, `brand`
+- `category`: KEYBOARD, MOUSE, HEADSET, MONITOR, CHAIR, WEBCAM, UPS, SPEAKER
+- `costPrice`, `retailPrice`, `stockStatus`, `specsSummary`, `tokopediaUrl`, `imageUrl`
 
----
+**ServicePackage** — Layanan Jasa:
+- `id`, `name`, `slug`, `price`, `estimatedDuration`, `description`, `features[]`
 
-## 5. SPESIFIKASI DETAIL SETIAP HALAMAN PUBLIK (12 HALAMAN)
+**ConsultationQuote** — Surat Penawaran:
+- `id`, `quoteCode` (KSS-Q-YYYYMM-XXX), `customerName`, `customerWa`, `budget`, `usageNeed`
+- `selectedParts` (JSON — daftar komponen tanpa harga per part di tampilan publik)
+- `totalCostPrice` (Hanya admin), `finalBundlePrice` (Tampil ke konsumen)
+- `adminNotes`, `validUntil`, `status`: DRAFT, SENT, APPROVED, EXPIRED
 
-### 5.1 Homepage (`src/app/page.tsx`)
-- **Top Announcement Bar:** Info jam operasional, garansi resmi, & link cepat Tokopedia (`https://tk.tokopedia.com/ZSpeToWkH/`).
-- **Sticky Header & Mega Navigation:** Search bar global instan (mencari Paket PC, VGA, Monitor, Aksesoris), shortcut Simulasi Rakit, Konsultasi WA, indikator Keranjang Eceran, dan badge Total Simulasi Aktif.
-- **Hero Section Modern:** Split layout—kiri berisi headline *"Rakit PC Siap Pakai Sesuai Budget, Tanpa Pusing Kompatibilitas"* + 2 tombol CTA (*Lihat Paket PC Siap Pakai* & *Konsultasi Budget via WA*); kanan berisi Interactive Rig Showcase Card.
-- **Quick Budget & Purpose Selector:** Pill filter interaktif (Di bawah 5 Juta, 5–8 Juta, 8–12 Juta, 12–20 Juta, Sultan >20 Juta | Gaming, Editing/3D, Kasir/Office, Live Streaming).
-- **Katalog Paket PC Rakitan Unggulan:** Grid 6 kartu PC jadi berisi badge target resolusi, rangkuman komponen utama (CPU, GPU, RAM, Storage), bar performa FPS, Harga Total Paket Jadi, tombol Upgrade/Kustomisasi, dan tombol Beli via Tokopedia / WA.
-- **Banner Konsultasi WA Interaktif:** Seksi khusus untuk pengguna yang punya budget spesifik dan ingin diracikkan langsung oleh teknisi KSS Komputer.
-- **Highlight Komponen & Aksesoris Terlaris:** Carousel/Grid Monitor, Gear Gaming, dan komponen upgrade siap beli eceran.
-- **Why KSS Komputer (USP Grid):** Garansi Resmi, Stress-Test OCCT/FurMark sebelum dikirim, Cable Management Rapi, Gratis Konsultasi, Packing Kayu Aman.
+**BuildOrderTracking** — Pelacakan Rakit/Servis:
+- `trackingCode` (TRK-KSS-XXX), `customerName`, `itemTitle`
+- `currentStage`: PAYMENT_VERIFIED → PARTS_PREPARATION → ASSEMBLING → CABLE_MANAGEMENT → STRESS_TESTING → READY_TO_SHIP
+- `updatedAt`, `notes`
 
-### 5.2 Katalog Paket PC Rakitan (`src/app/paket-rakitan/page.tsx`)
-- **Sidebar / Top Filter Bar:** Filter berdasarkan Rentang Harga, Platform Processor (AMD Ryzen / Intel Core), Seri GPU (RTX, Radeon, Integrated), Kapasitas RAM (16GB, 32GB, 64GB), dan Kegunaan.
-- **Sorting:** Termurah, Termahal, Performa FPS Tertinggi, Terlaris.
-- **Comparison Drawer (Bandingkan Paket):** Fitur memilih hingga 3 Paket PC untuk dibandingkan berdampingan (Spesifikasi, Estimasi FPS, Wattage, dan Total Harga Paket).
-
-### 5.3 Detail Paket PC & Quick Spec Upgrader (`src/app/paket-rakitan/[slug]/page.tsx`)
-- **Galeri & Highlight Rig:** Preview visual casing, badge garansi, estimasi konsumsi daya (Watt), dan skor performa.
-- **Daftar Spesifikasi Bawaan (Zero Part-Price):** Menampilkan 8–10 komponen utama yang menyusun PC tersebut lengkap dengan nama seri dan brand, tanpa mencantumkan harga per part.
-- **Interactive Quick Spec Upgrader:**
-  - Konsumen dapat langsung mengganti RAM, SSD, VGA, Cooler, atau Casing melalui pill/dropdown komponen yang 100% kompatibel.
-  - Setiap opsi hanya menampilkan Delta Price (`+ Rp 450.000`, `- Rp 200.000`, atau `Termasuk`).
-  - Mengklik opsi langsung memperbarui Harga Total Paket dan bar estimasi FPS secara real-time.
-- **Panel Aksi Konversi:** Tombol Pesan Paket Ini via WA (Kirim Rincian Spek & Harga Total), Checkout via Tokopedia, Cetak Lembar Spesifikasi (PDF), dan Buka di Custom Configurator Penuh.
-
-### 5.4 Custom PC Configurator (`src/app/simulasi/page.tsx`)
-- **Tabel Slot Rakitan Modern:** 10 baris slot (Processor, Motherboard, CPU Cooler, Memory RAM, SSD Utama, Storage Tambahan, Graphics Card / VGA, Power Supply, Casing PC, Monitor & Gear).
-- **Smart Part Selector Drawer:**
-  - Ketika pengguna klik "Pilih / Ganti" pada suatu slot, drawer terbuka dan otomatis mengunci/menyembunyikan part yang tidak kompatibel (misal: memilih CPU AM5 otomatis hanya memunculkan Motherboard AM5 dan RAM DDR5).
-  - Setiap kandidat part di dalam drawer tidak menampilkan harga eceran, melainkan menampilkan Selisih Harga Paket (`+ Rp xxx.xxx` / `- Rp xxx.xxx`) terhadap konfigurasi saat ini.
-- **Real-Time Compatibility & Bottleneck Inspector:** Menampilkan status 100% Kompatibel, peringatan ukuran GPU vs Casing, peringatan update BIOS, serta kalkulator Estimated Wattage vs Rekomendasi PSU.
-- **Sticky Bottom Telemetry Bar:** Menampilkan Total Komponen Terpilih, Estimasi Daya, Total Harga Paket Rakitan Siap Pakai, tombol Reset, Cetak Penawaran Resmi, dan Kirim ke WA Admin untuk Penawaran Terbaik.
-
-### 5.5 Wizard Konsultasi Rakitan by Budget (`src/app/konsultasi/page.tsx`)
-- **Step 1 - Tentukan Budget:** Slider interaktif dan tombol nominal cepat (Rp 4 Juta s/d Rp 50 Juta+).
-- **Step 2 - Pilih Kebutuhan Utama:** Multi-select game yang dimainkan (Valorant, CS2, Genshin, Cyberpunk, GTA V) atau software kerja (Premiere Pro, Blender, AutoCAD, Android Studio, Kasir/Office).
-- **Step 3 - Preferensi & Kelengkapan:** Pilihan PC Only vs Fullset dengan Monitor & Gear, preferensi warna casing (Black / White / RGB / Minimalis), dan preferensi platform (AMD / Intel / Bebas Rekomendasi Terbaik).
-- **Step 4 - Instant Recommendation & WA Dispatch:** Sistem menampilkan 2 Paket PC KSS yang paling mendekati budget tersebut, sekaligus tombol "Minta Racikan Kustom via WhatsApp" dengan pesan terformat otomatis.
-
-### 5.6 Katalog Komponen Eceran (`src/app/komponen/page.tsx` & `[slug]/page.tsx`)
-- **Mode Tampilan Ganda (Toggle View):**
-  - **Compact Table View (Gaya Enterkomputer Modern):** Baris padat berisi Kode SKU, Nama Komponen, Badge Spesifikasi Kunci, Status Stok, Harga Eceran (`retailPrice`), dan tombol cepat `+ Keranjang`.
-  - **Bento Grid View:** Tampilan kartu visual dengan foto produk, spesifikasi, dan harga eceran.
-- **Filter Instan Tanpa Reload:** Cari berdasarkan nama/seri, filter Kategori, Brand, Socket, dan Rentang Harga.
-
-### 5.7 Katalog Aksesoris & Gaming Gear (`src/app/aksesoris/page.tsx`)
-- Katalog khusus Monitor, Keyboard Mechanical, Mouse Gaming, Headset, Webcam, UPS, dan Kursi Gaming dengan tampilan Harga Eceran Resmi, filter kategori, dan integrasi ke `RetailCartDrawer`.
-
-### 5.8 Halaman Layanan Jasa & Booking (`src/app/jasa/page.tsx`)
-- **Katalog paket layanan:** Jasa Rakit Full Custom & Cable Management, Deep Cleaning & Repaste Thermal, Jasa Upgrade & Migrasi OS SSD, Instalasi PC Warnet/Kantor/Lab.
-- **Form Booking Jadwal Servis:** Input nama, jenis PC/keluhan, tanggal kedatangan/jemput, dan kirim antrean langsung ke WhatsApp Teknisi.
-
-### 5.9 Halaman Cek Status Rakit & Servis (`src/app/cek-pesanan/page.tsx`)
-- Konsumen memasukkan kode resi internal (contoh: `TRK-KSS-001`) untuk melihat progress stepper pengerjaan PC rakitannya (Persiapan Komponen -> Proses Perakitan -> Cable Management -> Stress Test 24 Jam -> Siap Dikirim).
-
-### 5.10 Halaman Surat Penawaran Resmi (`src/app/penawaran/[code]/page.tsx`)
-- Halaman khusus yang diakses konsumen dari link yang dikirim Admin melalui WhatsApp.
-- Menampilkan Kop Resmi KSS Komputer, Informasi Konsumen, Nomor Kuotasi, Masa Berlaku, Tabel Daftar Spesifikasi Lengkap (Tanpa Kolom Harga Satuan Part), Rincian Garansi & Bonus Rakit, serta 1 Kotak Harga Total Penawaran Paket.
-- Dilengkapi tombol Cetak / Download PDF (A4 Clean Layout), Setujui & Pesan via WhatsApp, dan Beli via Link Tokopedia Khusus.
+**AdminSetting** — Konfigurasi Toko:
+- `key` (Unique), `value` (String)
+- Keys: `adminWhatsApp`, `tokopediaUrl`, `assemblyFee`, `defaultMarkup`, `warrantyText`, `storeName`
 
 ---
 
-## 6. SPESIFIKASI DETAIL PANEL ADMIN (`/admin` - 10 SUB-MODUL)
+## 5. SPESIFIKASI HALAMAN PUBLIK (12 HALAMAN)
 
-- **`/admin` (Dashboard Command Center):**
-  - Ringkasan metrik bisnis: Total Paket PC Aktif, Total Komponen, Rata-rata Margin Profit Rakitan (% dan Rp), Daftar Kuotasi Konsultasi WA Terbaru, dan Peringatan Stok Komponen Menipis.
-- **`/admin/paket-rakitan` & `/admin/paket-rakitan/[id]` (Prebuilt PC Manager):**
-  - CRUD Paket PC Rakitan, fitur Clone Paket, atur komponen penyusun, lihat perbandingan Total Modal (HPP) vs Harga Jual Bundel vs Profit Bersih, serta edit URL Tokopedia per paket.
-- **`/admin/komponen` (Hardware Part Inventory):**
-  - CRUD Komponen PC, atur spesifikasi kompatibilitas (socket, ramType, wattage, lengthMm), status stok, dan toggle apakah part boleh dijual eceran (`isRetailSold`).
-- **`/admin/aksesoris` (Accessories Manager):**
-  - CRUD Aksesoris & Monitor beserta harga modal dan harga jual eceran.
-- **`/admin/pricing` (Spreadsheet Bulk Pricing & Markup Panel):**
-  - Tabel interaktif bergaya Excel untuk mengedit cepat `costPrice` (Modal), `sellPrice` (Harga Dasar Rakitan), `retailPrice` (Harga Ecer), pengaturan Global Markup %, Biaya Rakit Default, serta tombol Export/Import CSV/JSON.
-- **`/admin/quotes` & `/admin/quotes/buat` (WA Consultation Quotation Studio):**
-  - Alat kerja utama Admin saat membalas chat WA konsumen:
-    - Input Nama Konsumen, Nomor WA, dan Target Budget (misal: Rp 11.500.000).
-    - Pilih komponen per slot dengan indikator kompatibilitas otomatis.
-    - Panel Kalkulator Rahasia Admin: Menampilkan Total Modal Asli, Saran Harga Jual, input Diskon/Harga Deal Final, dan Keuntungan Bersih (Profit Rp & %).
-    - Klik *"Terbitkan Link & PDF Penawaran"*: Menghasilkan kode unik `/penawaran/KSS-XXXX` dan tombol sekali klik untuk mengirim pesan balasan WhatsApp ke konsumen berisi link penawaran tersebut.
-- **`/admin/jasa-servis` (Service & Assembly Tracker):**
-  - Kelola daftar harga jasa dan update status pengerjaan rakitan konsumen (`TRK-KSS-XXX`).
-- **`/admin/pengaturan` (Store Configuration):**
-  - Atur Nomor WhatsApp Admin/Teknisi, Link Toko Tokopedia Utama, Catatan Garansi pada Kaki Surat Penawaran, dan PIN/Password akses Admin.
+### P1 — Homepage (`/`)
+- **Announcement Bar:** Jam operasional, garansi, link Tokopedia.
+- **Sticky Header + Mega Nav:** Global search (Ctrl+K), badge Simulasi Aktif, badge Keranjang Eceran.
+- **Hero Section:** Split layout — headline + 2 CTA (*Lihat Paket Siap Pakai* & *Konsultasi via WA*) + Interactive Rig Showcase.
+- **Quick Budget & Purpose Filter:** Pill interaktif: < 5 Jt, 5–8 Jt, 8–12 Jt, 12–20 Jt, > 20 Jt | Gaming, Editing, Office, Streaming.
+- **Grid Paket Unggulan:** 6 kartu PC — badge resolusi, spek utama, FPS bar, Harga Total, tombol Upgrade & Beli.
+- **Banner Konsultasi WA:** Seksi CTA untuk konsultasi budget kustom.
+- **Carousel Aksesoris Terlaris:** Monitor, Gear Gaming, komponen upgrade siap beli eceran.
+- **USP Grid:** Garansi Resmi, Stress-Test, Cable Management, Gratis Konsultasi, Packing Kayu.
 
----
+### P2 — Katalog Paket PC Rakitan (`/paket-rakitan`)
+- **Filter:** Rentang Harga, Platform CPU (AMD/Intel), Seri GPU, RAM, Kegunaan.
+- **Sorting:** Termurah, Termahal, FPS Tertinggi, Terlaris.
+- **Compare Drawer:** Pilih hingga 3 paket untuk perbandingan berdampingan.
 
-## 7. CHECKLIST EKSEKUSI BERTAHAP (FASE 1 S/D FASE 10)
+### P3 — Detail Paket + Quick Spec Upgrader (`/paket-rakitan/[slug]`)
+- Galeri visual casing, badge garansi, konsumsi daya.
+- Daftar 8–10 komponen — **tanpa harga per part** (Zero Part-Price Leak).
+- **Quick Spec Upgrader:** Ganti RAM/SSD/GPU/Cooler → Delta Price real-time.
+- Panel Aksi: Pesan via WA, Checkout Tokopedia, Cetak PDF, Buka di Simulasi Penuh.
 
-### FASE 1: Fondasi Tipe Data, Kalkulator Markup & Database Komprehensif
-- [x] **1.1 Buat `src/lib/types.ts` dasar** (`HardwarePart`, `PrebuiltPC`, `ServicePackage`).
-- [x] **1.2 Buat `src/lib/format.ts` dasar** (`formatIDR`, `formatDeltaIDR`, generator WA dasar).
-- [x] **1.3 Buat `src/lib/mock-data.ts` dasar** (45+ part, 6 paket PC, 4 layanan jasa).
-- [ ] **1.4 Ekspansi `src/lib/types.ts` & `src/lib/sanitizer.ts`:**
-  - Tambahkan kontrak `AccessoryItem`, `ConsultationQuote`, `BuildOrderTracking`, `StoreSettings`, serta properti `retailPrice`, `isRetailSold`, dan `stockStatus` pada `HardwarePart`.
-  - Buat fungsi `sanitizePrebuiltForPublic()` di `src/lib/sanitizer.ts` agar harga modal (`costPrice`) dan harga per part rakitan tidak pernah terekspos ke komponen publik.
-- [ ] **1.5 Ekspansi `src/lib/mock-data.ts` & `src/lib/format.ts`:**
-  - Tambahkan 20+ item `AccessoryItem` (Monitor, Keyboard, Mouse, Headset, Kursi Gaming, UPS), 3 sample `ConsultationQuote` (`KSS-2026-001`, dll), dan 3 sample `BuildOrderTracking` (`TRK-KSS-001`, dll).
-  - Tambahkan formatter `generateConsultationWAMessage()`, `generateRetailCartWAMessage()`, dan `generateQuoteShareWAMessage()`.
+### P4 — Custom PC Configurator (`/simulasi`)
+- **10 Slot Rakitan:** CPU, Mobo, Cooler, RAM, SSD, HDD, GPU, PSU, Case, Monitor.
+- **Part Selector Drawer:** Auto-filter kompatibel, tampil Delta Price saja.
+- **Real-Time Telemetry:** Compatibility status, wattage calculator, bottleneck alert.
+- **Sticky Bar:** Total Komponen, Est. Watt, Harga Bundel, Reset, Cetak, Kirim WA.
 
----
+### P5 — Wizard Konsultasi Budget (`/konsultasi`)
+- **Step 1:** Slider budget (Rp 4 Jt – 50 Jt+).
+- **Step 2:** Multi-select game/software (Valorant, Premiere Pro, AutoCAD, dll).
+- **Step 3:** PC Only / Fullset, warna casing, platform preference.
+- **Step 4:** 2 rekomendasi paket terdekat + tombol "Minta Racikan Kustom via WA".
 
-### FASE 2: Compatibility Engine & Zustand Multi-Store Architecture
-- [x] **2.1 Buat `src/lib/compatibility.ts`** (Validasi socket, RAM, form factor, dimensi GPU, Wattage, `calculateBundleTotal`).
-- [x] **2.2 Buat `src/store/useBuilderStore.ts`** (State simulasi rakit PC & delta price).
-- [x] **2.3 Buat `src/store/useAdminStore.ts`** (State markup, assembly fee, dan edit harga).
-- [ ] **2.4 Buat `src/store/useRetailCartStore.ts` & `src/store/useQuoteStore.ts`:**
-  - `useRetailCartStore`: State keranjang belanja eceran & aksesoris (`items`, `addItem`, `removeItem`, `updateQty`, `clearCart`, `getTotalRetailPrice`).
-  - `useQuoteStore`: State CRUD Surat Penawaran Konsultasi WA (`quotes`, `createQuote`, `updateQuoteStatus`, `getQuoteByCode`) dan pelacakan status rakit (`trackings`, `updateTrackingStage`).
+### P6 — Katalog Komponen Eceran (`/komponen`)
+- **Toggle View:** Compact Table (gaya Enterkomputer) vs Bento Grid.
+- **Filter:** Kategori, Brand, Socket, Rentang Harga.
+- Tampil `retailPrice`, status stok, tombol `+ Keranjang`.
 
----
+### P7 — Detail Komponen Eceran (`/komponen/[slug]`)
+- Foto produk, spesifikasi lengkap, status stok, harga eceran.
+- Related parts, tombol beli eceran / tambah ke keranjang.
 
-### FASE 3: Layout Global Modern, Navigasi Mega-Menu, PWA & Homepage
-- [ ] **3.1 Buat `src/components/layout/Navbar.tsx`, `MobileBottomNav.tsx`, `RetailCartDrawer.tsx` & `Footer.tsx`:**
-  - Header modern berdensitas tinggi dengan Global Search Modal, indikator Simulasi Aktif, Drawer Keranjang Eceran, pintasan Tokopedia Resmi, dan Bottom Navigation Bar untuk perangkat mobile.
-  - Buat `public/manifest.json` untuk dukungan instalasi PWA.
-- [ ] **3.2 Buat `src/app/page.tsx` (High-Conversion Homepage):**
-  - Implementasikan Hero Section, Quick Budget & Need Filter, Grid Paket PC Rakitan Terlaris (dengan FPS Benchmark Bar & harga bundel), Banner Konsultasi WA, Katalog Aksesoris Pilihan, dan seksi Keunggulan KSS Komputer.
+### P8 — Katalog Aksesoris (`/aksesoris`)
+- Monitor, Keyboard, Mouse, Headset, Webcam, UPS, Kursi Gaming.
+- Filter kategori, `retailPrice`, integrasi `RetailCartDrawer`.
 
----
+### P9 — Katalog Jasa & Booking (`/jasa`)
+- Paket layanan: Rakit Custom, Deep Cleaning, Upgrade OS/SSD, Instalasi Warnet/Kantor.
+- Form Booking → kirim ke WhatsApp Teknisi.
 
-### FASE 4: Katalog Paket Rakitan, Perbandingan Rig & Halaman Quick Spec Upgrader
-- [ ] **4.1 Buat `src/app/paket-rakitan/page.tsx`:**
-  - Katalog lengkap Paket PC Siap Pakai dengan filter multi-dimensi (Budget, Platform CPU, Seri GPU, Resolusi) serta fitur Compare Drawer (Bandingkan hingga 3 PC).
-- [ ] **4.2 Buat `src/app/paket-rakitan/[slug]/page.tsx`:**
-  - Halaman detail Paket PC (tanpa menampilkan harga satuan part) lengkap dengan fitur Quick Spec Upgrader (ganti RAM/SSD/GPU/Casing dengan tampilan Delta Price `+ Rp xxx.xxx`), visualisasi FPS, tombol Pesan via WA, Beli di Tokopedia, dan lanjut ke Simulasi Penuh.
+### P10 — Tracking Status Rakit/Servis (`/cek-pesanan`)
+- Input kode resi `TRK-KSS-XXX` → stepper progress:
+  Persiapan Komponen → Perakitan → Cable Management → Stress Test → Siap Kirim.
 
----
+### P11 — Surat Penawaran Resmi (`/penawaran/[code]`)
+- Kop resmi KSS Komputer, info konsumen, nomor kuotasi, masa berlaku.
+- Tabel spek lengkap — **TANPA kolom harga per part** — 1 boks Harga Total.
+- Print-to-PDF (A4 clean layout), Setujui via WA, Beli via Tokopedia.
 
-### FASE 5: Custom PC Configurator (`/simulasi`) & Wizard Konsultasi Budget (`/konsultasi`)
-- [ ] **5.1 Buat `src/app/simulasi/page.tsx` beserta `BuilderSlotRow.tsx` & `PartSelectorDrawer.tsx`:**
-  - Antarmuka simulasi rakit PC 10 slot yang mengunci pilihan pada komponen yang kompatibel, hanya menampilkan Delta Price di dalam drawer, dilengkapi indikator Bottleneck/Wattage dan Sticky Telemetry Bar (Total Harga Bundel + Cetak PDF + Kirim WA).
-- [ ] **5.2 Buat `src/app/konsultasi/page.tsx`:**
-  - Wizard interaktif 4 langkah bagi konsumen untuk memilih budget, memilih game/software kerja, melihat rekomendasi paket otomatis, dan mengirim format konsultasi detail ke WhatsApp Admin.
+### P12 — Tentang Kami (`/tentang-kami`)
+- Profil toko, lokasi (embed Google Maps), garansi, FAQ accordion.
 
 ---
 
-### FASE 6: Katalog Komponen Eceran (`/komponen`) & Aksesoris (`/aksesoris`)
-- [ ] **6.1 Buat `src/app/komponen/page.tsx` & `src/app/komponen/[slug]/page.tsx`:**
-  - Katalog komponen dengan toggle High-Density Table View (Gaya Enterkomputer Modern) dan Bento Grid View, filter kategori/socket/brand, menampilkan Harga Eceran (`retailPrice`), status stok, dan tombol tambah ke Keranjang Eceran.
-- [ ] **6.2 Buat `src/app/aksesoris/page.tsx`:**
-  - Katalog Monitor, Gaming Gear, dan Aksesoris komputer dengan filter cepat dan checkout keranjang eceran ke WhatsApp / Tokopedia.
+## 6. SPESIFIKASI ADMIN PANEL (10 SUB-MODUL)
+
+| Kode | Route | Deskripsi |
+|------|-------|-----------|
+| **A1** | `/admin` | Dashboard — Total Paket Aktif, Total Komponen, Avg Margin %, Kuotasi Terbaru, Stok Menipis. |
+| **A2** | `/admin/paket-rakitan` | List paket PC — Clone, Toggle Aktif, Edit Link Tokopedia. |
+| **A3** | `/admin/paket-rakitan/[id]` | Editor paket — Pilih komponen, HPP Modal vs Harga Jual vs Profit. |
+| **A4** | `/admin/komponen` | CRUD Komponen, spesifikasi kompatibilitas, toggle `isRetailAvailable`. |
+| **A5** | `/admin/aksesoris` | CRUD Aksesoris, harga modal vs harga jual eceran. |
+| **A6** | `/admin/pricing` | Spreadsheet bulk pricing — `costPrice`, `retailPrice`, Markup %, Import/Export CSV. |
+| **A7** | `/admin/quotes` | Daftar penawaran WA — Draft, Terkirim, Deal, Expired. |
+| **A8** | `/admin/quotes/buat` | Quotation Studio — Racik spek, kalkulator HPP vs Harga Jual vs Margin, generate link & PDF. |
+| **A9** | `/admin/jasa-servis` | Harga jasa + update status pengerjaan (`TRK-KSS-XXX`). |
+| **A10** | `/admin/pengaturan` | Nomor WA, Link Tokopedia, Biaya Rakit, Kop Surat, PIN Admin. |
 
 ---
 
-### FASE 7: Layanan Jasa (`/jasa`), Cek Status Rakit (`/cek-pesanan`) & Profil Toko (`/tentang-kami`)
-- [ ] **7.1 Buat `src/app/jasa/page.tsx`:**
-  - Katalog layanan jasa rakit, maintenance, cleaning, dan form interaktif booking jadwal servis via WhatsApp.
-- [ ] **7.2 Buat `src/app/cek-pesanan/page.tsx` & `src/app/tentang-kami/page.tsx`:**
-  - Halaman pelacakan progress rakitan/servis menggunakan kode `TRK-KSS-XXX` dan halaman informasi garansi, alamat toko, serta FAQ KSS Komputer.
+## 7. CHECKLIST EKSEKUSI
+
+### STATUS LEGEND
+
+```
+[x] = Selesai dan lolos tsc + build
+[ ] = Belum dikerjakan
+```
 
 ---
 
-### FASE 8: Sistem Surat Penawaran Resmi (`/penawaran/[code]`) & Print-to-PDF Engine
-- [ ] **8.1 Buat `src/app/penawaran/[code]/page.tsx`:**
-  - Halaman Surat Penawaran (Quotation) profesional dengan stylesheet cetak A4 (`@media print`), menampilkan kop KSS Komputer, rincian komponen lengkap tanpa harga per part, hanya 1 Harga Total Paket Penawaran, masa berlaku, QR/Link Tokopedia, dan tombol konfirmasi WA.
+### FASE 0 — Project Bootstrap & Tooling ✅
+
+- [x] **0.1** Inisialisasi Next.js 16.4 + TypeScript strict + Tailwind CSS 4 + Turbopack
+- [x] **0.2** Setup Git repo (`kssgaminggear-pixel/kss-komputer`) + Vercel project
+- [x] **0.3** Codify `AGENT_RULES.md` (CI/CD rules, Anti-AI-Slop design system)
+- [x] **0.4** Initial deploy ke Vercel — verifikasi HTTP 200
 
 ---
 
-### FASE 9: Ekosistem Admin Panel Lengkap (`/admin/*`)
-- [ ] **9.1 Buat `src/app/admin/layout.tsx` & `src/app/admin/page.tsx`:**
-  - Layout dashboard admin dengan sidebar navigasi lengkap dan ringkasan metrik bisnis, profit margin, serta kuotasi aktif.
-- [ ] **9.2 Buat `/admin/quotes/page.tsx` & `/admin/quotes/buat/page.tsx` (WA Quotation Studio):**
-  - Studio peracik penawaran untuk merespons konsultasi WA konsumen: pilih part, pantau HPP Modal vs Harga Jual Paket vs Margin Profit secara real-time, generate kode `/penawaran/[code]`, dan kirim link ke WA konsumen.
-- [ ] **9.3 Buat `/admin/pricing/page.tsx`, `/admin/paket-rakitan/page.tsx`, `/admin/komponen/page.tsx` & `/admin/pengaturan/page.tsx`:**
-  - Spreadsheet Bulk Pricing editor (`costPrice`, `sellPrice`, `retailPrice`, Markup %, Import/Export JSON/CSV), manajemen paket PC jadi, manajemen antrean servis, dan konfigurasi nomor WA / link Tokopedia toko.
+### FASE 1 — Data Layer: Types, Format, Mock Data, Sanitizer
+
+- [x] **1.1** `src/lib/types.ts` — Kontrak `HardwarePart`, `PrebuiltPC`, `PrebuiltPCItem`, `ServicePackage`, `AccessoryItem`, `ConsultationQuote`
+- [x] **1.2** `src/lib/format.ts` — `formatIDR`, `formatDeltaIDR`, `formatWatt`, `generateWhatsAppOrderUrl`, `generateBuildPlainText`, `generateConsultationWAMessage`
+- [x] **1.3** `src/lib/mock-data.ts` — 45+ hardware parts, 6 prebuilt PCs, 4 services, 8 aksesoris, 1 sample quote
+- [x] **1.4** `src/lib/compatibility.ts` — Validasi socket, RAM type, form factor, GPU length, cooler height, wattage, bottleneck, `calculateBundleTotal`, `calculateDeltaPrice`
+- [ ] **1.5** Tambahkan tipe `BuildOrderTracking` di `types.ts` (stage enum: PAYMENT_VERIFIED → READY_TO_SHIP)
+- [ ] **1.6** Tambahkan tipe `StoreSettings` di `types.ts` (adminWhatsApp, tokopediaUrl, assemblyFee, defaultMarkup, warrantyText)
+- [ ] **1.7** Refactor sanitizer: rename `server-dto.ts` → `sanitizer.ts`, pastikan `sanitizePrebuiltForPublic()` dan `sanitizeQuoteForPublic()` diimpor dan digunakan di halaman publik yang relevan
+- [ ] **1.8** Ekspansi `mock-data.ts`: tambah 12+ aksesoris (total 20+), 2 tambahan sample `ConsultationQuote`, 3 sample `BuildOrderTracking`
+- [ ] **1.9** Tambahkan `generateRetailCartWAMessage()` dan `generateQuoteShareWAMessage()` di `format.ts` (pindahkan logic yang saat ini inline)
+- [ ] **1.10** Buat `src/lib/constants.ts` — Centralize WA number, Tokopedia URL, store name, warranty text
+- [ ] **1.11** Buat `src/lib/utils.ts` — `cn()` (clsx+twMerge), `slugify()`, `debounce()`, `clamp()`
 
 ---
 
-### FASE 10: Skema Database Produksi (Prisma + PostgreSQL) & Final QA
-- [ ] **10.1 Buat `prisma/schema.prisma`, `prisma/seed.ts` & API Route Sanitizer:**
-  - Siapkan skema database PostgreSQL produksi beserta script seeder dan endpoint API yang terproteksi.
-- [ ] **10.2 Final Audit & Type-Safety Verification:**
-  - Jalankan `npx tsc --noEmit` dan pastikan 0 error di seluruh halaman publik maupun admin.
+### FASE 2 — State Management (Zustand Stores)
+
+- [x] **2.1** `useBuilderStore.ts` — Full PC builder state, delta pricing, build code export/import, subtotal, wattage
+- [x] **2.2** `useAdminStore.ts` — Global markup%, assembly fee, price overrides, bulk markup, profit calculator
+- [x] **2.3** `useRetailCartStore.ts` — Keranjang eceran (HardwarePart + AccessoryItem), WA checkout URL
+- [x] **2.4** `useQuoteStore.ts` — CRUD surat penawaran, auto-generate quoteCode
+- [x] **2.5** `useCartStore.ts` — Builder cart (add/remove/update, bulk add from builder)
+- [x] **2.6** `useCompareStore.ts` — Bandingkan hingga 4 produk
+- [x] **2.7** `useHydrated.ts` — SSR-safe hydration hook via `useSyncExternalStore`
+
+---
+
+### FASE 3 — Global Layout, Navigasi & Shared Components
+
+- [x] **3.1** `Navbar.tsx` — Desktop nav + mobile hamburger, Ctrl+K search shortcut, builder badge, retail cart badge
+- [x] **3.2** `BottomNav.tsx` — Mobile bottom navigation bar
+- [x] **3.3** `Footer.tsx` — Multi-column footer
+- [x] **3.4** `CartDrawer.tsx` — Slide-over drawer untuk builder cart
+- [x] **3.5** `CommandSearchModal.tsx` — Ctrl+K fuzzy search modal
+- [x] **3.6** `RetailCartDrawer.tsx` — Drawer keranjang eceran + WA checkout
+- [x] **3.7** Root `layout.tsx` — Wrapping Navbar + BottomNav dalam `<Suspense>`
+- [x] **3.8** `public/manifest.json` — PWA manifest dasar
+- [ ] **3.9** Install & setup `shadcn/ui` — Init CLI, tambahkan komponen: Button, Dialog, Sheet, DropdownMenu, Tabs, Badge, Skeleton, Tooltip, Command, Separator
+- [ ] **3.10** Install `next-themes` — Buat `ThemeProvider` wrapper di root layout, toggle Dark/Light di Navbar
+- [ ] **3.11** Install `sonner` — Tambahkan `<Toaster />` di root layout, gunakan `toast()` untuk feedback aksi
+- [ ] **3.12** Buat shared components di `src/components/shared/`:
+  - `EmptyState.tsx` — Ilustrasi + pesan + CTA saat data kosong
+  - `Skeleton.tsx` — Skeleton loader variants (card, table row, detail page)
+  - `PriceTag.tsx` — Reusable price display (`font-mono tabular-nums`)
+  - `StatusBadge.tsx` — Badge stok (Ready/Limited/PO/Out of Stock)
+  - `ErrorFallback.tsx` — Error boundary fallback component
+- [ ] **3.13** Buat global error handling files:
+  - `src/app/not-found.tsx` — Custom 404 page
+  - `src/app/error.tsx` — Global error boundary (client component)
+  - `src/app/loading.tsx` — Root loading skeleton
+- [ ] **3.14** Setup `next/font` — Inter (body) + JetBrains Mono (prices, specs, codes)
+- [ ] **3.15** Buat `FloatingWAButton.tsx` — Floating WhatsApp CTA button (fixed bottom-right)
+- [ ] **3.16** Update PWA manifest dengan ikon PNG 192x192 & 512x512 (bukan placeholder SVG)
+
+---
+
+### FASE 4 — Homepage & Halaman Utama Publik
+
+- [x] **4.1** Homepage (`/`) — Hero, Budget Filter, Featured Prebuilts, Konsultasi WA, Aksesoris, USP Grid
+- [x] **4.2** Katalog Paket Rakitan (`/paket-rakitan`) — Filter multi-dimensi + sorting
+- [x] **4.3** Detail Paket + Quick Spec Upgrader (`/paket-rakitan/[slug]`) — Delta Price, FPS bar, WA/Tokopedia CTA
+- [x] **4.4** Custom PC Configurator (`/simulasi`) — 10 slot, compatibility engine, delta pricing, sticky telemetry
+- [x] **4.5** `PrebuiltCard.tsx` — Card component (specs, bundle price, WA link, Tokopedia link)
+- [x] **4.6** `FilterSidebar.tsx`, `ProductRowPricelist.tsx`, `SpecBadges.tsx` — Catalog filter & display components
+- [ ] **4.7** Implementasi Compare Drawer UI di `/paket-rakitan` — hubungkan dengan `useCompareStore` (store ada, UI belum terhubung)
+- [ ] **4.8** Buat `/konsultasi` — Wizard 4 langkah (Budget Slider → Game/Software Select → Preferensi → Rekomendasi + WA Dispatch)
+
+---
+
+### FASE 5 — Katalog Eceran, Aksesoris & Layanan
+
+- [x] **5.1** Katalog Komponen Eceran (`/komponen`) — Dual view (Table/Grid), filter, `retailPrice`, keranjang
+- [x] **5.2** Katalog Aksesoris (`/aksesoris`) — Category tabs, search, grid/table view, retail cart
+- [x] **5.3** Katalog Jasa & Booking (`/jasa`) — Paket layanan + WA contact
+- [ ] **5.4** Detail Komponen Eceran (`/komponen/[slug]`) — Halaman detail produk lengkap (foto, spek, stok, related parts, tambah keranjang)
+
+---
+
+### FASE 6 — Tracking, Penawaran & Profil Toko
+
+- [x] **6.1** Surat Penawaran (`/penawaran/[code]`) — Kop resmi, tabel spek, 1 Harga Total, Print PDF, WA confirm
+- [ ] **6.2** Tracking Status Rakit/Servis (`/cek-pesanan`) — Input kode `TRK-KSS-XXX`, stepper progress 5 tahap
+- [ ] **6.3** Tentang Kami (`/tentang-kami`) — Profil toko, lokasi (Google Maps embed), garansi, FAQ accordion
+
+---
+
+### FASE 7 — Admin Panel Core
+
+- [ ] **7.1** Admin Layout (`/admin/layout.tsx`) — Sidebar navigasi, header status toko, PIN/password gate
+- [ ] **7.2** Dashboard (`/admin`) — Metrik bisnis: Total Paket Aktif, Total Komponen, Avg Margin, Kuotasi Terbaru, Stok Alert
+- [x] **7.3** Admin Pricing (`/admin/pricing`) — Global markup slider, assembly fee, per-part price editing, bulk apply
+- [x] **7.4** Admin Quotes List (`/admin/quotes`) — Create, list, delete, update status quotation
+
+---
+
+### FASE 8 — Admin Panel Extended
+
+- [ ] **8.1** Quotation Studio (`/admin/quotes/buat`) — Form lengkap: input konsumen, part picker per slot, kalkulator HPP vs Harga Jual vs Margin, generate link `/penawaran/[code]` + WA dispatch
+- [ ] **8.2** Manajemen Paket PC (`/admin/paket-rakitan`) — List paket, Clone, Toggle Aktif, Edit Link Tokopedia
+- [ ] **8.3** Editor Paket PC (`/admin/paket-rakitan/[id]`) — Pilih komponen per slot, HPP Modal vs Harga Jual Bundel vs Profit
+- [ ] **8.4** Manajemen Komponen (`/admin/komponen`) — CRUD hardware parts, spesifikasi kompatibilitas, toggle `isRetailAvailable`
+- [ ] **8.5** Manajemen Aksesoris (`/admin/aksesoris`) — CRUD aksesoris, harga modal vs jual eceran
+- [ ] **8.6** Jasa & Antrean Servis (`/admin/jasa-servis`) — Harga jasa, update status `TRK-KSS-XXX`
+- [ ] **8.7** Pengaturan Toko (`/admin/pengaturan`) — Nomor WA, Link Tokopedia, Biaya Rakit, Kop Surat, PIN Admin
+
+---
+
+### FASE 9 — SEO, Performance & PWA
+
+- [ ] **9.1** `generateMetadata` pada semua halaman publik (title, description, openGraph, twitter card)
+- [ ] **9.2** `src/app/sitemap.ts` — Dynamic sitemap (semua slug paket, komponen, aksesoris)
+- [ ] **9.3** `src/app/robots.ts` — Allow public routes, disallow `/admin/*`
+- [ ] **9.4** `next/image` audit — Semua `<img>` diganti `<Image>` dengan `sizes`, `priority` pada LCP, WebP auto
+- [ ] **9.5** Suspense boundaries & loading states — `loading.tsx` per route segment dengan skeleton
+- [ ] **9.6** Service Worker — Offline shell, cache static assets, offline fallback page
+- [ ] **9.7** Bundle analysis — Jalankan `@next/bundle-analyzer`, identifikasi & eliminasi dependency bloat
+- [ ] **9.8** Core Web Vitals audit — LCP < 2.5s, FID < 100ms, CLS < 0.1
+
+---
+
+### FASE 10 — API Routes & Data Sanitization
+
+- [ ] **10.1** `src/app/api/catalog/route.ts` — GET endpoint katalog terfilter, sanitize `costPrice` dari response
+- [ ] **10.2** `src/app/api/quotes/[code]/route.ts` — GET quotation publik, strip harga per part
+- [ ] **10.3** `src/app/api/admin/export-import/route.ts` — POST/GET backup & restore data (CSV/JSON), admin-only
+- [ ] **10.4** Implement sanitizer usage: semua halaman publik yang menampilkan data rakitan harus melewati `sanitizePrebuiltForPublic()` — tidak ada direct access ke raw data dengan `costPrice`
+
+---
+
+### FASE 11 — Database Produksi & Final QA
+
+- [ ] **11.1** Install `prisma` + `@prisma/client` sebagai dependency
+- [ ] **11.2** Finalisasi `prisma/schema.prisma` — Semua model, relasi, index, enum
+- [ ] **11.3** Setup database PostgreSQL (Supabase) + `.env` connection string
+- [ ] **11.4** `prisma migrate dev` — Generate & apply initial migration
+- [ ] **11.5** `prisma/seed.ts` — Jalankan seeder, populasi data awal dari `mock-data.ts`
+- [ ] **11.6** Migrasi semua halaman dari mock data → Prisma queries (server components)
+- [ ] **11.7** `.env.example` — Dokumentasi semua environment variables yang dibutuhkan
+- [ ] **11.8** Final TypeScript audit: `tsc --noEmit` = 0 errors
+- [ ] **11.9** Final build audit: `npm run build` = sukses, semua routes generated
+- [ ] **11.10** Production deploy & smoke test seluruh halaman publik + admin
+
+---
+
+## 8. DEPLOYMENT & CI/CD RULES
+
+### 8.1 Pre-Push Checklist (Wajib)
+
+```
+1. ✅ tsc --noEmit       → 0 errors
+2. ✅ npm run build       → Exit 0, semua routes generated
+3. ✅ Checklist ROADMAP   → Sub-tugas yang dikerjakan sudah [x]
+4. ✅ No WIP / half-done  → Tidak ada fitur setengah jadi
+```
+
+### 8.2 Deploy Command
+
+```bash
+# Set PATH (per session)
+$env:PATH = "C:\Users\user\nodejs;$env:LOCALAPPDATA\Programs\Git\cmd;$env:PATH"
+
+# Type check → Build → Commit → Push → Deploy
+.\node_modules\.bin\tsc.cmd --noEmit
+npm run build
+git add .
+git commit -m "feat: <deskripsi>"
+git push origin main
+.\node_modules\.bin\vercel.cmd deploy --prod --yes --token <VERCEL_TOKEN>
+```
+
+### 8.3 Environment Variables
+
+| Variable | Scope | Deskripsi |
+|----------|-------|-----------|
+| `DATABASE_URL` | Server | PostgreSQL connection string |
+| `NEXT_PUBLIC_SITE_URL` | Public | Base URL produksi |
+| `ADMIN_PIN` | Server | PIN akses admin panel |
+| `VERCEL_TOKEN` | CI/CD | Token deploy Vercel |
+
+---
+
+## PROGRESS SUMMARY
+
+| Fase | Judul | Total | Selesai | Sisa |
+|------|-------|-------|---------|------|
+| 0 | Project Bootstrap | 4 | 4 | 0 |
+| 1 | Data Layer | 11 | 4 | 7 |
+| 2 | State Management | 7 | 7 | 0 |
+| 3 | Layout & Shared | 16 | 8 | 8 |
+| 4 | Homepage & Publik Utama | 8 | 6 | 2 |
+| 5 | Eceran, Aksesoris, Jasa | 4 | 3 | 1 |
+| 6 | Tracking, Penawaran, Profil | 3 | 1 | 2 |
+| 7 | Admin Core | 4 | 2 | 2 |
+| 8 | Admin Extended | 7 | 0 | 7 |
+| 9 | SEO, Performance, PWA | 8 | 0 | 8 |
+| 10 | API Routes | 4 | 0 | 4 |
+| 11 | Database & Final QA | 10 | 0 | 10 |
+| **TOTAL** | | **86** | **35** | **51** |
+
+> **Progress: 35 / 86 (40.7%)**
