@@ -137,7 +137,8 @@ export default function HomeClient({ prebuilts, accessories, services }: HomeCli
                   src="/images/tokopedia/banner-pc-store.webp"
                   alt="PC rakitan dan gaming setup KSS Komputer"
                   fill
-                  priority
+                  loading="eager"
+                  fetchPriority="high"
                   sizes="(max-width: 1024px) 100vw, 58vw"
                   className="object-cover object-center"
                 />
