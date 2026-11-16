@@ -199,7 +199,7 @@ export function CommandSearchModal({ isOpen, onClose, products }: CommandSearchM
                       )}
                     </div>
                     <Link
-                      href={`/produk/${product.slug}`}
+                      href={`/komponen/${product.slug}`}
                       onClick={onClose}
                       className="text-xs sm:text-sm font-medium text-zinc-900 dark:text-zinc-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 line-clamp-1 transition-colors"
                     >
@@ -285,7 +285,7 @@ export function CommandSearchModal({ isOpen, onClose, products }: CommandSearchM
             <span>Tekan <kbd className="px-1 py-0.5 bg-zinc-200 dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 rounded-md">ESC</kbd> untuk menutup</span>
           </div>
           <Link
-            href="/katalog"
+            href="/komponen"
             onClick={onClose}
             className="inline-flex items-center gap-1 text-blue-600 dark:text-blue-400 hover:underline"
           >

@@ -105,11 +105,11 @@ export function ProductRowPricelist({
         </div>
       </td>
 
-      {/* Kolom 2: Nama Produk (link ke /produk/[slug]) + SpecBadges */}
+      {/* Kolom 2: Nama Produk (link ke /komponen/[slug]) + SpecBadges */}
       <td className="py-2.5 px-3 align-top">
         <div className="flex items-start justify-between gap-2">
           <Link
-            href={`/produk/${product.slug}`}
+            href={`/komponen/${product.slug}`}
             className="font-semibold text-zinc-900 dark:text-zinc-100 hover:text-blue-600 dark:hover:text-blue-400 transition-colors leading-tight inline-flex items-center gap-1 group-hover:underline"
           >
             <span>{product.name}</span>
