@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useMemo } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import {
@@ -19,6 +20,7 @@ import { ProductCategory, PublicHardwarePart } from '@/lib/types';
 import { formatIDR, formatDeltaIDR, formatWatt, generateWhatsAppOrderUrl, TOKOPEDIA_OFFICIAL_STORE_URL } from '@/lib/format';
 import { useBuilderStore } from '@/store/useBuilderStore';
 import type { PublicPrebuiltDetailDTO } from '@/lib/sanitizer';
+import { getPackageImage } from '@/lib/package-images';
 
 const UPGRADEABLE_CATEGORIES: ProductCategory[] = ['gpu', 'ram', 'ssd', 'cooler', 'case'];
 
@@ -156,24 +158,44 @@ export default function PaketDetailContent({ pkg }: { pkg: PublicPrebuiltDetailD
         <div className="lg:col-span-8 space-y-6">
           {/* Header Card */}
           <div className="rounded-md border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-900/60 shadow-xs">
-            <div className="flex flex-wrap items-center gap-2 mb-3">
-              <span className="rounded-md bg-orange-500/10 border border-orange-500/20 px-2 py-0.5 text-[10px] font-mono font-bold text-orange-600 dark:text-orange-400 uppercase">
-                {pkg.platform}
-              </span>
-              <span className="rounded-md bg-zinc-100 dark:bg-zinc-800 px-2 py-0.5 text-[10px] font-mono text-zinc-700 dark:text-zinc-300">
-                {pkg.targetResolution}
-              </span>
-              <span className="rounded-md bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 text-[10px] font-mono font-bold text-emerald-600 dark:text-emerald-400">
-                {pkg.tier}
-              </span>
-            </div>
+            <div className="flex items-start gap-4">
+              <div className="min-w-0 flex-1">
+                <div className="flex flex-wrap items-center gap-2 mb-3">
+                  <span className="rounded-md bg-orange-500/10 border border-orange-500/20 px-2 py-0.5 text-[10px] font-mono font-bold text-orange-600 dark:text-orange-400 uppercase">
+                    {pkg.platform}
+                  </span>
+                  <span className="rounded-md bg-zinc-100 dark:bg-zinc-800 px-2 py-0.5 text-[10px] font-mono text-zinc-700 dark:text-zinc-300">
+                    {pkg.targetResolution}
+                  </span>
+                  <span className="rounded-md bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 text-[10px] font-mono font-bold text-emerald-600 dark:text-emerald-400">
+                    {pkg.tier}
+                  </span>
+                </div>
 
-            <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-zinc-900 dark:text-zinc-100">
-              {pkg.name}
-            </h1>
-            <p className="mt-2 text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
-              {pkg.description}
-            </p>
+                <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-zinc-900 dark:text-zinc-100">
+                  {pkg.name}
+                </h1>
+                <p className="mt-2 text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
+                  {pkg.description}
+                </p>
+              </div>
+
+              {(() => {
+                const image = getPackageImage(pkg.slug);
+                if (!image) return null;
+                return (
+                  <div className="relative h-28 w-20 shrink-0 overflow-hidden rounded-sm border border-zinc-200 bg-zinc-100 dark:border-zinc-800 dark:bg-zinc-950 sm:h-36 sm:w-28">
+                    <Image
+                      src={image}
+                      alt={`Foto unit ${pkg.name}`}
+                      fill
+                      sizes="(max-width: 640px) 80px, 112px"
+                      className="object-cover"
+                    />
+                  </div>
+                );
+              })()}
+            </div>
 
             {/* Highlights */}
             {pkg.highlights && pkg.highlights.length > 0 && (

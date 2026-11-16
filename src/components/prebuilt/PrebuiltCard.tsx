@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import {
@@ -19,6 +20,7 @@ import { ProductCategory, PublicHardwarePart } from '@/lib/types';
 import { formatIDR, generateWhatsAppOrderUrl, TOKOPEDIA_OFFICIAL_STORE_URL } from '@/lib/format';
 import { useBuilderStore } from '@/store/useBuilderStore';
 import type { PublicPrebuiltPCDTO } from '@/lib/sanitizer';
+import { getPackageImage } from '@/lib/package-images';
 
 export interface PrebuiltCardProps {
   pkg: PublicPrebuiltPCDTO;
@@ -81,34 +83,52 @@ export function PrebuiltCard({ pkg }: PrebuiltCardProps) {
     pkg.targetResolution,
   ].filter(Boolean) as string[];
 
+  const packageImage = getPackageImage(pkg.slug);
+
   return (
     <article className="group flex flex-col overflow-hidden rounded-md border border-zinc-200 bg-white transition-colors duration-150 hover:border-zinc-400 dark:border-zinc-800 dark:bg-zinc-900/60 dark:hover:border-zinc-600">
       {/* Header */}
       <div className="border-b border-zinc-100 p-5 dark:border-zinc-800">
-        <div className="mb-2 flex flex-wrap items-center gap-1.5">
-          <span className="rounded-md border border-orange-500/20 bg-orange-500/10 px-2 py-0.5 font-mono text-[10px] font-bold uppercase tracking-tight text-orange-600 dark:text-orange-400">
-            {pkg.platform}
-          </span>
-          <span className="rounded-md bg-zinc-100 px-2 py-0.5 font-mono text-[10px] font-semibold text-zinc-600 dark:bg-zinc-800 dark:text-zinc-300">
-            {pkg.targetResolution}
-          </span>
-          {pkg.featured && (
-            <span className="rounded-md border border-amber-500/20 bg-amber-500/10 px-2 py-0.5 font-mono text-[10px] font-bold text-amber-700 dark:text-amber-400">
-              Rekomendasi
-            </span>
+        <div className="flex items-start gap-3">
+          {packageImage && (
+            <div className="relative h-24 w-[76px] shrink-0 overflow-hidden rounded-sm border border-zinc-200 bg-zinc-100 dark:border-zinc-800 dark:bg-zinc-950">
+              <Image
+                src={packageImage}
+                alt={`Foto unit ${pkg.name}`}
+                fill
+                sizes="76px"
+                className="object-cover"
+              />
+            </div>
           )}
-          <span className="ml-auto flex items-center gap-1 font-mono text-[10px] font-semibold text-emerald-600 dark:text-emerald-400">
-            <ShieldCheck className="h-3 w-3" />
-            {pkg.warrantyYears} Th
-          </span>
-        </div>
 
-        <h3 className="text-base font-black tracking-tight text-zinc-900 transition-colors group-hover:text-orange-600 dark:text-zinc-100 dark:group-hover:text-orange-400">
-          <Link href={`/paket-rakitan/${pkg.slug}`}>{pkg.name}</Link>
-        </h3>
-        <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-zinc-500 dark:text-zinc-400">
-          {pkg.description}
-        </p>
+          <div className="min-w-0 flex-1">
+            <div className="mb-2 flex flex-wrap items-center gap-1.5">
+              <span className="rounded-md border border-orange-500/20 bg-orange-500/10 px-2 py-0.5 font-mono text-[10px] font-bold uppercase tracking-tight text-orange-600 dark:text-orange-400">
+                {pkg.platform}
+              </span>
+              <span className="rounded-md bg-zinc-100 px-2 py-0.5 font-mono text-[10px] font-semibold text-zinc-600 dark:bg-zinc-800 dark:text-zinc-300">
+                {pkg.targetResolution}
+              </span>
+              {pkg.featured && (
+                <span className="rounded-md border border-amber-500/20 bg-amber-500/10 px-2 py-0.5 font-mono text-[10px] font-bold text-amber-700 dark:text-amber-400">
+                  Rekomendasi
+                </span>
+              )}
+              <span className="ml-auto flex items-center gap-1 font-mono text-[10px] font-semibold text-emerald-600 dark:text-emerald-400">
+                <ShieldCheck className="h-3 w-3" />
+                {pkg.warrantyYears} Th
+              </span>
+            </div>
+
+            <h3 className="text-base font-black tracking-tight text-zinc-900 transition-colors group-hover:text-orange-600 dark:text-zinc-100 dark:group-hover:text-orange-400">
+              <Link href={`/paket-rakitan/${pkg.slug}`}>{pkg.name}</Link>
+            </h3>
+            <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-zinc-500 dark:text-zinc-400">
+              {pkg.description}
+            </p>
+          </div>
+        </div>
 
         <div className="mt-3 flex flex-wrap gap-1.5">
           {specPills.map((pill) => (

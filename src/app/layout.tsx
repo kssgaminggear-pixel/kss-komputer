@@ -27,6 +27,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://kss-komputer-seven.vercel.app'),
   title: 'KSS Komputer — System Integrator PC Rakitan & Hardware Eceran Jakarta',
   description:
     'Pusat PC rakitan jadi siap pakai (gaming, workstation, office), custom configurator kompatibilitas deterministik, konsultasi budget via WhatsApp, dan hardware eceran bergaransi resmi.',
@@ -44,6 +45,26 @@ export const metadata: Metadata = {
     'hardware eceran resmi',
     'pc workstation ryzen 7000',
   ],
+  openGraph: {
+    title: 'KSS Komputer — Paket PC Rakitan & Jasa Servis Jakarta',
+    description:
+      'Paket PC siap pakai dengan satu harga total, upgrade berbasis delta, dan layanan jasa komputer bergaransi.',
+    images: [
+      {
+        url: '/images/tokopedia/banner-pc-store.webp',
+        width: 700,
+        height: 600,
+        alt: 'Etalase PC dan gaming gear KSS Komputer',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'KSS Komputer — Paket PC Rakitan & Jasa Servis Jakarta',
+    description:
+      'Paket PC siap pakai, upgrade terukur, dan jasa servis bergaransi di Mangga Dua Mall.',
+    images: ['/images/tokopedia/banner-pc-store.webp'],
+  },
 };
 
 export default function RootLayout({

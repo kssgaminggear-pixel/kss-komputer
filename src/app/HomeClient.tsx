@@ -30,7 +30,7 @@ import {
 } from 'lucide-react';
 import type { PublicPrebuiltPCDTO } from '@/lib/sanitizer';
 import type { PublicAccessory, ServicePackage } from '@/lib/types';
-import { formatIDR, generateConsultationWAMessage, DEFAULT_WHATSAPP_PHONE } from '@/lib/format';
+import { formatIDR, generateConsultationWAMessage, DEFAULT_WHATSAPP_PHONE, TOKOPEDIA_OFFICIAL_STORE_URL } from '@/lib/format';
 import { PrebuiltCard } from '@/components/prebuilt/PrebuiltCard';
 import { SectionHeader } from '@/components/ui/SectionHeader';
 import { useRetailCartStore } from '@/store/useRetailCartStore';
@@ -589,6 +589,45 @@ export default function HomeClient({ prebuilts, accessories, services }: HomeCli
                 </article>
               );
             })}
+          </div>
+        </div>
+      </section>
+
+      {/* OFFICIAL TOKOPEDIA STORE */}
+      <section className="kss-container pb-4">
+        <div className="grid overflow-hidden rounded-md border border-zinc-800 bg-zinc-950 md:grid-cols-[1.15fr_1fr]">
+          <div className="relative min-h-[240px] md:min-h-full">
+            <Image
+              src="/images/tokopedia/banner-pc-store.webp"
+              alt="Etalase PC dan gaming gear KSS Komputer di Tokopedia"
+              fill
+              sizes="(max-width: 768px) 100vw, 60vw"
+              className="object-cover"
+            />
+          </div>
+          <div className="flex flex-col justify-center p-6">
+            <div className="font-mono text-[10px] font-bold uppercase tracking-wider text-[#00AA5B]">
+              Official Tokopedia Store
+            </div>
+            <h3 className="mt-1 text-xl font-black tracking-tight text-zinc-50">
+              Etalase PC &amp; Gaming Gear KSS
+            </h3>
+            <p className="mt-1 max-w-md text-xs leading-relaxed text-zinc-400">
+              Cek stok terbaru, promo berjalan, dan checkout resmi langsung melalui
+              toko Tokopedia KSS Komputer.
+            </p>
+            <a
+              href={TOKOPEDIA_OFFICIAL_STORE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 inline-flex h-10 w-fit items-center gap-2 rounded-md bg-[#00AA5B] px-4 text-xs font-bold text-white transition-colors hover:bg-[#00924E]"
+            >
+              <span>Kunjungi Tokopedia</span>
+              <ArrowRight className="h-3.5 w-3.5" />
+            </a>
+            <span className="mt-2 font-mono text-[10px] text-zinc-500">
+              Rating 4.9 · 33 rb terjual
+            </span>
           </div>
         </div>
       </section>
