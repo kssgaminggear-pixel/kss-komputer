@@ -1,10 +1,22 @@
 import { MOCK_HARDWARE_PARTS, MOCK_PREBUILT_PCS, MOCK_ACCESSORIES, MOCK_SERVICES } from '../src/lib/mock-data';
 
 /**
+ * Kontrak minimal Prisma Client yang dipakai seeder.
+ * Didefinisikan lokal karena `@prisma/client` belum dipasang di proyek ini.
+ */
+type SeedRecord = Record<string, unknown>;
+
+interface SeedDelegate {
+  upsert(args: { where: SeedRecord; update?: SeedRecord; create?: SeedRecord }): Promise<unknown>;
+}
+
+export type SeedPrismaClient = Record<string, SeedDelegate>;
+
+/**
  * Script Seed Database Produksi KSS Komputer
  * Memindahkan mock-data awal ke PostgreSQL
  */
-export async function seedDatabase(prisma: any) {
+export async function seedDatabase(prisma: SeedPrismaClient) {
   console.log('--- SEEDING KSS KOMPUTER DATABASE ---');
 
   // 1. Seed Hardware Parts
@@ -16,7 +28,7 @@ export async function seedDatabase(prisma: any) {
         sellPrice: part.sellPrice,
         retailPrice: part.retailPrice || part.sellPrice,
         wattage: part.wattage,
-        specs: part.specs as any,
+        specs: part.specs,
       },
       create: {
         id: part.id,
@@ -24,7 +36,7 @@ export async function seedDatabase(prisma: any) {
         name: part.name,
         slug: part.slug,
         brand: part.brand,
-        category: part.category.toUpperCase() as any,
+        category: part.category.toUpperCase(),
         costPrice: part.costPrice,
         sellPrice: part.sellPrice,
         retailPrice: part.retailPrice || part.sellPrice,
@@ -33,7 +45,7 @@ export async function seedDatabase(prisma: any) {
         wattage: part.wattage,
         warrantyYears: part.warrantyYears,
         officialDistributor: part.officialDistributor,
-        specs: part.specs as any,
+        specs: part.specs,
       },
     });
   }
@@ -54,7 +66,7 @@ export async function seedDatabase(prisma: any) {
         description: pkg.description,
         highlights: pkg.highlights,
         targetResolution: pkg.targetResolution,
-        estimatedFps: pkg.estimatedFps as any,
+        estimatedFps: pkg.estimatedFps,
         assemblyFee: pkg.assemblyFee,
         tokopediaUrl: pkg.tokopediaUrl,
         warrantyYears: pkg.warrantyYears,
@@ -76,14 +88,14 @@ export async function seedDatabase(prisma: any) {
         name: acc.name,
         slug: acc.slug,
         brand: acc.brand,
-        category: acc.category.toUpperCase() as any,
+        category: acc.category.toUpperCase(),
         retailPrice: acc.retailPrice,
         costPrice: acc.costPrice,
         stockStatus: 'READY',
         warrantyYears: acc.warrantyYears,
         officialDistributor: acc.officialDistributor,
         features: acc.features || [],
-        specs: acc.specs as any,
+        specs: acc.specs,
       },
     });
   }

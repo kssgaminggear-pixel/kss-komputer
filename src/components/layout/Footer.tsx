@@ -13,7 +13,8 @@ import {
 } from 'lucide-react';
 
 export function Footer() {
-  const currentYear = 2025;
+  // Tahun rilis konten — diperbarui manual agar tetap kompatibel dengan `cacheComponents`
+  const currentYear = 2026;
 
   const distributors = [
     { name: 'PT Astrindo Senayasa', brands: 'ASUS, Intel, ASRock' },
@@ -130,8 +131,8 @@ export function Footer() {
             </h3>
             <ul className="flex flex-col gap-2 text-xs">
               <li>
-                <Link href="/katalog" className="hover:text-blue-600 dark:hover:text-blue-400">
-                  Katalog &amp; Pricelist Lengkap
+                <Link href="/jasa" className="hover:text-blue-600 dark:hover:text-blue-400">
+                  Layanan Jasa &amp; Servis
                 </Link>
               </li>
               <li>
@@ -145,12 +146,22 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/bandingkan" className="hover:text-blue-600 dark:hover:text-blue-400">
-                  Komparasi Hardware (Side-by-Side)
+                <Link href="/cek-pesanan" className="hover:text-blue-600 dark:hover:text-blue-400">
+                  Cek Status Pengerjaan
                 </Link>
               </li>
               <li>
-                <Link href="/admin/pricelist" className="hover:text-blue-600 dark:hover:text-blue-400">
+                <Link href="/komponen" className="hover:text-blue-600 dark:hover:text-blue-400">
+                  Katalog Komponen Eceran
+                </Link>
+              </li>
+              <li>
+                <Link href="/aksesoris" className="hover:text-blue-600 dark:hover:text-blue-400">
+                  Aksesoris &amp; Gaming Gear
+                </Link>
+              </li>
+              <li>
+                <Link href="/admin/pricing" className="hover:text-blue-600 dark:hover:text-blue-400">
                   Portal Admin &amp; Update Pricelist
                 </Link>
               </li>

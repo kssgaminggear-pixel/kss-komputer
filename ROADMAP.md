@@ -552,7 +552,7 @@ Halaman utama yang memperkenalkan seluruh layanan KSS Komputer sebagai bengkel p
   - Deskripsi lengkap, includes/excludes, galeri, harga detail
   - Form Booking Jasa → auto-generate pesan WA ke teknisi
   - Related services cross-sell
-- [ ] **4.4** Buat Tracking Status Pengerjaan (`/cek-pesanan`) sesuai spec P6:
+- [x] **4.4** Buat Tracking Status Pengerjaan (`/cek-pesanan`) sesuai spec P6:
   - Input kode resi `TRK-KSS-XXX`
   - Stepper progress visual 7 tahap
   - Info customer, deskripsi order, estimasi selesai, catatan teknisi
@@ -695,7 +695,7 @@ git push origin main
 | 1 | Data Layer | 13 | 13 | 0 |
 | 2 | State Management | 8 | 8 | 0 |
 | 3 | Layout & Shared | 17 | 9 | 8 |
-| 4 | Jasa & Servis ⭐ | 5 | 0 | 5 |
+| 4 | Jasa & Servis ⭐ | 5 | 1 | 4 |
 | 5 | Builder, Konsultasi, Penawaran | 3 | 2 | 1 |
 | 6 | Paket Rakitan & Katalog | 9 | 6 | 3 |
 | 7 | Admin Core | 5 | 2 | 3 |
@@ -703,9 +703,9 @@ git push origin main
 | 9 | SEO, Performance, PWA | 8 | 0 | 8 |
 | 10 | API Routes | 4 | 0 | 4 |
 | 11 | Database & Final QA | 10 | 0 | 10 |
-| **TOTAL** | | **92** | **44** | **48** |
+| **TOTAL** | | **92** | **45** | **47** |
 
-> **Progress: 44 / 92 (47.8%)**
+> **Progress: 45 / 92 (48.9%)**
 >
 > **Prioritas Eksekusi Berikutnya:**
 > Fase 2 & 3 (sisa) → **Fase 4 (Jasa & Servis ⭐)** → Fase 5 → Fase 7 → sisanya
