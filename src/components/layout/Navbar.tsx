@@ -19,6 +19,7 @@ import {
   Database,
   ExternalLink,
   Headphones,
+  ClipboardList,
 } from 'lucide-react';
 import { useBuilderStore } from '@/store/useBuilderStore';
 import { useRetailCartStore } from '@/store/useRetailCartStore';
@@ -59,32 +60,37 @@ export function Navbar() {
 
   const navLinks = [
     {
-      href: '/paket-rakitan',
-      label: 'Paket PC Rakitan',
-      icon: Sparkles,
-      highlight: true,
+      href: '/jasa',
+      label: 'Jasa & Servis',
+      icon: Wrench,
     },
     {
       href: '/simulasi',
-      label: 'Simulasi & Konsultasi',
+      label: 'Rakit PC',
       icon: Cpu,
       badge: isMounted && builderPartCount > 0 ? `${builderPartCount} Part` : null,
       subBadge: isMounted && builderTotalPrice > 0 ? formatIDR(builderTotalPrice) : null,
     },
     {
+      href: '/paket-rakitan',
+      label: 'Paket Siap Pakai',
+      icon: Sparkles,
+      highlight: true,
+    },
+    {
+      href: '/cek-pesanan',
+      label: 'Cek Pesanan',
+      icon: ClipboardList,
+    },
+    {
       href: '/komponen',
-      label: 'Komponen Eceran',
+      label: 'Komponen',
       icon: Layers,
     },
     {
       href: '/aksesoris',
-      label: 'Aksesoris & Gear',
+      label: 'Aksesoris',
       icon: Headphones,
-    },
-    {
-      href: '/jasa',
-      label: 'Layanan Jasa',
-      icon: Wrench,
     },
     {
       href: '/admin/pricing',

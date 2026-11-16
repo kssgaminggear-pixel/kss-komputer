@@ -502,7 +502,7 @@ Halaman utama yang memperkenalkan seluruh layanan KSS Komputer sebagai bengkel p
 - [x] **2.5** `useCartStore.ts` — Builder cart (add/remove/update, bulk add from builder)
 - [x] **2.6** `useCompareStore.ts` — Bandingkan hingga 4 produk
 - [x] **2.7** `useHydrated.ts` — SSR-safe hydration hook via `useSyncExternalStore`
-- [ ] **2.8** Buat `useServiceStore.ts` — State booking jasa, antrean servis, tracking order (CRUD ServiceBooking, updateTrackingStage, getTrackingByCode)
+- [x] **2.8** Buat `useServiceStore.ts` — State booking jasa, antrean servis, tracking order (CRUD ServiceBooking, updateTrackingStage, getTrackingByCode)
 
 ---
 
@@ -516,7 +516,7 @@ Halaman utama yang memperkenalkan seluruh layanan KSS Komputer sebagai bengkel p
 - [x] **3.6** `RetailCartDrawer.tsx` — Drawer keranjang eceran + WA checkout
 - [x] **3.7** Root `layout.tsx` — Wrapping Navbar + BottomNav dalam `<Suspense>`
 - [x] **3.8** `public/manifest.json` — PWA manifest dasar
-- [ ] **3.9** Restruktur Navbar — Urutan menu: Jasa & Servis → Rakit PC → Paket Siap Pakai → Cek Pesanan → Komponen → Aksesoris
+- [x] **3.9** Restruktur Navbar — Urutan menu: Jasa & Servis → Rakit PC → Paket Siap Pakai → Cek Pesanan → Komponen → Aksesoris
 - [ ] **3.10** Install & setup `shadcn/ui` — Init CLI, tambahkan komponen: Button, Dialog, Sheet, DropdownMenu, Tabs, Badge, Skeleton, Tooltip, Command, Separator, Accordion
 - [ ] **3.11** Install `next-themes` — Buat `ThemeProvider` wrapper di root layout, toggle Dark/Light di Navbar
 - [ ] **3.12** Install `sonner` — Tambahkan `<Toaster />` di root layout, gunakan `toast()` untuk feedback aksi
@@ -693,8 +693,8 @@ git push origin main
 |------|-------|-------|---------|------|
 | 0 | Project Bootstrap | 4 | 4 | 0 |
 | 1 | Data Layer | 13 | 13 | 0 |
-| 2 | State Management | 8 | 7 | 1 |
-| 3 | Layout & Shared | 17 | 8 | 9 |
+| 2 | State Management | 8 | 8 | 0 |
+| 3 | Layout & Shared | 17 | 9 | 8 |
 | 4 | Jasa & Servis ⭐ | 5 | 0 | 5 |
 | 5 | Builder, Konsultasi, Penawaran | 3 | 2 | 1 |
 | 6 | Paket Rakitan & Katalog | 9 | 6 | 3 |
@@ -703,9 +703,9 @@ git push origin main
 | 9 | SEO, Performance, PWA | 8 | 0 | 8 |
 | 10 | API Routes | 4 | 0 | 4 |
 | 11 | Database & Final QA | 10 | 0 | 10 |
-| **TOTAL** | | **92** | **42** | **50** |
+| **TOTAL** | | **92** | **44** | **48** |
 
-> **Progress: 42 / 92 (45.7%)**
+> **Progress: 44 / 92 (47.8%)**
 >
 > **Prioritas Eksekusi Berikutnya:**
 > Fase 2 & 3 (sisa) → **Fase 4 (Jasa & Servis ⭐)** → Fase 5 → Fase 7 → sisanya
