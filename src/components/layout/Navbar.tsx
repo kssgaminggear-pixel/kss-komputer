@@ -20,6 +20,8 @@ import {
   ExternalLink,
   Headphones,
   ClipboardList,
+  MessageSquareCheck,
+  Building2,
 } from 'lucide-react';
 import { useBuilderStore } from '@/store/useBuilderStore';
 import { useRetailCartStore } from '@/store/useRetailCartStore';
@@ -70,6 +72,12 @@ export function Navbar({ searchProducts }: NavbarProps) {
       icon: Wrench,
     },
     {
+      href: '/konsultasi',
+      label: 'Konsultasi',
+      icon: MessageSquareCheck,
+      compact: true,
+    },
+    {
       href: '/simulasi',
       label: 'Rakit PC',
       icon: Cpu,
@@ -96,6 +104,12 @@ export function Navbar({ searchProducts }: NavbarProps) {
       href: '/aksesoris',
       label: 'Aksesoris',
       icon: Headphones,
+    },
+    {
+      href: '/tentang-kami',
+      label: 'Tentang Kami',
+      icon: Building2,
+      compact: true,
     },
     {
       href: '/admin/pricing',
@@ -186,7 +200,7 @@ export function Navbar({ searchProducts }: NavbarProps) {
                   <Link
                     key={item.href}
                     href={item.href}
-                    className={`inline-flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-semibold rounded-sm transition-colors ${
+                    className={`${'compact' in item && item.compact ? 'hidden xl:inline-flex' : 'inline-flex'} items-center gap-1.5 px-2.5 py-1.5 text-xs font-semibold rounded-sm transition-colors ${
                       isActive
                         ? 'bg-zinc-200 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-50'
                         : 'text-zinc-600 hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-300 dark:hover:bg-zinc-800/70 dark:hover:text-zinc-100'

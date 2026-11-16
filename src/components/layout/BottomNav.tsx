@@ -15,6 +15,8 @@ import {
   X,
   Headphones,
   Database,
+  MessageSquareCheck,
+  Building2,
 } from 'lucide-react';
 import { useBuilderStore } from '@/store/useBuilderStore';
 import { useRetailCartStore } from '@/store/useRetailCartStore';
@@ -66,8 +68,10 @@ export function BottomNav() {
 
   const moreItems = [
     { href: '/paket-rakitan', label: 'Paket Siap Pakai', icon: Sparkles },
+    { href: '/konsultasi', label: 'Konsultasi Budget', icon: MessageSquareCheck },
     { href: '/komponen', label: 'Komponen Eceran', icon: Layers },
     { href: '/aksesoris', label: 'Aksesoris & Gear', icon: Headphones },
+    { href: '/tentang-kami', label: 'Tentang Kami', icon: Building2 },
     { href: '/admin/pricing', label: 'Admin Portal', icon: Database },
   ];
 

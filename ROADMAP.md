@@ -552,13 +552,13 @@ Halaman utama yang memperkenalkan seluruh layanan KSS Komputer sebagai bengkel p
   - Service Showcase Grid (6 kartu layanan) sebagai seksi dominan
   - Quick Budget Strip, Paket Rakitan Populer (ringkas), Tracking CTA, USP Grid
   - Katalog eceran/aksesoris dipindah ke posisi bawah (sekunder)
-- [ ] **4.2** Buat Hub Layanan Jasa (`/jasa`) → Halaman penuh sesuai spec P2:
+- [x] **4.2** Buat Hub Layanan Jasa (`/jasa`) → Halaman penuh sesuai spec P2:
   - Grid 8-10 kartu layanan dengan harga, estimasi waktu, badge
   - FAQ jasa accordion
-  - CTA booking WhatsApp per layanan
-- [ ] **4.3** Buat Detail Layanan Jasa (`/jasa/[slug]`) sesuai spec P3:
-  - Deskripsi lengkap, includes/excludes, galeri, harga detail
-  - Form Booking Jasa → auto-generate pesan WA ke teknisi
+  - CTA booking WhatsApp per layanan + tautan detail
+- [x] **4.3** Buat Detail Layanan Jasa (`/jasa/[slug]`) sesuai spec P3:
+  - Deskripsi lengkap, includes/excludes, alur pengerjaan, harga detail
+  - Form Booking Jasa (`BookingForm.tsx`) → auto-generate pesan WA ke teknisi
   - Related services cross-sell
 - [x] **4.4** Buat Tracking Status Pengerjaan (`/cek-pesanan`) sesuai spec P6:
   - Input kode resi `TRK-KSS-XXX`
@@ -577,7 +577,7 @@ Halaman utama yang memperkenalkan seluruh layanan KSS Komputer sebagai bengkel p
 
 - [x] **5.1** Custom PC Configurator (`/simulasi`) — 10 slot, compatibility engine, delta pricing, sticky telemetry
 - [x] **5.2** Surat Penawaran (`/penawaran/[code]`) — Kop resmi, tabel spek, 1 Harga Total, Print PDF, WA confirm
-- [ ] **5.3** Buat Wizard Konsultasi (`/konsultasi`) — Expanded 5 langkah:
+- [x] **5.3** Buat Wizard Konsultasi (`/konsultasi`) — Expanded 5 langkah:
   - Step 1: Pilih tujuan (Rakit Baru / Upgrade / Servis)
   - Step 2: Budget slider atau deskripsi masalah
   - Step 3: Game/software/kebutuhan
@@ -594,9 +594,9 @@ Halaman utama yang memperkenalkan seluruh layanan KSS Komputer sebagai bengkel p
 - [x] **6.4** `FilterSidebar.tsx`, `ProductRowPricelist.tsx`, `SpecBadges.tsx` — Catalog filter & display components
 - [x] **6.5** Katalog Komponen Eceran (`/komponen`) — Dual view (Table/Grid), filter, `retailPrice`, keranjang
 - [x] **6.6** Katalog Aksesoris (`/aksesoris`) — Category tabs, search, grid/table view, retail cart
-- [ ] **6.7** Detail Komponen Eceran (`/komponen/[slug]`) — Halaman detail produk lengkap
+- [x] **6.7** Detail Komponen Eceran (`/komponen/[slug]`) - Halaman detail produk lengkap
 - [ ] **6.8** Implementasi Compare Drawer UI di `/paket-rakitan` — hubungkan dengan `useCompareStore`
-- [ ] **6.9** Buat Tentang Kami (`/tentang-kami`) — Profil bengkel, foto tim, lokasi, garansi, FAQ
+- [x] **6.9** Buat Tentang Kami (`/tentang-kami`) - Profil bengkel, tim teknisi, lokasi, garansi, FAQ
 
 ---
 
@@ -703,17 +703,17 @@ git push origin main
 | 1 | Data Layer | 13 | 12 | 1 |
 | 2 | State Management | 8 | 8 | 0 |
 | 3 | Layout & Shared | 17 | 9 | 8 |
-| 4 | Jasa & Servis ⭐ | 5 | 1 | 4 |
-| 5 | Builder, Konsultasi, Penawaran | 3 | 2 | 1 |
-| 6 | Paket Rakitan & Katalog | 9 | 6 | 3 |
+| 4 | Jasa & Servis ⭐ | 5 | 3 | 2 |
+| 5 | Builder, Konsultasi, Penawaran | 3 | 3 | 0 |
+| 6 | Paket Rakitan & Katalog | 9 | 8 | 1 |
 | 7 | Admin Core | 5 | 2 | 3 |
 | 8 | Admin Extended | 6 | 0 | 6 |
 | 9 | SEO, Performance, PWA | 8 | 0 | 8 |
 | 10 | API Routes | 4 | 1 | 3 |
 | 11 | Database & Final QA | 10 | 2 | 8 |
-| **TOTAL** | | **92** | **47** | **45** |
+| **TOTAL** | | **92** | **52** | **40** |
 
-> **Progress: 47 / 92 (51.1%)**
+> **Progress: 52 / 92 (56.5%)**
 >
 > **Prioritas Eksekusi Berikutnya:**
-> Fase 3 (sisa) → **Fase 4 (Jasa & Servis ⭐)** → Fase 5 → Fase 7 → sisanya
+> Fase 3 (sisa) → sisa Fase 4 (4.1, 4.5) → Fase 7 → Fase 8 → Fase 9 → Fase 11

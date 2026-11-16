@@ -136,6 +136,11 @@ export function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/konsultasi" className="hover:text-blue-600 dark:hover:text-blue-400">
+                  Konsultasi Budget &amp; Kebutuhan
+                </Link>
+              </li>
+              <li>
                 <Link href="/simulasi" className="hover:text-blue-600 dark:hover:text-blue-400">
                   Simulasi Rakitan PC Interaktif
                 </Link>
@@ -158,6 +163,11 @@ export function Footer() {
               <li>
                 <Link href="/aksesoris" className="hover:text-blue-600 dark:hover:text-blue-400">
                   Aksesoris &amp; Gaming Gear
+                </Link>
+              </li>
+              <li>
+                <Link href="/tentang-kami" className="hover:text-blue-600 dark:hover:text-blue-400">
+                  Tentang KSS Komputer
                 </Link>
               </li>
               <li>

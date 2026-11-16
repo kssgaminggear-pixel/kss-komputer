@@ -46,6 +46,30 @@ export function getPublicServices(): ServicePackage[] {
   return MOCK_SERVICES;
 }
 
+export function getPublicServiceBySlug(slug: string): ServicePackage | undefined {
+  return MOCK_SERVICES.find((service) => service.slug === slug);
+}
+
+export function getPublicServiceSlugs(): string[] {
+  return MOCK_SERVICES.map((service) => service.slug);
+}
+
+export function getPublicHardwarePartBySlug(slug: string): PublicHardwarePart | undefined {
+  const part = MOCK_HARDWARE_PARTS.find((item) => item.slug === slug);
+  return part ? sanitizeHardwarePartForPublic(part) : undefined;
+}
+
+export function getRelatedPublicHardwareParts(
+  part: PublicHardwarePart,
+  limit = 4
+): PublicHardwarePart[] {
+  return MOCK_HARDWARE_PARTS.filter(
+    (item) => item.category === part.category && item.slug !== part.slug
+  )
+    .slice(0, limit)
+    .map(sanitizeHardwarePartForPublic);
+}
+
 export function getPublicPrebuilts(): PublicPrebuiltPCDTO[] {
   return MOCK_PREBUILT_PCS.map((pkg) => sanitizePrebuiltPCForPublic(pkg, PARTS_BY_ID));
 }

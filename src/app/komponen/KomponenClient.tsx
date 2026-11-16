@@ -272,7 +272,9 @@ export default function KomponenEceranPage({ parts }: KomponenClientProps) {
                     </td>
 
                     <td className="py-2.5 px-3 font-sans font-semibold text-zinc-900 dark:text-zinc-100 max-w-md">
-                      <div>{part.name}</div>
+                      <Link href={`/komponen/${part.slug}`} className="hover:text-blue-600 dark:hover:text-blue-400">
+                        {part.name}
+                      </Link>
                       <div className="font-mono text-[10px] text-zinc-400 font-normal mt-0.5">
                         {part.wattage}W TDP • {part.category.toUpperCase()}
                       </div>
@@ -342,7 +344,9 @@ export default function KomponenEceranPage({ parts }: KomponenClientProps) {
                     <span className="text-emerald-600 dark:text-emerald-400 font-semibold">{part.warrantyYears} Th Garansi</span>
                   </div>
                   <h3 className="text-xs font-bold text-zinc-900 dark:text-zinc-100 line-clamp-2">
-                    {part.name}
+                    <Link href={`/komponen/${part.slug}`} className="hover:text-blue-600 dark:hover:text-blue-400">
+                      {part.name}
+                    </Link>
                   </h3>
                   <div className="mt-1 text-[10px] font-mono text-zinc-400">
                     SKU: {part.sku} • {part.wattage}W TDP

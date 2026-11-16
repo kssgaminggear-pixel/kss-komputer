@@ -99,22 +99,82 @@ export default function JasaLayananPage() {
               </div>
             </div>
 
-            <div className="pt-4 border-t border-zinc-100 dark:border-zinc-800">
+            <div className="pt-4 border-t border-zinc-100 dark:border-zinc-800 grid grid-cols-2 gap-2">
+              <Link
+                href={`/jasa/${srv.slug}`}
+                className="flex items-center justify-center gap-1.5 rounded-sm border border-zinc-300 bg-white hover:bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-950 dark:hover:bg-zinc-900 py-2.5 text-xs font-bold text-zinc-800 dark:text-zinc-200 transition-colors"
+              >
+                <span>Lihat Detail</span>
+                <ChevronRight className="h-3.5 w-3.5" />
+              </Link>
               <a
                 href={`https://wa.me/${DEFAULT_WHATSAPP_PHONE}?text=${encodeURIComponent(
                   `Halo KSS Komputer, saya ingin booking layanan: *${srv.title}* (${formatIDR(srv.price)})`
                 )}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 w-full rounded-sm bg-zinc-900 hover:bg-zinc-800 dark:bg-zinc-100 dark:hover:bg-zinc-200 text-white dark:text-zinc-900 py-2.5 text-xs font-bold transition-colors"
+                className="flex items-center justify-center gap-2 rounded-sm bg-zinc-900 hover:bg-zinc-800 dark:bg-zinc-100 dark:hover:bg-zinc-200 text-white dark:text-zinc-900 py-2.5 text-xs font-bold transition-colors"
               >
                 <PhoneCall className="h-3.5 w-3.5 text-emerald-500" />
-                <span>Booking Jadwal via WhatsApp</span>
+                <span>Booking WA</span>
               </a>
             </div>
           </div>
         ))}
       </div>
+
+      {/* FAQ Jasa */}
+      <section className="mb-8">
+        <h2 className="text-sm font-bold uppercase tracking-tight text-zinc-900 dark:text-zinc-100 mb-4 flex items-center gap-2">
+          <Clock className="h-4 w-4 text-blue-600" />
+          <span>Pertanyaan yang Sering Diajukan</span>
+        </h2>
+        <div className="divide-y divide-zinc-200 dark:divide-zinc-800 rounded-sm border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900/60">
+          {[
+            {
+              q: 'Apakah saya harus membeli komponen di KSS Komputer?',
+              a: 'Tidak. Anda boleh membawa komponen sendiri. Kami tetap melakukan pengecekan kompatibilitas dan kondisi fisik sebelum perakitan.',
+            },
+            {
+              q: 'Berapa lama pengerjaan rakit PC?',
+              a: 'Rakit standar 1 - 3 hari kerja, tergantung antrean dan ketersediaan komponen. Paket premium 2 - 4 hari kerja karena cable management dan dokumentasi build.',
+            },
+            {
+              q: 'Apakah ada garansi untuk jasa servis?',
+              a: 'Ya. Pengerjaan jasa bergaransi toko. Jika keluhan yang sama muncul kembali dalam masa garansi, pengecekan ulang tidak dikenakan biaya jasa.',
+            },
+            {
+              q: 'Bisakah booking di luar jam operasional?',
+              a: 'Jadwal normal Senin - Sabtu, 09:00 - 18:00 WIB. Untuk kebutuhan mendesak, silakan chat teknisi via WhatsApp terlebih dahulu.',
+            },
+            {
+              q: 'Apakah data saya aman saat instalasi ulang?',
+              a: 'Backup data tersedia sebagai opsi tambahan. Tanpa backup, proses fresh install akan menghapus data pada partisi sistem.',
+            },
+          ].map((faq) => (
+            <details key={faq.q} className="group px-4 py-3">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-3 text-xs font-bold text-zinc-900 dark:text-zinc-100">
+                <span>{faq.q}</span>
+                <ChevronRight className="h-3.5 w-3.5 shrink-0 text-zinc-400 transition-transform group-open:rotate-90" />
+              </summary>
+              <p className="mt-2 text-xs leading-relaxed text-zinc-600 dark:text-zinc-400">
+                {faq.a}
+              </p>
+            </details>
+          ))}
+        </div>
+        <div className="mt-3 text-center text-[11px] text-zinc-500">
+          Butuh layanan lain?{' '}
+          <a
+            href={`https://wa.me/${DEFAULT_WHATSAPP_PHONE}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-bold text-emerald-600 hover:text-emerald-700 dark:text-emerald-400"
+          >
+            Hubungi teknisi kami langsung via WhatsApp.
+          </a>
+        </div>
+      </section>
 
       {/* Standar Prosedur Operasional (SOP) Teknisi KSS */}
       <div className="rounded-sm border border-zinc-200 bg-zinc-50 p-6 dark:border-zinc-800 dark:bg-zinc-900/40">
