@@ -173,7 +173,7 @@ export default function KonsultasiClient({ prebuilts, services }: KonsultasiClie
   };
 
   return (
-    <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6">
+    <div className="kss-container max-w-4xl py-8">
       <nav className="mb-4 flex items-center gap-1.5 font-mono text-xs text-zinc-500">
         <Link href="/" className="hover:text-blue-600">Beranda</Link>
         <ChevronRight className="h-3.5 w-3.5 text-zinc-400" />
@@ -204,7 +204,7 @@ export default function KonsultasiClient({ prebuilts, services }: KonsultasiClie
           {[1, 2, 3, 4, 5].map((index) => (
             <div
               key={index}
-              className={`h-1.5 rounded-sm ${
+              className={`h-1.5 rounded-md ${
                 index <= step ? 'bg-blue-600' : 'bg-zinc-200 dark:bg-zinc-800'
               }`}
             />
@@ -212,7 +212,7 @@ export default function KonsultasiClient({ prebuilts, services }: KonsultasiClie
         </div>
       </div>
 
-      <div className="rounded-sm border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-900/60 sm:p-6">
+      <div className="rounded-md border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-900/60 sm:p-6">
         {step === 1 && (
           <section>
             <h2 className="mb-4 text-sm font-bold text-zinc-900 dark:text-zinc-100">
@@ -231,7 +231,7 @@ export default function KonsultasiClient({ prebuilts, services }: KonsultasiClie
                       setNeeds([]);
                       setError(null);
                     }}
-                    className={`rounded-sm border p-4 text-left transition-colors ${
+                    className={`rounded-md border p-4 text-left transition-colors ${
                       isActive
                         ? 'border-blue-500/40 bg-blue-500/5'
                         : 'border-zinc-200 hover:border-zinc-300 dark:border-zinc-800 dark:hover:border-zinc-700'
@@ -288,7 +288,7 @@ export default function KonsultasiClient({ prebuilts, services }: KonsultasiClie
                 value={problem}
                 onChange={(event) => setProblem(event.target.value)}
                 placeholder="Contoh: PC menyala tapi tidak ada tampilan, kipas berputar kencang..."
-                className="w-full rounded-sm border border-zinc-300 bg-white px-3 py-2 text-xs text-zinc-900 placeholder:text-zinc-400 focus:border-blue-600 focus:outline-none dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100"
+                className="w-full rounded-md border border-zinc-300 bg-white px-3 py-2 text-xs text-zinc-900 placeholder:text-zinc-400 focus:border-blue-600 focus:outline-none dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100"
               />
             )}
           </section>
@@ -316,7 +316,7 @@ export default function KonsultasiClient({ prebuilts, services }: KonsultasiClie
                     key={id}
                     type="button"
                     onClick={() => toggleNeed(id)}
-                    className={`inline-flex items-center gap-1.5 rounded-sm border px-3 py-2 text-[11px] font-semibold transition-colors ${
+                    className={`inline-flex items-center gap-1.5 rounded-md border px-3 py-2 text-[11px] font-semibold transition-colors ${
                       isActive
                         ? 'border-blue-500/40 bg-blue-500/10 text-blue-700 dark:text-blue-400'
                         : 'border-zinc-200 text-zinc-600 hover:border-zinc-300 dark:border-zinc-800 dark:text-zinc-400 dark:hover:border-zinc-700'
@@ -346,7 +346,7 @@ export default function KonsultasiClient({ prebuilts, services }: KonsultasiClie
                   id="device-type"
                   value={deviceType}
                   onChange={(event) => setDeviceType(event.target.value)}
-                  className="w-full rounded-sm border border-zinc-300 bg-white px-3 py-2 text-xs text-zinc-900 focus:border-blue-600 focus:outline-none dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100"
+                  className="w-full rounded-md border border-zinc-300 bg-white px-3 py-2 text-xs text-zinc-900 focus:border-blue-600 focus:outline-none dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100"
                 >
                   {SERVICE_DEVICE_TYPES.map((type) => (
                     <option key={type} value={type}>
@@ -367,7 +367,7 @@ export default function KonsultasiClient({ prebuilts, services }: KonsultasiClie
                         key={value}
                         type="button"
                         onClick={() => setPlatform(value)}
-                        className={`rounded-sm border px-2.5 py-1.5 text-[11px] font-semibold ${
+                        className={`rounded-md border px-2.5 py-1.5 text-[11px] font-semibold ${
                           platform === value
                             ? 'border-blue-500/40 bg-blue-500/10 text-blue-700 dark:text-blue-400'
                             : 'border-zinc-200 text-zinc-600 dark:border-zinc-800 dark:text-zinc-400'
@@ -389,7 +389,7 @@ export default function KonsultasiClient({ prebuilts, services }: KonsultasiClie
                         key={value}
                         type="button"
                         onClick={() => setColor(value)}
-                        className={`rounded-sm border px-2.5 py-1.5 text-[11px] font-semibold ${
+                        className={`rounded-md border px-2.5 py-1.5 text-[11px] font-semibold ${
                           color === value
                             ? 'border-blue-500/40 bg-blue-500/10 text-blue-700 dark:text-blue-400'
                             : 'border-zinc-200 text-zinc-600 dark:border-zinc-800 dark:text-zinc-400'
@@ -411,7 +411,7 @@ export default function KonsultasiClient({ prebuilts, services }: KonsultasiClie
                         key={value}
                         type="button"
                         onClick={() => setFormFactor(value)}
-                        className={`rounded-sm border px-2.5 py-1.5 text-[11px] font-semibold ${
+                        className={`rounded-md border px-2.5 py-1.5 text-[11px] font-semibold ${
                           formFactor === value
                             ? 'border-blue-500/40 bg-blue-500/10 text-blue-700 dark:text-blue-400'
                             : 'border-zinc-200 text-zinc-600 dark:border-zinc-800 dark:text-zinc-400'
@@ -435,7 +435,7 @@ export default function KonsultasiClient({ prebuilts, services }: KonsultasiClie
                 value={customerName}
                 onChange={(event) => setCustomerName(event.target.value)}
                 placeholder="Nama Anda"
-                className="w-full rounded-sm border border-zinc-300 bg-white px-3 py-2 text-xs text-zinc-900 placeholder:text-zinc-400 focus:border-blue-600 focus:outline-none dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100"
+                className="w-full rounded-md border border-zinc-300 bg-white px-3 py-2 text-xs text-zinc-900 placeholder:text-zinc-400 focus:border-blue-600 focus:outline-none dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100"
               />
             </div>
           </section>
@@ -460,7 +460,7 @@ export default function KonsultasiClient({ prebuilts, services }: KonsultasiClie
                     <Link
                       key={srv.id}
                       href={`/jasa/${srv.slug}`}
-                      className="flex flex-col justify-between rounded-sm border border-zinc-200 bg-zinc-50 p-4 transition-colors hover:border-zinc-300 dark:border-zinc-800 dark:bg-zinc-950 dark:hover:border-zinc-700"
+                      className="flex flex-col justify-between rounded-md border border-zinc-200 bg-zinc-50 p-4 transition-colors hover:border-zinc-300 dark:border-zinc-800 dark:bg-zinc-950 dark:hover:border-zinc-700"
                     >
                       <div>
                         <div className="text-xs font-bold text-zinc-900 dark:text-zinc-100">
@@ -488,7 +488,7 @@ export default function KonsultasiClient({ prebuilts, services }: KonsultasiClie
                     <Link
                       key={prebuilt.id}
                       href={`/paket-rakitan/${prebuilt.slug}`}
-                      className="flex flex-col justify-between rounded-sm border border-zinc-200 bg-zinc-50 p-4 transition-colors hover:border-zinc-300 dark:border-zinc-800 dark:bg-zinc-950 dark:hover:border-zinc-700"
+                      className="flex flex-col justify-between rounded-md border border-zinc-200 bg-zinc-50 p-4 transition-colors hover:border-zinc-300 dark:border-zinc-800 dark:bg-zinc-950 dark:hover:border-zinc-700"
                     >
                       <div>
                         <div className="mb-1 font-mono text-[10px] font-bold uppercase tracking-tight text-blue-600 dark:text-blue-400">
@@ -515,14 +515,14 @@ export default function KonsultasiClient({ prebuilts, services }: KonsultasiClie
                 href={buildWaUrl()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex flex-1 items-center justify-center gap-2 rounded-sm bg-emerald-600 px-3 py-2.5 text-xs font-bold text-white transition-colors hover:bg-emerald-700"
+                className="flex flex-1 items-center justify-center gap-2 rounded-md bg-emerald-600 px-3 py-2.5 text-xs font-bold text-white transition-colors hover:bg-emerald-700"
               >
                 <PhoneCall className="h-4 w-4" />
                 <span>{goal === 'servis' ? 'Booking Servis via WA' : 'Minta Racikan Kustom via WA'}</span>
               </a>
               <Link
                 href={goal === 'servis' ? '/jasa' : '/simulasi'}
-                className="flex flex-1 items-center justify-center gap-2 rounded-sm border border-zinc-300 bg-white px-3 py-2.5 text-xs font-bold text-zinc-800 transition-colors hover:bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-200 dark:hover:bg-zinc-900"
+                className="flex flex-1 items-center justify-center gap-2 rounded-md border border-zinc-300 bg-white px-3 py-2.5 text-xs font-bold text-zinc-800 transition-colors hover:bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-200 dark:hover:bg-zinc-900"
               >
                 <span>{goal === 'servis' ? 'Lihat Semua Layanan' : 'Coba Simulasi Rakit'}</span>
                 <ArrowRight className="h-3.5 w-3.5" />
@@ -532,7 +532,7 @@ export default function KonsultasiClient({ prebuilts, services }: KonsultasiClie
         )}
 
         {error && (
-          <p className="mt-4 rounded-sm border border-red-500/20 bg-red-500/5 px-3 py-2 text-[11px] font-semibold text-red-600 dark:text-red-400">
+          <p className="mt-4 rounded-md border border-red-500/20 bg-red-500/5 px-3 py-2 text-[11px] font-semibold text-red-600 dark:text-red-400">
             {error}
           </p>
         )}
@@ -542,7 +542,7 @@ export default function KonsultasiClient({ prebuilts, services }: KonsultasiClie
             <button
               type="button"
               onClick={handleBack}
-              className="inline-flex items-center gap-1.5 rounded-sm border border-zinc-300 px-3 py-2 text-xs font-semibold text-zinc-700 transition-colors hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-900"
+              className="inline-flex items-center gap-1.5 rounded-md border border-zinc-300 px-3 py-2 text-xs font-semibold text-zinc-700 transition-colors hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-900"
             >
               <ArrowLeft className="h-3.5 w-3.5" />
               <span>Kembali</span>
@@ -551,7 +551,7 @@ export default function KonsultasiClient({ prebuilts, services }: KonsultasiClie
             <button
               type="button"
               onClick={handleReset}
-              className="inline-flex items-center gap-1.5 rounded-sm border border-zinc-300 px-3 py-2 text-xs font-semibold text-zinc-700 transition-colors hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-900"
+              className="inline-flex items-center gap-1.5 rounded-md border border-zinc-300 px-3 py-2 text-xs font-semibold text-zinc-700 transition-colors hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-900"
             >
               <RotateCcw className="h-3.5 w-3.5" />
               <span>Reset</span>
@@ -562,7 +562,7 @@ export default function KonsultasiClient({ prebuilts, services }: KonsultasiClie
             <button
               type="button"
               onClick={handleNext}
-              className="inline-flex items-center gap-1.5 rounded-sm bg-blue-600 px-4 py-2 text-xs font-bold text-white transition-colors hover:bg-blue-700"
+              className="inline-flex items-center gap-1.5 rounded-md bg-blue-600 px-4 py-2 text-xs font-bold text-white transition-colors hover:bg-blue-700"
             >
               <span>Lanjut</span>
               <ArrowRight className="h-3.5 w-3.5" />
@@ -580,7 +580,7 @@ export default function KonsultasiClient({ prebuilts, services }: KonsultasiClie
         </div>
       </div>
 
-      <div className="mt-4 flex items-start gap-2 rounded-sm border border-zinc-200 bg-zinc-50 px-4 py-3 text-[11px] leading-relaxed text-zinc-500 dark:border-zinc-800 dark:bg-zinc-900/40 dark:text-zinc-400">
+      <div className="mt-4 flex items-start gap-2 rounded-md border border-zinc-200 bg-zinc-50 px-4 py-3 text-[11px] leading-relaxed text-zinc-500 dark:border-zinc-800 dark:bg-zinc-900/40 dark:text-zinc-400">
         <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-emerald-500" />
         <span>
           Harga paket yang tampil adalah harga total siap pakai. Harga satuan komponen

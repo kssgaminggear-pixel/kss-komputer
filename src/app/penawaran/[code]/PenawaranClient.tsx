@@ -35,7 +35,7 @@ export default function CustomerQuotationContent({ quote }: { quote: PublicQuote
   return (
     <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6">
       {/* Action Bar (Hidden on Print) */}
-      <div className="rounded-sm border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900/60 shadow-xs mb-6 flex flex-wrap items-center justify-between gap-3 print:hidden">
+      <div className="rounded-md border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900/60 shadow-xs mb-6 flex flex-wrap items-center justify-between gap-3 print:hidden">
         <div className="flex items-center gap-2">
           <FileText className="h-4 w-4 text-blue-600" />
           <span className="text-xs font-bold text-zinc-900 dark:text-zinc-100">
@@ -47,7 +47,7 @@ export default function CustomerQuotationContent({ quote }: { quote: PublicQuote
           <button
             type="button"
             onClick={handlePrint}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-sm border border-zinc-300 dark:border-zinc-700 bg-zinc-50 hover:bg-zinc-100 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-xs font-bold text-zinc-800 dark:text-zinc-200 transition-colors"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-md border border-zinc-300 dark:border-zinc-700 bg-zinc-50 hover:bg-zinc-100 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-xs font-bold text-zinc-800 dark:text-zinc-200 transition-colors"
           >
             <Printer className="h-3.5 w-3.5" />
             <span>Cetak PDF</span>
@@ -56,7 +56,7 @@ export default function CustomerQuotationContent({ quote }: { quote: PublicQuote
           <button
             type="button"
             onClick={handleConfirmWA}
-            className="flex items-center gap-1.5 px-4 py-1.5 rounded-sm bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition-colors shadow-xs"
+            className="flex items-center gap-1.5 px-4 py-1.5 rounded-md bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition-colors shadow-xs"
           >
             <MessageSquareCheck className="h-3.5 w-3.5" />
             <span>Konfirmasi Pesanan (WA)</span>
@@ -65,11 +65,11 @@ export default function CustomerQuotationContent({ quote }: { quote: PublicQuote
       </div>
 
       {/* Dokumen Fisik Surat Penawaran (Print-Optimized) */}
-      <div className="rounded-sm border border-zinc-300 bg-white p-8 sm:p-10 shadow-sm print:border-none print:p-0 print:shadow-none text-zinc-900">
+      <div className="rounded-md border border-zinc-300 bg-white p-8 sm:p-10 shadow-sm print:border-none print:p-0 print:shadow-none text-zinc-900">
         {/* Kop Surat Resmi KSS Komputer */}
         <div className="border-b-2 border-zinc-900 pb-5 mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <div className="flex items-center gap-3">
-            <div className="flex h-12 w-12 items-center justify-center rounded-sm bg-blue-600 text-white font-mono font-black text-xl tracking-wider">
+            <div className="flex h-12 w-12 items-center justify-center rounded-md bg-blue-600 text-white font-mono font-black text-xl tracking-wider">
               KSS
             </div>
             <div>
@@ -86,7 +86,7 @@ export default function CustomerQuotationContent({ quote }: { quote: PublicQuote
           </div>
 
           <div className="text-left sm:text-right font-mono text-xs">
-            <span className="inline-block rounded-xs bg-zinc-100 border border-zinc-300 px-2 py-0.5 text-[10px] font-bold uppercase text-zinc-800 mb-1">
+            <span className="inline-block rounded-md bg-zinc-100 border border-zinc-300 px-2 py-0.5 text-[10px] font-bold uppercase text-zinc-800 mb-1">
               Dokumen Penawaran Resmi
             </span>
             <div className="font-bold text-sm text-zinc-900">{quote.quoteCode}</div>
@@ -95,7 +95,7 @@ export default function CustomerQuotationContent({ quote }: { quote: PublicQuote
         </div>
 
         {/* Info Konsumen & Validitas */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6 p-4 rounded-sm bg-zinc-50 border border-zinc-200 text-xs font-mono">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6 p-4 rounded-md bg-zinc-50 border border-zinc-200 text-xs font-mono">
           <div>
             <span className="text-[10px] text-zinc-400 uppercase block">Ditujukan Kepada:</span>
             <div className="font-bold text-sm text-zinc-900">{quote.customerName}</div>
@@ -113,7 +113,7 @@ export default function CustomerQuotationContent({ quote }: { quote: PublicQuote
         </div>
 
         {/* Tabel Komponen (ZERO PART-PRICE LEAK: Tanpa harga per part!) */}
-        <div className="border border-zinc-300 rounded-sm overflow-hidden mb-6">
+        <div className="border border-zinc-300 rounded-md overflow-hidden mb-6">
           <table className="w-full text-left text-xs border-collapse">
             <thead>
               <tr className="bg-zinc-100 border-b border-zinc-300 font-mono text-[11px] uppercase text-zinc-700">
@@ -148,7 +148,7 @@ export default function CustomerQuotationContent({ quote }: { quote: PublicQuote
 
         {/* Catatan Khusus */}
         {quote.notes && (
-          <div className="mb-6 p-3 rounded-sm bg-zinc-50 border border-zinc-200 text-xs">
+          <div className="mb-6 p-3 rounded-md bg-zinc-50 border border-zinc-200 text-xs">
             <span className="font-mono text-[10px] uppercase font-bold text-zinc-500 block mb-1">
               Catatan &amp; Rekomendasi Teknisi:
             </span>

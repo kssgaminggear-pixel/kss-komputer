@@ -92,7 +92,7 @@ export function ProductRowPricelist({
         <div className="text-[11px] font-bold text-zinc-900 dark:text-zinc-100 flex items-center gap-1.5">
           <span>{product.brand}</span>
           {showCategoryBadge && (
-            <span className="text-[9px] uppercase px-1 py-0.2 bg-zinc-200 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300 rounded-xs">
+            <span className="text-[9px] uppercase px-1 py-0.2 bg-zinc-200 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300 rounded-sm">
               {product.category}
             </span>
           )}
@@ -129,19 +129,19 @@ export function ProductRowPricelist({
           {/* Status Stok Badge */}
           <div>
             {product.stockStatus === 'ready' ? (
-              <span className="inline-flex items-center px-1.5 py-0.5 font-mono text-[10px] font-bold uppercase rounded-sm bg-emerald-50 text-emerald-700 border border-emerald-500/20 dark:bg-emerald-950/40 dark:text-emerald-400">
+              <span className="inline-flex items-center px-1.5 py-0.5 font-mono text-[10px] font-bold uppercase rounded-md bg-emerald-50 text-emerald-700 border border-emerald-500/20 dark:bg-emerald-950/40 dark:text-emerald-400">
                 Ready Stock
               </span>
             ) : product.stockStatus === 'low' ? (
-              <span className="inline-flex items-center px-1.5 py-0.5 font-mono text-[10px] font-bold uppercase rounded-sm bg-amber-50 text-amber-700 border border-amber-500/20 dark:bg-amber-950/40 dark:text-amber-400">
+              <span className="inline-flex items-center px-1.5 py-0.5 font-mono text-[10px] font-bold uppercase rounded-md bg-amber-50 text-amber-700 border border-amber-500/20 dark:bg-amber-950/40 dark:text-amber-400">
                 Stok Terbatas
               </span>
             ) : product.stockStatus === 'po' ? (
-              <span className="inline-flex items-center px-1.5 py-0.5 font-mono text-[10px] font-bold uppercase rounded-sm bg-blue-50 text-blue-700 border border-blue-500/20 dark:bg-blue-950/40 dark:text-blue-400">
+              <span className="inline-flex items-center px-1.5 py-0.5 font-mono text-[10px] font-bold uppercase rounded-md bg-blue-50 text-blue-700 border border-blue-500/20 dark:bg-blue-950/40 dark:text-blue-400">
                 Pre-Order
               </span>
             ) : (
-              <span className="inline-flex items-center px-1.5 py-0.5 font-mono text-[10px] font-bold uppercase rounded-sm bg-red-50 text-red-700 border border-red-500/20 dark:bg-red-950/40 dark:text-red-400">
+              <span className="inline-flex items-center px-1.5 py-0.5 font-mono text-[10px] font-bold uppercase rounded-md bg-red-50 text-red-700 border border-red-500/20 dark:bg-red-950/40 dark:text-red-400">
                 Habis
               </span>
             )}
@@ -183,7 +183,7 @@ export function ProductRowPricelist({
             type="button"
             onClick={handleAddToSimulasi}
             title="Tambahkan ke Simulasi Rakitan PC"
-            className={`inline-flex items-center gap-1 px-2 py-1 font-mono text-[11px] font-semibold rounded-sm border transition-colors ${
+            className={`inline-flex items-center gap-1 px-2 py-1 font-mono text-[11px] font-semibold rounded-md border transition-colors ${
               justAddedSimulasi
                 ? 'bg-emerald-600 text-white border-emerald-600'
                 : 'bg-zinc-100 text-zinc-800 hover:bg-zinc-200 border-zinc-200 dark:bg-zinc-800 dark:text-zinc-200 dark:hover:bg-zinc-700 dark:border-zinc-700'
@@ -207,7 +207,7 @@ export function ProductRowPricelist({
             type="button"
             onClick={handleToggleCompare}
             title={comparing ? 'Hapus dari daftar perbandingan' : 'Bandingkan spesifikasi produk ini'}
-            className={`p-1 rounded-sm border transition-colors ${
+            className={`p-1 rounded-md border transition-colors ${
               comparing
                 ? 'bg-blue-600 text-white border-blue-600'
                 : 'bg-zinc-100 text-zinc-600 hover:bg-zinc-200 border-zinc-200 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700 dark:border-zinc-700'
@@ -226,7 +226,7 @@ export function ProductRowPricelist({
                 ? 'Stok produk habis'
                 : 'Tambahkan langsung ke Keranjang Belanja'
             }
-            className={`inline-flex items-center gap-1 px-2 py-1 font-mono text-[11px] font-semibold rounded-sm border transition-colors ${
+            className={`inline-flex items-center gap-1 px-2 py-1 font-mono text-[11px] font-semibold rounded-md border transition-colors ${
               product.stockStatus === 'out_of_stock'
                 ? 'opacity-40 cursor-not-allowed bg-zinc-100 text-zinc-400 border-zinc-200 dark:bg-zinc-800 dark:border-zinc-700'
                 : justAddedCart

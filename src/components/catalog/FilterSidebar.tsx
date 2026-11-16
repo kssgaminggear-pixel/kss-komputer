@@ -302,7 +302,7 @@ export function FilterSidebar({
             Filter Spesifikasi
           </span>
           {activeFiltersCount > 0 && (
-            <span className="px-1.5 py-0.2 font-mono text-[10px] font-bold bg-blue-600 text-white rounded-sm">
+            <span className="px-1.5 py-0.2 font-mono text-[10px] font-bold bg-blue-600 text-white rounded-md">
               {activeFiltersCount}
             </span>
           )}
@@ -322,7 +322,7 @@ export function FilterSidebar({
 
       {/* 1. Toggle Status Stok */}
       <div className="pb-3 border-b border-zinc-200 dark:border-zinc-800">
-        <label className="flex items-center justify-between p-2 rounded-sm border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 hover:bg-zinc-50 dark:hover:bg-zinc-800/60 cursor-pointer select-none transition-colors">
+        <label className="flex items-center justify-between p-2 rounded-md border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 hover:bg-zinc-50 dark:hover:bg-zinc-800/60 cursor-pointer select-none transition-colors">
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
             <span className="font-semibold text-zinc-800 dark:text-zinc-200 text-xs">
@@ -335,7 +335,7 @@ export function FilterSidebar({
             onChange={(e) =>
               onFilterChange({ ...filters, readyStockOnly: e.target.checked })
             }
-            className="w-3.5 h-3.5 rounded-sm border-zinc-300 dark:border-zinc-700 text-blue-600 focus:ring-0 focus:ring-offset-0 cursor-pointer"
+            className="w-3.5 h-3.5 rounded-md border-zinc-300 dark:border-zinc-700 text-blue-600 focus:ring-0 focus:ring-offset-0 cursor-pointer"
           />
         </label>
       </div>
@@ -350,7 +350,7 @@ export function FilterSidebar({
           <button
             type="button"
             onClick={() => handleCategorySelect('all')}
-            className={`w-full flex items-center justify-between px-2.5 py-1.5 text-left rounded-sm font-medium transition-colors ${
+            className={`w-full flex items-center justify-between px-2.5 py-1.5 text-left rounded-md font-medium transition-colors ${
               filters.category === 'all'
                 ? 'bg-blue-600 text-white font-semibold shadow-xs'
                 : 'text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800/70'
@@ -380,7 +380,7 @@ export function FilterSidebar({
                 key={cat}
                 type="button"
                 onClick={() => handleCategorySelect(cat)}
-                className={`w-full flex items-center justify-between px-2.5 py-1.5 text-left rounded-sm font-medium transition-colors ${
+                className={`w-full flex items-center justify-between px-2.5 py-1.5 text-left rounded-md font-medium transition-colors ${
                   isSelected
                     ? 'bg-blue-600 text-white font-semibold shadow-xs'
                     : 'text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800/70'
@@ -433,7 +433,7 @@ export function FilterSidebar({
                     const val = e.target.value ? parseInt(e.target.value, 10) : null;
                     onFilterChange({ ...filters, minPrice: val });
                   }}
-                  className="w-full px-2 py-1.5 font-mono text-xs rounded-sm border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:border-blue-500"
+                  className="w-full px-2 py-1.5 font-mono text-xs rounded-md border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:border-blue-500"
                 />
               </div>
               <div>
@@ -448,7 +448,7 @@ export function FilterSidebar({
                     const val = e.target.value ? parseInt(e.target.value, 10) : null;
                     onFilterChange({ ...filters, maxPrice: val });
                   }}
-                  className="w-full px-2 py-1.5 font-mono text-xs rounded-sm border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:border-blue-500"
+                  className="w-full px-2 py-1.5 font-mono text-xs rounded-md border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:border-blue-500"
                 />
               </div>
             </div>
@@ -471,7 +471,7 @@ export function FilterSidebar({
                       maxPrice: preset.max,
                     })
                   }
-                  className="px-2 py-0.5 text-[10px] font-mono rounded-sm border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-zinc-600 dark:text-zinc-400 hover:border-blue-500 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                  className="px-2 py-0.5 text-[10px] font-mono rounded-md border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-zinc-600 dark:text-zinc-400 hover:border-blue-500 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
                 >
                   {preset.label}
                 </button>
@@ -507,7 +507,7 @@ export function FilterSidebar({
                   placeholder="Cari brand..."
                   value={brandSearch}
                   onChange={(e) => setBrandSearch(e.target.value)}
-                  className="w-full pl-7 pr-2 py-1 font-mono text-[11px] rounded-sm border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:border-blue-500"
+                  className="w-full pl-7 pr-2 py-1 font-mono text-[11px] rounded-md border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:border-blue-500"
                 />
               </div>
             )}
@@ -518,14 +518,14 @@ export function FilterSidebar({
                 return (
                   <label
                     key={brand}
-                    className="flex items-center justify-between px-2 py-1 rounded-sm hover:bg-zinc-100 dark:hover:bg-zinc-800/60 cursor-pointer select-none text-zinc-700 dark:text-zinc-300 text-xs"
+                    className="flex items-center justify-between px-2 py-1 rounded-md hover:bg-zinc-100 dark:hover:bg-zinc-800/60 cursor-pointer select-none text-zinc-700 dark:text-zinc-300 text-xs"
                   >
                     <span className="truncate">{brand}</span>
                     <input
                       type="checkbox"
                       checked={isChecked}
                       onChange={() => handleBrandToggle(brand)}
-                      className="w-3.5 h-3.5 rounded-sm border-zinc-300 dark:border-zinc-700 text-blue-600 focus:ring-0 focus:ring-offset-0 cursor-pointer"
+                      className="w-3.5 h-3.5 rounded-md border-zinc-300 dark:border-zinc-700 text-blue-600 focus:ring-0 focus:ring-offset-0 cursor-pointer"
                     />
                   </label>
                 );
@@ -565,7 +565,7 @@ export function FilterSidebar({
                     key={socket}
                     type="button"
                     onClick={() => handleSocketToggle(socket)}
-                    className={`flex items-center justify-between px-2 py-1.5 rounded-sm border font-mono text-[11px] font-semibold transition-colors ${
+                    className={`flex items-center justify-between px-2 py-1.5 rounded-md border font-mono text-[11px] font-semibold transition-colors ${
                       isSelected
                         ? 'border-blue-600 bg-blue-50 text-blue-700 dark:bg-blue-950/40 dark:text-blue-300 dark:border-blue-500'
                         : 'border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-600 dark:text-zinc-300 hover:border-zinc-300 dark:hover:border-zinc-700'
@@ -606,7 +606,7 @@ export function FilterSidebar({
                     key={ramType}
                     type="button"
                     onClick={() => handleRamTypeToggle(ramType)}
-                    className={`flex items-center justify-between px-2 py-1.5 rounded-sm border font-mono text-[11px] font-semibold transition-colors ${
+                    className={`flex items-center justify-between px-2 py-1.5 rounded-md border font-mono text-[11px] font-semibold transition-colors ${
                       isSelected
                         ? 'border-blue-600 bg-blue-50 text-blue-700 dark:bg-blue-950/40 dark:text-blue-300 dark:border-blue-500'
                         : 'border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-600 dark:text-zinc-300 hover:border-zinc-300 dark:hover:border-zinc-700'
@@ -647,7 +647,7 @@ export function FilterSidebar({
                     key={ff}
                     type="button"
                     onClick={() => handleFormFactorToggle(ff)}
-                    className={`flex items-center justify-between px-2 py-1.5 rounded-sm border font-mono text-[11px] font-semibold transition-colors ${
+                    className={`flex items-center justify-between px-2 py-1.5 rounded-md border font-mono text-[11px] font-semibold transition-colors ${
                       isSelected
                         ? 'border-blue-600 bg-blue-50 text-blue-700 dark:bg-blue-950/40 dark:text-blue-300 dark:border-blue-500'
                         : 'border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-600 dark:text-zinc-300 hover:border-zinc-300 dark:hover:border-zinc-700'
@@ -703,7 +703,7 @@ export function FilterSidebar({
                 <button
                   type="button"
                   onClick={onMobileClose}
-                  className="p-1 rounded-sm text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-800"
+                  className="p-1 rounded-md text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-800"
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -715,7 +715,7 @@ export function FilterSidebar({
               <button
                 type="button"
                 onClick={onMobileClose}
-                className="w-full py-2.5 px-4 font-mono text-xs font-bold uppercase bg-blue-600 hover:bg-blue-700 text-white rounded-sm text-center shadow-xs"
+                className="w-full py-2.5 px-4 font-mono text-xs font-bold uppercase bg-blue-600 hover:bg-blue-700 text-white rounded-md text-center shadow-xs"
               >
                 Lihat Hasil {filteredCount !== undefined ? `(${filteredCount} SKU)` : ''}
               </button>

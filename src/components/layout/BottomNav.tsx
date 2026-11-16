@@ -100,7 +100,7 @@ export function BottomNav() {
                   key={item.href}
                   href={item.href}
                   onClick={() => setIsMoreOpen(false)}
-                  className="flex items-center gap-2 rounded-sm border border-zinc-200 bg-zinc-50 px-2.5 py-2 text-[11px] font-semibold text-zinc-800 hover:bg-zinc-100 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-zinc-800"
+                  className="flex items-center gap-2 rounded-md border border-zinc-200 bg-zinc-50 px-2.5 py-2 text-[11px] font-semibold text-zinc-800 hover:bg-zinc-100 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-zinc-800"
                 >
                   <Icon className="h-3.5 w-3.5 text-blue-600 dark:text-blue-400 shrink-0" />
                   <span className="truncate">{item.label}</span>
@@ -113,12 +113,12 @@ export function BottomNav() {
                 setIsMoreOpen(false);
                 openRetailCart();
               }}
-              className="flex items-center gap-2 rounded-sm border border-zinc-200 bg-zinc-50 px-2.5 py-2 text-[11px] font-semibold text-zinc-800 hover:bg-zinc-100 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-zinc-800"
+              className="flex items-center gap-2 rounded-md border border-zinc-200 bg-zinc-50 px-2.5 py-2 text-[11px] font-semibold text-zinc-800 hover:bg-zinc-100 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-zinc-800"
             >
               <ShoppingBag className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400 shrink-0" />
               <span className="truncate">Keranjang Eceran</span>
               {isHydrated && retailCartCount > 0 && (
-                <span className="ml-auto rounded-sm bg-emerald-600 px-1 font-mono text-[10px] font-bold text-white">
+                <span className="ml-auto rounded-md bg-emerald-600 px-1 font-mono text-[10px] font-bold text-white">
                   {retailCartCount}
                 </span>
               )}

@@ -26,90 +26,110 @@ export function Footer() {
   ];
 
   return (
-    <footer className="border-t border-zinc-200 bg-zinc-100/90 dark:border-zinc-800 dark:bg-zinc-950 text-zinc-600 dark:text-zinc-400">
+    <footer className="border-t border-zinc-200 bg-zinc-50 text-zinc-600 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-400">
       {/* 1. HIGHLIGHT SERVICE & VALUE BAR */}
-      <div className="border-b border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/60 py-4 px-4 sm:px-6">
-        <div className="mx-auto max-w-7xl grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div className="flex items-start gap-2.5">
-            <ShieldCheck className="h-5 w-5 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" />
-            <div>
-              <div className="text-xs font-bold text-zinc-900 dark:text-zinc-100 uppercase tracking-tight">
-                100% Garansi Resmi ID
+      <div className="border-b border-zinc-200 bg-white py-5 dark:border-zinc-800 dark:bg-zinc-900/40">
+        <div className="kss-container grid grid-cols-2 gap-4 md:grid-cols-4">
+          {[
+            {
+              icon: ShieldCheck,
+              title: '100% Garansi Resmi',
+              text: 'Semua part bersegel distributor resmi Indonesia.',
+            },
+            {
+              icon: Wrench,
+              title: 'Quality Assembly',
+              text: 'Cable management rapi, stress test, dan update BIOS.',
+            },
+            {
+              icon: Truck,
+              title: 'Packing Aman',
+              text: 'Packing kayu dan asuransi pengiriman Nusantara.',
+            },
+            {
+              icon: Headphones,
+              title: 'Konsultasi & RMA',
+              text: 'Bantuan klaim garansi langsung di Mangga Dua.',
+            },
+          ].map((item) => {
+            const Icon = item.icon;
+            return (
+              <div key={item.title} className="flex items-start gap-2.5">
+                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-blue-500/10">
+                  <Icon className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+                </span>
+                <div>
+                  <div className="text-xs font-bold text-zinc-900 dark:text-zinc-100">
+                    {item.title}
+                  </div>
+                  <div className="mt-0.5 text-[11px] leading-relaxed text-zinc-500">
+                    {item.text}
+                  </div>
+                </div>
               </div>
-              <div className="text-[11px] text-zinc-500">
-                Semua part bersegel distributor resmi Indonesia
-              </div>
-            </div>
-          </div>
+            );
+          })}
+        </div>
+      </div>
 
-          <div className="flex items-start gap-2.5">
-            <Wrench className="h-5 w-5 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" />
-            <div>
-              <div className="text-xs font-bold text-zinc-900 dark:text-zinc-100 uppercase tracking-tight">
-                Quality Assembly &amp; Test
-              </div>
-              <div className="text-[11px] text-zinc-500">
-                Cable management rapi, stress test &amp; update BIOS gratis
-              </div>
+      {/* 2. CTA BAND */}
+      <div className="border-b border-zinc-200 dark:border-zinc-800">
+        <div className="kss-container flex flex-col items-start justify-between gap-3 py-6 sm:flex-row sm:items-center">
+          <div>
+            <div className="text-sm font-black tracking-tight text-zinc-900 dark:text-zinc-100">
+              Butuh bantuan memilih spesifikasi?
             </div>
+            <p className="text-xs text-zinc-500">
+              Konsultasi gratis dengan teknisi KSS, tanpa harus langsung membeli.
+            </p>
           </div>
-
-          <div className="flex items-start gap-2.5">
-            <Truck className="h-5 w-5 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" />
-            <div>
-              <div className="text-xs font-bold text-zinc-900 dark:text-zinc-100 uppercase tracking-tight">
-                Packing Kayu &amp; Asuransi
-              </div>
-              <div className="text-[11px] text-zinc-500">
-                Aman dikirim ke seluruh wilayah Nusantara
-              </div>
-            </div>
-          </div>
-
-          <div className="flex items-start gap-2.5">
-            <Headphones className="h-5 w-5 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" />
-            <div>
-              <div className="text-xs font-bold text-zinc-900 dark:text-zinc-100 uppercase tracking-tight">
-                Konsultasi &amp; RMA Cepat
-              </div>
-              <div className="text-[11px] text-zinc-500">
-                Bantuan klaim garansi toko langsung di Mangga Dua
-              </div>
-            </div>
+          <div className="flex w-full gap-2 sm:w-auto">
+            <Link href="/konsultasi" className="kss-btn-primary flex-1 sm:flex-none">
+              Konsultasi Budget
+            </Link>
+            <a
+              href="https://wa.me/6281234567890"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="kss-btn-outline flex-1 sm:flex-none"
+            >
+              WhatsApp
+            </a>
           </div>
         </div>
       </div>
 
-      {/* 2. MAIN FOOTER CONTENT */}
-      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+      {/* 3. MAIN FOOTER CONTENT */}
+      <div className="kss-container py-10">
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {/* Kolom 1: Profil Toko & Kontak */}
           <div className="flex flex-col gap-3">
             <div className="flex items-center gap-2">
-              <div className="flex h-7 w-7 items-center justify-center rounded-sm bg-blue-600 text-white font-mono font-bold text-xs tracking-wider">
+              <div className="flex h-8 w-8 items-center justify-center rounded-md bg-blue-600 font-mono text-xs font-bold tracking-wider text-white">
                 KSS
               </div>
               <span className="font-mono text-sm font-black tracking-tight text-zinc-900 dark:text-zinc-100">
                 KSS KOMPUTER
               </span>
             </div>
-            <p className="text-xs text-zinc-500 leading-relaxed">
-              Toko retail &amp; perakitan komputer spesialis gaming, workstation, dan render profesional berstandar industri dengan harga transparan dan kompetitif.
+            <p className="text-xs leading-relaxed text-zinc-500">
+              Toko retail &amp; perakitan komputer spesialis gaming, workstation, dan render
+              profesional dengan harga transparan dan kompetitif.
             </p>
 
             <div className="mt-1 flex flex-col gap-2 text-xs">
               <div className="flex items-start gap-2">
-                <MapPin className="h-3.5 w-3.5 text-zinc-400 shrink-0 mt-0.5" />
+                <MapPin className="mt-0.5 h-3.5 w-3.5 shrink-0 text-zinc-400" />
                 <span>
                   Mangga Dua Mall Lt. 4 Blok A No. 12-14, Sawah Besar, Jakarta Pusat 10730
                 </span>
               </div>
               <div className="flex items-center gap-2">
-                <Clock className="h-3.5 w-3.5 text-zinc-400 shrink-0" />
-                <span>Senin – Sabtu: 10.00 – 18.00 WIB (Minggu Libur)</span>
+                <Clock className="h-3.5 w-3.5 shrink-0 text-zinc-400" />
+                <span>Senin - Sabtu: 10.00 - 18.00 WIB (Minggu Libur)</span>
               </div>
               <div className="flex items-center gap-2">
-                <Phone className="h-3.5 w-3.5 text-zinc-400 shrink-0" />
+                <Phone className="h-3.5 w-3.5 shrink-0 text-zinc-400" />
                 <a
                   href="https://wa.me/6281234567890"
                   className="font-mono font-medium text-emerald-600 hover:underline dark:text-emerald-400"
@@ -118,7 +138,7 @@ export function Footer() {
                 </a>
               </div>
               <div className="flex items-center gap-2">
-                <Mail className="h-3.5 w-3.5 text-zinc-400 shrink-0" />
+                <Mail className="h-3.5 w-3.5 shrink-0 text-zinc-400" />
                 <span className="font-mono">sales@ksskomputer.id</span>
               </div>
             </div>
@@ -126,72 +146,48 @@ export function Footer() {
 
           {/* Kolom 2: Navigasi Sistem */}
           <div>
-            <h3 className="font-mono text-xs font-bold uppercase tracking-wider text-zinc-900 dark:text-zinc-200 mb-3">
+            <h3 className="mb-3 font-mono text-xs font-bold uppercase tracking-wider text-zinc-900 dark:text-zinc-200">
               Navigasi Cepat
             </h3>
             <ul className="flex flex-col gap-2 text-xs">
-              <li>
-                <Link href="/jasa" className="hover:text-blue-600 dark:hover:text-blue-400">
-                  Layanan Jasa &amp; Servis
-                </Link>
-              </li>
-              <li>
-                <Link href="/konsultasi" className="hover:text-blue-600 dark:hover:text-blue-400">
-                  Konsultasi Budget &amp; Kebutuhan
-                </Link>
-              </li>
-              <li>
-                <Link href="/simulasi" className="hover:text-blue-600 dark:hover:text-blue-400">
-                  Simulasi Rakitan PC Interaktif
-                </Link>
-              </li>
-              <li>
-                <Link href="/paket-rakitan" className="hover:text-blue-600 dark:hover:text-blue-400">
-                  Paket PC Siap Pakai (Prebuilt)
-                </Link>
-              </li>
-              <li>
-                <Link href="/cek-pesanan" className="hover:text-blue-600 dark:hover:text-blue-400">
-                  Cek Status Pengerjaan
-                </Link>
-              </li>
-              <li>
-                <Link href="/komponen" className="hover:text-blue-600 dark:hover:text-blue-400">
-                  Katalog Komponen Eceran
-                </Link>
-              </li>
-              <li>
-                <Link href="/aksesoris" className="hover:text-blue-600 dark:hover:text-blue-400">
-                  Aksesoris &amp; Gaming Gear
-                </Link>
-              </li>
-              <li>
-                <Link href="/tentang-kami" className="hover:text-blue-600 dark:hover:text-blue-400">
-                  Tentang KSS Komputer
-                </Link>
-              </li>
-              <li>
-                <Link href="/admin/pricing" className="hover:text-blue-600 dark:hover:text-blue-400">
-                  Portal Admin &amp; Update Pricelist
-                </Link>
-              </li>
+              {[
+                { href: '/jasa', label: 'Layanan Jasa & Servis' },
+                { href: '/konsultasi', label: 'Konsultasi Budget & Kebutuhan' },
+                { href: '/simulasi', label: 'Simulasi Rakitan PC Interaktif' },
+                { href: '/paket-rakitan', label: 'Paket PC Siap Pakai (Prebuilt)' },
+                { href: '/cek-pesanan', label: 'Cek Status Pengerjaan' },
+                { href: '/komponen', label: 'Katalog Komponen Eceran' },
+                { href: '/aksesoris', label: 'Aksesoris & Gaming Gear' },
+                { href: '/tentang-kami', label: 'Tentang KSS Komputer' },
+                { href: '/admin/pricing', label: 'Portal Admin & Update Pricelist' },
+              ].map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="transition-colors hover:text-blue-600 dark:hover:text-blue-400"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
           {/* Kolom 3: Partner Distributor Resmi */}
           <div>
-            <h3 className="font-mono text-xs font-bold uppercase tracking-wider text-zinc-900 dark:text-zinc-200 mb-3">
+            <h3 className="mb-3 font-mono text-xs font-bold uppercase tracking-wider text-zinc-900 dark:text-zinc-200">
               Distributor Resmi
             </h3>
             <div className="flex flex-col gap-2 text-xs">
               {distributors.map((dist) => (
-                <div key={dist.name} className="border-b border-zinc-200/60 pb-1.5 dark:border-zinc-800/60">
-                  <div className="font-semibold text-zinc-800 dark:text-zinc-200 text-[11px]">
+                <div
+                  key={dist.name}
+                  className="border-b border-zinc-200/60 pb-1.5 dark:border-zinc-800/60"
+                >
+                  <div className="text-[11px] font-semibold text-zinc-800 dark:text-zinc-200">
                     {dist.name}
                   </div>
-                  <div className="font-mono text-[10px] text-zinc-500">
-                    {dist.brands}
-                  </div>
+                  <div className="font-mono text-[10px] text-zinc-500">{dist.brands}</div>
                 </div>
               ))}
             </div>
@@ -199,33 +195,31 @@ export function Footer() {
 
           {/* Kolom 4: Syarat Garansi & Pembayaran */}
           <div>
-            <h3 className="font-mono text-xs font-bold uppercase tracking-wider text-zinc-900 dark:text-zinc-200 mb-3">
+            <h3 className="mb-3 font-mono text-xs font-bold uppercase tracking-wider text-zinc-900 dark:text-zinc-200">
               Kebijakan &amp; Pembayaran
             </h3>
             <ul className="flex flex-col gap-2 text-xs">
-              <li className="flex items-start gap-1.5">
-                <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
-                <span>Garansi 1 to 1 Replacement (7 Hari Pertama Toko)</span>
-              </li>
-              <li className="flex items-start gap-1.5">
-                <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
-                <span>Bebas biaya rakitan dan instalasi OS trial</span>
-              </li>
-              <li className="flex items-start gap-1.5">
-                <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
-                <span>Dukungan faktur pajak untuk pengadaan kantor (PT/CV)</span>
-              </li>
+              {[
+                'Garansi 1 to 1 Replacement (7 Hari Pertama Toko)',
+                'Bebas biaya rakitan dan instalasi OS trial',
+                'Dukungan faktur pajak untuk pengadaan kantor (PT/CV)',
+              ].map((item) => (
+                <li key={item} className="flex items-start gap-1.5">
+                  <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-emerald-600 dark:text-emerald-400" />
+                  <span>{item}</span>
+                </li>
+              ))}
             </ul>
 
             <div className="mt-4">
-              <div className="text-[11px] font-mono font-semibold uppercase tracking-wider text-zinc-700 dark:text-zinc-300 mb-1.5">
+              <div className="mb-1.5 font-mono text-[11px] font-semibold uppercase tracking-wider text-zinc-700 dark:text-zinc-300">
                 Metode Pembayaran
               </div>
               <div className="flex flex-wrap gap-1.5 font-mono text-[10px]">
                 {['BCA Transfer', 'Mandiri', 'QRIS', 'Tokopedia', 'Shopee'].map((pay) => (
                   <span
                     key={pay}
-                    className="rounded-sm border border-zinc-200 bg-white px-1.5 py-0.5 text-zinc-700 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-300"
+                    className="rounded-md border border-zinc-200 bg-white px-1.5 py-0.5 text-zinc-700 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-300"
                   >
                     {pay}
                   </span>
@@ -236,19 +230,19 @@ export function Footer() {
         </div>
       </div>
 
-      {/* 3. SUB-FOOTER BOTTOM BAR */}
-      <div className="border-t border-zinc-200 bg-zinc-200/60 px-4 py-3 dark:border-zinc-800 dark:bg-zinc-900 text-[11px] text-zinc-500">
-        <div className="mx-auto max-w-7xl flex flex-col sm:flex-row items-center justify-between gap-2">
-          <div className="font-mono text-center sm:text-left">
-            &copy; {currentYear} KSS Komputer Jakarta. Seluruh hak cipta dilindungi undang-undang.
+      {/* 4. SUB-FOOTER BOTTOM BAR */}
+      <div className="border-t border-zinc-200 bg-white px-4 py-3 dark:border-zinc-800 dark:bg-zinc-900">
+        <div className="kss-container flex flex-col items-center justify-between gap-2 text-[11px] text-zinc-500 sm:flex-row">
+          <div className="text-center font-mono sm:text-left">
+            &copy; {currentYear} KSS Komputer Jakarta. Seluruh hak cipta dilindungi.
           </div>
           <div className="flex items-center gap-3 font-mono text-[10px]">
-            <span>Next.js 16 App Router</span>
+            <span>Garansi Resmi</span>
             <span>&bull;</span>
-            <span>Turbopack Engine</span>
+            <span>Faktur Pajak</span>
             <span>&bull;</span>
-            <span className="text-emerald-600 dark:text-emerald-400 font-semibold">
-              Pricelist Engine v2.4 Active
+            <span className="font-semibold text-emerald-600 dark:text-emerald-400">
+              Pricelist Terupdate
             </span>
           </div>
         </div>

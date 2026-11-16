@@ -1,10 +1,8 @@
 'use client';
 
 import React, { Suspense, useMemo, useState } from 'react';
-import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import {
-  ChevronRight,
   ClipboardList,
   Search,
   CheckCircle2,
@@ -62,71 +60,59 @@ function TrackingStatusContent({ trackings }: { trackings: BuildOrderTracking[] 
   };
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
-      {/* Breadcrumb */}
-      <nav className="flex items-center gap-1.5 text-xs text-zinc-500 mb-6 font-mono">
-        <Link href="/" className="hover:text-blue-600">
-          Beranda
-        </Link>
-        <ChevronRight className="h-3.5 w-3.5 text-zinc-400" />
-        <span className="text-zinc-900 dark:text-zinc-100 font-semibold">Cek Pesanan</span>
-      </nav>
-
-      {/* Header */}
-      <div className="rounded-sm border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-900/60 shadow-xs mb-6">
-        <div className="flex items-center gap-2 mb-1">
-          <span className="rounded-xs bg-blue-500/10 border border-blue-500/20 px-2 py-0.5 text-[10px] font-mono font-bold text-blue-600 dark:text-blue-400 uppercase">
-            Tracking Pengerjaan
-          </span>
-          <span className="text-xs font-mono text-zinc-400">TRK-KSS-XXX</span>
-        </div>
-        <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-zinc-900 dark:text-zinc-100">
-          Cek Status Rakit &amp; Servis PC Anda
-        </h1>
-        <p className="mt-1 text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 max-w-3xl leading-relaxed">
-          Masukkan kode resi internal yang diberikan teknisi KSS Komputer untuk melihat progres pengerjaan
-          secara real-time — dari verifikasi pembayaran sampai unit siap diambil.
-        </p>
-
-        <form onSubmit={handleSubmit} className="mt-4 flex flex-col sm:flex-row gap-2 max-w-2xl">
-          <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-zinc-400" />
-            <input
-              type="text"
-              value={inputCode}
-              onChange={(event) => setInputCode(event.target.value)}
-              placeholder="Contoh: TRK-KSS-001"
-              aria-label="Kode resi pengerjaan"
-              className="w-full rounded-sm border border-zinc-300 bg-white py-2.5 pl-9 pr-3 font-mono text-xs uppercase tracking-wide text-zinc-900 placeholder:text-zinc-400 focus:border-blue-600 focus:outline-none dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100"
-            />
-          </div>
-          <button
-            type="submit"
-            className="inline-flex items-center justify-center gap-2 rounded-sm bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 text-xs font-bold transition-colors"
-          >
+    <div>
+      <section className="border-b border-zinc-200 bg-zinc-50/70 dark:border-zinc-800 dark:bg-zinc-950">
+        <div className="kss-container py-8 sm:py-10">
+          <div className="kss-eyebrow mb-2">
             <ClipboardList className="h-3.5 w-3.5" />
-            <span>Cek Status</span>
-          </button>
-        </form>
-        <p className="mt-2 text-[11px] text-zinc-400 font-mono">
-          Kode contoh untuk demo: TRK-KSS-001, TRK-KSS-002, TRK-KSS-003
-        </p>
-      </div>
+            <span>Tracking Pengerjaan</span>
+          </div>
+          <h1 className="text-2xl font-black tracking-tight text-zinc-900 dark:text-zinc-50 sm:text-3xl">
+            Cek Status Rakit &amp; Servis PC
+          </h1>
+          <p className="mt-2 max-w-2xl text-xs leading-relaxed text-zinc-600 dark:text-zinc-400 sm:text-sm">
+            Masukkan kode resi internal dari teknisi KSS untuk melihat progres pengerjaan
+            secara real-time, dari verifikasi pembayaran sampai unit siap diambil.
+          </p>
 
+          <form onSubmit={handleSubmit} className="mt-5 flex max-w-2xl flex-col gap-2 sm:flex-row">
+            <div className="relative flex-1">
+              <Search className="absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-zinc-400" />
+              <input
+                type="text"
+                value={inputCode}
+                onChange={(event) => setInputCode(event.target.value)}
+                placeholder="Contoh: TRK-KSS-001"
+                aria-label="Kode resi pengerjaan"
+                className="kss-input py-2.5 pl-9 font-mono uppercase tracking-wide"
+              />
+            </div>
+            <button type="submit" className="kss-btn-primary px-5 py-2.5">
+              <ClipboardList className="h-3.5 w-3.5" />
+              <span>Cek Status</span>
+            </button>
+          </form>
+          <p className="mt-2 font-mono text-[11px] text-zinc-400">
+            Kode demo: TRK-KSS-001 · TRK-KSS-002 · TRK-KSS-003
+          </p>
+        </div>
+      </section>
+
+      <div className="kss-container py-6">
       {/* Hasil */}
       {!isHydrated ? (
-        <div className="rounded-sm border border-zinc-200 bg-white p-8 text-center text-xs text-zinc-400 font-mono dark:border-zinc-800 dark:bg-zinc-900/60">
+        <div className="rounded-md border border-zinc-200 bg-white p-8 text-center text-xs text-zinc-400 font-mono dark:border-zinc-800 dark:bg-zinc-900/60">
           Memuat data pengerjaan...
         </div>
       ) : !searchedCode ? (
-        <div className="rounded-sm border border-dashed border-zinc-300 bg-zinc-50 p-8 text-center dark:border-zinc-700 dark:bg-zinc-900/40">
+        <div className="rounded-md border border-dashed border-zinc-300 bg-zinc-50 p-8 text-center dark:border-zinc-700 dark:bg-zinc-900/40">
           <AlertCircle className="mx-auto h-6 w-6 text-zinc-400 mb-2" />
           <p className="text-xs text-zinc-500 dark:text-zinc-400">
             Belum ada kode resi yang dicek. Masukkan kode resi di atas untuk melihat progres pengerjaan.
           </p>
         </div>
       ) : !tracking ? (
-        <div className="rounded-sm border border-red-500/20 bg-red-500/5 p-6 dark:bg-red-500/10">
+        <div className="rounded-md border border-red-500/20 bg-red-500/5 p-6 dark:bg-red-500/10">
           <div className="flex items-start gap-2.5">
             <AlertCircle className="h-4 w-4 text-red-600 dark:text-red-400 shrink-0 mt-0.5" />
             <div>
@@ -144,12 +130,12 @@ function TrackingStatusContent({ trackings }: { trackings: BuildOrderTracking[] 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Ringkasan Order */}
           <div className="lg:col-span-1 flex flex-col gap-4">
-            <div className="rounded-sm border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-900/60 shadow-xs">
+            <div className="rounded-md border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-900/60 shadow-xs">
               <div className="flex items-center justify-between mb-3">
                 <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-zinc-400">
                   Kode Resi
                 </span>
-                <span className="rounded-sm border border-emerald-500/20 bg-emerald-500/10 px-2 py-0.5 font-mono text-[10px] font-bold text-emerald-600 dark:text-emerald-400">
+                <span className="rounded-md border border-emerald-500/20 bg-emerald-500/10 px-2 py-0.5 font-mono text-[10px] font-bold text-emerald-600 dark:text-emerald-400">
                   {tracking.trackingCode}
                 </span>
               </div>
@@ -184,7 +170,7 @@ function TrackingStatusContent({ trackings }: { trackings: BuildOrderTracking[] 
               </div>
 
               {tracking.adminNotes && (
-                <div className="mt-4 rounded-sm border border-zinc-200 bg-zinc-50 p-3 dark:border-zinc-800 dark:bg-zinc-950">
+                <div className="mt-4 rounded-md border border-zinc-200 bg-zinc-50 p-3 dark:border-zinc-800 dark:bg-zinc-950">
                   <div className="font-mono text-[10px] font-bold uppercase tracking-wider text-zinc-400 mb-1">
                     Catatan Teknisi
                   </div>
@@ -200,7 +186,7 @@ function TrackingStatusContent({ trackings }: { trackings: BuildOrderTracking[] 
                 )}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-sm bg-emerald-600 hover:bg-emerald-700 px-4 py-2.5 text-xs font-bold text-white transition-colors"
+                className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-md bg-emerald-600 hover:bg-emerald-700 px-4 py-2.5 text-xs font-bold text-white transition-colors"
               >
                 <PhoneCall className="h-3.5 w-3.5" />
                 <span>Hubungi Teknisi via WA</span>
@@ -209,7 +195,7 @@ function TrackingStatusContent({ trackings }: { trackings: BuildOrderTracking[] 
           </div>
 
           {/* Stepper Pengerjaan */}
-          <div className="lg:col-span-2 rounded-sm border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-900/60 shadow-xs">
+          <div className="lg:col-span-2 rounded-md border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-900/60 shadow-xs">
             <h3 className="font-mono text-xs font-bold uppercase tracking-wider text-zinc-900 dark:text-zinc-200 mb-4">
               Progres Pengerjaan
             </h3>
@@ -263,7 +249,7 @@ function TrackingStatusContent({ trackings }: { trackings: BuildOrderTracking[] 
                           {TRACKING_STAGE_LABELS[stage] ?? stage}
                         </span>
                         {isActive && (
-                          <span className="rounded-sm border border-blue-500/20 bg-blue-500/10 px-1.5 py-0.5 font-mono text-[9px] font-bold uppercase text-blue-600 dark:text-blue-400">
+                          <span className="rounded-md border border-blue-500/20 bg-blue-500/10 px-1.5 py-0.5 font-mono text-[9px] font-bold uppercase text-blue-600 dark:text-blue-400">
                             Sedang Dikerjakan
                           </span>
                         )}
@@ -286,6 +272,7 @@ function TrackingStatusContent({ trackings }: { trackings: BuildOrderTracking[] 
           </div>
         </div>
       )}
+      </div>
     </div>
   );
 }

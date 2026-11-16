@@ -11,6 +11,7 @@ import {
   PhoneCall,
   Wrench,
   Sparkles,
+  CalendarClock,
 } from 'lucide-react';
 import {
   getPublicServiceBySlug,
@@ -72,7 +73,7 @@ export default async function JasaDetailPage({ params }: JasaDetailPageProps) {
   const priceLabel = getPriceLabel(service.price, service.priceMax);
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
+    <div className="kss-container py-8">
       <nav className="mb-4 flex flex-wrap items-center gap-1.5 font-mono text-xs text-zinc-500">
         <Link href="/" className="hover:text-blue-600">
           Beranda
@@ -87,13 +88,13 @@ export default async function JasaDetailPage({ params }: JasaDetailPageProps) {
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_360px]">
         <div className="space-y-6">
-          <header className="rounded-sm border border-zinc-200 bg-white p-6 shadow-xs dark:border-zinc-800 dark:bg-zinc-900/60">
+          <header className="rounded-md border border-zinc-200 bg-white p-6 shadow-xs dark:border-zinc-800 dark:bg-zinc-900/60">
             <div className="mb-3 flex flex-wrap items-center gap-2">
-              <span className="rounded-xs border border-blue-500/20 bg-blue-500/10 px-2 py-0.5 font-mono text-[10px] font-bold uppercase text-blue-600 dark:text-blue-400">
+              <span className="rounded-md border border-blue-500/20 bg-blue-500/10 px-2 py-0.5 font-mono text-[10px] font-bold uppercase text-blue-600 dark:text-blue-400">
                 Layanan Teknisi
               </span>
               {service.badge && (
-                <span className="rounded-xs border border-amber-500/20 bg-amber-500/10 px-2 py-0.5 font-mono text-[10px] font-bold text-amber-700 dark:text-amber-400">
+                <span className="rounded-md border border-amber-500/20 bg-amber-500/10 px-2 py-0.5 font-mono text-[10px] font-bold text-amber-700 dark:text-amber-400">
                   {service.badge}
                 </span>
               )}
@@ -115,25 +116,31 @@ export default async function JasaDetailPage({ params }: JasaDetailPageProps) {
                 <div className="font-mono text-[10px] font-bold uppercase tracking-tight text-zinc-400">
                   Estimasi Biaya Jasa
                 </div>
-                <div className="font-mono text-2xl font-black tracking-tight text-zinc-900 tabular-nums dark:text-zinc-100">
+                <div className="kss-price whitespace-nowrap text-xl text-zinc-900 dark:text-zinc-100 sm:text-2xl">
                   {priceLabel}
                 </div>
               </div>
-              <a
-                href={`https://wa.me/${DEFAULT_WHATSAPP_PHONE}?text=${encodeURIComponent(
-                  `Halo KSS Komputer, saya ingin tanya layanan: *${service.title}*`
-                )}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-sm border border-emerald-500/30 bg-emerald-500/10 px-3 py-2 text-xs font-bold text-emerald-700 transition-colors hover:bg-emerald-500/15 dark:text-emerald-400"
-              >
-                <PhoneCall className="h-3.5 w-3.5" />
-                <span>Tanya Teknisi</span>
-              </a>
+              <div className="flex w-full flex-wrap gap-2 sm:w-auto">
+                <a
+                  href={`https://wa.me/${DEFAULT_WHATSAPP_PHONE}?text=${encodeURIComponent(
+                    `Halo KSS Komputer, saya ingin tanya layanan: *${service.title}*`
+                  )}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-md border border-emerald-500/30 bg-emerald-500/10 px-3 py-2 text-xs font-bold text-emerald-700 transition-colors hover:bg-emerald-500/15 dark:text-emerald-400"
+                >
+                  <PhoneCall className="h-3.5 w-3.5" />
+                  <span>Tanya Teknisi</span>
+                </a>
+                <a href="#booking-form" className="kss-btn-primary px-3 py-2 lg:hidden">
+                  <CalendarClock className="h-3.5 w-3.5" />
+                  <span>Booking</span>
+                </a>
+              </div>
             </div>
           </header>
 
-          <section className="rounded-sm border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-900/60">
+          <section className="rounded-md border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-900/60">
             <h2 className="mb-3 flex items-center gap-2 text-sm font-bold text-zinc-900 dark:text-zinc-100">
               <Wrench className="h-4 w-4 text-blue-600 dark:text-blue-400" />
               <span>Cakupan Pekerjaan</span>
@@ -152,7 +159,7 @@ export default async function JasaDetailPage({ params }: JasaDetailPageProps) {
           </section>
 
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <section className="rounded-sm border border-emerald-500/20 bg-emerald-500/5 p-5">
+            <section className="rounded-md border border-emerald-500/20 bg-emerald-500/5 p-5">
               <h2 className="mb-3 flex items-center gap-2 font-mono text-[11px] font-bold uppercase tracking-tight text-emerald-700 dark:text-emerald-400">
                 <Check className="h-3.5 w-3.5" />
                 <span>Termasuk</span>
@@ -167,7 +174,7 @@ export default async function JasaDetailPage({ params }: JasaDetailPageProps) {
               </ul>
             </section>
 
-            <section className="rounded-sm border border-amber-500/20 bg-amber-500/5 p-5">
+            <section className="rounded-md border border-amber-500/20 bg-amber-500/5 p-5">
               <h2 className="mb-3 flex items-center gap-2 font-mono text-[11px] font-bold uppercase tracking-tight text-amber-700 dark:text-amber-400">
                 <X className="h-3.5 w-3.5" />
                 <span>Tidak Termasuk</span>
@@ -186,7 +193,7 @@ export default async function JasaDetailPage({ params }: JasaDetailPageProps) {
             </section>
           </div>
 
-          <section className="rounded-sm border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-900/60">
+          <section className="rounded-md border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-900/60">
             <h2 className="mb-4 text-sm font-bold text-zinc-900 dark:text-zinc-100">
               Alur Pengerjaan Standar KSS
             </h2>
@@ -199,9 +206,9 @@ export default async function JasaDetailPage({ params }: JasaDetailPageProps) {
               ].map((step, index) => (
                 <li
                   key={step}
-                  className="flex items-start gap-3 rounded-sm border border-zinc-200 bg-zinc-50 p-3 dark:border-zinc-800 dark:bg-zinc-950"
+                  className="flex items-start gap-3 rounded-md border border-zinc-200 bg-zinc-50 p-3 dark:border-zinc-800 dark:bg-zinc-950"
                 >
-                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-sm bg-zinc-900 font-mono text-[11px] font-bold text-white dark:bg-zinc-100 dark:text-zinc-900">
+                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-zinc-900 font-mono text-[11px] font-bold text-white dark:bg-zinc-100 dark:text-zinc-900">
                     {index + 1}
                   </span>
                   <span className="text-xs text-zinc-700 dark:text-zinc-300">{step}</span>
@@ -221,7 +228,7 @@ export default async function JasaDetailPage({ params }: JasaDetailPageProps) {
                   <Link
                     key={related.id}
                     href={`/jasa/${related.slug}`}
-                    className="flex flex-col justify-between rounded-sm border border-zinc-200 bg-white p-4 transition-colors hover:border-zinc-300 dark:border-zinc-800 dark:bg-zinc-900/60 dark:hover:border-zinc-700"
+                    className="flex flex-col justify-between rounded-md border border-zinc-200 bg-white p-4 transition-colors hover:border-zinc-300 dark:border-zinc-800 dark:bg-zinc-900/60 dark:hover:border-zinc-700"
                   >
                     <div>
                       <div className="mb-1 font-mono text-[10px] font-bold uppercase tracking-tight text-zinc-400">
@@ -242,7 +249,7 @@ export default async function JasaDetailPage({ params }: JasaDetailPageProps) {
         </div>
 
         <aside className="space-y-4 lg:sticky lg:top-24 lg:self-start">
-          <div className="rounded-sm border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-900/60">
+          <div id="booking-form" className="scroll-mt-24 rounded-md border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-900/60">
             <h2 className="mb-1 flex items-center gap-2 text-sm font-bold text-zinc-900 dark:text-zinc-100">
               <Clock className="h-4 w-4 text-blue-600 dark:text-blue-400" />
               <span>Booking Jadwal</span>
@@ -253,7 +260,7 @@ export default async function JasaDetailPage({ params }: JasaDetailPageProps) {
             <BookingForm serviceTitle={service.title} />
           </div>
 
-          <div className="rounded-sm border border-zinc-200 bg-zinc-50 p-4 dark:border-zinc-800 dark:bg-zinc-900/40">
+          <div className="rounded-md border border-zinc-200 bg-zinc-50 p-4 dark:border-zinc-800 dark:bg-zinc-900/40">
             <div className="flex items-start gap-2">
               <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-emerald-500" />
               <div className="text-[11px] leading-relaxed text-zinc-600 dark:text-zinc-400">

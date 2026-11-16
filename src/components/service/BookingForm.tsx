@@ -53,7 +53,7 @@ export function BookingForm({ serviceTitle }: BookingFormProps) {
           value={customerName}
           onChange={(event) => setCustomerName(event.target.value)}
           placeholder="Contoh: Budi Santoso"
-          className="w-full rounded-sm border border-zinc-300 bg-white px-3 py-2 text-xs text-zinc-900 placeholder:text-zinc-400 focus:border-blue-600 focus:outline-none dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100"
+          className="w-full rounded-md border border-zinc-300 bg-white px-3 py-2 text-xs text-zinc-900 placeholder:text-zinc-400 focus:border-blue-600 focus:outline-none dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100"
         />
       </div>
 
@@ -67,7 +67,7 @@ export function BookingForm({ serviceTitle }: BookingFormProps) {
           value={customerWa}
           onChange={(event) => setCustomerWa(event.target.value)}
           placeholder="08xxxxxxxxxx"
-          className="w-full rounded-sm border border-zinc-300 bg-white px-3 py-2 font-mono text-xs tabular-nums text-zinc-900 placeholder:text-zinc-400 focus:border-blue-600 focus:outline-none dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100"
+          className="w-full rounded-md border border-zinc-300 bg-white px-3 py-2 font-mono text-xs tabular-nums text-zinc-900 placeholder:text-zinc-400 focus:border-blue-600 focus:outline-none dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100"
         />
       </div>
 
@@ -79,7 +79,7 @@ export function BookingForm({ serviceTitle }: BookingFormProps) {
           id="booking-device"
           value={deviceType}
           onChange={(event) => setDeviceType(event.target.value)}
-          className="w-full rounded-sm border border-zinc-300 bg-white px-3 py-2 text-xs text-zinc-900 focus:border-blue-600 focus:outline-none dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100"
+          className="w-full rounded-md border border-zinc-300 bg-white px-3 py-2 text-xs text-zinc-900 focus:border-blue-600 focus:outline-none dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100"
         >
           {SERVICE_DEVICE_TYPES.map((type) => (
             <option key={type} value={type}>
@@ -99,7 +99,7 @@ export function BookingForm({ serviceTitle }: BookingFormProps) {
           value={problemDescription}
           onChange={(event) => setProblemDescription(event.target.value)}
           placeholder="Ceritakan gejala kerusakan atau kebutuhan Anda..."
-          className="w-full rounded-sm border border-zinc-300 bg-white px-3 py-2 text-xs text-zinc-900 placeholder:text-zinc-400 focus:border-blue-600 focus:outline-none dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100"
+          className="w-full rounded-md border border-zinc-300 bg-white px-3 py-2 text-xs text-zinc-900 placeholder:text-zinc-400 focus:border-blue-600 focus:outline-none dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100"
         />
       </div>
 
@@ -113,7 +113,7 @@ export function BookingForm({ serviceTitle }: BookingFormProps) {
             type="date"
             value={preferredDate}
             onChange={(event) => setPreferredDate(event.target.value)}
-            className="w-full rounded-sm border border-zinc-300 bg-white px-2.5 py-2 font-mono text-xs text-zinc-900 focus:border-blue-600 focus:outline-none dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100"
+            className="w-full rounded-md border border-zinc-300 bg-white px-2.5 py-2 font-mono text-xs text-zinc-900 focus:border-blue-600 focus:outline-none dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100"
           />
         </div>
         <div>
@@ -124,7 +124,7 @@ export function BookingForm({ serviceTitle }: BookingFormProps) {
             id="booking-time"
             value={preferredTime}
             onChange={(event) => setPreferredTime(event.target.value)}
-            className="w-full rounded-sm border border-zinc-300 bg-white px-2.5 py-2 font-mono text-xs text-zinc-900 focus:border-blue-600 focus:outline-none dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100"
+            className="w-full rounded-md border border-zinc-300 bg-white px-2.5 py-2 font-mono text-xs text-zinc-900 focus:border-blue-600 focus:outline-none dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100"
           >
             <option value="">Fleksibel</option>
             {TIME_OPTIONS.map((time) => (
@@ -137,14 +137,14 @@ export function BookingForm({ serviceTitle }: BookingFormProps) {
       </div>
 
       {error && (
-        <p className="rounded-sm border border-red-500/20 bg-red-500/5 px-3 py-2 text-[11px] font-semibold text-red-600 dark:text-red-400">
+        <p className="rounded-md border border-red-500/20 bg-red-500/5 px-3 py-2 text-[11px] font-semibold text-red-600 dark:text-red-400">
           {error}
         </p>
       )}
 
       <button
         type="submit"
-        className="flex w-full items-center justify-center gap-2 rounded-sm bg-emerald-600 py-2.5 text-xs font-bold text-white transition-colors hover:bg-emerald-700"
+        className="flex w-full items-center justify-center gap-2 rounded-md bg-emerald-600 py-2.5 text-xs font-bold text-white transition-colors hover:bg-emerald-700"
       >
         <MessageSquareCheck className="h-4 w-4" />
         <span>Kirim Booking via WhatsApp</span>

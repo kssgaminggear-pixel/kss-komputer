@@ -23,7 +23,7 @@ export function KomponenDetailActions({ part }: { part: PublicHardwarePart }) {
         <span className="font-mono text-[10px] font-bold uppercase tracking-tight text-zinc-500">
           Jumlah
         </span>
-        <div className="inline-flex items-center rounded-sm border border-zinc-300 dark:border-zinc-700">
+        <div className="inline-flex items-center rounded-md border border-zinc-300 dark:border-zinc-700">
           <button
             type="button"
             onClick={() => setQuantity((value) => Math.max(1, value - 1))}
@@ -50,7 +50,7 @@ export function KomponenDetailActions({ part }: { part: PublicHardwarePart }) {
         <button
           type="button"
           onClick={handleAdd}
-          className={`flex flex-1 items-center justify-center gap-2 rounded-sm px-4 py-2.5 text-xs font-bold text-white transition-colors ${
+          className={`flex flex-1 items-center justify-center gap-2 rounded-md px-4 py-2.5 text-xs font-bold text-white transition-colors ${
             added ? 'bg-emerald-600 hover:bg-emerald-700' : 'bg-blue-600 hover:bg-blue-700'
           }`}
         >
@@ -61,7 +61,7 @@ export function KomponenDetailActions({ part }: { part: PublicHardwarePart }) {
         <button
           type="button"
           onClick={openCart}
-          className="flex items-center justify-center gap-2 rounded-sm border border-zinc-300 px-4 py-2.5 text-xs font-bold text-zinc-800 transition-colors hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-200 dark:hover:bg-zinc-900"
+          className="flex items-center justify-center gap-2 rounded-md border border-zinc-300 px-4 py-2.5 text-xs font-bold text-zinc-800 transition-colors hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-200 dark:hover:bg-zinc-900"
         >
           <span>Lihat Keranjang</span>
         </button>

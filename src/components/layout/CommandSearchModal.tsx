@@ -142,7 +142,7 @@ export function CommandSearchModal({ isOpen, onClose, products }: CommandSearchM
               <X className="w-3.5 h-3.5" />
             </button>
           )}
-          <kbd className="hidden sm:inline-flex items-center gap-0.5 px-1.5 py-0.5 text-[10px] font-mono text-zinc-500 bg-zinc-200 dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 rounded-sm">
+          <kbd className="hidden sm:inline-flex items-center gap-0.5 px-1.5 py-0.5 text-[10px] font-mono text-zinc-500 bg-zinc-200 dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 rounded-md">
             ESC
           </kbd>
           <button
@@ -181,7 +181,7 @@ export function CommandSearchModal({ isOpen, onClose, products }: CommandSearchM
               return (
                 <div
                   key={product.id}
-                  className="group flex flex-col sm:flex-row sm:items-center justify-between p-2.5 hover:bg-zinc-100/80 dark:hover:bg-zinc-800/60 rounded-sm transition-colors gap-2"
+                  className="group flex flex-col sm:flex-row sm:items-center justify-between p-2.5 hover:bg-zinc-100/80 dark:hover:bg-zinc-800/60 rounded-md transition-colors gap-2"
                 >
                   {/* Left Column: Product Info & Spec Badges */}
                   <div className="flex-1 min-w-0 pr-2">
@@ -189,7 +189,7 @@ export function CommandSearchModal({ isOpen, onClose, products }: CommandSearchM
                       <span className="font-mono text-[11px] text-zinc-400 dark:text-zinc-500 tracking-wider">
                         {product.sku}
                       </span>
-                      <span className="text-[10px] font-mono px-1 py-0.2 bg-zinc-200/60 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300 rounded-sm uppercase">
+                      <span className="text-[10px] font-mono px-1 py-0.2 bg-zinc-200/60 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300 rounded-md uppercase">
                         {product.brand}
                       </span>
                       {product.stockStatus === 'ready' && (
@@ -229,7 +229,7 @@ export function CommandSearchModal({ isOpen, onClose, products }: CommandSearchM
                         type="button"
                         onClick={(e) => handleAddToBuilder(e, product)}
                         title="Tambahkan ke Simulasi Rakitan PC"
-                        className={`inline-flex items-center gap-1 px-2 py-1 text-xs font-mono font-medium border rounded-sm transition-all ${
+                        className={`inline-flex items-center gap-1 px-2 py-1 text-xs font-mono font-medium border rounded-md transition-all ${
                           isAddedToBuilder
                             ? 'bg-emerald-600 border-emerald-600 text-white'
                             : 'bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-800 dark:text-zinc-200 border-zinc-300 dark:border-zinc-700'
@@ -253,7 +253,7 @@ export function CommandSearchModal({ isOpen, onClose, products }: CommandSearchM
                         type="button"
                         onClick={(e) => handleAddToCart(e, product)}
                         title="Tambahkan ke Keranjang Belanja"
-                        className={`inline-flex items-center gap-1 px-2 py-1 text-xs font-mono font-medium border rounded-sm transition-all ${
+                        className={`inline-flex items-center gap-1 px-2 py-1 text-xs font-mono font-medium border rounded-md transition-all ${
                           isAddedToCart
                             ? 'bg-emerald-600 border-emerald-600 text-white'
                             : 'bg-blue-600 hover:bg-blue-700 text-white border-blue-600'
@@ -282,7 +282,7 @@ export function CommandSearchModal({ isOpen, onClose, products }: CommandSearchM
         {/* Footer Shortcut Bar */}
         <div className="px-4 py-2 border-t border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950/70 flex items-center justify-between text-[11px] font-mono text-zinc-500">
           <div className="flex items-center gap-3">
-            <span>Tekan <kbd className="px-1 py-0.5 bg-zinc-200 dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 rounded-sm">ESC</kbd> untuk menutup</span>
+            <span>Tekan <kbd className="px-1 py-0.5 bg-zinc-200 dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 rounded-md">ESC</kbd> untuk menutup</span>
           </div>
           <Link
             href="/katalog"

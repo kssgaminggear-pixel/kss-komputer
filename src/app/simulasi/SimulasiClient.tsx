@@ -291,10 +291,10 @@ export default function SimulasiPage({ parts }: SimulasiClientProps) {
   };
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
+    <div className="kss-container py-8">
       {/* Toast Feedback */}
       {toastMessage && (
-        <div className="fixed bottom-20 right-4 z-50 rounded-sm border border-zinc-800 bg-zinc-900 px-4 py-2.5 text-xs font-semibold text-white shadow-xl flex items-center gap-2">
+        <div className="fixed bottom-20 right-4 z-50 rounded-md border border-zinc-800 bg-zinc-900 px-4 py-2.5 text-xs font-semibold text-white shadow-xl flex items-center gap-2">
           <CheckCircle2 className="h-4 w-4 text-emerald-400" />
           <span>{toastMessage}</span>
         </div>
@@ -308,18 +308,18 @@ export default function SimulasiPage({ parts }: SimulasiClientProps) {
       </nav>
 
       {/* Header Banner */}
-      <div className="rounded-sm border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-900/60 shadow-xs mb-6 print:border-none print:p-0">
+      <div className="rounded-md border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-900/60 shadow-xs mb-6 print:border-none print:p-0">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <div className="flex items-center gap-2 mb-1">
-              <span className="rounded-xs bg-blue-500/10 border border-blue-500/20 px-2 py-0.5 text-[10px] font-mono font-bold text-blue-600 dark:text-blue-400 uppercase">
+            <div className="mb-2 flex flex-wrap items-center gap-1.5">
+              <span className="rounded-md bg-blue-500/10 border border-blue-500/20 px-2 py-0.5 text-[10px] font-mono font-bold text-blue-600 dark:text-blue-400 uppercase">
                 Interactive PC Configurator
               </span>
-              <span className="rounded-xs bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 text-[10px] font-mono font-bold text-emerald-600 dark:text-emerald-400">
+              <span className="rounded-md bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 text-[10px] font-mono font-bold text-emerald-600 dark:text-emerald-400">
                 Zero Part-Price Leak
               </span>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-zinc-900 dark:text-zinc-100">
+            <h1 className="text-xl font-black tracking-tight text-zinc-900 dark:text-zinc-100 sm:text-3xl">
               Simulasi Rakitan &amp; Konsultasi Budget
             </h1>
             <p className="mt-1 text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 max-w-3xl leading-relaxed">
@@ -328,10 +328,10 @@ export default function SimulasiPage({ parts }: SimulasiClientProps) {
           </div>
 
           {/* Tab Selector */}
-          <div className="flex items-center rounded-sm border border-zinc-200 dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-950 p-1 shrink-0 print:hidden">
+          <div className="flex flex-wrap items-center rounded-md border border-zinc-200 bg-zinc-100 p-1 shrink-0 dark:border-zinc-800 dark:bg-zinc-950 print:hidden">
             <button
               onClick={() => setActiveTab('builder')}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-sm text-xs font-bold transition-colors ${
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-bold transition-colors ${
                 activeTab === 'builder'
                   ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 shadow-xs'
                   : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900'
@@ -342,7 +342,7 @@ export default function SimulasiPage({ parts }: SimulasiClientProps) {
             </button>
             <button
               onClick={() => setActiveTab('consultation')}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-sm text-xs font-bold transition-colors ${
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-bold transition-colors ${
                 activeTab === 'consultation'
                   ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 shadow-xs'
                   : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900'
@@ -357,7 +357,7 @@ export default function SimulasiPage({ parts }: SimulasiClientProps) {
 
       {activeTab === 'consultation' ? (
         /* TAB 2: FORM KONSULTASI RAKITAN BY BUDGET (VIA WA) */
-        <div className="rounded-sm border border-zinc-200 bg-white p-6 sm:p-8 dark:border-zinc-800 dark:bg-zinc-900/60 shadow-xs max-w-3xl mx-auto">
+        <div className="rounded-md border border-zinc-200 bg-white p-6 sm:p-8 dark:border-zinc-800 dark:bg-zinc-900/60 shadow-xs max-w-3xl mx-auto">
           <div className="flex items-center gap-2 mb-2">
             <PhoneCall className="h-5 w-5 text-emerald-600" />
             <h2 className="text-xl font-bold text-zinc-900 dark:text-zinc-100">
@@ -380,7 +380,7 @@ export default function SimulasiPage({ parts }: SimulasiClientProps) {
                   placeholder="Contoh: Bima Satria"
                   value={custName}
                   onChange={(e) => setCustName(e.target.value)}
-                  className="w-full rounded-sm border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950 px-3 py-2 text-xs text-zinc-900 dark:text-zinc-100 focus:outline-none focus:border-blue-600"
+                  className="w-full rounded-md border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950 px-3 py-2 text-xs text-zinc-900 dark:text-zinc-100 focus:outline-none focus:border-blue-600"
                 />
               </div>
 
@@ -400,7 +400,7 @@ export default function SimulasiPage({ parts }: SimulasiClientProps) {
                   step={500000}
                   value={custBudget}
                   onChange={(e) => setCustBudget(Number(e.target.value))}
-                  className="w-full accent-blue-600 h-2 bg-zinc-200 dark:bg-zinc-800 rounded-sm cursor-pointer"
+                  className="w-full accent-blue-600 h-2 bg-zinc-200 dark:bg-zinc-800 rounded-md cursor-pointer"
                 />
               </div>
             </div>
@@ -413,7 +413,7 @@ export default function SimulasiPage({ parts }: SimulasiClientProps) {
                 <select
                   value={custUsage}
                   onChange={(e) => setCustUsage(e.target.value)}
-                  className="w-full rounded-sm border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950 px-3 py-2 text-xs text-zinc-900 dark:text-zinc-100 focus:outline-none focus:border-blue-600"
+                  className="w-full rounded-md border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950 px-3 py-2 text-xs text-zinc-900 dark:text-zinc-100 focus:outline-none focus:border-blue-600"
                 >
                   <option value="Gaming E-Sports 1080p (Valorant, CS2, Dota)">Gaming E-Sports 1080p (Valorant, CS2, Dota)</option>
                   <option value="Gaming AAA 1080p / 1440p (Cyberpunk, Black Myth Wukong)">Gaming AAA 1080p / 1440p (Cyberpunk, Wukong)</option>
@@ -431,7 +431,7 @@ export default function SimulasiPage({ parts }: SimulasiClientProps) {
                 <select
                   value={custPlatform}
                   onChange={(e) => setCustPlatform(e.target.value)}
-                  className="w-full rounded-sm border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950 px-3 py-2 text-xs text-zinc-900 dark:text-zinc-100 focus:outline-none focus:border-blue-600"
+                  className="w-full rounded-md border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950 px-3 py-2 text-xs text-zinc-900 dark:text-zinc-100 focus:outline-none focus:border-blue-600"
                 >
                   <option value="Bebas (Rekomendasi Teknisi KSS)">Bebas (Rekomendasi Terbaik Teknisi KSS)</option>
                   <option value="AMD Ryzen Platform">AMD Ryzen Platform</option>
@@ -449,13 +449,13 @@ export default function SimulasiPage({ parts }: SimulasiClientProps) {
                 placeholder="Contoh: Sudah punya monitor 144Hz, butuh casing warna putih, ingin SSD kapasitas 1TB..."
                 value={custNotes}
                 onChange={(e) => setCustNotes(e.target.value)}
-                className="w-full rounded-sm border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950 px-3 py-2 text-xs text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 focus:outline-none focus:border-blue-600"
+                className="w-full rounded-md border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950 px-3 py-2 text-xs text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 focus:outline-none focus:border-blue-600"
               />
             </div>
 
             <button
               type="submit"
-              className="flex items-center justify-center gap-2 w-full rounded-sm bg-emerald-600 hover:bg-emerald-700 text-white py-3 text-xs sm:text-sm font-bold transition-colors shadow-xs"
+              className="flex items-center justify-center gap-2 w-full rounded-md bg-emerald-600 hover:bg-emerald-700 text-white py-3 text-xs sm:text-sm font-bold transition-colors shadow-xs"
             >
               <MessageSquareCheck className="h-4 w-4" />
               <span>Kirimkan ke WhatsApp Konsultasi KSS</span>
@@ -468,7 +468,7 @@ export default function SimulasiPage({ parts }: SimulasiClientProps) {
           {/* Kolom Kiri: Baris Slot Komponen */}
           <div className="lg:col-span-8 space-y-4">
             {/* Toolbar Konfigurator */}
-            <div className="rounded-sm border border-zinc-200 bg-white p-3.5 dark:border-zinc-800 dark:bg-zinc-900/60 shadow-xs flex flex-wrap items-center justify-between gap-3 print:hidden">
+            <div className="rounded-md border border-zinc-200 bg-white p-3.5 dark:border-zinc-800 dark:bg-zinc-900/60 shadow-xs flex flex-wrap items-center justify-between gap-3 print:hidden">
               <div className="flex items-center gap-2 flex-1 min-w-[200px]">
                 <span className="text-xs font-mono text-zinc-400">Nama Rakitan:</span>
                 <input
@@ -476,7 +476,7 @@ export default function SimulasiPage({ parts }: SimulasiClientProps) {
                   value={customBuildName}
                   onChange={(e) => setCustomBuildName(e.target.value)}
                   placeholder="Custom PC Rig KSS"
-                  className="rounded-sm border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950 px-2 py-1 text-xs text-zinc-900 dark:text-zinc-100 font-semibold focus:outline-none focus:border-blue-600 flex-1 max-w-xs"
+                  className="rounded-md border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950 px-2 py-1 text-xs text-zinc-900 dark:text-zinc-100 font-semibold focus:outline-none focus:border-blue-600 flex-1 max-w-xs"
                 />
               </div>
 
@@ -484,7 +484,7 @@ export default function SimulasiPage({ parts }: SimulasiClientProps) {
                 <button
                   type="button"
                   onClick={toggleStrictFilter}
-                  className={`px-2.5 py-1 rounded-sm text-[11px] font-semibold border transition-colors ${
+                  className={`px-2.5 py-1 rounded-md text-[11px] font-semibold border transition-colors ${
                     strictFilterEnabled
                       ? 'border-emerald-500/30 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400'
                       : 'border-zinc-300 dark:border-zinc-700 text-zinc-500'
@@ -512,7 +512,7 @@ export default function SimulasiPage({ parts }: SimulasiClientProps) {
             </div>
 
             {/* List Slot Hardware */}
-            <div className="rounded-sm border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900/60 shadow-xs divide-y divide-zinc-100 dark:divide-zinc-800/80">
+            <div className="rounded-md border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900/60 shadow-xs divide-y divide-zinc-100 dark:divide-zinc-800/80">
               {BUILDER_SLOTS.map((slot) => {
                 const Icon = slot.icon;
                 const selectedList = selections[slot.category] || [];
@@ -520,10 +520,10 @@ export default function SimulasiPage({ parts }: SimulasiClientProps) {
                 const part = getItemPart(currentItem);
 
                 return (
-                  <div key={slot.category} className="p-3.5 sm:p-4 flex items-center justify-between gap-3">
+                  <div key={slot.category} className="flex flex-col gap-3 p-4 sm:flex-row sm:items-center sm:justify-between">
                     {/* Icon & Label Kategori */}
-                    <div className="flex items-center gap-3 w-40 sm:w-48 shrink-0">
-                      <div className="flex h-8 w-8 items-center justify-center rounded-sm bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 shrink-0">
+                    <div className="flex w-full items-center gap-3 sm:w-48 sm:shrink-0">
+                      <div className="flex h-8 w-8 items-center justify-center rounded-md bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 shrink-0">
                         <Icon className="h-4 w-4" />
                       </div>
                       <div className="min-w-0">
@@ -537,7 +537,7 @@ export default function SimulasiPage({ parts }: SimulasiClientProps) {
                     </div>
 
                     {/* Status Terpasang / Part Info (ZERO PART LEAK) */}
-                    <div className="flex-1 min-w-0 px-2">
+                    <div className="flex min-w-0 flex-1 px-0 sm:px-2">
                       {part ? (
                         <div>
                           <div className="text-xs font-bold text-zinc-900 dark:text-zinc-100 truncate">
@@ -559,13 +559,13 @@ export default function SimulasiPage({ parts }: SimulasiClientProps) {
                     </div>
 
                     {/* Tombol Aksi Slot */}
-                    <div className="flex items-center gap-2 shrink-0 print:hidden">
+                    <div className="flex shrink-0 flex-wrap items-center gap-2 print:hidden">
                       {part ? (
                         <>
                           <button
                             type="button"
                             onClick={() => handleOpenDrawer(slot.category)}
-                            className="px-2.5 py-1.5 rounded-sm border border-zinc-200 dark:border-zinc-700 bg-zinc-50 hover:bg-zinc-100 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-xs font-bold text-zinc-800 dark:text-zinc-200 transition-colors"
+                            className="px-2.5 py-1.5 rounded-md border border-zinc-200 dark:border-zinc-700 bg-zinc-50 hover:bg-zinc-100 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-xs font-bold text-zinc-800 dark:text-zinc-200 transition-colors"
                           >
                             Ganti Part
                           </button>
@@ -585,7 +585,7 @@ export default function SimulasiPage({ parts }: SimulasiClientProps) {
                         <button
                           type="button"
                           onClick={() => handleOpenDrawer(slot.category)}
-                          className="flex items-center gap-1.5 px-3 py-1.5 rounded-sm bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition-colors shadow-xs"
+                          className="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition-colors shadow-xs"
                         >
                           <Plus className="h-3.5 w-3.5" />
                           <span>Pilih Komponen</span>
@@ -599,13 +599,13 @@ export default function SimulasiPage({ parts }: SimulasiClientProps) {
           </div>
 
           {/* Kolom Kanan: Sticky Telemetry & Checkout Box */}
-          <div className="lg:col-span-4 sticky top-20 space-y-4">
-            <div className="rounded-sm border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-900/90 shadow-sm space-y-4">
+          <div className="space-y-4 lg:col-span-4 lg:sticky lg:top-24">
+            <div className="rounded-md border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-900/90 shadow-sm space-y-4">
               <div className="border-b border-zinc-100 dark:border-zinc-800 pb-3">
                 <span className="text-[10px] font-mono text-zinc-400 uppercase tracking-tight block">
                   Total Harga Rakitan (Siap Pakai)
                 </span>
-                <div className="font-mono text-2xl font-black text-zinc-900 dark:text-zinc-100 tabular-nums mt-0.5">
+                <div className="kss-price mt-0.5 text-2xl text-zinc-900 dark:text-zinc-100">
                   {formatIDR(totalPrice)}
                 </div>
                 <span className="text-[11px] text-emerald-600 dark:text-emerald-400 font-semibold block mt-0.5">
@@ -614,7 +614,7 @@ export default function SimulasiPage({ parts }: SimulasiClientProps) {
               </div>
 
               {/* Status Kompatibilitas Engine */}
-              <div className="rounded-sm p-3 border text-xs space-y-1.5 bg-zinc-50 dark:bg-zinc-950 border-zinc-200 dark:border-zinc-800">
+              <div className="rounded-md p-3 border text-xs space-y-1.5 bg-zinc-50 dark:bg-zinc-950 border-zinc-200 dark:border-zinc-800">
                 <div className="flex items-center justify-between">
                   <span className="font-semibold text-zinc-700 dark:text-zinc-300">Kompatibilitas:</span>
                   {compatibilityReport.isCompatible ? (
@@ -636,7 +636,7 @@ export default function SimulasiPage({ parts }: SimulasiClientProps) {
                     {compatibilityReport.issues.map((iss) => (
                       <div
                         key={iss.id}
-                        className={`text-[11px] p-2 rounded-xs flex items-start gap-1.5 ${
+                        className={`text-[11px] p-2 rounded-md flex items-start gap-1.5 ${
                           iss.severity === 'error'
                             ? 'bg-red-500/10 text-red-600 dark:text-red-400 border border-red-500/20'
                             : 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20'
@@ -655,13 +655,13 @@ export default function SimulasiPage({ parts }: SimulasiClientProps) {
 
               {/* Telemetry Wattage */}
               <div className="space-y-2 font-mono text-xs">
-                <div className="flex justify-between items-center bg-zinc-50 dark:bg-zinc-950 p-2.5 rounded-xs border border-zinc-200 dark:border-zinc-800">
+                <div className="flex justify-between items-center bg-zinc-50 dark:bg-zinc-950 p-2.5 rounded-md border border-zinc-200 dark:border-zinc-800">
                   <span className="text-zinc-500">Estimasi TDP Daya:</span>
                   <span className="font-bold text-zinc-900 dark:text-zinc-100">
                     {formatWatt(compatibilityReport.totalWattage)}
                   </span>
                 </div>
-                <div className="flex justify-between items-center bg-zinc-50 dark:bg-zinc-950 p-2.5 rounded-xs border border-zinc-200 dark:border-zinc-800">
+                <div className="flex justify-between items-center bg-zinc-50 dark:bg-zinc-950 p-2.5 rounded-md border border-zinc-200 dark:border-zinc-800">
                   <span className="text-zinc-500">Rekomendasi PSU:</span>
                   <span className="font-bold text-blue-600 dark:text-blue-400">
                     Min. {compatibilityReport.recommendedPsuWatt}W
@@ -675,7 +675,7 @@ export default function SimulasiPage({ parts }: SimulasiClientProps) {
                   type="button"
                   onClick={handleWhatsAppCheckout}
                   disabled={selectedItemsFlat.length === 0}
-                  className="flex items-center justify-center gap-2 w-full rounded-sm bg-emerald-600 hover:bg-emerald-700 disabled:bg-zinc-300 dark:disabled:bg-zinc-800 text-white py-3 text-xs font-bold transition-colors shadow-xs"
+                  className="kss-btn-wa w-full py-3"
                 >
                   <MessageSquareCheck className="h-4 w-4" />
                   <span>Konsultasi &amp; Pesan via WhatsApp</span>
@@ -686,7 +686,7 @@ export default function SimulasiPage({ parts }: SimulasiClientProps) {
                     type="button"
                     onClick={handleCopySpecs}
                     disabled={selectedItemsFlat.length === 0}
-                    className="flex items-center justify-center gap-1.5 rounded-sm border border-zinc-300 dark:border-zinc-700 bg-white hover:bg-zinc-100 dark:bg-zinc-900 dark:hover:bg-zinc-800 py-2 text-xs font-semibold text-zinc-800 dark:text-zinc-200"
+                    className="kss-btn-outline h-9 px-2"
                     title="Salin teks spesifikasi rakitan"
                   >
                     <Copy className="h-3.5 w-3.5" />
@@ -697,7 +697,7 @@ export default function SimulasiPage({ parts }: SimulasiClientProps) {
                     type="button"
                     onClick={handlePrint}
                     disabled={selectedItemsFlat.length === 0}
-                    className="flex items-center justify-center gap-1.5 rounded-sm border border-zinc-300 dark:border-zinc-700 bg-white hover:bg-zinc-100 dark:bg-zinc-900 dark:hover:bg-zinc-800 py-2 text-xs font-semibold text-zinc-800 dark:text-zinc-200"
+                    className="kss-btn-outline h-9 px-2"
                     title="Cetak Surat Penawaran Resmi PDF"
                   >
                     <Printer className="h-3.5 w-3.5" />
@@ -709,7 +709,7 @@ export default function SimulasiPage({ parts }: SimulasiClientProps) {
                   href={TOKOPEDIA_OFFICIAL_STORE_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-1.5 w-full rounded-sm bg-[#03AC0E] hover:bg-[#02950c] text-white py-2.5 text-xs font-bold transition-colors shadow-xs"
+                  className="flex items-center justify-center gap-1.5 w-full rounded-md bg-[#03AC0E] hover:bg-[#02950c] text-white py-2.5 text-xs font-bold transition-colors shadow-xs"
                 >
                   <span>Request Link Checkout Tokopedia</span>
                   <ExternalLink className="h-3.5 w-3.5" />
@@ -724,11 +724,11 @@ export default function SimulasiPage({ parts }: SimulasiClientProps) {
       {activeDrawerCategory && (
         <div className="fixed inset-0 z-50 flex justify-end print:hidden">
           <div
-            className="fixed inset-0 bg-black/60 backdrop-blur-[2px]"
+            className="fixed inset-0 bg-black/60"
             onClick={() => setActiveDrawerCategory(null)}
           />
 
-          <div className="relative z-10 flex h-full w-full max-w-lg flex-col bg-white shadow-2xl dark:bg-zinc-950 dark:border-l dark:border-zinc-800">
+          <div className="relative z-10 flex h-full w-full max-w-lg flex-col bg-white shadow-sm dark:border-l dark:border-zinc-800 dark:bg-zinc-950">
             {/* Drawer Header */}
             <div className="flex items-center justify-between border-b border-zinc-200 px-4 py-3 dark:border-zinc-800">
               <div className="flex items-center gap-2">
@@ -739,7 +739,7 @@ export default function SimulasiPage({ parts }: SimulasiClientProps) {
               </div>
               <button
                 onClick={() => setActiveDrawerCategory(null)}
-                className="rounded-sm p-1.5 text-zinc-400 hover:bg-zinc-100 hover:text-zinc-700 dark:hover:bg-zinc-800 dark:hover:text-zinc-200"
+                className="rounded-md p-1.5 text-zinc-400 hover:bg-zinc-100 hover:text-zinc-700 dark:hover:bg-zinc-800 dark:hover:text-zinc-200"
               >
                 <X className="h-4 w-4" />
               </button>
@@ -754,7 +754,7 @@ export default function SimulasiPage({ parts }: SimulasiClientProps) {
                   placeholder="Cari brand, nama part, atau SKU..."
                   value={drawerSearchQuery}
                   onChange={(e) => setDrawerSearchQuery(e.target.value)}
-                  className="w-full rounded-sm border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 pl-8 pr-3 py-1.5 text-xs text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 focus:outline-none focus:border-blue-600"
+                  className="kss-input pl-8"
                 />
               </div>
             </div>
@@ -774,7 +774,7 @@ export default function SimulasiPage({ parts }: SimulasiClientProps) {
                     <div
                       key={candidate.id}
                       onClick={() => handleSelectDrawerPart(candidate)}
-                      className={`p-3 rounded-sm flex items-start justify-between gap-3 cursor-pointer transition-colors ${
+                      className={`p-3 rounded-md flex items-start justify-between gap-3 cursor-pointer transition-colors ${
                         isCurrent
                           ? 'bg-blue-50/60 dark:bg-blue-950/30 border border-blue-500/30'
                           : 'hover:bg-zinc-50 dark:hover:bg-zinc-900/80'
@@ -782,7 +782,7 @@ export default function SimulasiPage({ parts }: SimulasiClientProps) {
                     >
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-1.5 mb-0.5">
-                          <span className="rounded-xs bg-zinc-100 dark:bg-zinc-800 px-1.5 py-0.2 font-mono text-[9px] uppercase text-zinc-500">
+                          <span className="rounded-md bg-zinc-100 dark:bg-zinc-800 px-1.5 py-0.2 font-mono text-[9px] uppercase text-zinc-500">
                             {candidate.brand}
                           </span>
                           <span className="font-mono text-[10px] text-zinc-400 truncate">
@@ -805,7 +805,7 @@ export default function SimulasiPage({ parts }: SimulasiClientProps) {
                       <div className="text-right shrink-0">
                         {drawerHasBasePart ? (
                           <span
-                            className={`inline-block font-mono text-xs font-bold px-2 py-1 rounded-xs tabular-nums ${
+                            className={`inline-block font-mono text-xs font-bold px-2 py-1 rounded-md tabular-nums ${
                               delta === 0
                                 ? 'bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300'
                                 : delta > 0
@@ -816,7 +816,7 @@ export default function SimulasiPage({ parts }: SimulasiClientProps) {
                             {formatDeltaIDR(delta, true)}
                           </span>
                         ) : (
-                          <span className="inline-block font-mono text-[10px] font-semibold px-2 py-1 rounded-xs bg-zinc-100 dark:bg-zinc-800 text-zinc-500">
+                          <span className="inline-block font-mono text-[10px] font-semibold px-2 py-1 rounded-md bg-zinc-100 dark:bg-zinc-800 text-zinc-500">
                             Masuk total
                           </span>
                         )}
