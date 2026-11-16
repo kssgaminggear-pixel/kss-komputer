@@ -294,7 +294,7 @@ export default function SimulasiPage({ parts }: SimulasiClientProps) {
     <div className="kss-container py-8">
       {/* Toast Feedback */}
       {toastMessage && (
-        <div className="fixed bottom-20 right-4 z-50 rounded-md border border-zinc-800 bg-zinc-900 px-4 py-2.5 text-xs font-semibold text-white shadow-xl flex items-center gap-2">
+        <div className="fixed bottom-20 right-4 z-50 rounded-md border border-zinc-800 bg-zinc-900 px-4 py-2.5 text-xs font-semibold text-white shadow-sm flex items-center gap-2">
           <CheckCircle2 className="h-4 w-4 text-emerald-400" />
           <span>{toastMessage}</span>
         </div>
