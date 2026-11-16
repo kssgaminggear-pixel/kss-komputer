@@ -74,6 +74,16 @@ tersanitasi.
 
 Detail lengkap: `ARCHITECTURE.md`. Urutan pekerjaan: `ROADMAP.md`.
 
+### 3.1 FigCraft & Design Sources
+
+- Skill FigCraft terpasang di `.opencode/skills/figcraft/`.
+- Sumber desain native ada di `design/figcraft/` (`.figcraft`, skrip JSON,
+  PNG/SVG, dan kode React+Tailwind hasil Developer Mode).
+- Gunakan `figcraft-cli` 0.18.1 untuk membuat/mengekspor desain. Jangan commit
+  binary CLI.
+- Semua hasil desain tetap harus dipetakan ke `UI_FIGCRAFT_SKILL.md`; jangan
+  menyalin hex/px mentah tanpa alasan.
+
 ## 4. Gaya Kode
 
 - TypeScript strict; hindari `any` kecuali di boundary parsing dan beri komentar.

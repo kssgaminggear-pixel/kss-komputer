@@ -1,0 +1,138 @@
+[
+  { "command": "file.new", "params": { "name": "KSS System Blueprint" } },
+  {
+    "command": "node.create",
+    "as": "blueprint",
+    "params": {
+      "type": "frame",
+      "name": "PC Case Blueprint",
+      "x": 0,
+      "y": 0,
+      "width": 420,
+      "height": 460,
+      "props": { "fill": "none" }
+    }
+  },
+  {
+    "command": "node.create",
+    "params": {
+      "type": "rectangle",
+      "parent": { "$ref": "blueprint" },
+      "x": 110,
+      "y": 24,
+      "width": 200,
+      "height": 400,
+      "name": "Case Body",
+      "props": {
+        "fill": "#18181b",
+        "stroke": "#3f3f46",
+        "strokeWeight": 1.5,
+        "cornerRadius": 12
+      }
+    }
+  },
+  {
+    "command": "node.create",
+    "params": {
+      "type": "rectangle",
+      "parent": { "$ref": "blueprint" },
+      "x": 132,
+      "y": 46,
+      "width": 156,
+      "height": 278,
+      "name": "Glass Panel",
+      "props": {
+        "fill": "#0b0b0d",
+        "stroke": "#27272a",
+        "strokeWeight": 1,
+        "cornerRadius": 6
+      }
+    }
+  },
+  {
+    "command": "node.create",
+    "params": {
+      "type": "ellipse",
+      "parent": { "$ref": "blueprint" },
+      "x": 150,
+      "y": 66,
+      "width": 56,
+      "height": 56,
+      "name": "Fan Top",
+      "props": { "fill": "none", "stroke": "#f97316", "strokeWeight": 2 }
+    }
+  },
+  {
+    "command": "node.create",
+    "params": {
+      "type": "ellipse",
+      "parent": { "$ref": "blueprint" },
+      "x": 214,
+      "y": 66,
+      "width": 56,
+      "height": 56,
+      "name": "Fan Top Right",
+      "props": { "fill": "none", "stroke": "#f97316", "strokeWeight": 2 }
+    }
+  },
+  {
+    "command": "node.create",
+    "params": {
+      "type": "ellipse",
+      "parent": { "$ref": "blueprint" },
+      "x": 150,
+      "y": 134,
+      "width": 56,
+      "height": 56,
+      "name": "Fan Mid",
+      "props": { "fill": "none", "stroke": "#3f3f46", "strokeWeight": 2 }
+    }
+  },
+  {
+    "command": "node.create",
+    "params": {
+      "type": "rectangle",
+      "parent": { "$ref": "blueprint" },
+      "x": 132,
+      "y": 286,
+      "width": 156,
+      "height": 18,
+      "name": "GPU Accent",
+      "props": { "fill": "#f97316", "cornerRadius": 2 }
+    }
+  },
+  {
+    "command": "node.create",
+    "params": {
+      "type": "rectangle",
+      "parent": { "$ref": "blueprint" },
+      "x": 132,
+      "y": 350,
+      "width": 120,
+      "height": 30,
+      "name": "PSU",
+      "props": {
+        "fill": "#27272a",
+        "stroke": "#3f3f46",
+        "strokeWeight": 1,
+        "cornerRadius": 3
+      }
+    }
+  },
+  {
+    "command": "node.create",
+    "params": {
+      "type": "text",
+      "parent": { "$ref": "blueprint" },
+      "x": 132,
+      "y": 392,
+      "text": "KSS / SYSTEM INTEGRATOR",
+      "props": {
+        "fontSize": 10,
+        "fontStyle": "Bold",
+        "letterSpacing": 1.5,
+        "fill": "#71717a"
+      }
+    }
+  }
+]

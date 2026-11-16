@@ -142,7 +142,7 @@ export function PrebuiltCard({ pkg }: PrebuiltCardProps) {
         </div>
 
         {pkg.estimatedFps && pkg.estimatedFps.length > 0 && (
-          <div className="space-y-1.5 border-t border-zinc-200/80 pt-3 dark:border-zinc-800">
+          <div className="space-y-1.5 rounded-sm border border-zinc-200 bg-white p-3 dark:border-zinc-800 dark:bg-zinc-950">
             <div className="flex items-center justify-between font-mono text-[10px] font-semibold uppercase text-zinc-400">
               <span className="flex items-center gap-1">
                 <Gamepad2 className="h-3 w-3 text-orange-500" />
@@ -188,18 +188,28 @@ export function PrebuiltCard({ pkg }: PrebuiltCardProps) {
           </span>
         </div>
 
+        <button type="button" onClick={handleCustomize} className="kss-btn-primary h-10 w-full">
+          <SlidersHorizontal className="h-3.5 w-3.5" />
+          <span>Kustomisasi Paket</span>
+        </button>
+
         <div className="grid grid-cols-2 gap-2">
-          <button type="button" onClick={handleCustomize} className="kss-btn-primary h-9 px-2">
-            <SlidersHorizontal className="h-3.5 w-3.5" />
-            <span>Kustomisasi</span>
-          </button>
           <button type="button" onClick={handleWhatsAppOrder} className="kss-btn-outline h-9 px-2">
             <MessageSquareCheck className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" />
             <span>Pesan WA</span>
           </button>
+          <a
+            href={pkg.tokopediaUrl || TOKOPEDIA_OFFICIAL_STORE_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex h-9 items-center justify-center gap-1 rounded-md bg-[#00AA5B] px-2 text-xs font-bold text-white transition-colors hover:bg-[#00924E]"
+          >
+            <span>Tokopedia</span>
+            <ExternalLink className="h-3 w-3" />
+          </a>
         </div>
 
-        <div className="flex items-center justify-between gap-2">
+        <div className="flex items-center justify-between">
           <Link
             href={`/paket-rakitan/${pkg.slug}`}
             className="inline-flex items-center gap-1 text-[11px] font-bold text-zinc-700 transition-colors hover:text-orange-600 dark:text-zinc-300 dark:hover:text-orange-400"
@@ -207,15 +217,9 @@ export function PrebuiltCard({ pkg }: PrebuiltCardProps) {
             <span>Lihat Detail</span>
             <ArrowRight className="h-3 w-3" />
           </Link>
-          <a
-            href={pkg.tokopediaUrl || TOKOPEDIA_OFFICIAL_STORE_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 rounded-sm bg-[#00AA5B] px-2 py-1 text-[10px] font-bold text-white transition-colors hover:bg-[#00924E]"
-          >
-            <span>Tokopedia</span>
-            <ExternalLink className="h-3 w-3" />
-          </a>
+          <span className="font-mono text-[10px] text-zinc-400">
+            {pkg.warrantyYears} Th Garansi
+          </span>
         </div>
       </div>
     </article>

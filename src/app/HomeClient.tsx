@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useMemo } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import {
   Sparkles,
@@ -673,21 +674,59 @@ export default function HomeClient({ prebuilts, accessories, services }: HomeCli
           </div>
         </div>
 
-        <div className="mt-6 flex flex-col items-center justify-between gap-3 rounded-md border border-zinc-200 bg-zinc-900 p-6 text-white dark:border-zinc-800 sm:flex-row">
-          <div>
-            <div className="text-base font-black tracking-tight">Siap mulai merakit?</div>
-            <p className="text-xs text-zinc-300">
-              Gunakan konfigurator untuk melihat kompatibilitas dan total harga siap pakai.
-            </p>
+        <div className="mt-6 overflow-hidden rounded-md border border-zinc-800 bg-zinc-950 md:grid md:grid-cols-[280px_1fr]">
+          <div className="flex items-center justify-center border-b border-zinc-800 p-6 md:border-b-0 md:border-r">
+            <Image
+              src="/images/kss-pc-blueprint.svg"
+              width={420}
+              height={460}
+              alt="Blueprint PC rakitan KSS Komputer"
+              className="h-48 w-auto"
+            />
           </div>
-          <div className="flex w-full gap-2 sm:w-auto">
-            <Link href="/simulasi" className="inline-flex h-10 flex-1 items-center justify-center gap-2 rounded-md bg-white px-4 text-xs font-bold text-zinc-900 hover:bg-zinc-100 sm:flex-none">
-              <SlidersHorizontal className="h-4 w-4" />
-              <span>Buka Simulasi</span>
-            </Link>
-            <Link href="/paket-rakitan" className="inline-flex h-10 flex-1 items-center justify-center gap-2 rounded-md border border-zinc-700 px-4 text-xs font-bold text-white hover:bg-zinc-800 sm:flex-none">
-              <span>Paket Siap Pakai</span>
-            </Link>
+
+          <div className="p-6">
+            <div className="font-mono text-[10px] font-bold uppercase tracking-wider text-orange-400">
+              Proses Rakitan KSS
+            </div>
+            <h3 className="mt-1 text-lg font-black tracking-tight text-zinc-50">
+              Validasi → Rakit → Stress Test
+            </h3>
+            <p className="mt-1 max-w-xl text-xs leading-relaxed text-zinc-400">
+              Setiap unit melewati urutan yang sama. Tidak ada komponen yang dipasang
+              tanpa cek kompatibilitas, dan tidak ada unit yang keluar tanpa pengujian.
+            </p>
+
+            <div className="mt-4 grid grid-cols-1 gap-2 sm:grid-cols-3">
+              {[
+                'Cek socket, RAM, clearance, dan daya',
+                'Rakit rapi + cable management',
+                'Stress test, QC, lalu serah terima',
+              ].map((step, index) => (
+                <div
+                  key={step}
+                  className="rounded-sm border border-zinc-800 bg-zinc-900 p-3"
+                >
+                  <span className="font-mono text-[10px] font-bold text-orange-500">
+                    0{index + 1}
+                  </span>
+                  <p className="mt-1 text-[11px] leading-relaxed text-zinc-400">{step}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-4 flex flex-col gap-2 sm:flex-row">
+              <Link href="/simulasi" className="kss-btn-primary h-10 px-4">
+                <SlidersHorizontal className="h-4 w-4" />
+                <span>Buka Simulasi</span>
+              </Link>
+              <Link
+                href="/paket-rakitan"
+                className="inline-flex h-10 items-center justify-center gap-2 rounded-md border border-zinc-700 bg-zinc-900 px-4 text-xs font-bold text-zinc-100 transition-colors hover:bg-zinc-800"
+              >
+                <span>Paket Siap Pakai</span>
+              </Link>
+            </div>
           </div>
         </div>
 

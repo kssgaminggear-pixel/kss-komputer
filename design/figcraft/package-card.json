@@ -1,0 +1,332 @@
+[
+  { "command": "file.new", "params": { "name": "KSS Package Card" } },
+  {
+    "command": "node.create",
+    "as": "card",
+    "params": {
+      "type": "frame",
+      "name": "Package Card",
+      "x": 0,
+      "y": 0,
+      "width": 420,
+      "height": 440,
+      "props": {
+        "fill": "#ffffff",
+        "stroke": "#e4e4e7",
+        "strokeWeight": 1,
+        "cornerRadius": 6,
+        "layout": "vertical",
+        "padding": 20,
+        "gap": 12
+      }
+    }
+  },
+  {
+    "command": "node.create",
+    "params": {
+      "type": "text",
+      "parent": { "$ref": "card" },
+      "width": 380,
+      "text": "AMD RYZEN  ·  1080P  ·  GARANSI 2 TAHUN",
+      "props": {
+        "fontSize": 10,
+        "fontStyle": "Bold",
+        "letterSpacing": 1,
+        "fill": "#c2410c",
+        "textAutoResize": "height"
+      }
+    }
+  },
+  {
+    "command": "node.create",
+    "params": {
+      "type": "text",
+      "parent": { "$ref": "card" },
+      "width": 380,
+      "text": "KSS E-Sports Champion 1080p",
+      "props": {
+        "fontSize": 24,
+        "fontStyle": "Bold",
+        "lineHeight": "120%",
+        "fill": "#18181b",
+        "textAutoResize": "height"
+      }
+    }
+  },
+  {
+    "command": "node.create",
+    "params": {
+      "type": "text",
+      "parent": { "$ref": "card" },
+      "width": 380,
+      "text": "Pilihan utama untuk Valorant, CS2, dan Dota 2. Performa 1080p tinggi dengan Ryzen 5 5600 dan RX 6600 8GB.",
+      "props": {
+        "fontSize": 12,
+        "lineHeight": "150%",
+        "fill": "#71717a",
+        "textAutoResize": "height"
+      }
+    }
+  },
+  {
+    "command": "node.create",
+    "as": "pills",
+    "params": {
+      "type": "frame",
+      "parent": { "$ref": "card" },
+      "width": 380,
+      "height": 22,
+      "name": "Spec Pills",
+      "props": { "fill": "none", "layout": "horizontal", "gap": 6 }
+    }
+  },
+  {
+    "command": "node.create",
+    "as": "pill1",
+    "params": {
+      "type": "frame",
+      "parent": { "$ref": "pills" },
+      "name": "Pill AM4",
+      "props": {
+        "fill": "#f4f4f5",
+        "stroke": "#e4e4e7",
+        "strokeWeight": 1,
+        "cornerRadius": 2,
+        "layout": "horizontal",
+        "padding": [4, 7],
+        "mainAlign": "center",
+        "crossAlign": "center",
+        "sizingH": "hug",
+        "sizingV": "hug"
+      }
+    }
+  },
+  {
+    "command": "node.create",
+    "params": {
+      "type": "text",
+      "parent": { "$ref": "pill1" },
+      "text": "AM4",
+      "props": { "fontSize": 9, "fontStyle": "Bold", "fill": "#52525b" }
+    }
+  },
+  {
+    "command": "node.create",
+    "as": "pill2",
+    "params": {
+      "type": "frame",
+      "parent": { "$ref": "pills" },
+      "name": "Pill DDR4",
+      "props": {
+        "fill": "#f4f4f5",
+        "stroke": "#e4e4e7",
+        "strokeWeight": 1,
+        "cornerRadius": 2,
+        "layout": "horizontal",
+        "padding": [4, 7],
+        "mainAlign": "center",
+        "crossAlign": "center",
+        "sizingH": "hug",
+        "sizingV": "hug"
+      }
+    }
+  },
+  {
+    "command": "node.create",
+    "params": {
+      "type": "text",
+      "parent": { "$ref": "pill2" },
+      "text": "DDR4",
+      "props": { "fontSize": 9, "fontStyle": "Bold", "fill": "#52525b" }
+    }
+  },
+  {
+    "command": "node.create",
+    "as": "pill3",
+    "params": {
+      "type": "frame",
+      "parent": { "$ref": "pills" },
+      "name": "Pill Watt",
+      "props": {
+        "fill": "#fff7ed",
+        "stroke": "#fed7aa",
+        "strokeWeight": 1,
+        "cornerRadius": 2,
+        "layout": "horizontal",
+        "padding": [4, 7],
+        "mainAlign": "center",
+        "crossAlign": "center",
+        "sizingH": "hug",
+        "sizingV": "hug"
+      }
+    }
+  },
+  {
+    "command": "node.create",
+    "params": {
+      "type": "text",
+      "parent": { "$ref": "pill3" },
+      "text": "350W",
+      "props": { "fontSize": 9, "fontStyle": "Bold", "fill": "#c2410c" }
+    }
+  },
+  {
+    "command": "node.create",
+    "as": "fps",
+    "params": {
+      "type": "frame",
+      "parent": { "$ref": "card" },
+      "width": 380,
+      "height": 94,
+      "name": "FPS Telemetry",
+      "props": {
+        "fill": "#fafafa",
+        "stroke": "#f4f4f5",
+        "strokeWeight": 1,
+        "cornerRadius": 4,
+        "layout": "vertical",
+        "padding": [10, 12],
+        "gap": 6
+      }
+    }
+  },
+  {
+    "command": "node.create",
+    "params": {
+      "type": "text",
+      "parent": { "$ref": "fps" },
+      "width": 356,
+      "text": "VALORANT                                      ~280 FPS",
+      "props": { "fontSize": 10, "fontStyle": "Bold", "fill": "#3f3f46", "textAutoResize": "height" }
+    }
+  },
+  {
+    "command": "node.create",
+    "as": "bar1",
+    "params": {
+      "type": "frame",
+      "parent": { "$ref": "fps" },
+      "width": 356,
+      "height": 5,
+      "name": "Valorant Bar",
+      "props": { "fill": "#e4e4e7", "layout": "horizontal", "padding": 0, "gap": 0 }
+    }
+  },
+  {
+    "command": "node.create",
+    "params": {
+      "type": "rectangle",
+      "parent": { "$ref": "bar1" },
+      "width": 312,
+      "height": 5,
+      "name": "Valorant Fill",
+      "props": { "fill": "#f97316" }
+    }
+  },
+  {
+    "command": "node.create",
+    "params": {
+      "type": "text",
+      "parent": { "$ref": "fps" },
+      "width": 356,
+      "text": "COUNTER-STRIKE 2                          ~165 FPS",
+      "props": { "fontSize": 10, "fontStyle": "Bold", "fill": "#3f3f46", "textAutoResize": "height" }
+    }
+  },
+  {
+    "command": "node.create",
+    "as": "bar2",
+    "params": {
+      "type": "frame",
+      "parent": { "$ref": "fps" },
+      "width": 356,
+      "height": 5,
+      "name": "CS2 Bar",
+      "props": { "fill": "#e4e4e7", "layout": "horizontal", "padding": 0, "gap": 0 }
+    }
+  },
+  {
+    "command": "node.create",
+    "params": {
+      "type": "rectangle",
+      "parent": { "$ref": "bar2" },
+      "width": 220,
+      "height": 5,
+      "name": "CS2 Fill",
+      "props": { "fill": "#f97316" }
+    }
+  },
+  {
+    "command": "node.create",
+    "params": {
+      "type": "rectangle",
+      "parent": { "$ref": "card" },
+      "width": 380,
+      "height": 1,
+      "name": "Divider",
+      "props": { "fill": "#e4e4e7" }
+    }
+  },
+  {
+    "command": "node.create",
+    "as": "price",
+    "params": {
+      "type": "frame",
+      "parent": { "$ref": "card" },
+      "width": 380,
+      "height": 44,
+      "name": "Price Row",
+      "props": {
+        "fill": "none",
+        "layout": "horizontal",
+        "mainAlign": "spaceBetween",
+        "crossAlign": "center"
+      }
+    }
+  },
+  {
+    "command": "node.create",
+    "params": {
+      "type": "text",
+      "parent": { "$ref": "price" },
+      "text": "Rp 9.440.000",
+      "props": { "fontSize": 24, "fontStyle": "Bold", "fill": "#18181b" }
+    }
+  },
+  {
+    "command": "node.create",
+    "params": {
+      "type": "text",
+      "parent": { "$ref": "price" },
+      "text": "TERMASUK RAKIT",
+      "props": { "fontSize": 9, "fontStyle": "Bold", "fill": "#047857" }
+    }
+  },
+  {
+    "command": "node.create",
+    "as": "cta",
+    "params": {
+      "type": "frame",
+      "parent": { "$ref": "card" },
+      "width": 380,
+      "height": 40,
+      "name": "CTA",
+      "props": {
+        "fill": "#ea580c",
+        "cornerRadius": 4,
+        "layout": "horizontal",
+        "mainAlign": "center",
+        "crossAlign": "center"
+      }
+    }
+  },
+  {
+    "command": "node.create",
+    "params": {
+      "type": "text",
+      "parent": { "$ref": "cta" },
+      "text": "KUSTOMISASI PAKET",
+      "props": { "fontSize": 11, "fontStyle": "Bold", "fill": "#ffffff" }
+    }
+  }
+]
