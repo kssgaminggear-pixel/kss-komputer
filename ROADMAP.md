@@ -114,3 +114,14 @@
 - Migrasi UI ke `PrebuiltPackage`/`ComputerService` dilakukan pada Fase 3–6.
 - Setiap fase wajib lulus `npx tsc --noEmit`, `npm run lint`, dan `npm run build`
   sebelum commit.
+
+### Status per 2026-11-16
+
+- Seluruh halaman publik sudah live di
+  `https://kss-komputer-seven.vercel.app`.
+- Checklist Fase 3–6 menandai **migrasi ke domain v2** (data `PrebuiltPackage` /
+  `ComputerService`), bukan pembuatan halaman dari nol.
+- Sumber desain FigCraft native ada di `design/figcraft/`; skill OpenCode di
+  `.opencode/skills/figcraft/`.
+- Harga satuan komponen: 0 kebocoran di chunk publik (diverifikasi).
+

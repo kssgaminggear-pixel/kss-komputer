@@ -1,58 +1,98 @@
-# Modern High-Density PC Hardware Store & PC Builder
+# KSS Komputer — Custom PC System Integrator & Service Center
 
-Platform e-commerce komponen komputer dan simulasi rakitan PC (*PC Builder*) modern untuk pasar Indonesia. Dirancang dengan kepadatan informasi tinggi (*high information density*) ala **Enterkomputer** dan **PCPartPicker**, dipadukan dengan estetika teknis industrial yang bersih ala **Linear**—bebas dari elemen visual generik (*AI slop*).
+Website resmi KSS Komputer: paket PC rakitan siap pakai, konfigurator custom,
+layanan jasa servis/maintenance, konsultasi budget, dan tracking pengerjaan.
 
----
-
-## Urutan Baca untuk AI Coding Agent (WAJIB)
-
-Jika Anda adalah AI Agent yang ditugaskan membangun atau memodifikasi repositori ini, baca dokumen berikut secara berurutan sebelum menulis kode apa pun:
-
-1. **`AGENT_RULES.md`**: Aturan mutlak penulisan kode, batasan desain Tailwind CSS (*Anti-AI-Slop*), aturan tipografi angka, dan protokol eksekusi bertahap.
-2. **`ARCHITECTURE.md`**: Struktur direktori, kontrak *interface* TypeScript (`types.ts`), logika mesin kompatibilitas komponen PC, dan spesifikasi *state management* Zustand.
-3. **`ROADMAP.md`**: Daftar *to-do list* dan *checklist* bertahap (`[ ]`). Kerjakan tugas secara berurutan dan perbarui statusnya menjadi `[x]` setiap selesai satu sub-tugas.
+Fokus bisnis: **menjual paket rakitan dan jasa**, bukan harga satuan komponen.
+Publik hanya melihat **total harga paket** dan **delta upgrade**.
 
 ---
 
-## Tech Stack Utama
+## Dokumen Wajib untuk AI Agent
 
-- **Framework**: Next.js (App Router) + TypeScript (Strict Mode)
-- **Styling**: Tailwind CSS (Industrial Sharp/Flat Theme, Dark & Light Mode)
-- **Icons**: `lucide-react` (Ukuran kompak `w-4 h-4` atau `w-3.5 h-3.5`)
-- **State Management**: `zustand` dengan `persist` middleware (`localStorage`)
-- **Format Angka & Mata Uang**: Standar Rupiah Indonesia (`Rp 2.450.000` dengan `font-mono tabular-nums`)
+Baca berurutan sebelum menulis kode:
 
----
+1. **`AGENTS.md`** — identitas bisnis, aturan zero part-price leak, protokol
+   eksekusi, dan definition of done.
+2. **`UI_FIGCRAFT_SKILL.md`** — kontrak visual industrial: surface, tipografi,
+   FPS telemetry, delta tag, dan larangan anti-AI-slop.
+3. **`ARCHITECTURE.md`** — struktur modul, domain model, alur data harga, dan
+   state management.
+4. **`ROADMAP.md`** — urutan fase dan status pekerjaan.
 
-## Fitur Utama Platform
-
-1. **Dual-View Hardware Catalog**:
-   - **Enterkomputer Pricelist View**: Tabel baris super padat tanpa gambar besar untuk *scrolling* ratusan SKU, melihat badge spesifikasi instan, dan membandingkan harga secepat kilat.
-   - **Compact Grid View**: Kartu produk ringkas dengan 4 *badge* teknis utama, indikator status stok, dan garansi resmi.
-2. **Interactive PC Builder (`/simulasi`)**:
-   - Validasi kompatibilitas otomatis (*Socket CPU vs Mobo*, *DDR4 vs DDR5*, *Form Factor ATX/mATX/ITX*, *Panjang GPU vs Casing*, dan *Peringatan Update BIOS*).
-   - Kalkulator estimasi daya (*Wattage Meter*) *real-time* beserta rekomendasi kapasitas PSU minimum.
-   - Ekspor rakitan ke pesan **WhatsApp Admin**, **Salin Teks Forum/Discord**, **Shareable Link**, dan **Cetak Penawaran Harga (PDF/Print View)**.
-3. **1-Click Prebuilt Templates (`/paket-rakitan`)**:
-   - Template rakitan PC siap pakai berdasarkan *budget* & kebutuhan yang bisa langsung dimuat ke halaman Simulasi untuk dikustomisasi ulang.
-4. **Hardware Comparison Engine (`/bandingkan`)**:
-   - Perbandingan spesifikasi *side-by-side* hingga 4 produk dengan penyorotan otomatis pada spesifikasi yang lebih unggul dan harga termurah.
-5. **Spreadsheet-Style Admin Pricelist (`/admin/pricelist`)**:
-   - Editor harga dan status stok massal bergaya Excel untuk memperbarui ratusan komponen dalam hitungan detik.
+Sumber desain native FigCraft ada di `design/figcraft/` (lihat README folder).
 
 ---
 
-## Cara Menjalankan Proyek (Development)
+## Tech Stack
 
-~~~bash
-# 1. Install dependencies
+- **Next.js 16** App Router + TypeScript strict + Turbopack
+- **Tailwind CSS 4**
+- **Zustand** + persist
+- **lucide-react**
+- **Vercel** untuk deployment
+
+---
+
+## Fitur Publik
+
+1. **Homepage** — hero industrial, featured rig + FPS, paket, jasa, aksesoris,
+   perbandingan KSS vs rakit sendiri.
+2. **Paket PC (`/paket-rakitan`)** — filter budget/kebutuhan/platform, kartu
+   dengan estimasi FPS dan satu harga total.
+3. **Detail paket (`/paket-rakitan/[slug]`)** — quick upgrade dengan delta harga
+   real-time, FPS benchmark, CTA WhatsApp/Tokopedia.
+4. **Simulasi (`/simulasi`)** — 10 slot komponen, validasi kompatibilitas,
+   delta pricing tanpa harga satuan, quotation cetak, salin spek, WhatsApp.
+5. **Konsultasi (`/konsultasi`)** — wizard 5 langkah + rekomendasi + WA.
+6. **Jasa (`/jasa`, `/jasa/[slug]`)** — katalog layanan, detail, booking WA.
+7. **Cek pesanan (`/cek-pesanan`)** — tracking `TRK-KSS-XXX` 9 tahap.
+8. **Penawaran (`/penawaran/[code]`)** — surat penawaran resmi, print/PDF.
+9. **Katalog pendukung** — `/komponen`, `/komponen/[slug]`, `/aksesoris`.
+10. **Tentang kami (`/tentang-kami`)** — profil bengkel, lokasi, garansi, FAQ.
+
+## Area Internal
+
+- `/admin/pricing` — markup, harga modal, assembly fee, profit paket.
+- `/admin/quotes` — quotation studio.
+
+---
+
+## Aturan Harga (Wajib)
+
+- `costPrice`, `sellPrice`, dan alias `price` **tidak boleh** masuk client bundle
+  atau halaman publik.
+- Data mentah hanya diakses server/admin melalui `server-catalog` /
+  `server-pricing` dan DTO `sanitizer.ts`.
+- Estimasi total/delta memakai `POST /api/build/estimate`.
+- ESLint memblokir import `mock-data` dari komponen/halaman publik.
+
+---
+
+## Menjalankan
+
+```bash
 npm install
+npm run dev      # http://localhost:3000
+npm run lint
+npx tsc --noEmit
+npm run build
+```
 
-# 2. Pastikan package pendukung terpasang
-npm install zustand lucide-react clsx tailwind-merge
+## Deploy
 
-# 3. Jalankan development server
-npm run dev
-~~~
+Produksi: <https://kss-komputer-seven.vercel.app>
 
-Buka `http://localhost:3000` di browser untuk melihat hasilnya.
+```bash
+vercel deploy --prod --yes
+```
+
+---
+
+## FigCraft
+
+Desain sumber dan cara regenerate ada di `design/figcraft/README.md`.
+Skill FigCraft untuk OpenCode ada di `.opencode/skills/figcraft/`.
+
+Aturan: perubahan visual harus mengikuti `UI_FIGCRAFT_SKILL.md`; file
+`.figcraft` adalah sumber desain, PNG/SVG adalah hasil ekspor.
