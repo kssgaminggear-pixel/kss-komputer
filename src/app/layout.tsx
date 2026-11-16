@@ -20,7 +20,7 @@ const geistMono = Geist_Mono({
 });
 
 export const viewport: Viewport = {
-  themeColor: '#2563eb',
+  themeColor: '#ea580c',
   width: 'device-width',
   initialScale: 1,
   maximumScale: 5,
@@ -33,8 +33,8 @@ export const metadata: Metadata = {
     'Pusat PC rakitan jadi siap pakai (gaming, workstation, office), custom configurator kompatibilitas deterministik, konsultasi budget via WhatsApp, dan hardware eceran bergaransi resmi.',
   manifest: '/manifest.json',
   icons: {
-    icon: '/globe.svg',
-    apple: '/globe.svg',
+    icon: '/icons/kss-192.png',
+    apple: '/icons/kss-apple.png',
   },
   keywords: [
     'rakit pc jakarta',

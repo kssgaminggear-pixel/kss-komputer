@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import {
   ShieldCheck,
@@ -103,9 +104,13 @@ export function Footer() {
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
           <div className="flex flex-col gap-3">
             <div className="flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-md bg-orange-600 font-mono text-xs font-bold tracking-wider text-white">
-                KSS
-              </div>
+              <Image
+                src="/images/brand/kss-logo-light.png"
+                width={32}
+                height={32}
+                alt="Logo KSS Komputer"
+                className="h-8 w-8 rounded-sm"
+              />
               <span className="font-mono text-sm font-black tracking-tight text-zinc-100">
                 KSS KOMPUTER
               </span>

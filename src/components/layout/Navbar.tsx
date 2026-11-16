@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
@@ -132,9 +133,14 @@ export function Navbar({ searchProducts }: NavbarProps) {
         {/* Main bar */}
         <div className="kss-container flex h-16 items-center gap-3">
           <Link href="/" className="flex shrink-0 items-center gap-2.5">
-            <span className="flex h-9 w-9 items-center justify-center rounded-md bg-orange-600 font-mono text-sm font-black tracking-wider text-white">
-              KSS
-            </span>
+            <Image
+              src="/images/brand/kss-logo-light.png"
+              width={36}
+              height={36}
+              alt="Logo KSS Komputer"
+              className="h-9 w-9 rounded-sm"
+              priority
+            />
             <span className="hidden flex-col leading-none sm:flex">
               <span className="font-mono text-sm font-black tracking-tight text-zinc-900 dark:text-zinc-50">
                 KSS KOMPUTER
