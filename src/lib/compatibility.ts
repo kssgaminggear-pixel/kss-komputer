@@ -61,7 +61,7 @@ function toPublicPart(part: HardwarePart): PublicHardwarePart {
     slug: part.slug,
     brand: part.brand,
     category: part.category,
-    retailPrice: part.retailPrice ?? part.sellPrice,
+    retailPrice: part.retailPrice ?? 0,
     isRetailAvailable: part.isRetailAvailable,
     originalPrice: part.originalPrice,
     stockStatus: part.stockStatus,
