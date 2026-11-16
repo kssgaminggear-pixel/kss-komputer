@@ -138,11 +138,11 @@ export default async function KomponenDetailPage({ params }: KomponenDetailPageP
                 { label: 'Daya', value: `${part.wattage}W` },
                 { label: 'Garansi', value: `${part.warrantyYears} Tahun` },
               ].map((cell) => (
-                <div key={cell.label} className="bg-zinc-950 p-3">
+                <div key={cell.label} className="bg-white p-3">
                   <div className="font-mono text-[9px] uppercase tracking-wider text-zinc-500">
                     {cell.label}
                   </div>
-                  <div className="mt-1 font-mono text-xs font-bold tabular-nums text-zinc-100">
+                  <div className="mt-1 font-mono text-xs font-bold tabular-nums text-zinc-900">
                     {cell.value}
                   </div>
                 </div>

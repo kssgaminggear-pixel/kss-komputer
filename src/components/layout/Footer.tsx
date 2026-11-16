@@ -27,9 +27,9 @@ export function Footer() {
   ];
 
   return (
-    <footer className="border-t border-zinc-800 bg-zinc-950 text-zinc-400">
+    <footer className="border-t border-zinc-200 bg-zinc-50 text-zinc-600">
       {/* Value bar */}
-      <div className="border-b border-zinc-800">
+      <div className="border-b border-zinc-200">
         <div className="kss-container grid grid-cols-2 gap-4 py-5 md:grid-cols-4">
           {[
             {
@@ -60,7 +60,7 @@ export function Footer() {
                   <Icon className="h-4 w-4 text-orange-500" />
                 </span>
                 <div>
-                  <div className="text-xs font-bold text-zinc-100">{item.title}</div>
+                  <div className="text-xs font-bold text-zinc-900">{item.title}</div>
                   <div className="mt-0.5 text-[11px] leading-relaxed text-zinc-500">
                     {item.text}
                   </div>
@@ -72,10 +72,10 @@ export function Footer() {
       </div>
 
       {/* CTA band */}
-      <div className="border-b border-zinc-800">
+      <div className="border-b border-zinc-200">
         <div className="kss-container flex flex-col items-start justify-between gap-3 py-6 sm:flex-row sm:items-center">
           <div>
-            <div className="text-sm font-black tracking-tight text-zinc-100">
+            <div className="text-sm font-black tracking-tight text-zinc-900">
               Butuh bantuan memilih spesifikasi?
             </div>
             <p className="text-xs text-zinc-500">
@@ -91,7 +91,7 @@ export function Footer() {
               href="https://wa.me/6281234567890"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex flex-1 items-center justify-center gap-2 rounded-md border border-zinc-700 bg-zinc-900 px-4 py-2.5 text-xs font-bold text-zinc-100 transition-colors hover:bg-zinc-800 sm:flex-none"
+              className="inline-flex flex-1 items-center justify-center gap-2 rounded-md border border-zinc-700 bg-zinc-900 px-4 py-2.5 text-xs font-bold text-zinc-900 transition-colors hover:bg-zinc-800 sm:flex-none"
             >
               WhatsApp
             </a>
@@ -111,7 +111,7 @@ export function Footer() {
                 alt="Logo KSS Komputer"
                 className="h-8 w-8 rounded-sm"
               />
-              <span className="font-mono text-sm font-black tracking-tight text-zinc-100">
+              <span className="font-mono text-sm font-black tracking-tight text-zinc-900">
                 KSS KOMPUTER
               </span>
             </div>
@@ -146,7 +146,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h3 className="mb-3 font-mono text-xs font-bold uppercase tracking-wider text-zinc-100">
+            <h3 className="mb-3 font-mono text-xs font-bold uppercase tracking-wider text-zinc-900">
               Navigasi Cepat
             </h3>
             <ul className="flex flex-col gap-2 text-xs">
@@ -173,13 +173,13 @@ export function Footer() {
           </div>
 
           <div>
-            <h3 className="mb-3 font-mono text-xs font-bold uppercase tracking-wider text-zinc-100">
+            <h3 className="mb-3 font-mono text-xs font-bold uppercase tracking-wider text-zinc-900">
               Distributor Resmi
             </h3>
             <div className="flex flex-col gap-2 text-xs">
               {distributors.map((dist) => (
-                <div key={dist.name} className="border-b border-zinc-800/70 pb-1.5">
-                  <div className="text-[11px] font-semibold text-zinc-300">
+                <div key={dist.name} className="border-b border-zinc-200/70 pb-1.5">
+                  <div className="text-[11px] font-semibold text-zinc-700">
                     {dist.name}
                   </div>
                   <div className="font-mono text-[10px] text-zinc-500">{dist.brands}</div>
@@ -189,7 +189,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h3 className="mb-3 font-mono text-xs font-bold uppercase tracking-wider text-zinc-100">
+            <h3 className="mb-3 font-mono text-xs font-bold uppercase tracking-wider text-zinc-900">
               Kebijakan &amp; Pembayaran
             </h3>
             <ul className="flex flex-col gap-2 text-xs">
@@ -206,14 +206,14 @@ export function Footer() {
             </ul>
 
             <div className="mt-4">
-              <div className="mb-1.5 font-mono text-[11px] font-semibold uppercase tracking-wider text-zinc-300">
+              <div className="mb-1.5 font-mono text-[11px] font-semibold uppercase tracking-wider text-zinc-700">
                 Metode Pembayaran
               </div>
               <div className="flex flex-wrap gap-1.5 font-mono text-[10px]">
                 {['BCA', 'Mandiri', 'QRIS', 'Tokopedia', 'Shopee'].map((pay) => (
                   <span
                     key={pay}
-                    className="rounded-sm border border-zinc-800 bg-zinc-900 px-1.5 py-0.5 text-zinc-400"
+                    className="rounded-sm border border-zinc-200 bg-white px-1.5 py-0.5 text-zinc-600"
                   >
                     {pay}
                   </span>
@@ -224,7 +224,7 @@ export function Footer() {
         </div>
       </div>
 
-      <div className="border-t border-zinc-800 bg-black/40 px-4 py-3">
+      <div className="border-t border-zinc-200 bg-white px-4 py-3">
         <div className="kss-container flex flex-col items-center justify-between gap-2 text-[11px] text-zinc-500 sm:flex-row">
           <div className="text-center font-mono sm:text-left">
             &copy; {currentYear} KSS Komputer Jakarta. Seluruh hak cipta dilindungi.

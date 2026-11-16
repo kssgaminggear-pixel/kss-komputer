@@ -90,12 +90,12 @@ export function Navbar({ searchProducts }: NavbarProps) {
     <>
       <header className="sticky top-0 z-40 border-b border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-950">
         {/* Utility bar */}
-        <div className="hidden border-b border-zinc-800 bg-zinc-950 text-zinc-400 sm:block">
+        <div className="hidden border-b border-zinc-200 bg-zinc-100 text-zinc-500 sm:block">
           <div className="kss-container flex h-8 items-center justify-between text-[11px]">
             <div className="flex items-center gap-4">
               <span className="flex items-center gap-1.5">
                 <MapPin className="h-3 w-3 text-orange-500" />
-                <span className="font-semibold text-zinc-200">Mangga Dua Mall, Jakarta</span>
+                <span className="font-semibold text-zinc-800">Mangga Dua Mall, Jakarta</span>
               </span>
               <span className="hidden items-center gap-1 lg:flex">
                 <Clock className="h-3 w-3" />
@@ -121,7 +121,7 @@ export function Navbar({ searchProducts }: NavbarProps) {
                 href={`https://wa.me/${DEFAULT_WHATSAPP_PHONE}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-1 font-mono text-zinc-300 transition-colors hover:text-orange-400"
+                className="flex items-center gap-1 font-mono text-zinc-700 transition-colors hover:text-orange-600"
               >
                 <PhoneCall className="h-3 w-3 text-emerald-500" />
                 <span>0812-3456-7890</span>

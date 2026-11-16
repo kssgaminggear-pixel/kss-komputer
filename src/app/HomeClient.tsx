@@ -663,8 +663,8 @@ export default function HomeClient({ prebuilts, accessories, services }: HomeCli
           </div>
         </div>
 
-        <div className="mt-6 overflow-hidden rounded-md border border-zinc-800 bg-zinc-950 md:grid md:grid-cols-[280px_1fr]">
-          <div className="flex items-center justify-center border-b border-zinc-800 p-6 md:border-b-0 md:border-r">
+        <div className="mt-6 overflow-hidden rounded-md border border-zinc-200 bg-white md:grid md:grid-cols-[280px_1fr]">
+          <div className="flex items-center justify-center border-b border-zinc-200 bg-zinc-50 p-6 md:border-b-0 md:border-r">
             <Image
               src="/images/kss-pc-blueprint.svg"
               width={420}
@@ -675,13 +675,13 @@ export default function HomeClient({ prebuilts, accessories, services }: HomeCli
           </div>
 
           <div className="p-6">
-            <div className="font-mono text-[10px] font-bold uppercase tracking-wider text-orange-400">
+            <div className="font-mono text-[10px] font-bold uppercase tracking-wider text-orange-600">
               Proses Rakitan KSS
             </div>
-            <h3 className="mt-1 text-lg font-black tracking-tight text-zinc-50">
+            <h3 className="mt-1 text-lg font-black tracking-tight text-zinc-900">
               Validasi → Rakit → Stress Test
             </h3>
-            <p className="mt-1 max-w-xl text-xs leading-relaxed text-zinc-400">
+            <p className="mt-1 max-w-xl text-xs leading-relaxed text-zinc-600">
               Setiap unit melewati urutan yang sama. Tidak ada komponen yang dipasang
               tanpa cek kompatibilitas, dan tidak ada unit yang keluar tanpa pengujian.
             </p>
@@ -694,12 +694,12 @@ export default function HomeClient({ prebuilts, accessories, services }: HomeCli
               ].map((step, index) => (
                 <div
                   key={step}
-                  className="rounded-sm border border-zinc-800 bg-zinc-900 p-3"
+                  className="rounded-sm border border-zinc-200 bg-zinc-50 p-3"
                 >
-                  <span className="font-mono text-[10px] font-bold text-orange-500">
+                  <span className="font-mono text-[10px] font-bold text-orange-600">
                     0{index + 1}
                   </span>
-                  <p className="mt-1 text-[11px] leading-relaxed text-zinc-400">{step}</p>
+                  <p className="mt-1 text-[11px] leading-relaxed text-zinc-600">{step}</p>
                 </div>
               ))}
             </div>
@@ -711,7 +711,7 @@ export default function HomeClient({ prebuilts, accessories, services }: HomeCli
               </Link>
               <Link
                 href="/paket-rakitan"
-                className="inline-flex h-10 items-center justify-center gap-2 rounded-md border border-zinc-700 bg-zinc-900 px-4 text-xs font-bold text-zinc-100 transition-colors hover:bg-zinc-800"
+                className="inline-flex h-10 items-center justify-center gap-2 rounded-md border border-zinc-300 bg-white px-4 text-xs font-bold text-zinc-800 transition-colors hover:bg-zinc-100"
               >
                 <span>Paket Siap Pakai</span>
               </Link>
@@ -719,7 +719,7 @@ export default function HomeClient({ prebuilts, accessories, services }: HomeCli
           </div>
         </div>
 
-        <div className="mt-4 flex flex-wrap items-center justify-center gap-4 text-[10px] font-mono text-zinc-400">
+        <div className="mt-4 flex flex-wrap items-center justify-center gap-4 text-[10px] font-mono text-zinc-500">
           <span className="flex items-center gap-1"><ShieldCheck className="h-3 w-3" /> Garansi Resmi</span>
           <span className="flex items-center gap-1"><Clock className="h-3 w-3" /> Senin - Sabtu 09.00 - 18.00</span>
           <span className="flex items-center gap-1"><PhoneCall className="h-3 w-3" /> 0812-3456-7890</span>
