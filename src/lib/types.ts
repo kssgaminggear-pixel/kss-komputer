@@ -92,6 +92,19 @@ export interface HardwarePart {
   updatedAt: string;
 }
 
+/**
+ * Bentuk komponen yang aman dikirim ke client / halaman publik.
+ * `costPrice`, `sellPrice`, dan alias `price` sengaja dihilangkan.
+ */
+export type PublicHardwarePart = Omit<HardwarePart, 'costPrice' | 'sellPrice' | 'price'> & {
+  retailPrice: number;
+};
+
+/**
+ * Bentuk aksesoris yang aman dikirim ke client (tanpa harga modal).
+ */
+export type PublicAccessory = Omit<AccessoryItem, 'costPrice'>;
+
 // Alias untuk menjaga backward compatibility dengan kode sebelumnya
 export type Product = HardwarePart;
 export type ProductSpecs = PartSpecs;
@@ -175,8 +188,8 @@ export interface ServicePackage {
  * Item Rakitan Aktif
  */
 export interface SelectedBuildItem {
-  part: HardwarePart;
-  product?: HardwarePart;         // alias
+  part: PublicHardwarePart;
+  product?: PublicHardwarePart;   // alias
   quantity: number;
 }
 

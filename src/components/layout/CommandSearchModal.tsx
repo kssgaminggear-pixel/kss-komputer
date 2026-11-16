@@ -3,8 +3,7 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import Link from 'next/link';
 import { Search, X, ShoppingCart, Cpu, Check, ArrowRight } from 'lucide-react';
-import { Product } from '@/lib/types';
-import { MOCK_PRODUCTS } from '@/lib/mock-data';
+import { PublicHardwarePart } from '@/lib/types';
 import { formatIDR } from '@/lib/format';
 import { SpecBadges, getProductSpecLabels } from '@/components/catalog/SpecBadges';
 import { useBuilderStore } from '@/store/useBuilderStore';
@@ -13,13 +12,14 @@ import { useCartStore } from '@/store/useCartStore';
 export interface CommandSearchModalProps {
   isOpen: boolean;
   onClose: () => void;
+  products: PublicHardwarePart[];
 }
 
 /**
  * Memeriksa apakah suatu produk cocok dengan seluruh token pencarian (multi-token search).
  * Contoh: "am5 ddr5 msi" harus cocok dengan socket AM5, ram DDR5, dan brand MSI.
  */
-function matchesSearchTokens(product: Product, tokens: string[]): boolean {
+function matchesSearchTokens(product: PublicHardwarePart, tokens: string[]): boolean {
   if (tokens.length === 0) return true;
 
   const specLabels = getProductSpecLabels(product).map((lbl) => lbl.toLowerCase());
@@ -41,7 +41,7 @@ function matchesSearchTokens(product: Product, tokens: string[]): boolean {
   return tokens.every((token) => searchCorpus.includes(token));
 }
 
-export function CommandSearchModal({ isOpen, onClose }: CommandSearchModalProps) {
+export function CommandSearchModal({ isOpen, onClose, products }: CommandSearchModalProps) {
   const [query, setQuery] = useState('');
   const [addedBuilderId, setAddedBuilderId] = useState<string | null>(null);
   const [addedCartId, setAddedCartId] = useState<string | null>(null);
@@ -88,13 +88,13 @@ export function CommandSearchModal({ isOpen, onClose }: CommandSearchModalProps)
     const trimmed = query.trim().toLowerCase();
     if (!trimmed) {
       // Tampilkan 8 produk rekomendasi awal saat query kosong
-      return MOCK_PRODUCTS.slice(0, 8);
+      return products.slice(0, 8);
     }
     const tokens = trimmed.split(/\s+/).filter(Boolean);
-    return MOCK_PRODUCTS.filter((product) => matchesSearchTokens(product, tokens)).slice(0, 20);
-  }, [query]);
+    return products.filter((product) => matchesSearchTokens(product, tokens)).slice(0, 20);
+  }, [query, products]);
 
-  const handleAddToBuilder = (e: React.MouseEvent, product: Product) => {
+  const handleAddToBuilder = (e: React.MouseEvent, product: PublicHardwarePart) => {
     e.preventDefault();
     e.stopPropagation();
     addPart(product.category, product);
@@ -104,7 +104,7 @@ export function CommandSearchModal({ isOpen, onClose }: CommandSearchModalProps)
     }, 1500);
   };
 
-  const handleAddToCart = (e: React.MouseEvent, product: Product) => {
+  const handleAddToCart = (e: React.MouseEvent, product: PublicHardwarePart) => {
     e.preventDefault();
     e.stopPropagation();
     addItem(product, 1);
@@ -214,9 +214,9 @@ export function CommandSearchModal({ isOpen, onClose }: CommandSearchModalProps)
                   <div className="flex items-center justify-between sm:justify-end gap-3 pt-2 sm:pt-0 border-t sm:border-t-0 border-zinc-100 dark:border-zinc-800/60">
                     <div className="text-left sm:text-right">
                       <div className="font-mono font-semibold text-xs sm:text-sm text-zinc-900 dark:text-zinc-100 tabular-nums">
-                        {formatIDR(product.price)}
+                        {formatIDR(product.retailPrice)}
                       </div>
-                      {product.originalPrice && product.originalPrice > product.price && (
+                      {product.originalPrice && product.originalPrice > product.retailPrice && (
                         <div className="font-mono text-[10px] text-zinc-400 line-through tabular-nums">
                           {formatIDR(product.originalPrice)}
                         </div>

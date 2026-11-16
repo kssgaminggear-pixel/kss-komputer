@@ -2,13 +2,13 @@ import {
   BuildSelections,
   CompatibilityIssue,
   CompatibilityReport,
-  HardwarePart,
   ProductCategory,
+  PublicHardwarePart,
   SelectedBuildItem,
 } from './types';
 
 // Helper mengekstrak HardwarePart dari SelectedBuildItem secara aman
-export function getItemPart(item?: SelectedBuildItem): HardwarePart | undefined {
+export function getItemPart(item?: SelectedBuildItem): PublicHardwarePart | undefined {
   if (!item) return undefined;
   return item.part || item.product;
 }
@@ -17,7 +17,7 @@ export function getItemPart(item?: SelectedBuildItem): HardwarePart | undefined 
  * Menghitung total keping RAM fisik dari produk dan kuantitasnya.
  * Mendeteksi konfigurasi kit seperti '2x16GB', '2x8GB', '4x16GB', dsb.
  */
-export function getRamModuleCount(ramPart: HardwarePart, quantity: number): number {
+export function getRamModuleCount(ramPart: PublicHardwarePart, quantity: number): number {
   const kitConfig = ramPart.specs.kitConfiguration;
   if (kitConfig) {
     const match = kitConfig.match(/^(\d+)\s*x/i);
@@ -26,44 +26,6 @@ export function getRamModuleCount(ramPart: HardwarePart, quantity: number): numb
     }
   }
   return 1 * quantity;
-}
-
-/**
- * Hitung total harga paket rakitan PC jadi
- * Menggunakan sellPrice atau formula costPrice + global markup, ditambah assembly fee
- */
-export function calculateBundleTotal(
-  parts: (HardwarePart | undefined)[],
-  assemblyFee: number = 150000,
-  globalMarkupPercent: number = 0
-): number {
-  let subtotal = 0;
-
-  for (const part of parts) {
-    if (!part) continue;
-
-    if (globalMarkupPercent > 0) {
-      const markedUp = part.costPrice * (1 + globalMarkupPercent / 100);
-      subtotal += Math.round(markedUp);
-    } else {
-      subtotal += part.sellPrice || part.price || 0;
-    }
-  }
-
-  return subtotal + Math.max(0, assemblyFee);
-}
-
-/**
- * Menghitung Delta Price (selisih harga) antara part kandidat dengan part dasar paket
- * candidate.sellPrice - base.sellPrice
- */
-export function calculateDeltaPrice(
-  basePart: HardwarePart | undefined,
-  candidatePart: HardwarePart
-): number {
-  const basePrice = basePart ? basePart.sellPrice || basePart.price || 0 : 0;
-  const candidatePrice = candidatePart.sellPrice || candidatePart.price || 0;
-  return candidatePrice - basePrice;
 }
 
 /**
@@ -274,7 +236,7 @@ export function validateBuild(selections: BuildSelections): CompatibilityReport 
  * Memeriksa apakah satu part kandidat kompatibel jika dimasukkan ke dalam konfigurasi saat ini
  */
 export function isPartCompatibleWithCurrentBuild(
-  candidatePart: HardwarePart,
+  candidatePart: PublicHardwarePart,
   currentSelections: BuildSelections
 ): { compatible: boolean; reason?: string } {
   const { category, specs } = candidatePart;

@@ -10,7 +10,7 @@ import {
   Shield,
   ExternalLink,
 } from 'lucide-react';
-import { Product } from '@/lib/types';
+import { PublicHardwarePart } from '@/lib/types';
 import { formatIDR } from '@/lib/format';
 import { useHydrated } from '@/lib/useHydrated';
 import { SpecBadges } from './SpecBadges';
@@ -19,7 +19,7 @@ import { useCartStore } from '@/store/useCartStore';
 import { useCompareStore } from '@/store/useCompareStore';
 
 export interface ProductRowPricelistProps {
-  product: Product;
+  product: PublicHardwarePart;
   onActionFeedback?: (message: string) => void;
   className?: string;
   showCategoryBadge?: boolean;
@@ -42,9 +42,9 @@ export function ProductRowPricelist({
   const toggleCompare = useCompareStore((state) => state.toggleCompareProduct);
 
   const comparing = isHydrated && isComparing(product.id);
-  const hasDiscount = !!(product.originalPrice && product.originalPrice > product.price);
+  const hasDiscount = !!(product.originalPrice && product.originalPrice > product.retailPrice);
   const discountPercent = hasDiscount
-    ? Math.round(((product.originalPrice! - product.price) / product.originalPrice!) * 100)
+    ? Math.round(((product.originalPrice! - product.retailPrice) / product.originalPrice!) * 100)
     : 0;
 
   const distributor = product.officialDistributor || product.OfficialDistributor;
@@ -161,7 +161,7 @@ export function ProductRowPricelist({
       {/* Kolom 4: Harga Satuan & Coret */}
       <td className="py-2.5 px-3 align-top text-right w-36 whitespace-nowrap">
         <div className="font-mono tabular-nums font-bold text-sm text-zinc-900 dark:text-zinc-100">
-          {formatIDR(product.price)}
+          {formatIDR(product.retailPrice)}
         </div>
         {hasDiscount && (
           <div className="flex items-center justify-end gap-1 font-mono text-[10px]">

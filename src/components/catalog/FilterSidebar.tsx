@@ -24,7 +24,7 @@ import {
   X,
 } from 'lucide-react';
 import {
-  Product,
+  PublicHardwarePart,
   ProductCategory,
   CpuSocket,
   RamType,
@@ -75,7 +75,7 @@ const AVAILABLE_RAM_TYPES: RamType[] = ['DDR5', 'DDR4'];
 const AVAILABLE_FORM_FACTORS: FormFactor[] = ['ATX', 'mATX', 'ITX', 'E-ATX'];
 
 export interface FilterSidebarProps {
-  allProducts: Product[];
+  allProducts: PublicHardwarePart[];
   filters: CatalogFilterState;
   onFilterChange: (newFilters: CatalogFilterState) => void;
   onResetFilters: () => void;
@@ -88,7 +88,7 @@ export interface FilterSidebarProps {
 /**
  * Filter engine helper function untuk memvalidasi produk terhadap filter aktif
  */
-export function filterProducts(products: Product[], filters: CatalogFilterState): Product[] {
+export function filterProducts(products: PublicHardwarePart[], filters: CatalogFilterState): PublicHardwarePart[] {
   return products.filter((product) => {
     // 1. Kategori
     if (filters.category !== 'all' && product.category !== filters.category) {
@@ -106,10 +106,10 @@ export function filterProducts(products: Product[], filters: CatalogFilterState)
     }
 
     // 4. Rentang Harga
-    if (filters.minPrice !== null && filters.minPrice > 0 && product.price < filters.minPrice) {
+    if (filters.minPrice !== null && filters.minPrice > 0 && product.retailPrice < filters.minPrice) {
       return false;
     }
-    if (filters.maxPrice !== null && filters.maxPrice > 0 && product.price > filters.maxPrice) {
+    if (filters.maxPrice !== null && filters.maxPrice > 0 && product.retailPrice > filters.maxPrice) {
       return false;
     }
 

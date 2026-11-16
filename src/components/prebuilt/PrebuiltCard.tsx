@@ -15,35 +15,30 @@ import {
   Gamepad2,
   Layers,
 } from 'lucide-react';
-import { PrebuiltPC, ProductCategory, HardwarePart } from '@/lib/types';
-import { PARTS_BY_ID } from '@/lib/mock-data';
+import { ProductCategory, PublicHardwarePart } from '@/lib/types';
 import { formatIDR, generateWhatsAppOrderUrl, TOKOPEDIA_OFFICIAL_STORE_URL } from '@/lib/format';
-import { calculateBundleTotal } from '@/lib/compatibility';
 import { useBuilderStore } from '@/store/useBuilderStore';
+import type { PublicPrebuiltPCDTO } from '@/lib/sanitizer';
 
 export interface PrebuiltCardProps {
-  pkg: PrebuiltPC;
+  pkg: PublicPrebuiltPCDTO;
 }
 
 export function PrebuiltCard({ pkg }: PrebuiltCardProps) {
   const router = useRouter();
   const loadPrebuilt = useBuilderStore((state) => state.loadPrebuilt);
 
-  // Resolusi part objek dari baseParts
-  const partsList: { category: ProductCategory; part: HardwarePart; quantity: number }[] = [];
-  const rawParts: (HardwarePart | undefined)[] = [];
+  // Semua komponen sudah disanitasi di server — tanpa harga satuan.
+  const partsList: { category: ProductCategory; part: PublicHardwarePart; quantity: number }[] =
+    pkg.parts.map((item) => ({
+      category: item.category,
+      part: item.part,
+      quantity: item.quantity,
+    }));
 
-  for (const [catKey, item] of Object.entries(pkg.baseParts)) {
-    if (!item) continue;
-    const part = PARTS_BY_ID[item.partId];
-    if (part) {
-      partsList.push({ category: catKey as ProductCategory, part, quantity: item.quantity });
-      rawParts.push(part);
-    }
-  }
-
-  // Hitung total harga rakitan jadi (sellPrice + assemblyFee)
-  const totalBundlePrice = calculateBundleTotal(rawParts, pkg.assemblyFee || 150000);
+  const partsMap: Record<string, PublicHardwarePart> = Object.fromEntries(
+    pkg.parts.map((item) => [item.partId, item.part])
+  );
 
   // Ambil komponen inti untuk ringkasan cepat
   const cpuPart = partsList.find((p) => p.category === 'cpu')?.part;
@@ -52,7 +47,7 @@ export function PrebuiltCard({ pkg }: PrebuiltCardProps) {
   const ssdPart = partsList.find((p) => p.category === 'ssd')?.part;
 
   const handleCustomize = () => {
-    loadPrebuilt(pkg, PARTS_BY_ID);
+    loadPrebuilt(pkg, partsMap, pkg.totalBundlePrice);
     router.push(`/simulasi`);
   };
 
@@ -64,7 +59,7 @@ export function PrebuiltCard({ pkg }: PrebuiltCardProps) {
         name: p.part.name,
         quantity: p.quantity,
       })),
-      totalPrice: totalBundlePrice,
+      totalPrice: pkg.totalBundlePrice,
     });
     window.open(url, '_blank', 'noopener,noreferrer');
   };
@@ -172,7 +167,7 @@ export function PrebuiltCard({ pkg }: PrebuiltCardProps) {
               Total Harga Paket (Siap Pakai)
             </span>
             <span className="font-mono text-lg font-black tracking-tight text-zinc-900 dark:text-zinc-100 tabular-nums">
-              {formatIDR(totalBundlePrice)}
+              {formatIDR(pkg.totalBundlePrice)}
             </span>
           </div>
           <span className="rounded-xs bg-emerald-500/10 border border-emerald-500/20 px-1.5 py-0.5 font-mono text-[10px] font-bold text-emerald-600 dark:text-emerald-400">

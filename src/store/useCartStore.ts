@@ -1,9 +1,9 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
-import { Product, SelectedBuildItem } from '../lib/types';
+import { PublicHardwarePart, SelectedBuildItem } from '../lib/types';
 
 export interface CartItem {
-  product: Product;
+  product: PublicHardwarePart;
   quantity: number;
 }
 
@@ -20,7 +20,7 @@ export interface CartState {
   isOpen: boolean;
 
   // Actions
-  addItem: (product: Product, qty?: number) => void;
+  addItem: (product: PublicHardwarePart, qty?: number) => void;
   addBulkFromBuilder: (items: SelectedBuildItem[]) => void;
   removeItem: (productId: string) => void;
   updateQty: (productId: string, qty: number) => void;
@@ -41,7 +41,7 @@ export const useCartStore = create<CartState>()(
       items: [],
       isOpen: false,
 
-      addItem: (product: Product, qty = 1) => {
+      addItem: (product: PublicHardwarePart, qty = 1) => {
         const safeQty = Math.max(1, Math.round(qty));
         set((state) => {
           const existingIndex = state.items.findIndex(
@@ -141,7 +141,7 @@ export const useCartStore = create<CartState>()(
 
       getTotalPrice: (): number => {
         return get().items.reduce(
-          (sum, item) => sum + item.product.price * item.quantity,
+          (sum, item) => sum + (item.product.retailPrice || 0) * item.quantity,
           0
         );
       },
@@ -156,9 +156,12 @@ export const useCartStore = create<CartState>()(
     }),
     {
       name: 'kss-cart-storage',
+      version: 2,
       storage: createJSONStorage(() =>
         typeof window !== 'undefined' ? window.localStorage : memoryStorage
       ),
+      // Item lama menyimpan objek produk lengkap dengan harga modal.
+      migrate: () => ({ items: [] }),
       partialize: (state) => ({
         items: state.items,
       }),

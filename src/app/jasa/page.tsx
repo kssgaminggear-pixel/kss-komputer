@@ -1,5 +1,3 @@
-'use client';
-
 import React from 'react';
 import Link from 'next/link';
 import {
@@ -9,10 +7,12 @@ import {
   ChevronRight,
   Check,
 } from 'lucide-react';
-import { MOCK_SERVICES } from '@/lib/mock-data';
+import { getPublicServices } from '@/lib/server-catalog';
 import { formatIDR, DEFAULT_WHATSAPP_PHONE } from '@/lib/format';
 
 export default function JasaLayananPage() {
+  const services = getPublicServices();
+
   return (
     <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
       {/* Breadcrumb */}
@@ -54,7 +54,7 @@ export default function JasaLayananPage() {
 
       {/* Grid Layanan Jasa */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-        {MOCK_SERVICES.map((srv) => (
+        {services.map((srv) => (
           <div
             key={srv.id}
             className="flex flex-col justify-between rounded-sm border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-900/60 shadow-xs hover:border-zinc-300 dark:hover:border-zinc-700 transition-all"

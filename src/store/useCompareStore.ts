@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
-import { Product } from '../lib/types';
+import { PublicHardwarePart } from '../lib/types';
 
 export const MAX_COMPARE_LIMIT = 4;
 
@@ -13,10 +13,10 @@ const memoryStorage = {
 
 export interface CompareState {
   // State
-  products: Product[];
+  products: PublicHardwarePart[];
 
   // Actions
-  toggleCompareProduct: (product: Product) => { added: boolean; reason?: string };
+  toggleCompareProduct: (product: PublicHardwarePart) => { added: boolean; reason?: string };
   removeCompareProduct: (productId: string) => void;
   clearCompare: () => void;
 
@@ -30,7 +30,7 @@ export const useCompareStore = create<CompareState>()(
     (set, get) => ({
       products: [],
 
-      toggleCompareProduct: (product: Product) => {
+      toggleCompareProduct: (product: PublicHardwarePart) => {
         const currentProducts = get().products;
         const exists = currentProducts.some((p) => p.id === product.id);
 
@@ -74,9 +74,11 @@ export const useCompareStore = create<CompareState>()(
     }),
     {
       name: 'kss-compare-storage',
+      version: 2,
       storage: createJSONStorage(() =>
         typeof window !== 'undefined' ? window.localStorage : memoryStorage
       ),
+      migrate: () => ({ products: [] }),
       partialize: (state) => ({
         products: state.products,
       }),

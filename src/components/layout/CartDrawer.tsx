@@ -45,9 +45,9 @@ export function CartDrawer() {
     ];
 
     items.forEach((item, index) => {
-      const subtotal = item.product.price * item.quantity;
+      const subtotal = item.product.retailPrice * item.quantity;
       lines.push(
-        `${index + 1}. ${item.product.name} (${item.product.sku})\n   ${item.quantity}x @ ${formatIDR(item.product.price)} = *${formatIDR(subtotal)}*`
+        `${index + 1}. ${item.product.name} (${item.product.sku})\n   ${item.quantity}x @ ${formatIDR(item.product.retailPrice)} = *${formatIDR(subtotal)}*`
       );
     });
 
@@ -154,11 +154,11 @@ export function CartDrawer() {
 
                   <div className="text-right">
                     <div className="font-mono text-xs font-semibold tabular-nums text-zinc-900 dark:text-zinc-100">
-                      {formatIDR(item.product.price * item.quantity)}
+                      {formatIDR(item.product.retailPrice * item.quantity)}
                     </div>
                     {item.quantity > 1 && (
                       <div className="font-mono text-[10px] text-zinc-400">
-                        @{formatIDR(item.product.price)}
+                        @{formatIDR(item.product.retailPrice)}
                       </div>
                     )}
                   </div>

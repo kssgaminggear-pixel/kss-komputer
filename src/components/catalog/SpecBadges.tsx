@@ -1,8 +1,8 @@
 import React from 'react';
-import { Product } from '@/lib/types';
+import { PublicHardwarePart } from '@/lib/types';
 
 export interface SpecBadgesProps {
-  product: Product;
+  product: PublicHardwarePart;
   limit?: number;
   className?: string;
   badgeClassName?: string;
@@ -12,7 +12,7 @@ export interface SpecBadgesProps {
  * Mengambil array label spesifikasi teknis ringkas berdasarkan kategori produk.
  * Menghasilkan 3-4 badge teknis kotak ala Linear / Enterkomputer.
  */
-export function getProductSpecLabels(product: Product): string[] {
+export function getProductSpecLabels(product: PublicHardwarePart): string[] {
   const { category, specs, wattage } = product;
   const labels: string[] = [];
 

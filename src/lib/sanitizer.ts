@@ -1,30 +1,38 @@
-import { HardwarePart, PrebuiltPC, ConsultationQuote, ProductCategory } from './types';
-import { calculateBundleTotal } from './compatibility';
+import {
+  AccessoryItem,
+  ConsultationQuote,
+  HardwarePart,
+  PrebuiltPC,
+  PrebuiltPCItem,
+  ProductCategory,
+  PublicAccessory,
+  PublicHardwarePart,
+} from './types';
 
 /**
- * Public Sanitized DTO untuk Komponen Hardware
- * Memastikan 'costPrice' dan 'sellPrice' toko tidak pernah bocor ke client-side.
+ * Public Hardware Part — aman dikirim ke client.
+ * `costPrice`, `sellPrice`, dan alias `price` tidak pernah ikut.
  */
-export interface PublicHardwarePartDTO {
-  id: string;
-  sku: string;
-  name: string;
-  slug: string;
-  brand: string;
+export type PublicHardwarePartDTO = PublicHardwarePart;
+
+/**
+ * Public Accessory — aman dikirim ke client (tanpa `costPrice`).
+ */
+export type PublicAccessoryDTO = PublicAccessory;
+
+/**
+ * Satu komponen di dalam paket PC rakitan yang boleh ditampilkan publik.
+ */
+export interface PublicPrebuiltPartDTO {
   category: ProductCategory;
-  retailPrice?: number;
-  isRetailAvailable?: boolean;
-  stockStatus: string;
-  wattage: number;
-  warrantyYears: number;
-  officialDistributor?: string;
-  specs: HardwarePart['specs'];
-  updatedAt: string;
+  partId: string;
+  name: string;
+  quantity: number;
+  part: PublicHardwarePart;
 }
 
 /**
- * Public Sanitized DTO untuk Paket Rakitan PC
- * Menampilkan 1 Total Bundle Price dan daftar komponen tanpa harga satuan per part.
+ * Public Paket Rakitan PC — hanya 1 Total Bundle Price + daftar komponen.
  */
 export interface PublicPrebuiltPCDTO {
   id: string;
@@ -41,18 +49,33 @@ export interface PublicPrebuiltPCDTO {
   warrantyYears: number;
   tokopediaUrl: string;
   featured?: boolean;
-  parts: {
-    category: ProductCategory;
-    partId: string;
-    name: string;
-    quantity: number;
-  }[];
+  baseParts: Partial<Record<ProductCategory, PrebuiltPCItem>>;
+  parts: PublicPrebuiltPartDTO[];
 }
 
 /**
- * Sanitize HardwarePart sebelum dikirim ke browser
+ * Opsi upgrade dengan Delta Price (bukan harga satuan part).
  */
-export function sanitizeHardwarePartForPublic(part: HardwarePart): PublicHardwarePartDTO {
+export interface PublicUpgradeOptionDTO {
+  part: PublicHardwarePart;
+  deltaPrice: number;
+}
+
+/**
+ * Detail paket untuk halaman /paket-rakitan/[slug].
+ * Total paket dihitung server-side; client hanya menambahkan delta.
+ */
+export interface PublicPrebuiltDetailDTO extends PublicPrebuiltPCDTO {
+  baseTotalPrice: number;
+  upgradeOptions: Partial<Record<ProductCategory, PublicUpgradeOptionDTO[]>>;
+}
+
+/**
+ * Sanitize HardwarePart sebelum dikirim ke browser.
+ * `retailPrice` adalah harga jual publik (fallback ke sellPrice selama
+ * komponen belum punya harga eceran terpisah).
+ */
+export function sanitizeHardwarePartForPublic(part: HardwarePart): PublicHardwarePart {
   return {
     id: part.id,
     sku: part.sku,
@@ -60,8 +83,9 @@ export function sanitizeHardwarePartForPublic(part: HardwarePart): PublicHardwar
     slug: part.slug,
     brand: part.brand,
     category: part.category,
-    retailPrice: part.isRetailAvailable ? part.retailPrice || part.sellPrice : undefined,
+    retailPrice: part.retailPrice ?? part.sellPrice,
     isRetailAvailable: part.isRetailAvailable,
+    originalPrice: part.originalPrice,
     stockStatus: part.stockStatus,
     wattage: part.wattage,
     warrantyYears: part.warrantyYears,
@@ -72,13 +96,36 @@ export function sanitizeHardwarePartForPublic(part: HardwarePart): PublicHardwar
 }
 
 /**
- * Sanitize PrebuiltPC sebelum dikirim ke browser
+ * Sanitize AccessoryItem sebelum dikirim ke browser.
+ */
+export function sanitizeAccessoryForPublic(acc: AccessoryItem): PublicAccessory {
+  return {
+    id: acc.id,
+    sku: acc.sku,
+    name: acc.name,
+    slug: acc.slug,
+    brand: acc.brand,
+    category: acc.category,
+    retailPrice: acc.retailPrice,
+    originalPrice: acc.originalPrice,
+    stockStatus: acc.stockStatus,
+    warrantyYears: acc.warrantyYears,
+    officialDistributor: acc.officialDistributor,
+    image: acc.image,
+    features: acc.features,
+    specs: acc.specs,
+    updatedAt: acc.updatedAt,
+  };
+}
+
+/**
+ * Sanitize PrebuiltPC sebelum dikirim ke browser.
  */
 export function sanitizePrebuiltPCForPublic(
   pkg: PrebuiltPC,
   partsMap: Record<string, HardwarePart>
 ): PublicPrebuiltPCDTO {
-  const partsList: { category: ProductCategory; partId: string; name: string; quantity: number }[] = [];
+  const partsList: PublicPrebuiltPartDTO[] = [];
   const rawParts: HardwarePart[] = [];
 
   for (const [cat, item] of Object.entries(pkg.baseParts)) {
@@ -90,12 +137,15 @@ export function sanitizePrebuiltPCForPublic(
         partId: item.partId,
         name: part.name,
         quantity: item.quantity,
+        part: sanitizeHardwarePartForPublic(part),
       });
       rawParts.push(part);
     }
   }
 
-  const totalBundlePrice = calculateBundleTotal(rawParts, pkg.assemblyFee);
+  const totalBundlePrice =
+    rawParts.reduce((sum, part) => sum + (part.sellPrice || part.price || 0), 0) +
+    Math.max(0, pkg.assemblyFee);
 
   return {
     id: pkg.id,
@@ -112,17 +162,55 @@ export function sanitizePrebuiltPCForPublic(
     warrantyYears: pkg.warrantyYears,
     tokopediaUrl: pkg.tokopediaUrl,
     featured: pkg.featured,
+    baseParts: pkg.baseParts,
     parts: partsList,
   };
 }
 
 /**
- * Sanitize ConsultationQuote untuk tampilan publik
+ * Detail paket + opsi upgrade ber-delta untuk halaman publik.
+ * Hanya kategori yang sudah ada di baseParts yang boleh di-upgrade agar
+ * Delta Price selalu punya harga pembanding.
+ */
+export function sanitizePrebuiltDetailForPublic(
+  pkg: PrebuiltPC,
+  allParts: HardwarePart[],
+  partsMap: Record<string, HardwarePart>,
+  upgradeableCategories: ProductCategory[]
+): PublicPrebuiltDetailDTO {
+  const base = sanitizePrebuiltPCForPublic(pkg, partsMap);
+  const upgradeOptions: Partial<Record<ProductCategory, PublicUpgradeOptionDTO[]>> = {};
+
+  for (const category of upgradeableCategories) {
+    const baseItem = pkg.baseParts[category];
+    if (!baseItem) continue;
+
+    const basePart = partsMap[baseItem.partId];
+    if (!basePart) continue;
+
+    upgradeOptions[category] = allParts
+      .filter((part) => part.category === category)
+      .map((part) => ({
+        part: sanitizeHardwarePartForPublic(part),
+        deltaPrice: part.sellPrice - basePart.sellPrice,
+      }));
+  }
+
+  return {
+    ...base,
+    baseTotalPrice: base.totalBundlePrice,
+    upgradeOptions,
+  };
+}
+
+/**
+ * Sanitize ConsultationQuote untuk tampilan publik.
  */
 export function sanitizeQuoteForPublic(quote: ConsultationQuote) {
   return {
     quoteCode: quote.quoteCode,
     customerName: quote.customerName,
+    customerWa: quote.customerWa,
     usageNeed: quote.usageNeed,
     selectedParts: quote.selectedParts.map((p) => ({
       category: p.category,
@@ -137,3 +225,5 @@ export function sanitizeQuoteForPublic(quote: ConsultationQuote) {
     createdAt: quote.createdAt,
   };
 }
+
+export type PublicQuoteDTO = ReturnType<typeof sanitizeQuoteForPublic>;

@@ -3,12 +3,10 @@ import { persist, createJSONStorage } from 'zustand/middleware';
 import {
   BuildSelections,
   ProductCategory,
-  HardwarePart,
+  PublicHardwarePart,
   SelectedBuildItem,
-  PrebuiltPC,
 } from '../lib/types';
-import { PARTS_BY_ID } from '../lib/mock-data';
-import { calculateDeltaPrice, getItemPart } from '../lib/compatibility';
+import { getItemPart } from '../lib/compatibility';
 
 export const DEFAULT_ASSEMBLY_FEE = 150000;
 
@@ -25,6 +23,13 @@ export const MULTI_ITEM_CATEGORIES: ReadonlyArray<ProductCategory> = [
   'peripheral',
   'monitor',
 ];
+
+export interface BuilderPrebuiltInput {
+  id: string;
+  name: string;
+  baseParts: Partial<Record<ProductCategory, { partId: string; quantity: number }>>;
+  assemblyFee?: number;
+}
 
 export interface EncodedBuildPayload {
   v: number;
@@ -73,38 +78,51 @@ export function decodeBuildPayload(str: string): EncodedBuildPayload {
 
 export interface BuilderState {
   selections: BuildSelections;
-  activePrebuilt: PrebuiltPC | null;
+  activePrebuilt: BuilderPrebuiltInput | null;
   customBuildName: string;
   assemblyFee: number;
   strictFilterEnabled: boolean;
 
+  /**
+   * Total harga rakitan hasil estimasi server.
+   * Satu-satunya angka harga yang boleh hidup di client.
+   */
+  publicTotalPrice: number;
+
   // Actions
-  selectPart: (category: ProductCategory, part: HardwarePart, quantity?: number) => void;
-  addPart: (category: ProductCategory, part: HardwarePart, quantity?: number) => void; // alias
+  selectPart: (category: ProductCategory, part: PublicHardwarePart, quantity?: number) => void;
+  addPart: (category: ProductCategory, part: PublicHardwarePart, quantity?: number) => void; // alias
   removePart: (category: ProductCategory, index?: number) => void;
   updateQuantity: (category: ProductCategory, index: number, qty: number) => void;
   clearCategory: (category: ProductCategory) => void;
   clearAll: () => void;
 
-  loadPrebuilt: (pkg: PrebuiltPC, partsMap?: Record<string, HardwarePart>) => void;
-  loadTemplate: (template: PrebuiltPC) => void; // alias
+  loadPrebuilt: (
+    pkg: BuilderPrebuiltInput,
+    partsMap: Record<string, PublicHardwarePart>,
+    totalPrice?: number
+  ) => void;
+  loadTemplate: (
+    template: BuilderPrebuiltInput,
+    partsMap: Record<string, PublicHardwarePart>,
+    totalPrice?: number
+  ) => void; // alias
 
   setCustomBuildName: (name: string) => void;
   setAssemblyFee: (fee: number) => void;
+  setPublicTotalPrice: (total: number) => void;
   toggleStrictFilter: () => void;
-
-  // Delta Pricing Helper
-  getDeltaPrice: (category: ProductCategory, candidatePart: HardwarePart) => number;
 
   // Computations
   getAllSelectedItems: () => SelectedBuildItem[];
-  getSubtotal: () => number;
-  getTotalPrice: () => number;
   getTotalWattage: () => number;
   getItemCount: () => number;
 
   exportToEncodedString: () => string;
-  importFromEncodedString: (code: string) => boolean;
+  importFromEncodedString: (
+    code: string,
+    partsMap: Record<string, PublicHardwarePart>
+  ) => boolean;
 }
 
 export const useBuilderStore = create<BuilderState>()(
@@ -115,8 +133,9 @@ export const useBuilderStore = create<BuilderState>()(
       customBuildName: 'Custom PC Rig KSS',
       assemblyFee: DEFAULT_ASSEMBLY_FEE,
       strictFilterEnabled: true,
+      publicTotalPrice: 0,
 
-      selectPart: (category: ProductCategory, part: HardwarePart, quantity = 1) => {
+      selectPart: (category: ProductCategory, part: PublicHardwarePart, quantity = 1) => {
         const safeQty = Math.max(1, Math.round(quantity));
         const isMulti = MULTI_ITEM_CATEGORIES.includes(category);
 
@@ -218,10 +237,15 @@ export const useBuilderStore = create<BuilderState>()(
           activePrebuilt: null,
           customBuildName: 'Custom PC Rig KSS',
           assemblyFee: DEFAULT_ASSEMBLY_FEE,
+          publicTotalPrice: 0,
         });
       },
 
-      loadPrebuilt: (pkg: PrebuiltPC, partsMap: Record<string, HardwarePart> = PARTS_BY_ID) => {
+      loadPrebuilt: (
+        pkg: BuilderPrebuiltInput,
+        partsMap: Record<string, PublicHardwarePart>,
+        totalPrice = 0
+      ) => {
         const newSelections: BuildSelections = {};
 
         for (const [cat, item] of Object.entries(pkg.baseParts)) {
@@ -241,14 +265,20 @@ export const useBuilderStore = create<BuilderState>()(
 
         set({
           selections: newSelections,
-          activePrebuilt: pkg,
+          activePrebuilt: {
+            id: pkg.id,
+            name: pkg.name,
+            baseParts: pkg.baseParts,
+            assemblyFee: pkg.assemblyFee,
+          },
           customBuildName: pkg.name,
           assemblyFee: pkg.assemblyFee || DEFAULT_ASSEMBLY_FEE,
+          publicTotalPrice: Math.max(0, totalPrice),
         });
       },
 
-      loadTemplate: (template: PrebuiltPC) => {
-        get().loadPrebuilt(template);
+      loadTemplate: (template, partsMap, totalPrice) => {
+        get().loadPrebuilt(template, partsMap, totalPrice);
       },
 
       setCustomBuildName: (name: string) => {
@@ -259,15 +289,12 @@ export const useBuilderStore = create<BuilderState>()(
         set({ assemblyFee: Math.max(0, fee) });
       },
 
-      toggleStrictFilter: () => {
-        set((state) => ({ strictFilterEnabled: !state.strictFilterEnabled }));
+      setPublicTotalPrice: (total: number) => {
+        set({ publicTotalPrice: Math.max(0, Math.round(total)) });
       },
 
-      getDeltaPrice: (category: ProductCategory, candidatePart: HardwarePart): number => {
-        const state = get();
-        const currentItem = state.selections[category]?.[0];
-        const basePart = getItemPart(currentItem);
-        return calculateDeltaPrice(basePart, candidatePart);
+      toggleStrictFilter: () => {
+        set((state) => ({ strictFilterEnabled: !state.strictFilterEnabled }));
       },
 
       getAllSelectedItems: () => {
@@ -280,21 +307,6 @@ export const useBuilderStore = create<BuilderState>()(
           }
         }
         return result;
-      },
-
-      getSubtotal: () => {
-        const items = get().getAllSelectedItems();
-        return items.reduce((sum, item) => {
-          const part = getItemPart(item);
-          const price = part ? part.sellPrice || part.price || 0 : 0;
-          return sum + price * item.quantity;
-        }, 0);
-      },
-
-      getTotalPrice: () => {
-        const subtotal = get().getSubtotal();
-        const fee = get().assemblyFee;
-        return subtotal + fee;
       },
 
       getTotalWattage: () => {
@@ -343,7 +355,10 @@ export const useBuilderStore = create<BuilderState>()(
         return encodeBuildPayload(payload);
       },
 
-      importFromEncodedString: (code: string) => {
+      importFromEncodedString: (
+        code: string,
+        partsMap: Record<string, PublicHardwarePart>
+      ) => {
         try {
           const payload = decodeBuildPayload(code);
           if (!payload || !payload.parts || !Array.isArray(payload.parts)) {
@@ -352,7 +367,7 @@ export const useBuilderStore = create<BuilderState>()(
 
           const newSelections: BuildSelections = {};
           for (const entry of payload.parts) {
-            const part = PARTS_BY_ID[entry.id];
+            const part = partsMap[entry.id];
             if (part && entry.c) {
               const currentList = newSelections[entry.c] || [];
               newSelections[entry.c] = [
@@ -366,6 +381,7 @@ export const useBuilderStore = create<BuilderState>()(
             selections: newSelections,
             customBuildName: payload.name || 'Custom PC Rig KSS',
             assemblyFee: payload.fee !== undefined ? payload.fee : DEFAULT_ASSEMBLY_FEE,
+            publicTotalPrice: 0,
           });
 
           return true;
@@ -377,15 +393,27 @@ export const useBuilderStore = create<BuilderState>()(
     }),
     {
       name: 'kss-builder-storage',
+      version: 3,
       storage: createJSONStorage(() =>
         typeof window !== 'undefined' ? window.localStorage : memoryStorage
       ),
+      // Data lama menyimpan objek part lengkap (termasuk harga modal).
+      // Versi baru membuang selections agar tidak ada harga lama yang ikut hidrasi.
+      migrate: () => ({
+        selections: {},
+        activePrebuilt: null,
+        customBuildName: 'Custom PC Rig KSS',
+        assemblyFee: DEFAULT_ASSEMBLY_FEE,
+        strictFilterEnabled: true,
+        publicTotalPrice: 0,
+      }),
       partialize: (state) => ({
         selections: state.selections,
         activePrebuilt: state.activePrebuilt,
         customBuildName: state.customBuildName,
         assemblyFee: state.assemblyFee,
         strictFilterEnabled: state.strictFilterEnabled,
+        publicTotalPrice: state.publicTotalPrice,
       }),
     }
   )

@@ -467,7 +467,7 @@ Halaman utama yang memperkenalkan seluruh layanan KSS Komputer sebagai bengkel p
 ### CATATAN AUDIT — 2026-11-16
 
 - **1.4** dibiarkan `[ ]`: validasi socket, tipe RAM, form factor, clearance GPU/cooler, dan wattage PSU sudah berjalan, tetapi **deteksi bottleneck CPU–GPU belum diimplementasikan**.
-- **1.9** dibiarkan `[ ]`: `sanitizer.ts` sudah berisi `sanitizeHardwarePartForPublic()`, `sanitizePrebuiltPCForPublic()`, dan `sanitizeQuoteForPublic()`, tetapi **belum diimpor halaman publik mana pun**. Saat ini halaman publik masih mengimpor `mock-data.ts` langsung, sehingga `costPrice`/`sellPrice` berpotensi ikut ter-bundle ke client (melanggar aturan **B2**). Perlu dikerjakan bersama **10.4**.
+- **1.9 / 10.4** ditandai `[x]` pada refactor **B2 price leak**: seluruh halaman publik kini memakai Server Component wrapper + DTO `sanitizer.ts`; `costPrice`/`sellPrice`/`price` tidak lagi masuk bundle publik. Harga satuan diganti total rakitan (`publicTotalPrice` / `baseTotalPrice`) dan delta upgrade dari `POST /api/build/estimate`. Verifikasi: 0 kemunculan harga modal di 21 HTML publik; hanya chunk admin (`/admin/pricing`, `/admin/quotes`) yang masih memuat `costPrice`.
 - **3.15** dibiarkan `[ ]`: `next/font` sudah dipakai di `layout.tsx`, tetapi memakai **Geist + Geist Mono**, bukan Inter + JetBrains Mono sesuai spesifikasi.
 - **11.8 / 11.9** ditandai `[x]`: hasil verifikasi nyata pada audit ini (`tsc --noEmit` 0 error, `npm run build` exit 0).
 - **6.4** tetap `[x]`: ketiga file komponen ada, tetapi belum diintegrasikan ke halaman katalog (masih inline). Integrasi dijadwalkan bersama **6.8**.
@@ -493,7 +493,7 @@ Halaman utama yang memperkenalkan seluruh layanan KSS Komputer sebagai bengkel p
 - [x] **1.6** Tambahkan tipe `ServiceBooking` di `types.ts` (bookingCode, deviceType, problemDescription, preferredDate, status)
 - [x] **1.7** Tambahkan tipe `StoreSettings` di `types.ts` (adminWhatsApp, technicianWhatsApp, tokopediaUrl, operationalHours)
 - [x] **1.8** Ekspansi `ServicePackage` di `types.ts` — Tambah field: `category`, `priceMax`, `includes[]`, `excludes[]`, `imageUrl`, `isActive`
-- [ ] **1.9** Refactor sanitizer: rename `server-dto.ts` → `sanitizer.ts`, pastikan `sanitizePrebuiltPCForPublic()` dan `sanitizeQuoteForPublic()` diimpor dan digunakan di halaman publik yang relevan *(file sudah ada, tetapi belum dipakai halaman mana pun)*
+- [x] **1.9** Refactor sanitizer: `sanitizer.ts` menjadi satu-satunya DTO publik; `sanitizeHardwarePartForPublic()`, `sanitizePrebuiltPCForPublic()`, `sanitizePrebuiltDetailForPublic()`, dan `sanitizeQuoteForPublic()` dipakai seluruh halaman publik via `server-catalog.ts`
 - [x] **1.10** Ekspansi `mock-data.ts`: tambah 10 paket jasa (total 10+), 12+ aksesoris (total 20+), 2 tambahan `ConsultationQuote`, 3 sample `BuildOrderTracking`, 3 sample `ServiceBooking`
 - [x] **1.11** Tambahkan `generateServiceBookingWAMessage()`, `generateRetailCartWAMessage()`, `generateQuoteShareWAMessage()` di `format.ts`
 - [x] **1.12** Buat `src/lib/constants.ts` — Centralize WA number (admin + teknisi), Tokopedia URL, store name, warranty text, operational hours
@@ -639,7 +639,7 @@ Halaman utama yang memperkenalkan seluruh layanan KSS Komputer sebagai bengkel p
 - [ ] **10.1** `src/app/api/catalog/route.ts` — GET endpoint katalog terfilter, sanitize `costPrice` dari response
 - [ ] **10.2** `src/app/api/quotes/[code]/route.ts` — GET quotation publik, strip harga per part
 - [ ] **10.3** `src/app/api/admin/export-import/route.ts` — POST/GET backup & restore data (CSV/JSON), admin-only
-- [ ] **10.4** Implement sanitizer usage: semua halaman publik yang menampilkan data rakitan harus melewati `sanitizePrebuiltForPublic()` — tidak ada direct access ke raw data dengan `costPrice`
+- [x] **10.4** Implement sanitizer usage: semua halaman publik yang menampilkan data rakitan melewati `sanitizer.ts` — tidak ada direct access ke raw data dengan `costPrice`. Estimasi total/delta via `POST /api/build/estimate`; modul `mock-data` diblokir dari client lewat ESLint `no-restricted-imports`
 
 ---
 
@@ -700,7 +700,7 @@ git push origin main
 | Fase | Judul | Total | Selesai | Sisa |
 |------|-------|-------|---------|------|
 | 0 | Project Bootstrap | 4 | 4 | 0 |
-| 1 | Data Layer | 13 | 11 | 2 |
+| 1 | Data Layer | 13 | 12 | 1 |
 | 2 | State Management | 8 | 8 | 0 |
 | 3 | Layout & Shared | 17 | 9 | 8 |
 | 4 | Jasa & Servis ⭐ | 5 | 1 | 4 |
@@ -709,11 +709,11 @@ git push origin main
 | 7 | Admin Core | 5 | 2 | 3 |
 | 8 | Admin Extended | 6 | 0 | 6 |
 | 9 | SEO, Performance, PWA | 8 | 0 | 8 |
-| 10 | API Routes | 4 | 0 | 4 |
+| 10 | API Routes | 4 | 1 | 3 |
 | 11 | Database & Final QA | 10 | 2 | 8 |
-| **TOTAL** | | **92** | **45** | **47** |
+| **TOTAL** | | **92** | **47** | **45** |
 
-> **Progress: 45 / 92 (48.9%)**
+> **Progress: 47 / 92 (51.1%)**
 >
 > **Prioritas Eksekusi Berikutnya:**
 > Fase 3 (sisa) → **Fase 4 (Jasa & Servis ⭐)** → Fase 5 → Fase 7 → sisanya

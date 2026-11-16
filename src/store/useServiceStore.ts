@@ -6,7 +6,6 @@ import {
   ServiceBookingStatus,
   TrackingStage,
 } from '../lib/types';
-import { MOCK_BUILD_TRACKINGS, MOCK_SERVICE_BOOKINGS } from '../lib/mock-data';
 
 const memoryStorage = {
   getItem: () => null,
@@ -34,8 +33,8 @@ export interface ServiceState {
 export const useServiceStore = create<ServiceState>()(
   persist(
     (set, get) => ({
-      trackings: MOCK_BUILD_TRACKINGS,
-      bookings: MOCK_SERVICE_BOOKINGS,
+      trackings: [],
+      bookings: [],
 
       getTrackingByCode: (code: string) => {
         const clean = code.trim().toUpperCase();

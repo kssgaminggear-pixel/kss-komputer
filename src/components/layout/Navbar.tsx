@@ -23,11 +23,16 @@ import {
 } from 'lucide-react';
 import { useBuilderStore } from '@/store/useBuilderStore';
 import { useRetailCartStore } from '@/store/useRetailCartStore';
+import { PublicHardwarePart } from '@/lib/types';
 import { formatIDR, TOKOPEDIA_OFFICIAL_STORE_URL, DEFAULT_WHATSAPP_PHONE } from '@/lib/format';
 import { CommandSearchModal } from '@/components/layout/CommandSearchModal';
 import { useHydrated } from '@/lib/useHydrated';
 
-export function Navbar() {
+export interface NavbarProps {
+  searchProducts: PublicHardwarePart[];
+}
+
+export function Navbar({ searchProducts }: NavbarProps) {
   const pathname = usePathname();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -42,7 +47,7 @@ export function Navbar() {
 
   // Zustand stores
   const builderPartCount = useBuilderStore((state) => state.getItemCount());
-  const builderTotalPrice = useBuilderStore((state) => state.getTotalPrice());
+  const builderTotalPrice = useBuilderStore((state) => state.publicTotalPrice);
   const retailCartCount = useRetailCartStore((state) => state.getTotalItemsCount());
   const openRetailCart = useRetailCartStore((state) => state.openCart);
 
@@ -319,7 +324,11 @@ export function Navbar() {
       </header>
 
       {/* Global Command Search Modal */}
-      <CommandSearchModal isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
+      <CommandSearchModal
+        isOpen={isSearchOpen}
+        onClose={() => setIsSearchOpen(false)}
+        products={searchProducts}
+      />
     </>
   );
 }

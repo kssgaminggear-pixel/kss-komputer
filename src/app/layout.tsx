@@ -7,6 +7,7 @@ import { Footer } from '@/components/layout/Footer';
 import { BottomNav } from '@/components/layout/BottomNav';
 import { CartDrawer } from '@/components/layout/CartDrawer';
 import { RetailCartDrawer } from '@/components/cart/RetailCartDrawer';
+import { getPublicHardwareParts } from '@/lib/server-catalog';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -50,6 +51,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const searchProducts = getPublicHardwareParts();
+
   return (
     <html
       lang="id"
@@ -57,7 +60,7 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col bg-zinc-50 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100 font-sans selection:bg-blue-600 selection:text-white pb-14 md:pb-0">
         <Suspense fallback={null}>
-          <Navbar />
+          <Navbar searchProducts={searchProducts} />
         </Suspense>
         <main className="flex-1 w-full">{children}</main>
         <Footer />

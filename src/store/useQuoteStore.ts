@@ -1,7 +1,6 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { ConsultationQuote } from '../lib/types';
-import { MOCK_CONSULTATION_QUOTES } from '../lib/mock-data';
 
 export interface CreateQuoteInput {
   customerName: string;
@@ -21,6 +20,7 @@ export interface QuoteState {
   quotes: ConsultationQuote[];
 
   // Actions
+  seedQuotes: (quotes: ConsultationQuote[]) => void;
   createQuote: (input: CreateQuoteInput) => ConsultationQuote;
   updateQuoteStatus: (id: string, status: ConsultationQuote['status']) => void;
   deleteQuote: (id: string) => void;
@@ -37,7 +37,13 @@ const memoryStorage = {
 export const useQuoteStore = create<QuoteState>()(
   persist(
     (set, get) => ({
-      quotes: MOCK_CONSULTATION_QUOTES,
+      quotes: [],
+
+      seedQuotes: (quotes: ConsultationQuote[]) => {
+        if (get().quotes.length === 0) {
+          set({ quotes });
+        }
+      },
 
       createQuote: (input: CreateQuoteInput) => {
         const now = new Date();

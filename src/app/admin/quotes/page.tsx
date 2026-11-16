@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import {
   FileText,
@@ -12,7 +12,7 @@ import {
   CheckCircle2,
 } from 'lucide-react';
 import { useQuoteStore } from '@/store/useQuoteStore';
-import { MOCK_HARDWARE_PARTS } from '@/lib/mock-data';
+import { MOCK_CONSULTATION_QUOTES, MOCK_HARDWARE_PARTS } from '@/lib/mock-data';
 import { ProductCategory, UsageNeedTag } from '@/lib/types';
 import { formatIDR } from '@/lib/format';
 import { useHydrated } from '@/lib/useHydrated';
@@ -31,9 +31,14 @@ const ESSENTIAL_SLOTS: { category: ProductCategory; label: string }[] = [
 export default function AdminQuotesPage() {
   const isHydrated = useHydrated();
   const quotes = useQuoteStore((state) => state.quotes);
+  const seedQuotes = useQuoteStore((state) => state.seedQuotes);
   const createQuote = useQuoteStore((state) => state.createQuote);
   const deleteQuote = useQuoteStore((state) => state.deleteQuote);
   const updateQuoteStatus = useQuoteStore((state) => state.updateQuoteStatus);
+
+  useEffect(() => {
+    seedQuotes(MOCK_CONSULTATION_QUOTES);
+  }, [seedQuotes]);
 
   // Form State
   const [isCreating, setIsCreating] = useState(false);

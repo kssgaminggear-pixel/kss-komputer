@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
-import { HardwarePart, AccessoryItem } from '../lib/types';
+import { PublicHardwarePart, PublicAccessory } from '../lib/types';
 import { formatIDR, DEFAULT_WHATSAPP_PHONE } from '../lib/format';
 
 export interface RetailCartItem {
@@ -21,7 +21,7 @@ export interface RetailCartState {
   isOpen: boolean;
 
   // Actions
-  addItem: (product: HardwarePart | AccessoryItem, quantity?: number) => void;
+  addItem: (product: PublicHardwarePart | PublicAccessory, quantity?: number) => void;
   removeItem: (itemId: string) => void;
   updateQuantity: (itemId: string, quantity: number) => void;
   clearCart: () => void;
@@ -49,14 +49,9 @@ export const useRetailCartStore = create<RetailCartState>()(
       items: [],
       isOpen: false,
 
-      addItem: (product: HardwarePart | AccessoryItem, quantity = 1) => {
+      addItem: (product: PublicHardwarePart | PublicAccessory, quantity = 1) => {
         const safeQty = Math.max(1, Math.round(quantity));
-        const unitPrice =
-          'retailPrice' in product && product.retailPrice
-            ? product.retailPrice
-            : 'sellPrice' in product
-            ? product.sellPrice
-            : 0;
+        const unitPrice = product.retailPrice || 0;
 
         set((state) => {
           const existingIndex = state.items.findIndex((item) => item.id === product.id);
