@@ -363,3 +363,60 @@ export interface StoreSettings {
   warrantyText: string;
   operationalHours: string;       // "Senin - Sabtu, 09:00 - 18:00 WIB"
 }
+
+/* =========================================================================
+ * KSS KOMPUTER V2 — KONTRAK DOMAIN PAKET RAKITAN & JASA
+ * Model bisnis: System Integrator. Harga satuan part tidak pernah dipublikasi.
+ * ========================================================================= */
+
+export type PackageTier =
+  | 'Office & Kasir'
+  | 'E-Sports 1080p'
+  | 'AAA 1080p Ultra'
+  | 'Creator & 1440p'
+  | 'Workstation & 4K';
+
+export interface PackagePartRef {
+  category: ProductCategory;
+  partId: string;
+  quantity: number;
+}
+
+export interface FpsBenchmark {
+  game: string;
+  resolution: '1080p' | '1440p' | '4K' | 'Office';
+  fps: number;
+  settings: string;
+}
+
+/**
+ * Paket PC Rakitan Jadi (satu harga total, tanpa harga satuan komponen).
+ */
+export interface PrebuiltPackage {
+  id: string;
+  slug: string;
+  name: string;
+  tier: PackageTier;
+  parts: PackagePartRef[];
+  assemblyFee: number;
+  customTotalOverride?: number;
+  fpsBenchmarks: FpsBenchmark[];
+  tokopediaUrl: string;
+  highlights: string[];
+}
+
+export type ComputerServiceCategory = 'rakit' | 'upgrade' | 'cleaning' | 'konsultasi';
+
+/**
+ * Layanan jasa komputer KSS (harga mulai dari, bukan harga part).
+ */
+export interface ComputerService {
+  id: string;
+  slug: string;
+  title: string;
+  category: ComputerServiceCategory;
+  priceStartFrom: number;
+  durationEstimate: string;
+  features: string[];
+  warrantyInfo: string;
+}

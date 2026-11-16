@@ -5,6 +5,7 @@ import {
   ProductCategory,
   PublicHardwarePart,
   SelectedBuildItem,
+  PrebuiltPackage,
 } from '../lib/types';
 import { getItemPart } from '../lib/compatibility';
 
@@ -82,6 +83,8 @@ export interface BuilderState {
   customBuildName: string;
   assemblyFee: number;
   strictFilterEnabled: boolean;
+  /** Alias eksplisit untuk filter kompatibilitas ketat (kontrak Fase 2). */
+  strictCompatibilityFilter: boolean;
 
   /**
    * Total harga rakitan hasil estimasi server.
@@ -102,6 +105,11 @@ export interface BuilderState {
     partsMap: Record<string, PublicHardwarePart>,
     totalPrice?: number
   ) => void;
+  loadPrebuiltPackage: (
+    pkg: PrebuiltPackage,
+    partsMap: Record<string, PublicHardwarePart>,
+    totalPrice?: number
+  ) => void;
   loadTemplate: (
     template: BuilderPrebuiltInput,
     partsMap: Record<string, PublicHardwarePart>,
@@ -112,11 +120,13 @@ export interface BuilderState {
   setAssemblyFee: (fee: number) => void;
   setPublicTotalPrice: (total: number) => void;
   toggleStrictFilter: () => void;
+  setStrictCompatibilityFilter: (enabled: boolean) => void;
 
   // Computations
   getAllSelectedItems: () => SelectedBuildItem[];
   getTotalWattage: () => number;
   getItemCount: () => number;
+  getBundleTotal: () => number;
 
   exportToEncodedString: () => string;
   importFromEncodedString: (
@@ -133,6 +143,7 @@ export const useBuilderStore = create<BuilderState>()(
       customBuildName: 'Custom PC Rig KSS',
       assemblyFee: DEFAULT_ASSEMBLY_FEE,
       strictFilterEnabled: true,
+      strictCompatibilityFilter: true,
       publicTotalPrice: 0,
 
       selectPart: (category: ProductCategory, part: PublicHardwarePart, quantity = 1) => {
@@ -281,6 +292,26 @@ export const useBuilderStore = create<BuilderState>()(
         get().loadPrebuilt(template, partsMap, totalPrice);
       },
 
+      loadPrebuiltPackage: (pkg, partsMap, totalPrice) => {
+        const baseParts: BuilderPrebuiltInput['baseParts'] = {};
+        for (const item of pkg.parts) {
+          baseParts[item.category] = { partId: item.partId, quantity: item.quantity };
+        }
+
+        const template: BuilderPrebuiltInput = {
+          id: pkg.id,
+          name: pkg.name,
+          baseParts,
+          assemblyFee: pkg.assemblyFee,
+        };
+
+        get().loadPrebuilt(
+          template,
+          partsMap,
+          pkg.customTotalOverride ?? totalPrice ?? 0
+        );
+      },
+
       setCustomBuildName: (name: string) => {
         set({ customBuildName: name.trim() || 'Custom PC Rig KSS' });
       },
@@ -294,8 +325,20 @@ export const useBuilderStore = create<BuilderState>()(
       },
 
       toggleStrictFilter: () => {
-        set((state) => ({ strictFilterEnabled: !state.strictFilterEnabled }));
+        set((state) => {
+          const next = !state.strictFilterEnabled;
+          return {
+            strictFilterEnabled: next,
+            strictCompatibilityFilter: next,
+          };
+        });
       },
+
+      setStrictCompatibilityFilter: (enabled: boolean) => {
+        set({ strictFilterEnabled: enabled, strictCompatibilityFilter: enabled });
+      },
+
+      getBundleTotal: () => get().publicTotalPrice,
 
       getAllSelectedItems: () => {
         const state = get();
@@ -405,6 +448,7 @@ export const useBuilderStore = create<BuilderState>()(
         customBuildName: 'Custom PC Rig KSS',
         assemblyFee: DEFAULT_ASSEMBLY_FEE,
         strictFilterEnabled: true,
+        strictCompatibilityFilter: true,
         publicTotalPrice: 0,
       }),
       partialize: (state) => ({
@@ -413,6 +457,7 @@ export const useBuilderStore = create<BuilderState>()(
         customBuildName: state.customBuildName,
         assemblyFee: state.assemblyFee,
         strictFilterEnabled: state.strictFilterEnabled,
+        strictCompatibilityFilter: state.strictCompatibilityFilter,
         publicTotalPrice: state.publicTotalPrice,
       }),
     }

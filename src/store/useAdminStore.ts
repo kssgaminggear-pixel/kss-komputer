@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
-import { HardwarePart, PrebuiltPC } from '../lib/types';
+import { HardwarePart, PrebuiltPackage, PrebuiltPC } from '../lib/types';
 import { TOKOPEDIA_OFFICIAL_STORE_URL } from '../lib/format';
 
 export interface PartPriceOverride {
@@ -13,6 +13,7 @@ export interface AdminPricingState {
   defaultAssemblyFee: number;
   tokopediaStoreUrl: string;
   priceOverrides: Record<string, PartPriceOverride>;
+  customPackages: PrebuiltPackage[];
 
   // Actions
   setGlobalMarkupPercent: (percent: number) => void;
@@ -21,6 +22,8 @@ export interface AdminPricingState {
   updatePartPrice: (partId: string, costPrice: number, sellPrice: number) => void;
   bulkApplyMarkupToAll: (percent: number, parts: HardwarePart[]) => void;
   resetPriceOverrides: () => void;
+  upsertPackage: (pkg: PrebuiltPackage) => void;
+  deletePackage: (id: string) => void;
 
   // Calculators & Selectors
   getEffectivePartPrices: (part: HardwarePart) => {
@@ -40,6 +43,18 @@ export interface AdminPricingState {
     netProfit: number;
     profitMarginPercent: number;
   };
+  calculatePackageProfitV2: (
+    pkg: PrebuiltPackage,
+    partsMap: Record<string, HardwarePart>
+  ) => {
+    totalCost: number;
+    totalSell: number;
+    assemblyFee: number;
+    totalCustomerPrice: number;
+    netProfit: number;
+    profitMarginPercent: number;
+  };
+  getMergedPackages: (basePackages: PrebuiltPackage[]) => PrebuiltPackage[];
 }
 
 const memoryStorage = {
@@ -55,6 +70,7 @@ export const useAdminStore = create<AdminPricingState>()(
       defaultAssemblyFee: 150000,
       tokopediaStoreUrl: TOKOPEDIA_OFFICIAL_STORE_URL,
       priceOverrides: {},
+      customPackages: [],
 
       setGlobalMarkupPercent: (percent: number) => {
         set({ globalMarkupPercent: Math.max(0, Math.min(100, percent)) });
@@ -103,6 +119,23 @@ export const useAdminStore = create<AdminPricingState>()(
         set({ priceOverrides: {}, globalMarkupPercent: 12 });
       },
 
+      upsertPackage: (pkg: PrebuiltPackage) => {
+        set((state) => {
+          const exists = state.customPackages.some((item) => item.id === pkg.id);
+          return {
+            customPackages: exists
+              ? state.customPackages.map((item) => (item.id === pkg.id ? pkg : item))
+              : [...state.customPackages, pkg],
+          };
+        });
+      },
+
+      deletePackage: (id: string) => {
+        set((state) => ({
+          customPackages: state.customPackages.filter((item) => item.id !== id),
+        }));
+      },
+
       getEffectivePartPrices: (part: HardwarePart) => {
         const override = get().priceOverrides[part.id];
         const costPrice = override?.costPrice ?? part.costPrice;
@@ -146,6 +179,50 @@ export const useAdminStore = create<AdminPricingState>()(
           netProfit,
           profitMarginPercent: Math.round(profitMarginPercent * 10) / 10,
         };
+      },
+
+      calculatePackageProfitV2: (
+        pkg: PrebuiltPackage,
+        partsMap: Record<string, HardwarePart>
+      ) => {
+        let totalCost = 0;
+        let totalSell = 0;
+
+        for (const item of pkg.parts) {
+          const part = partsMap[item.partId];
+          if (!part) continue;
+
+          const prices = get().getEffectivePartPrices(part);
+          totalCost += prices.costPrice * item.quantity;
+          totalSell += prices.sellPrice * item.quantity;
+        }
+
+        const fee = pkg.assemblyFee ?? get().defaultAssemblyFee;
+        const calculatedTotal = pkg.customTotalOverride ?? totalSell + fee;
+        const netProfit = calculatedTotal - totalCost;
+        const profitMarginPercent = totalCost > 0 ? (netProfit / totalCost) * 100 : 0;
+
+        return {
+          totalCost,
+          totalSell,
+          assemblyFee: fee,
+          totalCustomerPrice: calculatedTotal,
+          netProfit,
+          profitMarginPercent: Math.round(profitMarginPercent * 10) / 10,
+        };
+      },
+
+      getMergedPackages: (basePackages: PrebuiltPackage[]) => {
+        const customById = new Map(get().customPackages.map((pkg) => [pkg.id, pkg]));
+        const merged = basePackages.map((pkg) => customById.get(pkg.id) ?? pkg);
+
+        for (const custom of get().customPackages) {
+          if (!merged.some((pkg) => pkg.id === custom.id)) {
+            merged.push(custom);
+          }
+        }
+
+        return merged;
       },
     }),
     {

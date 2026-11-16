@@ -1,6 +1,8 @@
 import { ProductCategory } from './types';
 
 export const TOKOPEDIA_OFFICIAL_STORE_URL = 'https://tk.tokopedia.com/ZSpeToWkH/';
+/** Alias resmi sesuai kontrak bisnis KSS Komputer. */
+export const TOKOPEDIA_URL = TOKOPEDIA_OFFICIAL_STORE_URL;
 export const DEFAULT_WHATSAPP_PHONE = '6281234567890'; // Nomor CS WhatsApp KSS Komputer
 
 /**
@@ -26,7 +28,7 @@ export function formatDeltaIDR(diff: number, includeBrackets = false): string {
   const safeDiff = Math.round(Number(diff) || 0);
 
   if (safeDiff === 0) {
-    return includeBrackets ? '[Termasuk dalam Paket]' : 'Termasuk dalam Paket';
+    return includeBrackets ? '[Termasuk Paket]' : 'Termasuk Paket';
   }
 
   const sign = safeDiff > 0 ? '+ ' : '- ';
@@ -287,4 +289,64 @@ export function generateQuoteShareWAMessage(
   ];
   const message = lines.join('\n');
   return `https://wa.me/${cleanPhone}?text=${encodeURIComponent(message)}`;
+}
+
+/**
+ * Pesan pemesanan paket rakitan jadi.
+ * WAJIB: hanya total harga paket yang dicantumkan, bukan harga satuan komponen.
+ */
+export function generateWhatsAppBuildOrder(
+  packageName: string,
+  partsList: { name: string; quantity: number }[],
+  totalPrice: number,
+  notes?: string,
+  phone: string = DEFAULT_WHATSAPP_PHONE
+): string {
+  const cleanPhone = phone.replace(/[^0-9]/g, '');
+  const lines: string[] = [
+    '*PEMESANAN PAKET PC RAKITAN — KSS KOMPUTER*',
+    '━━━━━━━━━━━━━━━━━━━━━━━━━',
+    `*Paket:* ${packageName}`,
+    '',
+    '*Rincian Komponen:*',
+    ...partsList.map(
+      (part, index) =>
+        `${index + 1}. ${part.name}${part.quantity > 1 ? ` (${part.quantity}x)` : ''}`
+    ),
+    '━━━━━━━━━━━━━━━━━━━━━━━━━',
+    `*Total Harga Paket:* ${formatIDR(totalPrice)}`,
+    'Sudah termasuk perakitan, cable management, stress test, dan garansi toko.',
+  ];
+
+  if (notes?.trim()) {
+    lines.push('', `*Catatan:* ${notes.trim()}`);
+  }
+
+  lines.push('', 'Mohon konfirmasi ketersediaan unit dan jadwal pengerjaan. Terima kasih!');
+
+  return `https://wa.me/${cleanPhone}?text=${encodeURIComponent(lines.join('\n'))}`;
+}
+
+/**
+ * Pesan booking layanan jasa komputer.
+ */
+export function generateWhatsAppServiceBooking(
+  serviceTitle: string,
+  pcSpecs: string,
+  issueNotes: string,
+  phone: string = DEFAULT_WHATSAPP_PHONE
+): string {
+  const cleanPhone = phone.replace(/[^0-9]/g, '');
+  const lines: string[] = [
+    '*BOOKING JASA KOMPUTER — KSS KOMPUTER*',
+    '━━━━━━━━━━━━━━━━━━━━━━━━━',
+    `*Layanan:* ${serviceTitle}`,
+    `*Spesifikasi / Perangkat:* ${pcSpecs}`,
+    '*Keluhan / Kebutuhan:*',
+    issueNotes.trim() || '-',
+    '━━━━━━━━━━━━━━━━━━━━━━━━━',
+    'Mohon konfirmasi jadwal dan estimasi biaya. Terima kasih!',
+  ];
+
+  return `https://wa.me/${cleanPhone}?text=${encodeURIComponent(lines.join('\n'))}`;
 }

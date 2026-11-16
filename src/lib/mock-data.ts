@@ -6,6 +6,11 @@ import {
   ConsultationQuote,
   BuildOrderTracking,
   ServiceBooking,
+  ComputerService,
+  FpsBenchmark,
+  PackageTier,
+  PrebuiltPackage,
+  ProductCategory,
 } from './types';
 import { TOKOPEDIA_OFFICIAL_STORE_URL } from './format';
 
@@ -1103,6 +1108,77 @@ export const MOCK_HARDWARE_PARTS: HardwarePart[] = [
     specs: {},
     updatedAt: '2026-11-03',
   },
+
+  // ===================== TAMBAHAN KATALOG V2 =====================
+  {
+    id: 'cpu-i5-14400f',
+    sku: 'INTEL-I5-14400F-BOX',
+    name: 'Intel Core i5-14400F (10C/16T, Up to 4.7 GHz)',
+    slug: 'intel-core-i5-14400f',
+    brand: 'Intel',
+    category: 'cpu',
+    costPrice: 2450000,
+    sellPrice: 2799000,
+    price: 2799000,
+    stockStatus: 'ready',
+    wattage: 65,
+    warrantyYears: 3,
+    officialDistributor: 'Astrindo',
+    specs: {
+      socket: 'LGA1700',
+      cores: 10,
+      threads: 16,
+      baseClockGhz: 2.5,
+      boostClockGhz: 4.7,
+      integratedGpu: false,
+      cpuGenTag: 'intel-14',
+    },
+    updatedAt: '2026-11-03',
+  },
+  {
+    id: 'gpu-rtx-4070-super',
+    sku: 'MSI-RTX4070S-VENTUS-3X',
+    name: 'MSI GeForce RTX 4070 Super 12GB Ventus 3X OC',
+    slug: 'msi-geforce-rtx-4070-super-ventus-3x',
+    brand: 'MSI',
+    category: 'gpu',
+    costPrice: 10200000,
+    sellPrice: 11499000,
+    price: 11499000,
+    stockStatus: 'ready',
+    wattage: 220,
+    warrantyYears: 3,
+    officialDistributor: 'WPG',
+    specs: {
+      gpuLengthMm: 308,
+      vramGb: 12,
+      vramType: 'GDDR6X',
+      recommendedPsuWatt: 650,
+    },
+    updatedAt: '2026-11-03',
+  },
+  {
+    id: 'gpu-rx-7700-xt',
+    sku: 'SAPPHIRE-RX7700XT-PULSE',
+    name: 'Sapphire PULSE AMD Radeon RX 7700 XT 12GB GDDR6',
+    slug: 'sapphire-pulse-rx-7700-xt',
+    brand: 'Sapphire',
+    category: 'gpu',
+    costPrice: 7100000,
+    sellPrice: 7999000,
+    price: 7999000,
+    stockStatus: 'ready',
+    wattage: 245,
+    warrantyYears: 3,
+    officialDistributor: 'EMD',
+    specs: {
+      gpuLengthMm: 276,
+      vramGb: 12,
+      vramType: 'GDDR6',
+      recommendedPsuWatt: 650,
+    },
+    updatedAt: '2026-11-03',
+  },
 ];
 
 // Helper lookup part by ID
@@ -2130,3 +2206,98 @@ export const TRACKINGS_BY_CODE: Record<string, BuildOrderTracking> = MOCK_BUILD_
   },
   {} as Record<string, BuildOrderTracking>
 );
+
+/* =========================================================================
+ * KSS KOMPUTER V2 — DATA DOMAIN PAKET RAKITAN & JASA
+ * ========================================================================= */
+
+/** Katalog internal komponen (harga modal & sellPrice hanya untuk kalkulasi). */
+export const KSS_HARDWARE_PARTS: HardwarePart[] = MOCK_HARDWARE_PARTS;
+export const KSS_PARTS_BY_ID: Record<string, HardwarePart> = PARTS_BY_ID;
+
+const PACKAGE_TIER_BY_TAG: Record<PrebuiltPC['categoryTag'], PackageTier> = {
+  office: 'Office & Kasir',
+  'gaming-1080p': 'E-Sports 1080p',
+  'gaming-1440p': 'AAA 1080p Ultra',
+  creator: 'Creator & 1440p',
+  workstation: 'Workstation & 4K',
+  'sultan-4k': 'Workstation & 4K',
+};
+
+function toFpsBenchmarks(pkg: PrebuiltPC): FpsBenchmark[] {
+  return pkg.estimatedFps.map((benchmark) => ({
+    game: benchmark.game,
+    resolution: pkg.targetResolution,
+    fps: benchmark.fps,
+    settings: benchmark.settings,
+  }));
+}
+
+/** 6 Paket PC Rakitan Jadi KSS Komputer (satu harga total, tanpa harga part). */
+export const KSS_PREBUILT_PACKAGES: PrebuiltPackage[] = MOCK_PREBUILT_PCS.map((pkg) => ({
+  id: pkg.id,
+  slug: pkg.slug,
+  name: pkg.name,
+  tier: PACKAGE_TIER_BY_TAG[pkg.categoryTag],
+  parts: (Object.entries(pkg.baseParts) as [ProductCategory, PrebuiltPC['baseParts'][ProductCategory]][])
+    .filter(([, item]) => Boolean(item))
+    .map(([category, item]) => ({
+      category,
+      partId: item!.partId,
+      quantity: item!.quantity,
+    })),
+  assemblyFee: pkg.assemblyFee,
+  customTotalOverride: undefined,
+  fpsBenchmarks: toFpsBenchmarks(pkg),
+  tokopediaUrl: pkg.tokopediaUrl || TOKOPEDIA_OFFICIAL_STORE_URL,
+  highlights: pkg.highlights,
+}));
+
+export const KSS_PREBUILT_BY_SLUG: Record<string, PrebuiltPackage> =
+  KSS_PREBUILT_PACKAGES.reduce((acc, pkg) => {
+    acc[pkg.slug] = pkg;
+    return acc;
+  }, {} as Record<string, PrebuiltPackage>);
+
+/** 4 Paket Layanan Jasa KSS Komputer. */
+export const KSS_COMPUTER_SERVICES: ComputerService[] = [
+  {
+    slug: 'rakit-pc-cable-management-premium',
+    category: 'rakit',
+  },
+  {
+    slug: 'upgrade-ssd-nvme',
+    category: 'upgrade',
+  },
+  {
+    slug: 'deep-cleaning-repaste',
+    category: 'cleaning',
+  },
+  {
+    slug: 'konsultasi-cek-spesifikasi',
+    category: 'konsultasi',
+  },
+].map(({ slug, category }) => {
+  const service = MOCK_SERVICES.find((item) => item.slug === slug);
+  if (!service) {
+    throw new Error(`Layanan KSS tidak ditemukan: ${slug}`);
+  }
+
+  return {
+    id: service.id,
+    slug: service.slug,
+    title: service.title,
+    category: category as ComputerService['category'],
+    priceStartFrom: service.price,
+    durationEstimate: service.duration,
+    features: service.features,
+    warrantyInfo:
+      'Garansi pengerjaan toko KSS. Pengecekan ulang keluhan yang sama tidak dikenakan biaya jasa selama masa garansi.',
+  };
+});
+
+export const KSS_SERVICES_BY_SLUG: Record<string, ComputerService> =
+  KSS_COMPUTER_SERVICES.reduce((acc, service) => {
+    acc[service.slug] = service;
+    return acc;
+  }, {} as Record<string, ComputerService>);

@@ -2,6 +2,7 @@ import {
   BuildSelections,
   CompatibilityIssue,
   CompatibilityReport,
+  HardwarePart,
   ProductCategory,
   PublicHardwarePart,
   SelectedBuildItem,
@@ -28,11 +29,55 @@ export function getRamModuleCount(ramPart: PublicHardwarePart, quantity: number)
   return 1 * quantity;
 }
 
+export function validateBuild(selections: BuildSelections): CompatibilityReport;
+export function validateBuild(parts: HardwarePart[]): CompatibilityReport;
+export function validateBuild(input: BuildSelections | HardwarePart[]): CompatibilityReport {
+  if (!Array.isArray(input)) {
+    return validateSelections(input);
+  }
+
+  const selections: BuildSelections = {};
+
+  for (const part of input) {
+    const item: SelectedBuildItem = {
+      part: toPublicPart(part),
+      quantity: 1,
+    };
+
+    if (!selections[part.category]) {
+      selections[part.category] = [];
+    }
+    selections[part.category]!.push(item);
+  }
+
+  return validateSelections(selections);
+}
+
+function toPublicPart(part: HardwarePart): PublicHardwarePart {
+  return {
+    id: part.id,
+    sku: part.sku,
+    name: part.name,
+    slug: part.slug,
+    brand: part.brand,
+    category: part.category,
+    retailPrice: part.retailPrice ?? part.sellPrice,
+    isRetailAvailable: part.isRetailAvailable,
+    originalPrice: part.originalPrice,
+    stockStatus: part.stockStatus,
+    wattage: part.wattage,
+    warrantyYears: part.warrantyYears,
+    officialDistributor: part.officialDistributor,
+    specs: part.specs,
+    updatedAt: part.updatedAt,
+  };
+}
+
 /**
  * Validasi deterministik seluruh aturan kompatibilitas rakitan PC
  * sesuai dengan standar System Integrator KSS Komputer.
  */
-export function validateBuild(selections: BuildSelections): CompatibilityReport {
+function validateSelections(selections: BuildSelections): CompatibilityReport {
   const issues: CompatibilityIssue[] = [];
 
   const cpu = getItemPart(selections.cpu?.[0]);
@@ -328,4 +373,44 @@ export function isPartCompatibleWithCurrentBuild(
   }
 
   return { compatible: true };
+}
+
+/**
+ * Harga jual satu part berdasarkan modal + markup, atau sellPrice internal.
+ * Hanya boleh dipakai di server/admin — jangan kirim hasil per-part ke publik.
+ */
+function resolveSellPrice(part: HardwarePart, globalMarkupPercent = 0): number {
+  if (globalMarkupPercent > 0) {
+    return Math.round(part.costPrice * (1 + globalMarkupPercent / 100));
+  }
+  return part.sellPrice;
+}
+
+/**
+ * Total harga paket rakitan jadi: jumlah harga jual komponen + biaya rakit.
+ */
+export function calculatePackageTotal(
+  parts: (HardwarePart | undefined)[],
+  assemblyFee: number,
+  globalMarkupPercent = 0
+): number {
+  const subtotal = parts.reduce((sum, part) => {
+    if (!part) return sum;
+    return sum + resolveSellPrice(part, globalMarkupPercent);
+  }, 0);
+
+  return subtotal + Math.max(0, assemblyFee);
+}
+
+/**
+ * Selisih harga antara part terpasang dan kandidat upgrade.
+ * Positif = tambah biaya, negatif = lebih hemat.
+ */
+export function calculatePartDelta(
+  currentPart: HardwarePart | undefined,
+  candidatePart: HardwarePart,
+  globalMarkupPercent = 0
+): number {
+  const currentPrice = currentPart ? resolveSellPrice(currentPart, globalMarkupPercent) : 0;
+  return resolveSellPrice(candidatePart, globalMarkupPercent) - currentPrice;
 }

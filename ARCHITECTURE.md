@@ -1,103 +1,206 @@
-# SYSTEM ARCHITECTURE & BUSINESS SPECIFICATIONS — KSS KOMPUTER
+# ARCHITECTURE.md — KSS Komputer
 
-Dokumen ini mendefinisikan model bisnis, arsitektur teknis, kontrak tipe TypeScript, logika validasi kompatibilitas, dan mekanisme *pricing* untuk **KSS Komputer**.
-
----
-
-## 1. MODEL BISNIS KSS KOMPUTER (SYSTEM INTEGRATOR & JASA)
-
-KSS Komputer **BUKAN** toko eceran part komputer transparan ala marketplace grosir. KSS Komputer beroperasi sebagai **System Integrator & Pusat Jasa Komputer**:
-1. **Penjualan Utama**:
-   - **PC Rakitan Jadi (Siap Pakai)**: Konfigurasi seimbang (*balanced build*), sudah dirakit rapi (*clean cable management*), melalui proses *stress test* 24 jam, dan dilengkapi garansi toko + garansi resmi distributor.
-   - **Layanan Jasa Komputer**: Jasa perakitan custom, maintenance/deep cleaning, upgrade hardware, dan konsultasi rakitan.
-2. **Kanal Transaksi**:
-   - **Tokopedia Resmi**: `https://tk.tokopedia.com/ZSpeToWkH/`
-   - **WhatsApp Admin**: Konsultasi langsung, pesanan custom invoice, dan koordinasi pengiriman instan (Gosend/Grab) atau kargo kayu luar kota.
+Dokumen ini menjelaskan arsitektur target KSS Komputer sebagai **Custom PC System
+Integrator & Pusat Layanan Jasa Komputer**. Fokus utama: paket rakitan jadi,
+upgrade berbasis delta, dan layanan jasa — bukan penjualan komponen lepasan.
 
 ---
 
-## 2. STRUKTUR PRICING: HIDDEN PART PRICE & DELTA PRICING
+## 1. Prinsip Arsitektur
 
-### A. Kebijakan Privasi Harga Part (Hidden Part Price)
-- **DILARANG** menampilkan harga satuan komponen (CPU, Motherboard, RAM, VGA, SSD, PSU, Case, Cooler) di antarmuka publik.
-- Publik hanya berhak melihat:
-  1. **Total Harga PC Rakitan Jadi** (sudah termasuk komponen, markup rahasia toko, dan jasa rakit).
-  2. **Selisih Harga (Delta Price)** saat mengganti/meng-upgrade suatu komponen.
-
-### B. Struktur Data Komponen Internal
-Setiap komponen hardware (`HardwarePart`) menyimpan:
-- `costPrice`: Harga modal riil dari distributor (hanya bisa diakses di `/admin/pricing`).
-- `sellPrice`: Harga jual komponen setelah ditambah margin keuntungan toko.
-- `wattage`: Estimasi TDP komponen untuk kalkulator daya.
-
-### C. Logika Perhitungan Total Paket PC
-$$\text{Total Harga Paket} = \sum (\text{sellPrice part}) + \text{assemblyFee}$$
-Jika terdapat penyesuaian markup global oleh admin:
-$$\text{Total Harga Paket} = \left(\sum \text{costPrice part} \times (1 + \frac{\text{markupPercent}}{100})\right) + \text{assemblyFee}$$
-
-### D. Mekanisme Delta Pricing (Quick Upgrader & Configurator)
-Ketika pembeli membuka halaman kustomisasi paket atau konfigurator:
-$$\text{Delta Price} = \text{sellPrice}(\text{Komponen Baru}) - \text{sellPrice}(\text{Komponen Bawaan})$$
-- Jika $\text{Delta Price} == 0$: Label tampil sebagai `[Termasuk dalam Paket]`
-- Jika $\text{Delta Price} > 0$: Label tampil sebagai `[+ Rp 650.000]` (Upgrade)
-- Jika $\text{Delta Price} < 0$: Label tampil sebagai `[- Rp 250.000]` (Downgrade)
+1. **Satu harga untuk satu paket.** Publik hanya melihat total harga paket.
+2. **Delta, bukan harga part.** Upgrade ditampilkan sebagai selisih harga.
+3. **Server sebagai pemegang harga.** `costPrice`/`sellPrice` tidak pernah masuk
+   bundle client.
+4. **Kompatibilitas deterministik.** Aturan socket, RAM, form factor, clearance,
+   dan PSU dihitung dari spesifikasi, bukan tebakan.
+5. **UI industrial high-craft.** Semua komponen mengikuti
+   `UI_FIGCRAFT_SKILL.md`.
 
 ---
 
-## 3. ENGINE KOMPATIBILITAS TEKNIS (`src/lib/compatibility.ts`)
+## 2. Stack
 
-Engine validasi memeriksa 8 aturan teknis mutlak secara fungsional:
-1. **Socket CPU vs Motherboard**: AM4, AM5, LGA1700, LGA1851 wajib identik.
-2. **Generasi RAM vs Motherboard**: RAM DDR4 hanya cocok di Motherboard DDR4; RAM DDR5 hanya cocok di Motherboard DDR5.
-3. **Form Factor Motherboard vs Casing**: Casing harus mendukung ukuran fisik Motherboard (misal: Casing mATX tidak bisa memuat Motherboard ATX).
-4. **Panjang Fisik GPU vs Casing**: `gpuLengthMm` tidak boleh melebihi `maxGpuLengthMm` casing.
-5. **Tinggi CPU Cooler vs Casing**: `coolerHeightMm` tidak boleh melebihi `maxCoolerHeightMm` casing.
-6. **Peringatan BIOS Update**: Ditampilkan jika prosesor generasi terbaru dipasang pada chipset motherboard generasi awal (misal: Ryzen 9000 di chipset B650 non-update).
-7. **Deteksi iGPU**: Memberikan peringatan jika CPU tidak memiliki iGPU dan build belum memiliki kartu grafis diskrit (VGA).
-8. **Kalkulasi Daya & Rekomendasi PSU**:
-   - Menghitung akumulasi TDP seluruh komponen.
-   - Standar rekomendasi PSU: $\text{Rekomendasi Watt} = \text{Total TDP} \times 1.35$ (headroom 35% untuk efisiensi & spike transient).
+| Lapisan | Teknologi |
+|---|---|
+| Framework | Next.js 16 App Router (Turbopack, Cache Components) |
+| Bahasa | TypeScript strict |
+| Styling | Tailwind CSS 4 |
+| State | Zustand + persist |
+| Ikon | lucide-react |
+| Deploy | Vercel (`https://kss-komputer-seven.vercel.app`) |
+
+Dependensi wajib: `next`, `react`, `react-dom`, `zustand`, `lucide-react`,
+`tailwindcss`.
 
 ---
 
-## 4. STRUKTUR DIREKTORI TARGET
+## 3. Batas Bisnis: Zero Part-Price Leak
 
-~~~text
+### 3.1 Yang boleh tampil publik
+
+- Total harga paket rakitan.
+- Delta upgrade (`+ Rp`, `- Rp`, `[Termasuk Paket]`).
+- Harga layanan jasa (`priceStartFrom`).
+- Biaya rakit/assembly fee bila relevan.
+
+### 3.2 Yang dilarang tampil publik
+
+- `costPrice` (modal distributor).
+- `sellPrice` (harga jual internal part).
+- Alias `price` per komponen.
+- Perhitungan harga yang membaca `sellPrice` di client.
+
+### 3.3 Alur data
+
+```text
+mock-data / database (costPrice, sellPrice)
+        │
+        ├── admin (useAdminStore, /admin/pricing)  → boleh melihat modal
+        │
+        └── server-catalog / server-pricing
+                 │ sanitize + hitung total/delta
+                 ▼
+          DTO publik (tanpa harga part)
+                 │
+                 ▼
+          Server Component → props → Client Component
+```
+
+Route estimasi `POST /api/build/estimate` menerima ID part + quantity, lalu
+mengembalikan `subtotal`, `totalPrice`, dan `deltas` saja.
+
+---
+
+## 4. Struktur Direktori
+
+```text
 src/
 ├── app/
-│   ├── layout.tsx                     # Layout global dengan Navbar, Footer, & CartDrawer
-│   ├── page.tsx                       # High-Conversion Homepage (Paket Terlaris, Kategori Kebutuhan, Keunggulan Jasa)
-│   ├── paket-rakitan/
-│   │   ├── page.tsx                   # Katalog Seluruh PC Rakitan Jadi (Filter Budget & Platform)
-│   │   └── [slug]/
-│   │       └── page.tsx               # Quick Spec Upgrader dengan Delta Pricing & 1-Click Checkout
-│   ├── simulasi/
-│   │   └── page.tsx                   # Custom PC Configurator (Slot Hardware, Auto-filter Kompatibel, Telemetry)
-│   ├── jasa/
-│   │   └── page.tsx                   # Katalog Layanan Jasa Komputer & Booking Jadwal via WhatsApp
-│   └── admin/
-│       └── pricing/
-│           └── page.tsx               # Spreadsheet Modal & Markup Management untuk Owner KSS Komputer
+│   ├── page.tsx                 # Homepage retail-industrial
+│   ├── paket-rakitan/           # Katalog + detail quick-upgrade
+│   ├── simulasi/                # Custom configurator
+│   ├── jasa/                    # Katalog + detail layanan
+│   ├── konsultasi/              # Wizard budget
+│   ├── komponen/                # Katalog pendukung (retailPrice)
+│   ├── aksesoris/               # Katalog pendukung
+│   ├── cek-pesanan/             # Tracking
+│   ├── penawaran/[code]/        # Surat penawaran
+│   ├── tentang-kami/
+│   ├── admin/pricing/           # Markup & profit (modal terlihat)
+│   └── api/build/estimate/      # Estimasi total + delta
 ├── components/
-│   ├── layout/
-│   │   ├── Navbar.tsx                 # Header teknis padat, link Tokopedia resmi, drawer keranjang
-│   │   ├── Footer.tsx                 # Profil KSS Komputer, garansi toko, distributor, jam operasional
-│   │   └── CartDrawer.tsx             # Drawer ringkasan belanja & perakitan
-│   ├── builder/
-│   │   ├── ConfiguratorSlotRow.tsx    # Baris slot komponen dengan badge delta pricing
-│   │   ├── PartSelectorDrawer.tsx     # Drawer pemilih part kompatibel dengan delta price
-│   │   ├── TelemetryBar.tsx           # Bar sticky status kompatibilitas, watt meter, & total harga
-│   │   └── QuotationPrintView.tsx     # Template cetak penawaran resmi PDF/Print View
-│   └── prebuilt/
-│       ├── PrebuiltCard.tsx           # Kartu paket PC dengan indikator FPS & spek inti
-│       └── QuickUpgraderModal.tsx     # Modal cepat tukar spek di halaman detail paket
+│   ├── layout/                  # Navbar, Footer, BottomNav
+│   ├── prebuilt/                # Kartu paket + FPS telemetry
+│   ├── catalog/                 # Filter & baris katalog
+│   ├── service/                 # Booking form
+│   └── ui/                      # PageHeader, SectionHeader
 ├── lib/
-│   ├── types.ts                       # Kontrak TypeScript (HardwarePart, PrebuiltPC, ServicePackage, dll)
-│   ├── format.ts                      # Helper format Rupiah, format Delta IDR, URL WA & Tokopedia
-│   ├── compatibility.ts               # Engine murni validasi kompatibilitas & kalkulator bundle
-│   └── mock-data.ts                   # 45+ HardwarePart (modal + jual), 6 PrebuiltPC, 4 ServicePackage
+│   ├── types.ts                 # Kontrak domain
+│   ├── mock-data.ts             # Katalog internal + paket + jasa
+│   ├── compatibility.ts         # Validasi + total + delta
+│   ├── format.ts                # Rupiah, delta, WhatsApp
+│   ├── sanitizer.ts             # DTO publik
+│   ├── server-catalog.ts        # Akses data server-only
+│   └── server-pricing.ts        # Estimasi total/delta server-only
 └── store/
-    ├── useBuilderStore.ts             # State simulasi & custom configurator (dengan Delta Price calculation)
-    ├── useAdminStore.ts               # State manajemen markup, biaya rakit, dan modal toko
-    └── useCartStore.ts                # State keranjang transaksi belanja
-~~~
+    ├── useBuilderStore.ts       # Konfigurator + delta
+    ├── useAdminStore.ts         # Markup, modal, paket kustom
+    ├── useCartStore.ts
+    ├── useRetailCartStore.ts
+    └── useQuoteStore.ts
+```
+
+---
+
+## 5. Domain Model
+
+### 5.1 `HardwarePart`
+
+Menyimpan identitas komponen, `costPrice`, `sellPrice`, `wattage`, `stockStatus`,
+dan `specs` (socket, RAM type, form factor, dimensi GPU/cooler, VRAM, PSU).
+
+- Hanya dipakai internal/admin.
+- Tidak boleh dikirim langsung ke client.
+
+### 5.2 `PrebuiltPackage`
+
+Kontrak paket rakitan jadi:
+
+- `tier`: Office & Kasir, E-Sports 1080p, AAA 1080p Ultra, Creator & 1440p,
+  Workstation & 4K.
+- `parts`: referensi `partId` + quantity.
+- `assemblyFee`, `customTotalOverride`.
+- `fpsBenchmarks`: game, resolusi, FPS, settings.
+- `tokopediaUrl`, `highlights`.
+
+### 5.3 `ComputerService`
+
+Kontrak layanan jasa:
+
+- `category`: rakit, upgrade, cleaning, konsultasi.
+- `priceStartFrom`, `durationEstimate`, `features`, `warrantyInfo`.
+
+### 5.4 Kompatibilitas & Delta
+
+`validateBuild()` menerima `BuildSelections` atau `HardwarePart[]` dan
+mengembalikan laporan:
+
+- error/warning socket, RAM, form factor, clearance, BIOS, PSU;
+- total wattage;
+- rekomendasi PSU (`totalWattage × 1.35`, dibulatkan ke 50W).
+
+`calculatePackageTotal(parts, assemblyFee, markup)` menghitung harga jual paket.
+`calculatePartDelta(current, candidate, markup)` menghitung selisih upgrade.
+Keduanya **server/admin-only** karena memakai `sellPrice`/`costPrice`.
+
+---
+
+## 6. State Management
+
+### 6.1 `useBuilderStore`
+
+- Slot komponen per kategori.
+- `loadPrebuilt`, `loadPrebuiltPackage`, `selectPart`.
+- `strictCompatibilityFilter` / `strictFilterEnabled`.
+- `publicTotalPrice` — satu-satunya harga rakitan di client.
+- `getBundleTotal()`.
+- Persist v3; selections lama dibersihkan untuk mencegah harga part tersimpan.
+
+### 6.2 `useAdminStore`
+
+- `globalMarkupPercent`, `defaultAssemblyFee`, `tokopediaStoreUrl`.
+- Override `costPrice`/`sellPrice` per part.
+- Profit paket (`calculatePackageProfit`, `calculatePackageProfitV2`).
+- Paket kustom (`customPackages`, `upsertPackage`, `deletePackage`,
+  `getMergedPackages`).
+
+---
+
+## 7. UI System
+
+- Semua aturan visual ada di `UI_FIGCRAFT_SKILL.md`.
+- Palet: zinc surface, orange CTA, emerald status/WA, Tokopedia green.
+- Angka wajib `font-mono tabular-nums tracking-tight`.
+- FPS telemetry bar pada setiap kartu paket.
+- Delta tag pada setiap opsi upgrade.
+- Tidak ada gradient, radius > `md`, blur berlebihan, atau hero kosong.
+
+---
+
+## 8. Keamanan & Kualitas
+
+- ESLint `no-restricted-imports` melarang `mock-data`, `server-catalog`, dan
+  `server-pricing` di komponen client.
+- Halaman publik hanya menerima DTO tersanitasi.
+- `npx tsc --noEmit`, `npm run lint`, dan `npm run build` wajib lulus.
+- Uji responsif 390–1440px tanpa horizontal overflow.
+
+---
+
+## 9. Catatan Migrasi
+
+Kontrak v2 (`PrebuiltPackage`, `ComputerService`) ditambahkan berdampingan dengan
+tipe lama (`PrebuiltPC`, `ServicePackage`) agar halaman yang sudah live tidak
+rusak. Fase 3–6 memigrasikan UI ke kontrak v2, setelah itu tipe lama dapat
+dihapus.
