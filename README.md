@@ -12,13 +12,11 @@ Publik hanya melihat **total harga paket** dan **delta upgrade**.
 
 Baca berurutan sebelum menulis kode:
 
-1. **`AGENTS.md`** — identitas bisnis, aturan zero part-price leak, protokol
-   eksekusi, dan definition of done.
-2. **`UI_FIGCRAFT_SKILL.md`** — kontrak visual industrial: surface, tipografi,
-   FPS telemetry, delta tag, dan larangan anti-AI-slop.
-3. **`ARCHITECTURE.md`** — struktur modul, domain model, alur data harga, dan
-   state management.
-4. **`ROADMAP.md`** — urutan fase dan status pekerjaan.
+1. **`AGENTS.md`** — identitas bisnis, zero part-price leak, protokol eksekusi.
+2. **`UI_FIGCRAFT_SKILL.md`** — kontrak visual industrial.
+3. **`DESIGN.md`** — token & pola desain (Vercel/NVIDIA via awesome-design-md).
+4. **`ARCHITECTURE.md`** — arsitektur modul dan domain.
+5. **`ROADMAP.md`** — fase dan status.
 
 Sumber desain native FigCraft ada di `design/figcraft/` (lihat README folder).
 

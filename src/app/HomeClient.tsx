@@ -30,7 +30,7 @@ import {
 } from 'lucide-react';
 import type { PublicPrebuiltPCDTO } from '@/lib/sanitizer';
 import type { PublicAccessory, ServicePackage } from '@/lib/types';
-import { formatIDR, generateConsultationWAMessage, DEFAULT_WHATSAPP_PHONE, TOKOPEDIA_OFFICIAL_STORE_URL } from '@/lib/format';
+import { formatIDR, generateConsultationWAMessage, DEFAULT_WHATSAPP_PHONE } from '@/lib/format';
 import { PrebuiltCard } from '@/components/prebuilt/PrebuiltCard';
 import { SectionHeader } from '@/components/ui/SectionHeader';
 import { useRetailCartStore } from '@/store/useRetailCartStore';
@@ -128,15 +128,70 @@ export default function HomeClient({ prebuilts, accessories, services }: HomeCli
 
       {/* HERO */}
       <section className="border-b border-zinc-800 bg-zinc-950">
-        <div className="kss-container py-10 sm:py-12 lg:py-16">
-          <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-12">
-            <div className="flex flex-col items-start gap-4 lg:col-span-7">
-              <div className="inline-flex items-center gap-2 rounded-md border border-orange-500/30 bg-orange-500/10 px-2.5 py-1 font-mono text-[10px] font-bold uppercase tracking-tight text-orange-400">
+        <div className="kss-container py-8 sm:py-10 lg:py-14">
+          <div className="grid grid-cols-1 items-stretch gap-6 lg:grid-cols-12 lg:gap-8">
+            {/* Banner visual */}
+            <div className="order-first lg:order-2 lg:col-span-7">
+              <div className="relative min-h-[300px] overflow-hidden rounded-md border border-zinc-800 bg-zinc-900 sm:min-h-[360px] lg:h-full lg:min-h-[430px]">
+                <Image
+                  src="/images/tokopedia/banner-pc-store.webp"
+                  alt="PC rakitan dan gaming setup KSS Komputer"
+                  fill
+                  priority
+                  sizes="(max-width: 1024px) 100vw, 58vw"
+                  className="object-cover object-center"
+                />
+                <span className="absolute left-0 top-0 h-3 w-3 bg-orange-500" />
+                <div className="absolute left-4 top-4 flex items-center gap-1.5 rounded-sm border border-emerald-500/40 bg-zinc-950/90 px-2 py-1 font-mono text-[10px] font-bold uppercase tracking-wider text-emerald-400">
+                  <BadgeCheck className="h-3 w-3" />
+                  Official Store
+                </div>
+                <div className="absolute right-4 top-4 rounded-sm border border-zinc-700 bg-zinc-950/90 px-2 py-1 font-mono text-[10px] font-semibold text-zinc-300">
+                  4.9 · 33 rb terjual
+                </div>
+
+                {featured && (
+                  <div className="absolute inset-x-0 bottom-0 border-t border-zinc-700 bg-zinc-950/95 p-4">
+                    <div className="flex flex-wrap items-end justify-between gap-3">
+                      <div className="min-w-0">
+                        <div className="font-mono text-[9px] font-bold uppercase tracking-wider text-orange-400">
+                          Featured Rig
+                        </div>
+                        <Link
+                          href={`/paket-rakitan/${featured.slug}`}
+                          className="line-clamp-1 text-sm font-bold text-zinc-50 hover:text-orange-400"
+                        >
+                          {featured.name}
+                        </Link>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <div className="text-right">
+                          <div className="font-mono text-[9px] uppercase tracking-tight text-zinc-500">
+                            Harga Paket
+                          </div>
+                          <div className="kss-price text-base text-zinc-50">
+                            {formatIDR(featured.totalBundlePrice)}
+                          </div>
+                        </div>
+                        <Link href={`/paket-rakitan/${featured.slug}`} className="kss-btn-primary h-8 px-3">
+                          <span>Detail</span>
+                          <ArrowRight className="h-3 w-3" />
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Copy */}
+            <div className="order-last flex flex-col justify-center gap-4 lg:order-1 lg:col-span-5">
+              <div className="inline-flex w-fit items-center gap-2 rounded-md border border-orange-500/30 bg-orange-500/10 px-2.5 py-1 font-mono text-[10px] font-bold uppercase tracking-wider text-orange-400">
                 <span className="h-1.5 w-1.5 rounded-full bg-orange-500" />
                 System Integrator &amp; PC Builder Jakarta
               </div>
 
-              <h1 className="text-3xl font-black leading-[1.08] tracking-tight text-zinc-50 sm:text-4xl lg:text-5xl">
+              <h1 className="text-3xl font-black leading-[1.05] tracking-[-0.04em] text-zinc-50 sm:text-4xl lg:text-[46px]">
                 PC Rakitan Siap Pakai,<br className="hidden sm:block" /> Harga Jelas &amp; Bergaransi.
               </h1>
 
@@ -175,73 +230,6 @@ export default function HomeClient({ prebuilts, accessories, services }: HomeCli
                   </div>
                 ))}
               </div>
-            </div>
-
-            {/* Featured flagship */}
-            <div className="lg:col-span-5">
-              {featured && (
-                <div className="rounded-md border border-zinc-800 bg-zinc-900 p-5">
-                  <div className="mb-3 flex items-center justify-between">
-                    <span className="rounded-sm border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 font-mono text-[10px] font-bold uppercase text-emerald-400">
-                      Featured Rig
-                    </span>
-                    <span className="font-mono text-[10px] text-zinc-500">
-                      {featured.platform} · {featured.targetResolution}
-                    </span>
-                  </div>
-
-                  <h2 className="text-lg font-black tracking-tight text-zinc-50">
-                    <Link href={`/paket-rakitan/${featured.slug}`} className="hover:text-orange-400">
-                      {featured.name}
-                    </Link>
-                  </h2>
-
-                  <div className="mt-3 flex flex-wrap gap-1.5">
-                    {featured.parts.slice(0, 4).map((item) => (
-                      <span
-                        key={item.partId}
-                        className="inline-flex items-center rounded-sm border border-zinc-700 bg-zinc-800 px-1.5 py-0.5 font-mono text-[10px] uppercase tracking-wider text-zinc-300"
-                      >
-                        {item.category}
-                      </span>
-                    ))}
-                  </div>
-
-                  <div className="mt-4 space-y-2 rounded-md border border-zinc-800 bg-zinc-950 p-3">
-                    {featured.estimatedFps.slice(0, 3).map((bench, index) => (
-                      <div key={index} className="space-y-1">
-                        <div className="flex items-center justify-between gap-2">
-                          <span className="truncate text-[11px] text-zinc-400">{bench.game}</span>
-                          <span className="font-mono text-xs font-bold tabular-nums text-zinc-100">
-                            ~{bench.fps} FPS
-                          </span>
-                        </div>
-                        <div className="h-1.5 overflow-hidden bg-zinc-800">
-                          <div
-                            className="h-full bg-orange-500"
-                            style={{ width: `${Math.min(100, (bench.fps / 300) * 100)}%` }}
-                          />
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className="mt-4 flex items-end justify-between border-t border-zinc-800 pt-3">
-                    <div>
-                      <div className="font-mono text-[10px] uppercase tracking-tight text-zinc-500">
-                        Harga Siap Pakai
-                      </div>
-                      <div className="kss-price text-xl text-zinc-50">
-                        {formatIDR(featured.totalBundlePrice)}
-                      </div>
-                    </div>
-                    <Link href={`/paket-rakitan/${featured.slug}`} className="kss-btn-primary h-9 px-3">
-                      <span>Detail</span>
-                      <ArrowRight className="h-3.5 w-3.5" />
-                    </Link>
-                  </div>
-                </div>
-              )}
             </div>
           </div>
         </div>
@@ -589,45 +577,6 @@ export default function HomeClient({ prebuilts, accessories, services }: HomeCli
                 </article>
               );
             })}
-          </div>
-        </div>
-      </section>
-
-      {/* OFFICIAL TOKOPEDIA STORE */}
-      <section className="kss-container pb-4">
-        <div className="grid overflow-hidden rounded-md border border-zinc-800 bg-zinc-950 md:grid-cols-[1.15fr_1fr]">
-          <div className="relative min-h-[240px] md:min-h-full">
-            <Image
-              src="/images/tokopedia/banner-pc-store.webp"
-              alt="Etalase PC dan gaming gear KSS Komputer di Tokopedia"
-              fill
-              sizes="(max-width: 768px) 100vw, 60vw"
-              className="object-cover"
-            />
-          </div>
-          <div className="flex flex-col justify-center p-6">
-            <div className="font-mono text-[10px] font-bold uppercase tracking-wider text-[#00AA5B]">
-              Official Tokopedia Store
-            </div>
-            <h3 className="mt-1 text-xl font-black tracking-tight text-zinc-50">
-              Etalase PC &amp; Gaming Gear KSS
-            </h3>
-            <p className="mt-1 max-w-md text-xs leading-relaxed text-zinc-400">
-              Cek stok terbaru, promo berjalan, dan checkout resmi langsung melalui
-              toko Tokopedia KSS Komputer.
-            </p>
-            <a
-              href={TOKOPEDIA_OFFICIAL_STORE_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-4 inline-flex h-10 w-fit items-center gap-2 rounded-md bg-[#00AA5B] px-4 text-xs font-bold text-white transition-colors hover:bg-[#00924E]"
-            >
-              <span>Kunjungi Tokopedia</span>
-              <ArrowRight className="h-3.5 w-3.5" />
-            </a>
-            <span className="mt-2 font-mono text-[10px] text-zinc-500">
-              Rating 4.9 · 33 rb terjual
-            </span>
           </div>
         </div>
       </section>

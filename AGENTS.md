@@ -1,7 +1,7 @@
 # AGENTS.md — Instruksi Utama OpenCode untuk KSS Komputer
 
 > Dokumen ini adalah instruksi utama untuk seluruh pekerjaan di repositori ini.
-> Baca juga `UI_FIGCRAFT_SKILL.md` sebelum menulis komponen UI apa pun.
+> Baca juga `UI_FIGCRAFT_SKILL.md` dan `DESIGN.md` sebelum menulis komponen UI apa pun.
 
 ## 1. Identitas Bisnis KSS Komputer
 
@@ -41,7 +41,7 @@ tersanitasi.
 
 1. **Single-agent direct execution.** Jangan membuat atau memanggil sub-agent.
    Semua perintah terminal, penulisan file, dan perbaikan dilakukan langsung.
-2. **Selalu baca `UI_FIGCRAFT_SKILL.md`** sebelum menulis atau mengubah `.tsx`.
+2. **Selalu baca `UI_FIGCRAFT_SKILL.md` dan `DESIGN.md`** sebelum menulis atau mengubah `.tsx`.
 3. **Dilarang menulis placeholder** seperti `// TODO`, komponen kosong, atau
    handler palsu. Implementasi harus utuh dan bisa diklik.
 4. **Type safety dulu.** Setiap selesai satu fase:
@@ -72,7 +72,7 @@ tersanitasi.
 - `src/app/(public)` atau route publik — hanya menerima DTO tersanitasi.
 - `src/app/admin/*` — satu-satunya area yang boleh melihat harga modal.
 
-Detail lengkap: `ARCHITECTURE.md`. Urutan pekerjaan: `ROADMAP.md`.
+Detail lengkap: `ARCHITECTURE.md`. Design token: `DESIGN.md`. Urutan pekerjaan: `ROADMAP.md`.
 
 ### 3.1 FigCraft & Design Sources
 
@@ -100,7 +100,7 @@ Detail lengkap: `ARCHITECTURE.md`. Urutan pekerjaan: `ROADMAP.md`.
 - `npm run lint` = 0 error.
 - `npm run build` sukses.
 - Tidak ada harga satuan part di bundle/HTML publik.
-- UI mengikuti `UI_FIGCRAFT_SKILL.md`.
+- UI mengikuti `UI_FIGCRAFT_SKILL.md` dan `DESIGN.md`.
 - `ROADMAP.md` diperbarui dan commit sudah di-push.
 
 <!-- BEGIN:nextjs-agent-rules -->
