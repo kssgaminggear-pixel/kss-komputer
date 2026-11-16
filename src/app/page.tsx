@@ -5,35 +5,25 @@ import Link from 'next/link';
 import {
   Sparkles,
   Cpu,
-  ShieldCheck,
   Wrench,
-  Clock,
   ArrowRight,
   SlidersHorizontal,
   PhoneCall,
   ShoppingBag,
-  ExternalLink,
   MessageSquareCheck,
   CheckCircle2,
-  Gamepad2,
-  Layers,
-  Monitor,
   Headphones,
-  Zap,
 } from 'lucide-react';
-import { PrebuiltPC, UsageNeedTag } from '@/lib/types';
 import { MOCK_PREBUILT_PCS, MOCK_ACCESSORIES, MOCK_SERVICES, PARTS_BY_ID } from '@/lib/mock-data';
-import { formatIDR, generateConsultationWAMessage, TOKOPEDIA_OFFICIAL_STORE_URL, DEFAULT_WHATSAPP_PHONE } from '@/lib/format';
+import { formatIDR, generateConsultationWAMessage, DEFAULT_WHATSAPP_PHONE } from '@/lib/format';
 import { calculateBundleTotal } from '@/lib/compatibility';
 import { PrebuiltCard } from '@/components/prebuilt/PrebuiltCard';
 import { useRetailCartStore } from '@/store/useRetailCartStore';
-import { useHydrated } from '@/lib/useHydrated';
 
 type BudgetFilter = 'all' | 'under-7m' | '7-12m' | '12-20m' | 'above-20m';
 type UsageFilter = 'all' | 'gaming-1080p' | 'gaming-1440p' | 'creator' | 'office' | 'sultan-4k';
 
 export default function HomePage() {
-  const isHydrated = useHydrated();
   const addRetailItem = useRetailCartStore((state) => state.addItem);
 
   // Filter State

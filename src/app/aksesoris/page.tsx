@@ -8,18 +8,16 @@ import {
   Mouse,
   Monitor,
   Zap,
-  Armchair,
   Search,
   ShoppingBag,
   ExternalLink,
   ChevronRight,
-  ShieldCheck,
   CheckCircle2,
   PhoneCall,
   LayoutGrid,
   ListFilter,
 } from 'lucide-react';
-import { AccessoryCategory, AccessoryItem } from '@/lib/types';
+import { AccessoryCategory } from '@/lib/types';
 import { MOCK_ACCESSORIES } from '@/lib/mock-data';
 import { formatIDR, TOKOPEDIA_OFFICIAL_STORE_URL, DEFAULT_WHATSAPP_PHONE } from '@/lib/format';
 import { useRetailCartStore } from '@/store/useRetailCartStore';

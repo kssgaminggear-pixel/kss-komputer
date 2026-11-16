@@ -3,22 +3,14 @@
 import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
 import {
-  Sparkles,
   SlidersHorizontal,
-  ArrowUpDown,
   ShieldCheck,
-  Wrench,
-  CheckCircle2,
   ChevronRight,
   RotateCcw,
-  Layers,
-  Cpu,
 } from 'lucide-react';
-import { PrebuiltPC } from '@/lib/types';
 import { MOCK_PREBUILT_PCS, PARTS_BY_ID } from '@/lib/mock-data';
 import { calculateBundleTotal } from '@/lib/compatibility';
 import { PrebuiltCard } from '@/components/prebuilt/PrebuiltCard';
-import { formatIDR } from '@/lib/format';
 
 type BudgetFilter = 'all' | 'under-7m' | '7-12m' | '12-20m' | 'above-20m';
 type PlatformFilter = 'all' | 'AMD Ryzen' | 'Intel Core';

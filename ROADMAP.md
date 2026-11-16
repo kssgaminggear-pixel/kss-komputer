@@ -464,6 +464,14 @@ Halaman utama yang memperkenalkan seluruh layanan KSS Komputer sebagai bengkel p
 [ ] = Belum dikerjakan
 ```
 
+### CATATAN AUDIT — 2026-11-16
+
+- **1.4** dibiarkan `[ ]`: validasi socket, tipe RAM, form factor, clearance GPU/cooler, dan wattage PSU sudah berjalan, tetapi **deteksi bottleneck CPU–GPU belum diimplementasikan**.
+- **1.9** dibiarkan `[ ]`: `sanitizer.ts` sudah berisi `sanitizeHardwarePartForPublic()`, `sanitizePrebuiltPCForPublic()`, dan `sanitizeQuoteForPublic()`, tetapi **belum diimpor halaman publik mana pun**. Saat ini halaman publik masih mengimpor `mock-data.ts` langsung, sehingga `costPrice`/`sellPrice` berpotensi ikut ter-bundle ke client (melanggar aturan **B2**). Perlu dikerjakan bersama **10.4**.
+- **3.15** dibiarkan `[ ]`: `next/font` sudah dipakai di `layout.tsx`, tetapi memakai **Geist + Geist Mono**, bukan Inter + JetBrains Mono sesuai spesifikasi.
+- **11.8 / 11.9** ditandai `[x]`: hasil verifikasi nyata pada audit ini (`tsc --noEmit` 0 error, `npm run build` exit 0).
+- **6.4** tetap `[x]`: ketiga file komponen ada, tetapi belum diintegrasikan ke halaman katalog (masih inline). Integrasi dijadwalkan bersama **6.8**.
+
 ---
 
 ### FASE 0 — Project Bootstrap & Tooling ✅
@@ -480,12 +488,12 @@ Halaman utama yang memperkenalkan seluruh layanan KSS Komputer sebagai bengkel p
 - [x] **1.1** `src/lib/types.ts` — Kontrak `HardwarePart`, `PrebuiltPC`, `PrebuiltPCItem`, `ServicePackage`, `AccessoryItem`, `ConsultationQuote`
 - [x] **1.2** `src/lib/format.ts` — `formatIDR`, `formatDeltaIDR`, `formatWatt`, `generateWhatsAppOrderUrl`, `generateBuildPlainText`, `generateConsultationWAMessage`
 - [x] **1.3** `src/lib/mock-data.ts` — 45+ hardware parts, 6 prebuilt PCs, 4 services, 8 aksesoris, 1 sample quote
-- [x] **1.4** `src/lib/compatibility.ts` — Validasi socket, RAM type, form factor, GPU length, cooler height, wattage, bottleneck, `calculateBundleTotal`, `calculateDeltaPrice`
+- [ ] **1.4** `src/lib/compatibility.ts` — Validasi socket, RAM type, form factor, GPU length, cooler height, wattage, `calculateBundleTotal`, `calculateDeltaPrice` *(catatan: deteksi bottleneck CPU–GPU belum ada)*
 - [x] **1.5** Tambahkan tipe `BuildOrderTracking` di `types.ts` (stage enum, stageHistory, orderType: RAKIT/SERVIS/CLEANING/UPGRADE)
 - [x] **1.6** Tambahkan tipe `ServiceBooking` di `types.ts` (bookingCode, deviceType, problemDescription, preferredDate, status)
 - [x] **1.7** Tambahkan tipe `StoreSettings` di `types.ts` (adminWhatsApp, technicianWhatsApp, tokopediaUrl, operationalHours)
 - [x] **1.8** Ekspansi `ServicePackage` di `types.ts` — Tambah field: `category`, `priceMax`, `includes[]`, `excludes[]`, `imageUrl`, `isActive`
-- [x] **1.9** Refactor sanitizer: rename `server-dto.ts` → `sanitizer.ts`, pastikan `sanitizePrebuiltForPublic()` dan `sanitizeQuoteForPublic()` diimpor dan digunakan di halaman publik yang relevan
+- [ ] **1.9** Refactor sanitizer: rename `server-dto.ts` → `sanitizer.ts`, pastikan `sanitizePrebuiltPCForPublic()` dan `sanitizeQuoteForPublic()` diimpor dan digunakan di halaman publik yang relevan *(file sudah ada, tetapi belum dipakai halaman mana pun)*
 - [x] **1.10** Ekspansi `mock-data.ts`: tambah 10 paket jasa (total 10+), 12+ aksesoris (total 20+), 2 tambahan `ConsultationQuote`, 3 sample `BuildOrderTracking`, 3 sample `ServiceBooking`
 - [x] **1.11** Tambahkan `generateServiceBookingWAMessage()`, `generateRetailCartWAMessage()`, `generateQuoteShareWAMessage()` di `format.ts`
 - [x] **1.12** Buat `src/lib/constants.ts` — Centralize WA number (admin + teknisi), Tokopedia URL, store name, warranty text, operational hours
@@ -644,8 +652,8 @@ Halaman utama yang memperkenalkan seluruh layanan KSS Komputer sebagai bengkel p
 - [ ] **11.5** `prisma/seed.ts` — Jalankan seeder, populasi data awal dari `mock-data.ts`
 - [ ] **11.6** Migrasi semua halaman dari mock data → Prisma queries (server components)
 - [ ] **11.7** `.env.example` — Dokumentasi semua environment variables yang dibutuhkan
-- [ ] **11.8** Final TypeScript audit: `tsc --noEmit` = 0 errors
-- [ ] **11.9** Final build audit: `npm run build` = sukses, semua routes generated
+- [x] **11.8** Final TypeScript audit: `tsc --noEmit` = 0 errors *(diverifikasi ulang 2026-11-16)*
+- [x] **11.9** Final build audit: `npm run build` = sukses, semua routes generated *(diverifikasi ulang 2026-11-16)*
 - [ ] **11.10** Production deploy & smoke test seluruh halaman publik + admin
 
 ---
@@ -692,7 +700,7 @@ git push origin main
 | Fase | Judul | Total | Selesai | Sisa |
 |------|-------|-------|---------|------|
 | 0 | Project Bootstrap | 4 | 4 | 0 |
-| 1 | Data Layer | 13 | 13 | 0 |
+| 1 | Data Layer | 13 | 11 | 2 |
 | 2 | State Management | 8 | 8 | 0 |
 | 3 | Layout & Shared | 17 | 9 | 8 |
 | 4 | Jasa & Servis ⭐ | 5 | 1 | 4 |
@@ -702,10 +710,10 @@ git push origin main
 | 8 | Admin Extended | 6 | 0 | 6 |
 | 9 | SEO, Performance, PWA | 8 | 0 | 8 |
 | 10 | API Routes | 4 | 0 | 4 |
-| 11 | Database & Final QA | 10 | 0 | 10 |
+| 11 | Database & Final QA | 10 | 2 | 8 |
 | **TOTAL** | | **92** | **45** | **47** |
 
 > **Progress: 45 / 92 (48.9%)**
 >
 > **Prioritas Eksekusi Berikutnya:**
-> Fase 2 & 3 (sisa) → **Fase 4 (Jasa & Servis ⭐)** → Fase 5 → Fase 7 → sisanya
+> Fase 3 (sisa) → **Fase 4 (Jasa & Servis ⭐)** → Fase 5 → Fase 7 → sisanya

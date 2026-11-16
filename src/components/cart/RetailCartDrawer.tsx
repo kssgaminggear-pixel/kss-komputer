@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { X, Trash2, Plus, Minus, ShoppingBag, ExternalLink, ArrowRight, MessageSquareCheck } from 'lucide-react';
+import { X, Trash2, Plus, Minus, ShoppingBag, ExternalLink, MessageSquareCheck } from 'lucide-react';
 import { useRetailCartStore } from '@/store/useRetailCartStore';
 import { formatIDR, TOKOPEDIA_OFFICIAL_STORE_URL } from '@/lib/format';
 import { useHydrated } from '@/lib/useHydrated';

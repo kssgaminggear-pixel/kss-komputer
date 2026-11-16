@@ -2,24 +2,10 @@
 
 import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
-import {
-  Database,
-  Save,
-  Download,
-  Upload,
-  RotateCcw,
-  Search,
-  Filter,
-  CheckCircle2,
-  AlertCircle,
-  TrendingUp,
-  DollarSign,
-  ChevronRight,
-  SlidersHorizontal,
-} from 'lucide-react';
+import { Download, RotateCcw, Search, CheckCircle2, ChevronRight } from 'lucide-react';
 import { useAdminStore } from '@/store/useAdminStore';
 import { MOCK_HARDWARE_PARTS } from '@/lib/mock-data';
-import { ProductCategory, HardwarePart } from '@/lib/types';
+import { ProductCategory } from '@/lib/types';
 import { formatIDR } from '@/lib/format';
 import { useHydrated } from '@/lib/useHydrated';
 
@@ -30,7 +16,6 @@ export default function AdminPricingPage() {
   const globalMarkupPercent = useAdminStore((state) => state.globalMarkupPercent);
   const defaultAssemblyFee = useAdminStore((state) => state.defaultAssemblyFee);
   const priceOverrides = useAdminStore((state) => state.priceOverrides);
-  const setGlobalMarkupPercent = useAdminStore((state) => state.setGlobalMarkupPercent);
   const setDefaultAssemblyFee = useAdminStore((state) => state.setDefaultAssemblyFee);
   const updatePartPrice = useAdminStore((state) => state.updatePartPrice);
   const bulkApplyMarkupToAll = useAdminStore((state) => state.bulkApplyMarkupToAll);
@@ -122,7 +107,7 @@ export default function AdminPricingPage() {
     const avgMargin = totalCost > 0 ? (totalProfit / totalCost) * 100 : 0;
 
     return { totalCost, totalSell, totalProfit, avgMargin };
-  }, [priceOverrides, getEffectivePartPrices]);
+  }, [getEffectivePartPrices]);
 
   if (!isHydrated) return null;
 

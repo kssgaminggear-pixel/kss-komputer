@@ -13,7 +13,6 @@ import {
   Box,
   Fan,
   Monitor,
-  Sparkles,
   SlidersHorizontal,
   PhoneCall,
   RotateCcw,
@@ -23,18 +22,15 @@ import {
   MessageSquareCheck,
   CheckCircle2,
   AlertTriangle,
-  XCircle,
   Info,
   Copy,
   Printer,
   Search,
   X,
-  Layers,
   ChevronRight,
-  ShieldCheck,
 } from 'lucide-react';
-import { ProductCategory, HardwarePart, SelectedBuildItem } from '@/lib/types';
-import { MOCK_HARDWARE_PARTS, PARTS_BY_ID } from '@/lib/mock-data';
+import { ProductCategory, HardwarePart } from '@/lib/types';
+import { MOCK_HARDWARE_PARTS } from '@/lib/mock-data';
 import {
   formatIDR,
   formatDeltaIDR,

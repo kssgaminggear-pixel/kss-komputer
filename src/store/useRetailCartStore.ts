@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { HardwarePart, AccessoryItem } from '../lib/types';
-import { formatIDR, DEFAULT_WHATSAPP_PHONE, TOKOPEDIA_OFFICIAL_STORE_URL } from '../lib/format';
+import { formatIDR, DEFAULT_WHATSAPP_PHONE } from '../lib/format';
 
 export interface RetailCartItem {
   id: string;

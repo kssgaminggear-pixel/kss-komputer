@@ -4,13 +4,10 @@ import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import {
-  Sparkles,
   Cpu,
   Disc3,
   MemoryStick,
   HardDriveDownload,
-  Zap,
-  Box,
   ShieldCheck,
   ExternalLink,
   MessageSquareCheck,
@@ -26,10 +23,9 @@ import { useBuilderStore } from '@/store/useBuilderStore';
 
 export interface PrebuiltCardProps {
   pkg: PrebuiltPC;
-  compact?: boolean;
 }
 
-export function PrebuiltCard({ pkg, compact = false }: PrebuiltCardProps) {
+export function PrebuiltCard({ pkg }: PrebuiltCardProps) {
   const router = useRouter();
   const loadPrebuilt = useBuilderStore((state) => state.loadPrebuilt);
 

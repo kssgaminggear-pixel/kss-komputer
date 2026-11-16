@@ -11,7 +11,6 @@ import {
   ShoppingBag,
   ExternalLink,
   ChevronRight,
-  ShieldCheck,
   Cpu,
   CircuitBoard,
   MemoryStick,
@@ -20,13 +19,11 @@ import {
   Zap,
   Box,
   Fan,
-  Monitor,
   PhoneCall,
-  RotateCcw,
 } from 'lucide-react';
-import { ProductCategory, HardwarePart } from '@/lib/types';
+import { ProductCategory } from '@/lib/types';
 import { MOCK_HARDWARE_PARTS } from '@/lib/mock-data';
-import { formatIDR, CATEGORY_LABELS, TOKOPEDIA_OFFICIAL_STORE_URL, DEFAULT_WHATSAPP_PHONE } from '@/lib/format';
+import { formatIDR, TOKOPEDIA_OFFICIAL_STORE_URL, DEFAULT_WHATSAPP_PHONE } from '@/lib/format';
 import { useRetailCartStore } from '@/store/useRetailCartStore';
 
 const CATEGORY_ITEMS: { id: ProductCategory | 'all'; label: string; icon: React.ComponentType<{ className?: string }> }[] = [

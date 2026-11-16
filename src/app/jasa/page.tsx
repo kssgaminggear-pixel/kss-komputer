@@ -3,17 +3,10 @@
 import React from 'react';
 import Link from 'next/link';
 import {
-  Wrench,
   Clock,
   ShieldCheck,
-  CheckCircle2,
   PhoneCall,
   ChevronRight,
-  ExternalLink,
-  Sparkles,
-  Zap,
-  HardDriveDownload,
-  Flame,
   Check,
 } from 'lucide-react';
 import { MOCK_SERVICES } from '@/lib/mock-data';

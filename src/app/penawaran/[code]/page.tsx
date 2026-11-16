@@ -1,23 +1,16 @@
 'use client';
 
 import React, { use, Suspense } from 'react';
-import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import {
   Printer,
   MessageSquareCheck,
-  ExternalLink,
-  ShieldCheck,
   CheckCircle2,
-  Clock,
-  PhoneCall,
-  Zap,
   Truck,
-  Wrench,
   FileText,
 } from 'lucide-react';
 import { useQuoteStore } from '@/store/useQuoteStore';
-import { formatIDR, formatWatt, TOKOPEDIA_OFFICIAL_STORE_URL, DEFAULT_WHATSAPP_PHONE } from '@/lib/format';
+import { formatIDR, formatWatt, DEFAULT_WHATSAPP_PHONE } from '@/lib/format';
 import { useHydrated } from '@/lib/useHydrated';
 
 function CustomerQuotationContent({

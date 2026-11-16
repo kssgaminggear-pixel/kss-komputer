@@ -97,6 +97,14 @@ export type Product = HardwarePart;
 export type ProductSpecs = PartSpecs;
 
 /**
+ * Satu slot komponen di dalam paket PC rakitan
+ */
+export interface PrebuiltPCItem {
+  partId: string;
+  quantity: number;
+}
+
+/**
  * Paket PC Rakitan Jadi (Siap Pakai) KSS Komputer
  */
 export interface PrebuiltPC {
@@ -116,10 +124,7 @@ export interface PrebuiltPC {
   }[];
   // Komponen bawaan paket (kategori -> partId & qty)
   baseParts: {
-    [K in ProductCategory]?: {
-      partId: string;
-      quantity: number;
-    };
+    [K in ProductCategory]?: PrebuiltPCItem;
   };
   assemblyFee: number;            // Biaya rakit & garansi toko
   tokopediaUrl: string;           // Direct link ke Tokopedia resmi KSS Komputer

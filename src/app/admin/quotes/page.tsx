@@ -6,22 +6,15 @@ import {
   FileText,
   Plus,
   Send,
-  Printer,
   Trash2,
   ExternalLink,
   ChevronRight,
-  ShieldCheck,
   CheckCircle2,
-  Clock,
-  PhoneCall,
-  SlidersHorizontal,
-  DollarSign,
-  Copy,
 } from 'lucide-react';
 import { useQuoteStore } from '@/store/useQuoteStore';
 import { MOCK_HARDWARE_PARTS } from '@/lib/mock-data';
-import { ProductCategory, HardwarePart, UsageNeedTag } from '@/lib/types';
-import { formatIDR, DEFAULT_WHATSAPP_PHONE } from '@/lib/format';
+import { ProductCategory, UsageNeedTag } from '@/lib/types';
+import { formatIDR } from '@/lib/format';
 import { useHydrated } from '@/lib/useHydrated';
 
 const ESSENTIAL_SLOTS: { category: ProductCategory; label: string }[] = [
@@ -47,8 +40,9 @@ export default function AdminQuotesPage() {
   const [custName, setCustName] = useState('');
   const [custWa, setCustWa] = useState('');
   const [budget, setBudget] = useState(12000000);
-  const [usageNeed, setUsageNeed] = useState<UsageNeedTag>('gaming');
-  const [notes, setNotes] = useState('');
+  // Nilai default — input form untuk 3 field ini menyusul di Fase 8.1 (Quotation Studio)
+  const usageNeed: UsageNeedTag = 'gaming';
+  const notes = '';
   const [selectedParts, setSelectedParts] = useState<Record<ProductCategory, string>>({
     cpu: 'cpu-r5-7500f',
     motherboard: 'mobo-b650m-hdv',
@@ -60,7 +54,7 @@ export default function AdminQuotesPage() {
     case: 'case-paradox-cube',
   } as Record<ProductCategory, string>);
 
-  const [assemblyFee, setAssemblyFee] = useState(150000);
+  const assemblyFee = 150000;
   const [customFinalPrice, setCustomFinalPrice] = useState<number | null>(null);
 
   const [toastMessage, setToastMessage] = useState<string | null>(null);
