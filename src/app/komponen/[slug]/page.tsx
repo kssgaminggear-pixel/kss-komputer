@@ -115,9 +115,9 @@ export default async function KomponenDetailPage({ params }: KomponenDetailPageP
   return (
     <div className="kss-container py-8">
       <nav className="mb-4 flex flex-wrap items-center gap-1.5 font-mono text-xs text-zinc-500">
-        <Link href="/" className="hover:text-blue-600">Beranda</Link>
+        <Link href="/" className="hover:text-orange-600">Beranda</Link>
         <ChevronRight className="h-3.5 w-3.5 text-zinc-400" />
-        <Link href="/komponen" className="hover:text-blue-600">Komponen</Link>
+        <Link href="/komponen" className="hover:text-orange-600">Komponen</Link>
         <ChevronRight className="h-3.5 w-3.5 text-zinc-400" />
         <span className="font-semibold text-zinc-900 dark:text-zinc-100">{part.name}</span>
       </nav>
@@ -146,7 +146,7 @@ export default async function KomponenDetailPage({ params }: KomponenDetailPageP
             </div>
 
             <div className="flex flex-wrap items-center gap-2">
-              <span className="rounded-md border border-blue-500/20 bg-blue-500/10 px-2 py-0.5 font-mono text-[10px] font-bold uppercase text-blue-600 dark:text-blue-400">
+              <span className="rounded-md border border-orange-500/20 bg-orange-500/10 px-2 py-0.5 font-mono text-[10px] font-bold uppercase text-orange-600 dark:text-orange-400">
                 {CATEGORY_LABELS[part.category] || part.category}
               </span>
               <span
@@ -207,7 +207,7 @@ export default async function KomponenDetailPage({ params }: KomponenDetailPageP
 
           <section className="rounded-md border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-900/60">
             <h2 className="mb-3 flex items-center gap-2 text-sm font-bold text-zinc-900 dark:text-zinc-100">
-              <Layers className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+              <Layers className="h-4 w-4 text-orange-600 dark:text-orange-400" />
               <span>Spesifikasi Lengkap</span>
             </h2>
             <dl className="divide-y divide-zinc-100 dark:divide-zinc-800">
@@ -262,7 +262,7 @@ export default async function KomponenDetailPage({ params }: KomponenDetailPageP
                         {related.name}
                       </div>
                     </div>
-                    <div className="shrink-0 font-mono text-xs font-bold text-blue-600 tabular-nums dark:text-blue-400">
+                    <div className="shrink-0 font-mono text-xs font-bold text-orange-600 tabular-nums dark:text-orange-400">
                       {formatIDR(related.retailPrice)}
                     </div>
                   </Link>
@@ -283,7 +283,7 @@ export default async function KomponenDetailPage({ params }: KomponenDetailPageP
                 <span>Garansi resmi distributor selama {part.warrantyYears} tahun.</span>
               </li>
               <li className="flex items-start gap-2">
-                <Truck className="mt-0.5 h-3.5 w-3.5 shrink-0 text-blue-500" />
+                <Truck className="mt-0.5 h-3.5 w-3.5 shrink-0 text-orange-500" />
                 <span>Pengambilan di toko Mangga Dua Mall atau kirim via ekspedisi.</span>
               </li>
               <li className="flex items-start gap-2">
@@ -330,7 +330,7 @@ export default async function KomponenDetailPage({ params }: KomponenDetailPageP
 
           <div className="rounded-md border border-zinc-200 bg-zinc-50 p-4 text-[11px] leading-relaxed text-zinc-500 dark:border-zinc-800 dark:bg-zinc-900/40 dark:text-zinc-400">
             Butuh komponen ini dirakit menjadi PC siap pakai?{' '}
-            <Link href="/simulasi" className="font-bold text-blue-600 hover:text-blue-700 dark:text-blue-400">
+            <Link href="/simulasi" className="font-bold text-orange-600 hover:text-orange-700 dark:text-orange-400">
               Buka Simulasi Rakit
             </Link>{' '}
             atau{' '}

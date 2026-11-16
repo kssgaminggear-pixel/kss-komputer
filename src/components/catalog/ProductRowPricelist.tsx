@@ -110,7 +110,7 @@ export function ProductRowPricelist({
         <div className="flex items-start justify-between gap-2">
           <Link
             href={`/komponen/${product.slug}`}
-            className="font-semibold text-zinc-900 dark:text-zinc-100 hover:text-blue-600 dark:hover:text-blue-400 transition-colors leading-tight inline-flex items-center gap-1 group-hover:underline"
+            className="font-semibold text-zinc-900 dark:text-zinc-100 hover:text-orange-600 dark:hover:text-orange-400 transition-colors leading-tight inline-flex items-center gap-1 group-hover:underline"
           >
             <span>{product.name}</span>
             <ExternalLink className="w-3 h-3 opacity-0 group-hover:opacity-60 transition-opacity shrink-0" />
@@ -137,7 +137,7 @@ export function ProductRowPricelist({
                 Stok Terbatas
               </span>
             ) : product.stockStatus === 'po' ? (
-              <span className="inline-flex items-center px-1.5 py-0.5 font-mono text-[10px] font-bold uppercase rounded-md bg-blue-50 text-blue-700 border border-blue-500/20 dark:bg-blue-950/40 dark:text-blue-400">
+              <span className="inline-flex items-center px-1.5 py-0.5 font-mono text-[10px] font-bold uppercase rounded-md bg-orange-50 text-orange-700 border border-orange-500/20 dark:bg-orange-950/40 dark:text-orange-400">
                 Pre-Order
               </span>
             ) : (
@@ -196,7 +196,7 @@ export function ProductRowPricelist({
               </>
             ) : (
               <>
-                <Plus className="w-3 h-3 text-blue-600 dark:text-blue-400" />
+                <Plus className="w-3 h-3 text-orange-600 dark:text-orange-400" />
                 <span>Simulasi</span>
               </>
             )}
@@ -209,7 +209,7 @@ export function ProductRowPricelist({
             title={comparing ? 'Hapus dari daftar perbandingan' : 'Bandingkan spesifikasi produk ini'}
             className={`p-1 rounded-md border transition-colors ${
               comparing
-                ? 'bg-blue-600 text-white border-blue-600'
+                ? 'bg-orange-600 text-white border-orange-600'
                 : 'bg-zinc-100 text-zinc-600 hover:bg-zinc-200 border-zinc-200 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700 dark:border-zinc-700'
             }`}
           >
@@ -231,7 +231,7 @@ export function ProductRowPricelist({
                 ? 'opacity-40 cursor-not-allowed bg-zinc-100 text-zinc-400 border-zinc-200 dark:bg-zinc-800 dark:border-zinc-700'
                 : justAddedCart
                 ? 'bg-emerald-600 text-white border-emerald-600'
-                : 'bg-blue-600 hover:bg-blue-700 text-white border-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700'
+                : 'bg-orange-600 hover:bg-orange-700 text-white border-orange-600 dark:bg-orange-600 dark:hover:bg-orange-700'
             }`}
           >
             {justAddedCart ? (

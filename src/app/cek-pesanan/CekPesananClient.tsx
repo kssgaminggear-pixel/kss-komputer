@@ -224,7 +224,7 @@ function TrackingStatusContent({ trackings }: { trackings: BuildOrderTracking[] 
                       {isDone ? (
                         <CheckCircle2 className="h-[18px] w-[18px] text-emerald-600 dark:text-emerald-400" />
                       ) : isActive ? (
-                        <Loader2 className="h-[18px] w-[18px] animate-spin text-blue-600 dark:text-blue-400" />
+                        <Loader2 className="h-[18px] w-[18px] animate-spin text-orange-600 dark:text-orange-400" />
                       ) : (
                         <Circle
                           className={`h-[18px] w-[18px] ${
@@ -242,14 +242,14 @@ function TrackingStatusContent({ trackings }: { trackings: BuildOrderTracking[] 
                             isDone
                               ? 'text-emerald-700 dark:text-emerald-400'
                               : isActive
-                                ? 'text-blue-700 dark:text-blue-400'
+                                ? 'text-orange-700 dark:text-orange-400'
                                 : 'text-zinc-400 dark:text-zinc-500'
                           }`}
                         >
                           {TRACKING_STAGE_LABELS[stage] ?? stage}
                         </span>
                         {isActive && (
-                          <span className="rounded-md border border-blue-500/20 bg-blue-500/10 px-1.5 py-0.5 font-mono text-[9px] font-bold uppercase text-blue-600 dark:text-blue-400">
+                          <span className="rounded-md border border-orange-500/20 bg-orange-500/10 px-1.5 py-0.5 font-mono text-[9px] font-bold uppercase text-orange-600 dark:text-orange-400">
                             Sedang Dikerjakan
                           </span>
                         )}

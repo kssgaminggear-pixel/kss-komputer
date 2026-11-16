@@ -302,7 +302,7 @@ export default function SimulasiPage({ parts }: SimulasiClientProps) {
 
       {/* Breadcrumb */}
       <nav className="flex items-center gap-1.5 text-xs text-zinc-500 mb-4 font-mono print:hidden">
-        <Link href="/" className="hover:text-blue-600">Beranda</Link>
+        <Link href="/" className="hover:text-orange-600">Beranda</Link>
         <ChevronRight className="h-3.5 w-3.5 text-zinc-400" />
         <span className="text-zinc-900 dark:text-zinc-100 font-semibold">Simulasi &amp; PC Configurator</span>
       </nav>
@@ -312,7 +312,7 @@ export default function SimulasiPage({ parts }: SimulasiClientProps) {
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
             <div className="mb-2 flex flex-wrap items-center gap-1.5">
-              <span className="rounded-md bg-blue-500/10 border border-blue-500/20 px-2 py-0.5 text-[10px] font-mono font-bold text-blue-600 dark:text-blue-400 uppercase">
+              <span className="rounded-md bg-orange-500/10 border border-orange-500/20 px-2 py-0.5 text-[10px] font-mono font-bold text-orange-600 dark:text-orange-400 uppercase">
                 Interactive PC Configurator
               </span>
               <span className="rounded-md bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 text-[10px] font-mono font-bold text-emerald-600 dark:text-emerald-400">
@@ -380,7 +380,7 @@ export default function SimulasiPage({ parts }: SimulasiClientProps) {
                   placeholder="Contoh: Bima Satria"
                   value={custName}
                   onChange={(e) => setCustName(e.target.value)}
-                  className="w-full rounded-md border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950 px-3 py-2 text-xs text-zinc-900 dark:text-zinc-100 focus:outline-none focus:border-blue-600"
+                  className="w-full rounded-md border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950 px-3 py-2 text-xs text-zinc-900 dark:text-zinc-100 focus:outline-none focus:border-orange-600"
                 />
               </div>
 
@@ -389,7 +389,7 @@ export default function SimulasiPage({ parts }: SimulasiClientProps) {
                   <label className="text-xs font-semibold text-zinc-700 dark:text-zinc-300">
                     Batas Maksimal Budget
                   </label>
-                  <span className="font-mono text-xs font-bold text-blue-600 dark:text-blue-400 tabular-nums">
+                  <span className="font-mono text-xs font-bold text-orange-600 dark:text-orange-400 tabular-nums">
                     {formatIDR(custBudget)}
                   </span>
                 </div>
@@ -400,7 +400,7 @@ export default function SimulasiPage({ parts }: SimulasiClientProps) {
                   step={500000}
                   value={custBudget}
                   onChange={(e) => setCustBudget(Number(e.target.value))}
-                  className="w-full accent-blue-600 h-2 bg-zinc-200 dark:bg-zinc-800 rounded-md cursor-pointer"
+                  className="w-full accent-orange-600 h-2 bg-zinc-200 dark:bg-zinc-800 rounded-md cursor-pointer"
                 />
               </div>
             </div>
@@ -413,7 +413,7 @@ export default function SimulasiPage({ parts }: SimulasiClientProps) {
                 <select
                   value={custUsage}
                   onChange={(e) => setCustUsage(e.target.value)}
-                  className="w-full rounded-md border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950 px-3 py-2 text-xs text-zinc-900 dark:text-zinc-100 focus:outline-none focus:border-blue-600"
+                  className="w-full rounded-md border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950 px-3 py-2 text-xs text-zinc-900 dark:text-zinc-100 focus:outline-none focus:border-orange-600"
                 >
                   <option value="Gaming E-Sports 1080p (Valorant, CS2, Dota)">Gaming E-Sports 1080p (Valorant, CS2, Dota)</option>
                   <option value="Gaming AAA 1080p / 1440p (Cyberpunk, Black Myth Wukong)">Gaming AAA 1080p / 1440p (Cyberpunk, Wukong)</option>
@@ -431,7 +431,7 @@ export default function SimulasiPage({ parts }: SimulasiClientProps) {
                 <select
                   value={custPlatform}
                   onChange={(e) => setCustPlatform(e.target.value)}
-                  className="w-full rounded-md border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950 px-3 py-2 text-xs text-zinc-900 dark:text-zinc-100 focus:outline-none focus:border-blue-600"
+                  className="w-full rounded-md border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950 px-3 py-2 text-xs text-zinc-900 dark:text-zinc-100 focus:outline-none focus:border-orange-600"
                 >
                   <option value="Bebas (Rekomendasi Teknisi KSS)">Bebas (Rekomendasi Terbaik Teknisi KSS)</option>
                   <option value="AMD Ryzen Platform">AMD Ryzen Platform</option>
@@ -449,7 +449,7 @@ export default function SimulasiPage({ parts }: SimulasiClientProps) {
                 placeholder="Contoh: Sudah punya monitor 144Hz, butuh casing warna putih, ingin SSD kapasitas 1TB..."
                 value={custNotes}
                 onChange={(e) => setCustNotes(e.target.value)}
-                className="w-full rounded-md border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950 px-3 py-2 text-xs text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 focus:outline-none focus:border-blue-600"
+                className="w-full rounded-md border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950 px-3 py-2 text-xs text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 focus:outline-none focus:border-orange-600"
               />
             </div>
 
@@ -476,7 +476,7 @@ export default function SimulasiPage({ parts }: SimulasiClientProps) {
                   value={customBuildName}
                   onChange={(e) => setCustomBuildName(e.target.value)}
                   placeholder="Custom PC Rig KSS"
-                  className="rounded-md border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950 px-2 py-1 text-xs text-zinc-900 dark:text-zinc-100 font-semibold focus:outline-none focus:border-blue-600 flex-1 max-w-xs"
+                  className="rounded-md border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950 px-2 py-1 text-xs text-zinc-900 dark:text-zinc-100 font-semibold focus:outline-none focus:border-orange-600 flex-1 max-w-xs"
                 />
               </div>
 
@@ -585,7 +585,7 @@ export default function SimulasiPage({ parts }: SimulasiClientProps) {
                         <button
                           type="button"
                           onClick={() => handleOpenDrawer(slot.category)}
-                          className="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition-colors shadow-xs"
+                          className="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-orange-600 hover:bg-orange-700 text-white text-xs font-bold transition-colors shadow-xs"
                         >
                           <Plus className="h-3.5 w-3.5" />
                           <span>Pilih Komponen</span>
@@ -663,7 +663,7 @@ export default function SimulasiPage({ parts }: SimulasiClientProps) {
                 </div>
                 <div className="flex justify-between items-center bg-zinc-50 dark:bg-zinc-950 p-2.5 rounded-md border border-zinc-200 dark:border-zinc-800">
                   <span className="text-zinc-500">Rekomendasi PSU:</span>
-                  <span className="font-bold text-blue-600 dark:text-blue-400">
+                  <span className="font-bold text-orange-600 dark:text-orange-400">
                     Min. {compatibilityReport.recommendedPsuWatt}W
                   </span>
                 </div>
@@ -709,7 +709,7 @@ export default function SimulasiPage({ parts }: SimulasiClientProps) {
                   href={TOKOPEDIA_OFFICIAL_STORE_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-1.5 w-full rounded-md bg-[#03AC0E] hover:bg-[#02950c] text-white py-2.5 text-xs font-bold transition-colors shadow-xs"
+                  className="flex items-center justify-center gap-1.5 w-full rounded-md bg-[#00AA5B] hover:bg-[#00924E] text-white py-2.5 text-xs font-bold transition-colors"
                 >
                   <span>Request Link Checkout Tokopedia</span>
                   <ExternalLink className="h-3.5 w-3.5" />
@@ -732,7 +732,7 @@ export default function SimulasiPage({ parts }: SimulasiClientProps) {
             {/* Drawer Header */}
             <div className="flex items-center justify-between border-b border-zinc-200 px-4 py-3 dark:border-zinc-800">
               <div className="flex items-center gap-2">
-                <SlidersHorizontal className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+                <SlidersHorizontal className="h-4 w-4 text-orange-600 dark:text-orange-400" />
                 <h3 className="text-sm font-bold uppercase tracking-tight text-zinc-900 dark:text-zinc-100">
                   Pilih {CATEGORY_LABELS[activeDrawerCategory] || activeDrawerCategory}
                 </h3>
@@ -776,7 +776,7 @@ export default function SimulasiPage({ parts }: SimulasiClientProps) {
                       onClick={() => handleSelectDrawerPart(candidate)}
                       className={`p-3 rounded-md flex items-start justify-between gap-3 cursor-pointer transition-colors ${
                         isCurrent
-                          ? 'bg-blue-50/60 dark:bg-blue-950/30 border border-blue-500/30'
+                          ? 'bg-orange-50/60 dark:bg-orange-950/30 border border-orange-500/30'
                           : 'hover:bg-zinc-50 dark:hover:bg-zinc-900/80'
                       }`}
                     >
@@ -807,10 +807,10 @@ export default function SimulasiPage({ parts }: SimulasiClientProps) {
                           <span
                             className={`inline-block font-mono text-xs font-bold px-2 py-1 rounded-md tabular-nums ${
                               delta === 0
-                                ? 'bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300'
+                                ? 'bg-zinc-100 dark:bg-zinc-800/80 text-zinc-500 dark:text-zinc-400'
                                 : delta > 0
-                                ? 'bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20'
-                                : 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20'
+                                ? 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/30'
+                                : 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30'
                             }`}
                           >
                             {formatDeltaIDR(delta, true)}
@@ -821,7 +821,7 @@ export default function SimulasiPage({ parts }: SimulasiClientProps) {
                           </span>
                         )}
                         {isCurrent && (
-                          <span className="block text-[10px] font-semibold text-blue-600 mt-1">
+                          <span className="block text-[10px] font-semibold text-orange-600 mt-1">
                             (Sedang Terpasang)
                           </span>
                         )}

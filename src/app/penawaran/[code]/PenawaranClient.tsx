@@ -37,7 +37,7 @@ export default function CustomerQuotationContent({ quote }: { quote: PublicQuote
       {/* Action Bar (Hidden on Print) */}
       <div className="rounded-md border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900/60 shadow-xs mb-6 flex flex-wrap items-center justify-between gap-3 print:hidden">
         <div className="flex items-center gap-2">
-          <FileText className="h-4 w-4 text-blue-600" />
+          <FileText className="h-4 w-4 text-orange-600" />
           <span className="text-xs font-bold text-zinc-900 dark:text-zinc-100">
             Surat Penawaran Resmi: {quote.quoteCode}
           </span>
@@ -69,7 +69,7 @@ export default function CustomerQuotationContent({ quote }: { quote: PublicQuote
         {/* Kop Surat Resmi KSS Komputer */}
         <div className="border-b-2 border-zinc-900 pb-5 mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <div className="flex items-center gap-3">
-            <div className="flex h-12 w-12 items-center justify-center rounded-md bg-blue-600 text-white font-mono font-black text-xl tracking-wider">
+            <div className="flex h-12 w-12 items-center justify-center rounded-md bg-orange-600 text-white font-mono font-black text-xl tracking-wider">
               KSS
             </div>
             <div>
@@ -164,7 +164,7 @@ export default function CustomerQuotationContent({ quote }: { quote: PublicQuote
               <span>Sudah Termasuk Jasa Rakit Rapi &amp; Pengujian Beban 24 Jam</span>
             </div>
             <div className="flex items-center gap-1.5">
-              <Truck className="h-4 w-4 text-blue-600" />
+              <Truck className="h-4 w-4 text-orange-600" />
               <span>Gratis Pengemasan Kayu &amp; Asuransi Pengiriman Ekspedisi</span>
             </div>
           </div>

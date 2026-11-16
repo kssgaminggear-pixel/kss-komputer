@@ -60,8 +60,8 @@ export default function JasaLayananPage() {
             >
               <div>
                 <div className="mb-3 flex items-center justify-between gap-2">
-                  <span className="flex h-9 w-9 items-center justify-center rounded-md bg-blue-500/10">
-                    <Clock className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+                  <span className="flex h-9 w-9 items-center justify-center rounded-md bg-orange-500/10">
+                    <Clock className="h-4 w-4 text-orange-600 dark:text-orange-400" />
                   </span>
                   <div className="flex items-center gap-1.5">
                     {srv.badge && (
@@ -129,7 +129,7 @@ export default function JasaLayananPage() {
       {/* FAQ Jasa */}
       <section className="mb-8">
         <h2 className="text-sm font-bold uppercase tracking-tight text-zinc-900 dark:text-zinc-100 mb-4 flex items-center gap-2">
-          <Clock className="h-4 w-4 text-blue-600" />
+          <Clock className="h-4 w-4 text-orange-600" />
           <span>Pertanyaan yang Sering Diajukan</span>
         </h2>
         <div className="divide-y divide-zinc-200 dark:divide-zinc-800 rounded-md border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900/60">
@@ -182,7 +182,7 @@ export default function JasaLayananPage() {
       {/* Standar Prosedur Operasional (SOP) Teknisi KSS */}
       <div className="rounded-md border border-zinc-200 bg-zinc-50 p-6 dark:border-zinc-800 dark:bg-zinc-900/40">
         <h3 className="mb-4 flex items-center gap-2 text-sm font-bold uppercase tracking-tight text-zinc-900 dark:text-zinc-100">
-          <ShieldCheck className="h-4 w-4 text-blue-600" />
+          <ShieldCheck className="h-4 w-4 text-orange-600" />
           <span>Standar Mutu Layanan Teknisi KSS</span>
         </h3>
 

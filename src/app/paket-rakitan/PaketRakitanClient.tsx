@@ -100,7 +100,7 @@ export default function PaketRakitanPage({ packages }: PaketRakitanClientProps) 
         <div className="mb-6 space-y-3 rounded-md border border-zinc-200 bg-white p-4 shadow-xs dark:border-zinc-800 dark:bg-zinc-900/60">
           <div className="flex items-center justify-between border-b border-zinc-100 pb-2.5 dark:border-zinc-800">
             <div className="flex items-center gap-2">
-              <SlidersHorizontal className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+              <SlidersHorizontal className="h-4 w-4 text-orange-600 dark:text-orange-400" />
               <span className="text-xs font-bold uppercase tracking-tight text-zinc-900 dark:text-zinc-100">
                 Filter Spesifikasi &amp; Budget
               </span>
@@ -108,7 +108,7 @@ export default function PaketRakitanPage({ packages }: PaketRakitanClientProps) 
 
             <button
               onClick={handleResetFilters}
-              className="flex items-center gap-1 text-[11px] font-semibold text-zinc-500 hover:text-blue-600 dark:hover:text-blue-400"
+              className="flex items-center gap-1 text-[11px] font-semibold text-zinc-500 hover:text-orange-600 dark:hover:text-orange-400"
             >
               <RotateCcw className="h-3 w-3" />
               <span>Reset</span>

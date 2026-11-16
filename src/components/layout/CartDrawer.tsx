@@ -74,7 +74,7 @@ export function CartDrawer() {
         {/* Drawer Header */}
         <div className="flex items-center justify-between border-b border-zinc-200 px-4 py-3 dark:border-zinc-800">
           <div className="flex items-center gap-2">
-            <ShoppingBag className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+            <ShoppingBag className="h-5 w-5 text-orange-600 dark:text-orange-400" />
             <h2 className="text-sm font-semibold tracking-tight uppercase text-zinc-900 dark:text-zinc-100">
               Keranjang Belanja
             </h2>
@@ -197,7 +197,7 @@ export function CartDrawer() {
                 <Link
                   href="/simulasi"
                   onClick={closeCart}
-                  className="inline-flex items-center gap-1 text-[11px] font-medium text-blue-600 hover:underline dark:text-blue-400"
+                  className="inline-flex items-center gap-1 text-[11px] font-medium text-orange-600 hover:underline dark:text-orange-400"
                 >
                   Buka Simulasi Rakitan <ArrowRight className="h-3 w-3" />
                 </Link>

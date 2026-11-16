@@ -89,12 +89,12 @@ export function Navbar({ searchProducts }: NavbarProps) {
     <>
       <header className="sticky top-0 z-40 border-b border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-950">
         {/* Utility bar */}
-        <div className="hidden border-b border-zinc-100 bg-zinc-50 dark:border-zinc-900 dark:bg-zinc-900/50 sm:block">
-          <div className="kss-container flex h-8 items-center justify-between text-[11px] text-zinc-500 dark:text-zinc-400">
+        <div className="hidden border-b border-zinc-800 bg-zinc-950 text-zinc-400 sm:block">
+          <div className="kss-container flex h-8 items-center justify-between text-[11px]">
             <div className="flex items-center gap-4">
               <span className="flex items-center gap-1.5">
-                <MapPin className="h-3 w-3 text-blue-600" />
-                <span className="font-semibold text-zinc-700 dark:text-zinc-300">Mangga Dua Mall, Jakarta</span>
+                <MapPin className="h-3 w-3 text-orange-500" />
+                <span className="font-semibold text-zinc-200">Mangga Dua Mall, Jakarta</span>
               </span>
               <span className="hidden items-center gap-1 lg:flex">
                 <Clock className="h-3 w-3" />
@@ -120,7 +120,7 @@ export function Navbar({ searchProducts }: NavbarProps) {
                 href={`https://wa.me/${DEFAULT_WHATSAPP_PHONE}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-1 font-mono text-zinc-700 transition-colors hover:text-blue-600 dark:text-zinc-300"
+                className="flex items-center gap-1 font-mono text-zinc-300 transition-colors hover:text-orange-400"
               >
                 <PhoneCall className="h-3 w-3 text-emerald-500" />
                 <span>0812-3456-7890</span>
@@ -132,7 +132,7 @@ export function Navbar({ searchProducts }: NavbarProps) {
         {/* Main bar */}
         <div className="kss-container flex h-16 items-center gap-3">
           <Link href="/" className="flex shrink-0 items-center gap-2.5">
-            <span className="flex h-9 w-9 items-center justify-center rounded-md bg-blue-600 font-mono text-sm font-black tracking-wider text-white">
+            <span className="flex h-9 w-9 items-center justify-center rounded-md bg-orange-600 font-mono text-sm font-black tracking-wider text-white">
               KSS
             </span>
             <span className="hidden flex-col leading-none sm:flex">
@@ -157,14 +157,14 @@ export function Navbar({ searchProducts }: NavbarProps) {
                   href={item.href}
                   className={`${isCompact ? 'hidden xl:inline-flex' : 'inline-flex'} items-center gap-1.5 whitespace-nowrap rounded-md px-2 py-2 text-xs font-semibold transition-colors xl:px-2.5 ${
                     isActive
-                      ? 'bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-50'
+                      ? 'bg-orange-50 text-orange-700 dark:bg-orange-950/40 dark:text-orange-300'
                       : 'text-zinc-600 hover:bg-zinc-50 hover:text-zinc-900 dark:text-zinc-300 dark:hover:bg-zinc-900 dark:hover:text-zinc-50'
                   }`}
                 >
                   <Icon className="h-3.5 w-3.5" />
                   <span>{item.label}</span>
                   {item.badge && (
-                    <span className="rounded-md bg-blue-600 px-1 font-mono text-[9px] font-bold text-white">
+                    <span className="rounded-md bg-orange-600 px-1 font-mono text-[9px] font-bold text-white">
                       {item.badge}
                     </span>
                   )}
@@ -177,14 +177,14 @@ export function Navbar({ searchProducts }: NavbarProps) {
             <button
               type="button"
               onClick={() => setIsSearchOpen(true)}
-              className="flex h-9 items-center gap-2 rounded-md border border-zinc-200 bg-zinc-50 px-2.5 text-xs text-zinc-500 transition-colors hover:border-zinc-300 hover:bg-white dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-400 dark:hover:border-zinc-700 dark:hover:bg-zinc-800 2xl:w-52 2xl:justify-between"
+              className="flex h-9 items-center gap-2 rounded-md border border-zinc-200 bg-zinc-50 px-2.5 text-xs text-zinc-500 transition-colors hover:border-zinc-300 hover:bg-white dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-400 dark:hover:border-zinc-700 dark:hover:bg-zinc-800 xl:w-52 xl:justify-between"
               title="Cari komponen, paket PC, atau aksesoris (Ctrl+K)"
             >
               <span className="flex items-center gap-1.5 truncate">
                 <Search className="h-3.5 w-3.5 shrink-0" />
-                <span className="hidden truncate 2xl:inline">Cari part, paket, gear...</span>
+                <span className="hidden truncate xl:inline">Cari part, paket, gear...</span>
               </span>
-              <kbd className="hidden rounded border border-zinc-300 bg-white px-1 font-mono text-[10px] text-zinc-500 dark:border-zinc-700 dark:bg-zinc-800 2xl:inline-flex">
+              <kbd className="hidden rounded border border-zinc-300 bg-white px-1 font-mono text-[10px] text-zinc-500 dark:border-zinc-700 dark:bg-zinc-800 xl:inline-flex">
                 <span>⌘</span>K
               </kbd>
             </button>
@@ -244,7 +244,7 @@ export function Navbar({ searchProducts }: NavbarProps) {
                       </span>
                       <span className="flex items-center gap-1.5">
                         {item.badge && (
-                          <span className="rounded-md bg-blue-600 px-1.5 py-0.5 font-mono text-[10px] font-bold text-white">
+                          <span className="rounded-md bg-orange-600 px-1.5 py-0.5 font-mono text-[10px] font-bold text-white">
                             {item.badge}
                           </span>
                         )}

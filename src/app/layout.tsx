@@ -58,7 +58,7 @@ export default function RootLayout({
       lang="id"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-zinc-50 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100 font-sans selection:bg-blue-600 selection:text-white pb-14 md:pb-0">
+      <body className="min-h-full flex flex-col bg-zinc-50 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100 font-sans selection:bg-orange-600 selection:text-white pb-14 md:pb-0">
         <Suspense fallback={null}>
           <Navbar searchProducts={searchProducts} />
         </Suspense>

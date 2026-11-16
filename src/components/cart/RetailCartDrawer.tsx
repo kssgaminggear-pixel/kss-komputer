@@ -99,7 +99,7 @@ export function RetailCartDrawer() {
                     {item.name}
                   </h3>
                   <div className="mt-1 flex items-baseline gap-2">
-                    <span className="font-mono text-xs font-bold text-blue-600 dark:text-blue-400 tabular-nums">
+                    <span className="font-mono text-xs font-bold text-orange-600 dark:text-orange-400 tabular-nums">
                       {formatIDR(item.unitPrice)}
                     </span>
                     {item.originalPrice && item.originalPrice > item.unitPrice && (
@@ -152,14 +152,14 @@ export function RetailCartDrawer() {
                 placeholder="Nama Anda (Opsional)"
                 value={customerName}
                 onChange={(e) => setCustomerName(e.target.value)}
-                className="w-full rounded-md border border-zinc-200 bg-white px-2.5 py-1.5 text-xs text-zinc-900 placeholder:text-zinc-400 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-100 focus:outline-none focus:border-blue-600"
+                className="w-full rounded-md border border-zinc-200 bg-white px-2.5 py-1.5 text-xs text-zinc-900 placeholder:text-zinc-400 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-100 focus:outline-none focus:border-orange-600"
               />
               <input
                 type="text"
                 placeholder="Catatan pesanan / pertanyaan stok..."
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
-                className="w-full rounded-md border border-zinc-200 bg-white px-2.5 py-1.5 text-xs text-zinc-900 placeholder:text-zinc-400 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-100 focus:outline-none focus:border-blue-600"
+                className="w-full rounded-md border border-zinc-200 bg-white px-2.5 py-1.5 text-xs text-zinc-900 placeholder:text-zinc-400 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-100 focus:outline-none focus:border-orange-600"
               />
             </div>
 

@@ -25,6 +25,7 @@ import {
   BadgeCheck,
   ChevronRight,
   Gamepad2,
+  X,
 } from 'lucide-react';
 import type { PublicPrebuiltPCDTO } from '@/lib/sanitizer';
 import type { PublicAccessory, ServicePackage } from '@/lib/types';
@@ -102,12 +103,6 @@ export default function HomeClient({ prebuilts, accessories, services }: HomeCli
   }, [selectedUsage, selectedBudget, prebuilts]);
 
   const featured = prebuilts.find((pkg) => pkg.featured) || prebuilts[0];
-  const featuredSpecs = featured
-    ? ['cpu', 'gpu', 'ram', 'ssd']
-        .map((category) => featured.parts.find((part) => part.category === category)?.part.name)
-        .filter(Boolean)
-        .slice(0, 4)
-    : [];
 
   const handleSendConsultation = (e: React.FormEvent) => {
     e.preventDefault();
@@ -131,20 +126,20 @@ export default function HomeClient({ prebuilts, accessories, services }: HomeCli
       )}
 
       {/* HERO */}
-      <section className="border-b border-zinc-200 bg-zinc-50/70 dark:border-zinc-800 dark:bg-zinc-950">
+      <section className="border-b border-zinc-800 bg-zinc-950">
         <div className="kss-container py-10 sm:py-12 lg:py-16">
           <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-12">
             <div className="flex flex-col items-start gap-4 lg:col-span-7">
-              <div className="inline-flex items-center gap-2 rounded-md border border-blue-500/20 bg-blue-500/10 px-2.5 py-1 font-mono text-[10px] font-bold uppercase tracking-tight text-blue-700 dark:text-blue-400">
-                <span className="h-1.5 w-1.5 rounded-full bg-blue-600" />
+              <div className="inline-flex items-center gap-2 rounded-md border border-orange-500/30 bg-orange-500/10 px-2.5 py-1 font-mono text-[10px] font-bold uppercase tracking-tight text-orange-400">
+                <span className="h-1.5 w-1.5 rounded-full bg-orange-500" />
                 System Integrator &amp; PC Builder Jakarta
               </div>
 
-              <h1 className="text-3xl font-black leading-[1.08] tracking-tight text-zinc-900 dark:text-zinc-50 sm:text-4xl lg:text-5xl">
+              <h1 className="text-3xl font-black leading-[1.08] tracking-tight text-zinc-50 sm:text-4xl lg:text-5xl">
                 PC Rakitan Siap Pakai,<br className="hidden sm:block" /> Harga Jelas &amp; Bergaransi.
               </h1>
 
-              <p className="max-w-xl text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
+              <p className="max-w-xl text-sm leading-relaxed text-zinc-400">
                 Pilih paket siap pakai atau rakit sendiri. Semua unit melalui validasi
                 kompatibilitas, cable management rapi, stress test, dan garansi resmi
                 distributor.
@@ -155,13 +150,16 @@ export default function HomeClient({ prebuilts, accessories, services }: HomeCli
                   <Sparkles className="h-4 w-4" />
                   <span>Lihat Paket Siap Pakai</span>
                 </a>
-                <Link href="/konsultasi" className="kss-btn-outline h-11 px-5 text-sm">
-                  <MessageSquareCheck className="h-4 w-4 text-emerald-600" />
+                <Link
+                  href="/konsultasi"
+                  className="inline-flex h-11 items-center justify-center gap-2 rounded-md border border-zinc-700 bg-zinc-900 px-5 text-sm font-bold text-zinc-100 transition-colors hover:bg-zinc-800"
+                >
+                  <MessageSquareCheck className="h-4 w-4 text-emerald-400" />
                   <span>Konsultasi Budget</span>
                 </Link>
               </div>
 
-              <div className="grid w-full grid-cols-2 gap-3 border-t border-zinc-200 pt-4 dark:border-zinc-800 sm:grid-cols-4">
+              <div className="grid w-full grid-cols-2 gap-3 border-t border-zinc-800 pt-4 sm:grid-cols-4">
                 {[
                   { value: '100%', label: 'Garansi Resmi' },
                   { value: '24 Jam', label: 'Stress Test' },
@@ -169,7 +167,7 @@ export default function HomeClient({ prebuilts, accessories, services }: HomeCli
                   { value: 'Same Day', label: 'Siap Ambil' },
                 ].map((stat) => (
                   <div key={stat.label}>
-                    <div className="font-mono text-sm font-black tracking-tight text-zinc-900 dark:text-zinc-100">
+                    <div className="font-mono text-sm font-black tracking-tight text-zinc-100">
                       {stat.value}
                     </div>
                     <div className="text-[11px] text-zinc-500">{stat.label}</div>
@@ -178,44 +176,65 @@ export default function HomeClient({ prebuilts, accessories, services }: HomeCli
               </div>
             </div>
 
-            {/* Featured build */}
+            {/* Featured flagship */}
             <div className="lg:col-span-5">
               {featured && (
-                <div className="rounded-md border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
+                <div className="rounded-md border border-zinc-800 bg-zinc-900 p-5">
                   <div className="mb-3 flex items-center justify-between">
-                    <span className="rounded-md border border-emerald-500/20 bg-emerald-500/10 px-2 py-0.5 font-mono text-[10px] font-bold uppercase text-emerald-700 dark:text-emerald-400">
-                      Rekomendasi
+                    <span className="rounded-sm border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 font-mono text-[10px] font-bold uppercase text-emerald-400">
+                      Featured Rig
                     </span>
-                    <span className="font-mono text-[10px] text-zinc-400">
+                    <span className="font-mono text-[10px] text-zinc-500">
                       {featured.platform} · {featured.targetResolution}
                     </span>
                   </div>
 
-                  <h2 className="text-lg font-black tracking-tight text-zinc-900 dark:text-zinc-100">
-                    <Link href={`/paket-rakitan/${featured.slug}`} className="hover:text-blue-600">
+                  <h2 className="text-lg font-black tracking-tight text-zinc-50">
+                    <Link href={`/paket-rakitan/${featured.slug}`} className="hover:text-orange-400">
                       {featured.name}
                     </Link>
                   </h2>
 
-                  <div className="mt-3 space-y-1.5 rounded-md border border-zinc-100 bg-zinc-50 p-3 dark:border-zinc-800 dark:bg-zinc-950">
-                    {featuredSpecs.map((spec, index) => (
-                      <div key={index} className="flex items-start gap-2 text-[11px] text-zinc-600 dark:text-zinc-400">
-                        <CheckCircle2 className="mt-0.5 h-3 w-3 shrink-0 text-emerald-500" />
-                        <span className="line-clamp-1">{spec}</span>
+                  <div className="mt-3 flex flex-wrap gap-1.5">
+                    {featured.parts.slice(0, 4).map((item) => (
+                      <span
+                        key={item.partId}
+                        className="inline-flex items-center rounded-sm border border-zinc-700 bg-zinc-800 px-1.5 py-0.5 font-mono text-[10px] uppercase tracking-wider text-zinc-300"
+                      >
+                        {item.category}
+                      </span>
+                    ))}
+                  </div>
+
+                  <div className="mt-4 space-y-2 rounded-md border border-zinc-800 bg-zinc-950 p-3">
+                    {featured.estimatedFps.slice(0, 3).map((bench, index) => (
+                      <div key={index} className="space-y-1">
+                        <div className="flex items-center justify-between gap-2">
+                          <span className="truncate text-[11px] text-zinc-400">{bench.game}</span>
+                          <span className="font-mono text-xs font-bold tabular-nums text-zinc-100">
+                            ~{bench.fps} FPS
+                          </span>
+                        </div>
+                        <div className="h-1.5 overflow-hidden bg-zinc-800">
+                          <div
+                            className="h-full bg-orange-500"
+                            style={{ width: `${Math.min(100, (bench.fps / 300) * 100)}%` }}
+                          />
+                        </div>
                       </div>
                     ))}
                   </div>
 
-                  <div className="mt-4 flex items-end justify-between border-t border-zinc-100 pt-3 dark:border-zinc-800">
+                  <div className="mt-4 flex items-end justify-between border-t border-zinc-800 pt-3">
                     <div>
-                      <div className="font-mono text-[10px] uppercase tracking-tight text-zinc-400">
+                      <div className="font-mono text-[10px] uppercase tracking-tight text-zinc-500">
                         Harga Siap Pakai
                       </div>
-                      <div className="kss-price text-xl text-zinc-900 dark:text-zinc-100">
+                      <div className="kss-price text-xl text-zinc-50">
                         {formatIDR(featured.totalBundlePrice)}
                       </div>
                     </div>
-                    <Link href={`/paket-rakitan/${featured.slug}`} className="kss-btn-dark h-9 px-3">
+                    <Link href={`/paket-rakitan/${featured.slug}`} className="kss-btn-primary h-9 px-3">
                       <span>Detail</span>
                       <ArrowRight className="h-3.5 w-3.5" />
                     </Link>
@@ -238,7 +257,7 @@ export default function HomeClient({ prebuilts, accessories, services }: HomeCli
                 href={item.href}
                 className="inline-flex shrink-0 items-center gap-2 rounded-md border border-zinc-200 px-3 py-2 text-[11px] font-semibold text-zinc-600 transition-colors hover:border-zinc-300 hover:bg-zinc-50 dark:border-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-900"
               >
-                <Icon className="h-3.5 w-3.5 text-blue-600 dark:text-blue-400" />
+                <Icon className="h-3.5 w-3.5 text-orange-600 dark:text-orange-400" />
                 <span>{item.label}</span>
               </Link>
             );
@@ -263,8 +282,8 @@ export default function HomeClient({ prebuilts, accessories, services }: HomeCli
             >
               <div>
                 <div className="mb-3 flex items-center justify-between">
-                  <span className="flex h-9 w-9 items-center justify-center rounded-md bg-blue-500/10">
-                    <Wrench className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+                  <span className="flex h-9 w-9 items-center justify-center rounded-md bg-orange-500/10">
+                    <Wrench className="h-4 w-4 text-orange-600 dark:text-orange-400" />
                   </span>
                   {srv.badge && (
                     <span className="rounded-md border border-amber-500/20 bg-amber-500/10 px-1.5 py-0.5 font-mono text-[9px] font-bold uppercase text-amber-700 dark:text-amber-400">
@@ -322,7 +341,7 @@ export default function HomeClient({ prebuilts, accessories, services }: HomeCli
                   onClick={() => setSelectedUsage(tab.id as UsageFilter)}
                   className={`rounded-md px-3 py-1.5 text-xs font-semibold transition-colors ${
                     selectedUsage === tab.id
-                      ? 'bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900'
+                      ? 'bg-orange-600 text-white'
                       : 'border border-zinc-200 bg-white text-zinc-600 hover:border-zinc-300 hover:bg-zinc-100 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-300 dark:hover:bg-zinc-800'
                   }`}
                 >
@@ -334,7 +353,7 @@ export default function HomeClient({ prebuilts, accessories, services }: HomeCli
             <select
               value={selectedBudget}
               onChange={(event) => setSelectedBudget(event.target.value as BudgetFilter)}
-              className="rounded-md border border-zinc-200 bg-white px-3 py-2 text-xs text-zinc-700 focus:border-blue-600 focus:outline-none dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-300"
+              className="rounded-md border border-zinc-200 bg-white px-3 py-2 text-xs text-zinc-700 focus:border-orange-600 focus:outline-none dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-300"
             >
               <option value="all">Semua Budget</option>
               <option value="under-7m">&lt; Rp 7.000.000</option>
@@ -353,7 +372,7 @@ export default function HomeClient({ prebuilts, accessories, services }: HomeCli
                   setSelectedUsage('all');
                   setSelectedBudget('all');
                 }}
-                className="mt-2 text-xs font-semibold text-blue-600 underline"
+                className="mt-2 text-xs font-semibold text-orange-600 underline"
               >
                 Reset filter
               </button>
@@ -435,7 +454,7 @@ export default function HomeClient({ prebuilts, accessories, services }: HomeCli
                   <label className="font-mono text-[10px] font-bold uppercase tracking-tight text-zinc-500">
                     Budget
                   </label>
-                  <span className="font-mono text-[11px] font-bold tabular-nums text-blue-600 dark:text-blue-400">
+                  <span className="font-mono text-[11px] font-bold tabular-nums text-orange-600 dark:text-orange-400">
                     {formatIDR(custBudget)}
                   </span>
                 </div>
@@ -446,7 +465,7 @@ export default function HomeClient({ prebuilts, accessories, services }: HomeCli
                   step={500000}
                   value={custBudget}
                   onChange={(e) => setCustBudget(Number(e.target.value))}
-                  className="mt-2 w-full accent-blue-600"
+                  className="mt-2 w-full accent-orange-600"
                 />
               </div>
             </div>
@@ -544,7 +563,7 @@ export default function HomeClient({ prebuilts, accessories, services }: HomeCli
                     </h3>
 
                     <div className="mt-2 flex items-baseline gap-2">
-                      <span className="kss-price text-sm text-blue-600 dark:text-blue-400">
+                      <span className="kss-price text-sm text-orange-600 dark:text-orange-400">
                         {formatIDR(acc.retailPrice)}
                       </span>
                       {hasDiscount && (
@@ -599,6 +618,59 @@ export default function HomeClient({ prebuilts, accessories, services }: HomeCli
               </div>
             );
           })}
+        </div>
+
+        {/* KSS vs beli part sendiri */}
+        <div className="mt-8 overflow-hidden rounded-md border border-zinc-200 dark:border-zinc-800 md:grid md:grid-cols-2">
+          <div className="bg-white p-5 dark:bg-zinc-900/60">
+            <div className="mb-3 flex items-center gap-2">
+              <span className="rounded-sm bg-orange-600 px-2 py-0.5 font-mono text-[10px] font-bold uppercase text-white">
+                Rekomendasi
+              </span>
+              <span className="text-sm font-black text-zinc-900 dark:text-zinc-100">
+                Paket Rakitan KSS
+              </span>
+            </div>
+            <ul className="space-y-2.5">
+              {[
+                'Satu harga total, tanpa menghitung part satu per satu',
+                'Dirakit teknisi + cable management rapi',
+                'Stress test dan QC sebelum serah terima',
+                'Garansi toko + distributor, klaim dibantu KSS',
+                'Konsultasi dan upgrade terukur setelah pembelian',
+              ].map((item) => (
+                <li key={item} className="flex items-start gap-2 text-[11px] text-zinc-700 dark:text-zinc-300">
+                  <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-emerald-500" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="border-t border-zinc-200 bg-zinc-50 p-5 dark:border-zinc-800 dark:bg-zinc-950 md:border-l md:border-t-0">
+            <div className="mb-3 flex items-center gap-2">
+              <span className="rounded-sm border border-zinc-300 px-2 py-0.5 font-mono text-[10px] font-bold uppercase text-zinc-500 dark:border-zinc-700">
+                Pembanding
+              </span>
+              <span className="text-sm font-black text-zinc-600 dark:text-zinc-400">
+                Beli Part &amp; Rakit Sendiri
+              </span>
+            </div>
+            <ul className="space-y-2.5">
+              {[
+                'Harga part terpisah, total baru diketahui di akhir',
+                'Rakit sendiri atau cari jasa tambahan',
+                'Belum tentu lolos stress test dan QC',
+                'Klaim garansi masing-masing distributor',
+                'Risiko salah socket, RAM, atau ukuran casing',
+              ].map((item) => (
+                <li key={item} className="flex items-start gap-2 text-[11px] text-zinc-500 dark:text-zinc-400">
+                  <X className="mt-0.5 h-3.5 w-3.5 shrink-0 text-zinc-400" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
 
         <div className="mt-6 flex flex-col items-center justify-between gap-3 rounded-md border border-zinc-200 bg-zinc-900 p-6 text-white dark:border-zinc-800 sm:flex-row">

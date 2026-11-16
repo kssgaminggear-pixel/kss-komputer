@@ -175,13 +175,13 @@ export default function KonsultasiClient({ prebuilts, services }: KonsultasiClie
   return (
     <div className="kss-container max-w-4xl py-8">
       <nav className="mb-4 flex items-center gap-1.5 font-mono text-xs text-zinc-500">
-        <Link href="/" className="hover:text-blue-600">Beranda</Link>
+        <Link href="/" className="hover:text-orange-600">Beranda</Link>
         <ChevronRight className="h-3.5 w-3.5 text-zinc-400" />
         <span className="font-semibold text-zinc-900 dark:text-zinc-100">Konsultasi Budget</span>
       </nav>
 
       <header className="mb-6">
-        <div className="mb-1 flex items-center gap-2 font-mono text-[11px] font-bold uppercase tracking-tight text-blue-600 dark:text-blue-400">
+        <div className="mb-1 flex items-center gap-2 font-mono text-[11px] font-bold uppercase tracking-tight text-orange-600 dark:text-orange-400">
           <MessageSquareCheck className="h-3.5 w-3.5" />
           <span>Wizard Konsultasi</span>
         </div>
@@ -205,7 +205,7 @@ export default function KonsultasiClient({ prebuilts, services }: KonsultasiClie
             <div
               key={index}
               className={`h-1.5 rounded-md ${
-                index <= step ? 'bg-blue-600' : 'bg-zinc-200 dark:bg-zinc-800'
+                index <= step ? 'bg-orange-600' : 'bg-zinc-200 dark:bg-zinc-800'
               }`}
             />
           ))}
@@ -233,11 +233,11 @@ export default function KonsultasiClient({ prebuilts, services }: KonsultasiClie
                     }}
                     className={`rounded-md border p-4 text-left transition-colors ${
                       isActive
-                        ? 'border-blue-500/40 bg-blue-500/5'
+                        ? 'border-orange-500/40 bg-orange-500/5'
                         : 'border-zinc-200 hover:border-zinc-300 dark:border-zinc-800 dark:hover:border-zinc-700'
                     }`}
                   >
-                    <Icon className={`mb-2 h-5 w-5 ${isActive ? 'text-blue-600 dark:text-blue-400' : 'text-zinc-400'}`} />
+                    <Icon className={`mb-2 h-5 w-5 ${isActive ? 'text-orange-600 dark:text-orange-400' : 'text-zinc-400'}`} />
                     <div className="text-xs font-bold text-zinc-900 dark:text-zinc-100">
                       {option.label}
                     </div>
@@ -274,7 +274,7 @@ export default function KonsultasiClient({ prebuilts, services }: KonsultasiClie
                   step={BUDGET_STEP}
                   value={budget}
                   onChange={(event) => setBudget(Number(event.target.value))}
-                  className="w-full accent-blue-600"
+                  className="w-full accent-orange-600"
                   aria-label="Budget konsultasi"
                 />
                 <div className="mt-1 flex justify-between font-mono text-[10px] text-zinc-400">
@@ -288,7 +288,7 @@ export default function KonsultasiClient({ prebuilts, services }: KonsultasiClie
                 value={problem}
                 onChange={(event) => setProblem(event.target.value)}
                 placeholder="Contoh: PC menyala tapi tidak ada tampilan, kipas berputar kencang..."
-                className="w-full rounded-md border border-zinc-300 bg-white px-3 py-2 text-xs text-zinc-900 placeholder:text-zinc-400 focus:border-blue-600 focus:outline-none dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100"
+                className="w-full rounded-md border border-zinc-300 bg-white px-3 py-2 text-xs text-zinc-900 placeholder:text-zinc-400 focus:border-orange-600 focus:outline-none dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100"
               />
             )}
           </section>
@@ -318,7 +318,7 @@ export default function KonsultasiClient({ prebuilts, services }: KonsultasiClie
                     onClick={() => toggleNeed(id)}
                     className={`inline-flex items-center gap-1.5 rounded-md border px-3 py-2 text-[11px] font-semibold transition-colors ${
                       isActive
-                        ? 'border-blue-500/40 bg-blue-500/10 text-blue-700 dark:text-blue-400'
+                        ? 'border-orange-500/40 bg-orange-500/10 text-orange-700 dark:text-orange-400'
                         : 'border-zinc-200 text-zinc-600 hover:border-zinc-300 dark:border-zinc-800 dark:text-zinc-400 dark:hover:border-zinc-700'
                     }`}
                   >
@@ -346,7 +346,7 @@ export default function KonsultasiClient({ prebuilts, services }: KonsultasiClie
                   id="device-type"
                   value={deviceType}
                   onChange={(event) => setDeviceType(event.target.value)}
-                  className="w-full rounded-md border border-zinc-300 bg-white px-3 py-2 text-xs text-zinc-900 focus:border-blue-600 focus:outline-none dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100"
+                  className="w-full rounded-md border border-zinc-300 bg-white px-3 py-2 text-xs text-zinc-900 focus:border-orange-600 focus:outline-none dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100"
                 >
                   {SERVICE_DEVICE_TYPES.map((type) => (
                     <option key={type} value={type}>
@@ -369,7 +369,7 @@ export default function KonsultasiClient({ prebuilts, services }: KonsultasiClie
                         onClick={() => setPlatform(value)}
                         className={`rounded-md border px-2.5 py-1.5 text-[11px] font-semibold ${
                           platform === value
-                            ? 'border-blue-500/40 bg-blue-500/10 text-blue-700 dark:text-blue-400'
+                            ? 'border-orange-500/40 bg-orange-500/10 text-orange-700 dark:text-orange-400'
                             : 'border-zinc-200 text-zinc-600 dark:border-zinc-800 dark:text-zinc-400'
                         }`}
                       >
@@ -391,7 +391,7 @@ export default function KonsultasiClient({ prebuilts, services }: KonsultasiClie
                         onClick={() => setColor(value)}
                         className={`rounded-md border px-2.5 py-1.5 text-[11px] font-semibold ${
                           color === value
-                            ? 'border-blue-500/40 bg-blue-500/10 text-blue-700 dark:text-blue-400'
+                            ? 'border-orange-500/40 bg-orange-500/10 text-orange-700 dark:text-orange-400'
                             : 'border-zinc-200 text-zinc-600 dark:border-zinc-800 dark:text-zinc-400'
                         }`}
                       >
@@ -413,7 +413,7 @@ export default function KonsultasiClient({ prebuilts, services }: KonsultasiClie
                         onClick={() => setFormFactor(value)}
                         className={`rounded-md border px-2.5 py-1.5 text-[11px] font-semibold ${
                           formFactor === value
-                            ? 'border-blue-500/40 bg-blue-500/10 text-blue-700 dark:text-blue-400'
+                            ? 'border-orange-500/40 bg-orange-500/10 text-orange-700 dark:text-orange-400'
                             : 'border-zinc-200 text-zinc-600 dark:border-zinc-800 dark:text-zinc-400'
                         }`}
                       >
@@ -435,7 +435,7 @@ export default function KonsultasiClient({ prebuilts, services }: KonsultasiClie
                 value={customerName}
                 onChange={(event) => setCustomerName(event.target.value)}
                 placeholder="Nama Anda"
-                className="w-full rounded-md border border-zinc-300 bg-white px-3 py-2 text-xs text-zinc-900 placeholder:text-zinc-400 focus:border-blue-600 focus:outline-none dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100"
+                className="w-full rounded-md border border-zinc-300 bg-white px-3 py-2 text-xs text-zinc-900 placeholder:text-zinc-400 focus:border-orange-600 focus:outline-none dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100"
               />
             </div>
           </section>
@@ -491,7 +491,7 @@ export default function KonsultasiClient({ prebuilts, services }: KonsultasiClie
                       className="flex flex-col justify-between rounded-md border border-zinc-200 bg-zinc-50 p-4 transition-colors hover:border-zinc-300 dark:border-zinc-800 dark:bg-zinc-950 dark:hover:border-zinc-700"
                     >
                       <div>
-                        <div className="mb-1 font-mono text-[10px] font-bold uppercase tracking-tight text-blue-600 dark:text-blue-400">
+                        <div className="mb-1 font-mono text-[10px] font-bold uppercase tracking-tight text-orange-600 dark:text-orange-400">
                           {prebuilt.categoryTag.replace(/-/g, ' ')}
                         </div>
                         <div className="text-xs font-bold text-zinc-900 dark:text-zinc-100">
@@ -562,7 +562,7 @@ export default function KonsultasiClient({ prebuilts, services }: KonsultasiClie
             <button
               type="button"
               onClick={handleNext}
-              className="inline-flex items-center gap-1.5 rounded-md bg-blue-600 px-4 py-2 text-xs font-bold text-white transition-colors hover:bg-blue-700"
+              className="inline-flex items-center gap-1.5 rounded-md bg-orange-600 px-4 py-2 text-xs font-bold text-white transition-colors hover:bg-orange-700"
             >
               <span>Lanjut</span>
               <ArrowRight className="h-3.5 w-3.5" />

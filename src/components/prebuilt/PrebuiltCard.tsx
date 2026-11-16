@@ -69,12 +69,24 @@ export function PrebuiltCard({ pkg }: PrebuiltCardProps) {
     { icon: HardDriveDownload, value: ssdPart?.name || 'Storage NVMe Ready' },
   ];
 
+  const totalWattage = partsList.reduce(
+    (sum, item) => sum + (item.part.wattage || 0) * item.quantity,
+    0
+  );
+
+  const specPills = [
+    cpuPart?.specs.socket,
+    ramPart?.specs.ramType,
+    totalWattage > 0 ? `${totalWattage}W` : null,
+    pkg.targetResolution,
+  ].filter(Boolean) as string[];
+
   return (
-    <article className="group flex flex-col overflow-hidden rounded-md border border-zinc-200 bg-white shadow-xs transition-all duration-200 hover:-translate-y-0.5 hover:border-zinc-300 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900/60 dark:hover:border-zinc-700">
+    <article className="group flex flex-col overflow-hidden rounded-md border border-zinc-200 bg-white transition-colors duration-150 hover:border-zinc-400 dark:border-zinc-800 dark:bg-zinc-900/60 dark:hover:border-zinc-600">
       {/* Header */}
       <div className="border-b border-zinc-100 p-5 dark:border-zinc-800">
         <div className="mb-2 flex flex-wrap items-center gap-1.5">
-          <span className="rounded-md border border-blue-500/20 bg-blue-500/10 px-2 py-0.5 font-mono text-[10px] font-bold uppercase tracking-tight text-blue-600 dark:text-blue-400">
+          <span className="rounded-md border border-orange-500/20 bg-orange-500/10 px-2 py-0.5 font-mono text-[10px] font-bold uppercase tracking-tight text-orange-600 dark:text-orange-400">
             {pkg.platform}
           </span>
           <span className="rounded-md bg-zinc-100 px-2 py-0.5 font-mono text-[10px] font-semibold text-zinc-600 dark:bg-zinc-800 dark:text-zinc-300">
@@ -91,12 +103,23 @@ export function PrebuiltCard({ pkg }: PrebuiltCardProps) {
           </span>
         </div>
 
-        <h3 className="text-base font-black tracking-tight text-zinc-900 transition-colors group-hover:text-blue-600 dark:text-zinc-100 dark:group-hover:text-blue-400">
+        <h3 className="text-base font-black tracking-tight text-zinc-900 transition-colors group-hover:text-orange-600 dark:text-zinc-100 dark:group-hover:text-orange-400">
           <Link href={`/paket-rakitan/${pkg.slug}`}>{pkg.name}</Link>
         </h3>
         <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-zinc-500 dark:text-zinc-400">
           {pkg.description}
         </p>
+
+        <div className="mt-3 flex flex-wrap gap-1.5">
+          {specPills.map((pill) => (
+            <span
+              key={pill}
+              className="inline-flex items-center rounded-sm border border-zinc-200 bg-zinc-100 px-1.5 py-0.5 font-mono text-[10px] uppercase tracking-wider text-zinc-600 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300"
+            >
+              {pill}
+            </span>
+          ))}
+        </div>
       </div>
 
       {/* Specs */}
@@ -122,7 +145,7 @@ export function PrebuiltCard({ pkg }: PrebuiltCardProps) {
           <div className="space-y-1.5 border-t border-zinc-200/80 pt-3 dark:border-zinc-800">
             <div className="flex items-center justify-between font-mono text-[10px] font-semibold uppercase text-zinc-400">
               <span className="flex items-center gap-1">
-                <Gamepad2 className="h-3 w-3 text-blue-500" />
+                <Gamepad2 className="h-3 w-3 text-orange-500" />
                 Estimasi FPS
               </span>
               <span>{pkg.targetResolution}</span>
@@ -137,9 +160,9 @@ export function PrebuiltCard({ pkg }: PrebuiltCardProps) {
                     ~{bench.fps} FPS
                   </span>
                 </div>
-                <div className="h-1.5 w-full overflow-hidden rounded-full bg-zinc-200 dark:bg-zinc-800">
+                <div className="h-1.5 w-full overflow-hidden bg-zinc-200 dark:bg-zinc-800">
                   <div
-                    className="h-full rounded-full bg-blue-600 dark:bg-blue-500"
+                    className="h-full bg-orange-500"
                     style={{ width: `${Math.min(100, (bench.fps / 240) * 100)}%` }}
                   />
                 </div>
@@ -166,20 +189,20 @@ export function PrebuiltCard({ pkg }: PrebuiltCardProps) {
         </div>
 
         <div className="grid grid-cols-2 gap-2">
-          <button type="button" onClick={handleCustomize} className="kss-btn-outline h-9 px-2">
-            <SlidersHorizontal className="h-3.5 w-3.5 text-blue-600 dark:text-blue-400" />
-            <span>Ubah Spek</span>
+          <button type="button" onClick={handleCustomize} className="kss-btn-primary h-9 px-2">
+            <SlidersHorizontal className="h-3.5 w-3.5" />
+            <span>Kustomisasi</span>
           </button>
-          <button type="button" onClick={handleWhatsAppOrder} className="kss-btn-primary h-9 px-2">
-            <MessageSquareCheck className="h-3.5 w-3.5" />
+          <button type="button" onClick={handleWhatsAppOrder} className="kss-btn-outline h-9 px-2">
+            <MessageSquareCheck className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" />
             <span>Pesan WA</span>
           </button>
         </div>
 
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between gap-2">
           <Link
             href={`/paket-rakitan/${pkg.slug}`}
-            className="inline-flex items-center gap-1 text-[11px] font-bold text-zinc-700 transition-colors hover:text-blue-600 dark:text-zinc-300 dark:hover:text-blue-400"
+            className="inline-flex items-center gap-1 text-[11px] font-bold text-zinc-700 transition-colors hover:text-orange-600 dark:text-zinc-300 dark:hover:text-orange-400"
           >
             <span>Lihat Detail</span>
             <ArrowRight className="h-3 w-3" />
@@ -188,7 +211,7 @@ export function PrebuiltCard({ pkg }: PrebuiltCardProps) {
             href={pkg.tokopediaUrl || TOKOPEDIA_OFFICIAL_STORE_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-600 transition-colors hover:text-emerald-700 dark:text-emerald-400"
+            className="inline-flex items-center gap-1 rounded-sm bg-[#00AA5B] px-2 py-1 text-[10px] font-bold text-white transition-colors hover:bg-[#00924E]"
           >
             <span>Tokopedia</span>
             <ExternalLink className="h-3 w-3" />

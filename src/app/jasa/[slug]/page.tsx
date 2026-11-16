@@ -75,11 +75,11 @@ export default async function JasaDetailPage({ params }: JasaDetailPageProps) {
   return (
     <div className="kss-container py-8">
       <nav className="mb-4 flex flex-wrap items-center gap-1.5 font-mono text-xs text-zinc-500">
-        <Link href="/" className="hover:text-blue-600">
+        <Link href="/" className="hover:text-orange-600">
           Beranda
         </Link>
         <ChevronRight className="h-3.5 w-3.5 text-zinc-400" />
-        <Link href="/jasa" className="hover:text-blue-600">
+        <Link href="/jasa" className="hover:text-orange-600">
           Jasa &amp; Servis
         </Link>
         <ChevronRight className="h-3.5 w-3.5 text-zinc-400" />
@@ -90,7 +90,7 @@ export default async function JasaDetailPage({ params }: JasaDetailPageProps) {
         <div className="space-y-6">
           <header className="rounded-md border border-zinc-200 bg-white p-6 shadow-xs dark:border-zinc-800 dark:bg-zinc-900/60">
             <div className="mb-3 flex flex-wrap items-center gap-2">
-              <span className="rounded-md border border-blue-500/20 bg-blue-500/10 px-2 py-0.5 font-mono text-[10px] font-bold uppercase text-blue-600 dark:text-blue-400">
+              <span className="rounded-md border border-orange-500/20 bg-orange-500/10 px-2 py-0.5 font-mono text-[10px] font-bold uppercase text-orange-600 dark:text-orange-400">
                 Layanan Teknisi
               </span>
               {service.badge && (
@@ -142,7 +142,7 @@ export default async function JasaDetailPage({ params }: JasaDetailPageProps) {
 
           <section className="rounded-md border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-900/60">
             <h2 className="mb-3 flex items-center gap-2 text-sm font-bold text-zinc-900 dark:text-zinc-100">
-              <Wrench className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+              <Wrench className="h-4 w-4 text-orange-600 dark:text-orange-400" />
               <span>Cakupan Pekerjaan</span>
             </h2>
             <ul className="grid grid-cols-1 gap-2 sm:grid-cols-2">
@@ -220,7 +220,7 @@ export default async function JasaDetailPage({ params }: JasaDetailPageProps) {
           {relatedServices.length > 0 && (
             <section>
               <h2 className="mb-3 flex items-center gap-2 text-sm font-bold text-zinc-900 dark:text-zinc-100">
-                <Sparkles className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+                <Sparkles className="h-4 w-4 text-orange-600 dark:text-orange-400" />
                 <span>Layanan Terkait</span>
               </h2>
               <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
@@ -238,7 +238,7 @@ export default async function JasaDetailPage({ params }: JasaDetailPageProps) {
                         {related.title}
                       </div>
                     </div>
-                    <div className="mt-3 font-mono text-xs font-bold text-blue-600 tabular-nums dark:text-blue-400">
+                    <div className="mt-3 font-mono text-xs font-bold text-orange-600 tabular-nums dark:text-orange-400">
                       {getPriceLabel(related.price, related.priceMax)}
                     </div>
                   </Link>
@@ -251,7 +251,7 @@ export default async function JasaDetailPage({ params }: JasaDetailPageProps) {
         <aside className="space-y-4 lg:sticky lg:top-24 lg:self-start">
           <div id="booking-form" className="scroll-mt-24 rounded-md border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-900/60">
             <h2 className="mb-1 flex items-center gap-2 text-sm font-bold text-zinc-900 dark:text-zinc-100">
-              <Clock className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+              <Clock className="h-4 w-4 text-orange-600 dark:text-orange-400" />
               <span>Booking Jadwal</span>
             </h2>
             <p className="mb-4 text-[11px] text-zinc-500 dark:text-zinc-400">

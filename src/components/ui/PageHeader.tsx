@@ -16,7 +16,7 @@ export function PageHeader({ eyebrow, title, description, actions, aside }: Page
           <div className="min-w-0 max-w-3xl">
             {eyebrow && (
               <div className="kss-eyebrow mb-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-blue-600" />
+                <span className="h-1.5 w-1.5 rounded-full bg-orange-600" />
                 <span>{eyebrow}</span>
               </div>
             )}

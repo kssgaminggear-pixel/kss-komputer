@@ -201,7 +201,7 @@ export function CommandSearchModal({ isOpen, onClose, products }: CommandSearchM
                     <Link
                       href={`/komponen/${product.slug}`}
                       onClick={onClose}
-                      className="text-xs sm:text-sm font-medium text-zinc-900 dark:text-zinc-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 line-clamp-1 transition-colors"
+                      className="text-xs sm:text-sm font-medium text-zinc-900 dark:text-zinc-100 group-hover:text-orange-600 dark:group-hover:text-orange-400 line-clamp-1 transition-colors"
                     >
                       {product.name}
                     </Link>
@@ -256,7 +256,7 @@ export function CommandSearchModal({ isOpen, onClose, products }: CommandSearchM
                         className={`inline-flex items-center gap-1 px-2 py-1 text-xs font-mono font-medium border rounded-md transition-all ${
                           isAddedToCart
                             ? 'bg-emerald-600 border-emerald-600 text-white'
-                            : 'bg-blue-600 hover:bg-blue-700 text-white border-blue-600'
+                            : 'bg-orange-600 hover:bg-orange-700 text-white border-orange-600'
                         }`}
                       >
                         {isAddedToCart ? (
@@ -287,7 +287,7 @@ export function CommandSearchModal({ isOpen, onClose, products }: CommandSearchM
           <Link
             href="/komponen"
             onClick={onClose}
-            className="inline-flex items-center gap-1 text-blue-600 dark:text-blue-400 hover:underline"
+            className="inline-flex items-center gap-1 text-orange-600 dark:text-orange-400 hover:underline"
           >
             Buka Katalog Lengkap <ArrowRight className="w-3 h-3" />
           </Link>
