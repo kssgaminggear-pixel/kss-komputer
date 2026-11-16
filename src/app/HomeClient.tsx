@@ -127,12 +127,12 @@ export default function HomeClient({ prebuilts, accessories, services }: HomeCli
       )}
 
       {/* HERO */}
-      <section className="border-b border-zinc-800 bg-zinc-950">
+      <section className="border-b border-zinc-200 bg-zinc-50">
         <div className="kss-container py-8 sm:py-10 lg:py-14">
           <div className="grid grid-cols-1 items-stretch gap-6 lg:grid-cols-12 lg:gap-8">
             {/* Banner visual */}
             <div className="order-first lg:order-2 lg:col-span-7">
-              <div className="relative min-h-[300px] overflow-hidden rounded-md border border-zinc-800 bg-zinc-900 sm:min-h-[360px] lg:h-full lg:min-h-[430px]">
+              <div className="relative min-h-[300px] overflow-hidden rounded-md border border-zinc-200 bg-zinc-100 sm:min-h-[360px] lg:h-full lg:min-h-[430px]">
                 <Image
                   src="/images/tokopedia/banner-pc-store.webp"
                   alt="PC rakitan dan gaming setup KSS Komputer"
@@ -143,34 +143,34 @@ export default function HomeClient({ prebuilts, accessories, services }: HomeCli
                   className="object-cover object-center"
                 />
                 <span className="absolute left-0 top-0 h-3 w-3 bg-orange-500" />
-                <div className="absolute left-4 top-4 flex items-center gap-1.5 rounded-sm border border-emerald-500/40 bg-zinc-950/90 px-2 py-1 font-mono text-[10px] font-bold uppercase tracking-wider text-emerald-400">
+                <div className="absolute left-4 top-4 flex items-center gap-1.5 rounded-sm border border-emerald-600/30 bg-white px-2 py-1 font-mono text-[10px] font-bold uppercase tracking-wider text-emerald-700">
                   <BadgeCheck className="h-3 w-3" />
                   Official Store
                 </div>
-                <div className="absolute right-4 top-4 rounded-sm border border-zinc-700 bg-zinc-950/90 px-2 py-1 font-mono text-[10px] font-semibold text-zinc-300">
+                <div className="absolute right-4 top-4 rounded-sm border border-zinc-200 bg-white px-2 py-1 font-mono text-[10px] font-semibold text-zinc-600">
                   4.9 · 33 rb terjual
                 </div>
 
                 {featured && (
-                  <div className="absolute inset-x-0 bottom-0 border-t border-zinc-700 bg-zinc-950/95 p-4">
+                  <div className="absolute inset-x-0 bottom-0 border-t border-zinc-200 bg-white p-4">
                     <div className="flex flex-wrap items-end justify-between gap-3">
                       <div className="min-w-0">
-                        <div className="font-mono text-[9px] font-bold uppercase tracking-wider text-orange-400">
+                        <div className="font-mono text-[9px] font-bold uppercase tracking-wider text-orange-600">
                           Featured Rig
                         </div>
                         <Link
                           href={`/paket-rakitan/${featured.slug}`}
-                          className="line-clamp-1 text-sm font-bold text-zinc-50 hover:text-orange-400"
+                          className="line-clamp-1 text-sm font-bold text-zinc-900 hover:text-orange-600"
                         >
                           {featured.name}
                         </Link>
                       </div>
                       <div className="flex items-center gap-3">
                         <div className="text-right">
-                          <div className="font-mono text-[9px] uppercase tracking-tight text-zinc-500">
+                          <div className="font-mono text-[9px] uppercase tracking-tight text-zinc-400">
                             Harga Paket
                           </div>
-                          <div className="kss-price text-base text-zinc-50">
+                          <div className="kss-price text-base text-zinc-900">
                             {formatIDR(featured.totalBundlePrice)}
                           </div>
                         </div>
@@ -187,16 +187,16 @@ export default function HomeClient({ prebuilts, accessories, services }: HomeCli
 
             {/* Copy */}
             <div className="order-last flex flex-col justify-center gap-4 lg:order-1 lg:col-span-5">
-              <div className="inline-flex w-fit items-center gap-2 rounded-md border border-orange-500/30 bg-orange-500/10 px-2.5 py-1 font-mono text-[10px] font-bold uppercase tracking-wider text-orange-400">
+              <div className="inline-flex w-fit items-center gap-2 rounded-md border border-orange-500/30 bg-orange-500/10 px-2.5 py-1 font-mono text-[10px] font-bold uppercase tracking-wider text-orange-700">
                 <span className="h-1.5 w-1.5 rounded-full bg-orange-500" />
                 System Integrator &amp; PC Builder Jakarta
               </div>
 
-              <h1 className="text-3xl font-black leading-[1.05] tracking-[-0.04em] text-zinc-50 sm:text-4xl lg:text-[46px]">
+              <h1 className="text-3xl font-black leading-[1.05] tracking-[-0.04em] text-zinc-900 sm:text-4xl lg:text-[46px]">
                 PC Rakitan Siap Pakai,<br className="hidden sm:block" /> Harga Jelas &amp; Bergaransi.
               </h1>
 
-              <p className="max-w-xl text-sm leading-relaxed text-zinc-400">
+              <p className="max-w-xl text-sm leading-relaxed text-zinc-600">
                 Pilih paket siap pakai atau rakit sendiri. Semua unit melalui validasi
                 kompatibilitas, cable management rapi, stress test, dan garansi resmi
                 distributor.
@@ -209,14 +209,14 @@ export default function HomeClient({ prebuilts, accessories, services }: HomeCli
                 </a>
                 <Link
                   href="/konsultasi"
-                  className="inline-flex h-11 items-center justify-center gap-2 rounded-md border border-zinc-700 bg-zinc-900 px-5 text-sm font-bold text-zinc-100 transition-colors hover:bg-zinc-800"
+                  className="inline-flex h-11 items-center justify-center gap-2 rounded-md border border-zinc-300 bg-white px-5 text-sm font-bold text-zinc-900 transition-colors hover:bg-zinc-100"
                 >
-                  <MessageSquareCheck className="h-4 w-4 text-emerald-400" />
+                  <MessageSquareCheck className="h-4 w-4 text-emerald-600" />
                   <span>Konsultasi Budget</span>
                 </Link>
               </div>
 
-              <div className="grid w-full grid-cols-2 gap-3 border-t border-zinc-800 pt-4 sm:grid-cols-4">
+              <div className="grid w-full grid-cols-2 gap-3 border-t border-zinc-200 pt-4 sm:grid-cols-4">
                 {[
                   { value: '100%', label: 'Garansi Resmi' },
                   { value: '24 Jam', label: 'Stress Test' },
@@ -224,7 +224,7 @@ export default function HomeClient({ prebuilts, accessories, services }: HomeCli
                   { value: 'Same Day', label: 'Siap Ambil' },
                 ].map((stat) => (
                   <div key={stat.label}>
-                    <div className="font-mono text-sm font-black tracking-tight text-zinc-100">
+                    <div className="font-mono text-sm font-black tracking-tight text-zinc-900">
                       {stat.value}
                     </div>
                     <div className="text-[11px] text-zinc-500">{stat.label}</div>
