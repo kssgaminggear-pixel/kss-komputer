@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import PaketDetailContent from './PaketDetailClient';
@@ -28,21 +28,10 @@ export async function generateMetadata({
   };
 }
 
-export default function PaketDetailPage({ params }: PaketDetailPageProps) {
-  return (
-    <Suspense
-      fallback={
-        <div className="mx-auto max-w-7xl px-4 py-16 text-center font-mono text-xs text-zinc-500">
-          Memuat spesifikasi paket PC...
-        </div>
-      }
-    >
-      <PaketDetailContentServer params={params} />
-    </Suspense>
-  );
-}
+// Detail paket hanya berisi data statis; tidak perlu validasi instant navigation.
+export const instant = false;
 
-async function PaketDetailContentServer({ params }: PaketDetailPageProps) {
+export default async function PaketDetailPage({ params }: PaketDetailPageProps) {
   const { slug } = await params;
   const pkg = getPublicPrebuiltDetail(slug);
 

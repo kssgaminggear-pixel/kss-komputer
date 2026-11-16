@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
@@ -91,21 +91,10 @@ export async function generateMetadata({ params }: KomponenDetailPageProps): Pro
   };
 }
 
-export default function KomponenDetailPage({ params }: KomponenDetailPageProps) {
-  return (
-    <Suspense
-      fallback={
-        <div className="mx-auto max-w-7xl px-4 py-16 text-center font-mono text-xs text-zinc-500">
-          Memuat detail komponen...
-        </div>
-      }
-    >
-      <KomponenDetailContent params={params} />
-    </Suspense>
-  );
-}
+// Detail komponen hanya berisi data statis; tidak perlu validasi instant navigation.
+export const instant = false;
 
-async function KomponenDetailContent({ params }: KomponenDetailPageProps) {
+export default async function KomponenDetailPage({ params }: KomponenDetailPageProps) {
   const { slug } = await params;
   const part = getPublicHardwarePartBySlug(slug);
 

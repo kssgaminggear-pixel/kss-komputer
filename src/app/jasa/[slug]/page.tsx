@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
@@ -50,21 +50,10 @@ function getPriceLabel(price: number, priceMax?: number) {
   return `Mulai ${formatIDR(price)}`;
 }
 
-export default function JasaDetailPage({ params }: JasaDetailPageProps) {
-  return (
-    <Suspense
-      fallback={
-        <div className="mx-auto max-w-7xl px-4 py-16 text-center font-mono text-xs text-zinc-500">
-          Memuat detail layanan...
-        </div>
-      }
-    >
-      <JasaDetailContent params={params} />
-    </Suspense>
-  );
-}
+// Detail layanan hanya berisi data statis; tidak perlu validasi instant navigation.
+export const instant = false;
 
-async function JasaDetailContent({ params }: JasaDetailPageProps) {
+export default async function JasaDetailPage({ params }: JasaDetailPageProps) {
   const { slug } = await params;
   const service = getPublicServiceBySlug(slug);
 

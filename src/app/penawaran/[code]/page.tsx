@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import { notFound } from 'next/navigation';
 import PenawaranClient from './PenawaranClient';
 import { getPublicQuoteByCode, getPublicQuoteCodes } from '@/lib/server-catalog';
@@ -11,21 +11,10 @@ export function generateStaticParams() {
   return getPublicQuoteCodes().map((code) => ({ code }));
 }
 
-export default function PenawaranPage({ params }: PenawaranPageProps) {
-  return (
-    <Suspense
-      fallback={
-        <div className="mx-auto max-w-4xl px-4 py-16 text-center font-mono text-xs text-zinc-500">
-          Memuat surat penawaran resmi...
-        </div>
-      }
-    >
-      <PenawaranContent params={params} />
-    </Suspense>
-  );
-}
+// Surat penawaran hanya berisi data statis; tidak perlu validasi instant navigation.
+export const instant = false;
 
-async function PenawaranContent({ params }: PenawaranPageProps) {
+export default async function PenawaranPage({ params }: PenawaranPageProps) {
   const { code } = await params;
   const quote = getPublicQuoteByCode(code);
 
