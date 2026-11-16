@@ -131,18 +131,39 @@ export interface PrebuiltPC {
 export type PrebuiltTemplate = PrebuiltPC;
 
 /**
+ * Kategori Layanan Jasa Komputer KSS Komputer
+ */
+export type ServiceCategory =
+  | 'rakit_custom'
+  | 'deep_cleaning'
+  | 'upgrade_ssd'
+  | 'upgrade_ram'
+  | 'repaste_thermal'
+  | 'instalasi_os'
+  | 'instalasi_warnet'
+  | 'troubleshoot'
+  | 'cable_management'
+  | 'maintenance';
+
+/**
  * Paket Layanan Jasa Komputer KSS Komputer
  */
 export interface ServicePackage {
   id: string;
   title: string;
   slug: string;
-  price: number;
+  category: ServiceCategory;
+  price: number;                  // Harga mulai dari
+  priceMax?: number;              // Harga sampai (untuk range)
   duration: string;               // contoh: '1 - 2 Jam', 'Same Day', '1 Hari Kerja'
   description: string;
-  features: string[];
+  features: string[];             // Apa saja yang termasuk
+  includes?: string[];            // Detail item yang termasuk
+  excludes?: string[];            // Apa yang tidak termasuk / biaya tambahan
   popular?: boolean;
   badge?: string;                 // contoh: 'Paling Dicari', 'Best Value'
+  imageUrl?: string;
+  isActive: boolean;
 }
 
 /**
@@ -238,4 +259,89 @@ export interface ConsultationQuote {
   validUntil: string;             // Tanggal kedaluwarsa penawaran
   status: 'draft' | 'sent' | 'accepted' | 'expired';
   createdAt: string;
+}
+
+/**
+ * Tipe Order untuk Pelacakan Pengerjaan
+ */
+export type TrackingOrderType = 'rakit_custom' | 'rakit_paket' | 'servis' | 'cleaning' | 'upgrade';
+
+/**
+ * Tahapan Pengerjaan Rakit / Servis
+ */
+export type TrackingStage =
+  | 'payment_verified'
+  | 'parts_preparation'
+  | 'diagnosis'
+  | 'assembling'
+  | 'cable_management'
+  | 'stress_testing'
+  | 'qc_final'
+  | 'ready_to_pickup'
+  | 'completed';
+
+export interface TrackingStageEntry {
+  stage: TrackingStage;
+  timestamp: string;
+  notes?: string;
+}
+
+/**
+ * Pelacakan Status Pengerjaan Rakit / Servis (TRK-KSS-XXX)
+ */
+export interface BuildOrderTracking {
+  id: string;
+  trackingCode: string;           // TRK-KSS-XXX
+  customerName: string;
+  customerWa: string;
+  orderType: TrackingOrderType;
+  itemTitle: string;              // "Rakit PC Gaming RTX 4060" / "Deep Cleaning + Repaste"
+  currentStage: TrackingStage;
+  stageHistory: TrackingStageEntry[];
+  estimatedCompletion?: string;   // ISO date string
+  adminNotes?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+/**
+ * Status Booking Jasa Servis
+ */
+export type ServiceBookingStatus = 'pending' | 'confirmed' | 'in_progress' | 'completed' | 'cancelled';
+
+/**
+ * Booking Jasa Servis / Booking Jadwal Teknisi
+ */
+export interface ServiceBooking {
+  id: string;
+  bookingCode: string;            // SRV-KSS-YYYYMM-XXX
+  serviceId: string;              // Referensi ke ServicePackage.id
+  customerName: string;
+  customerWa: string;
+  customerEmail?: string;
+  deviceType: string;             // "PC Desktop", "Laptop", "PC Warnet/Lab"
+  problemDescription: string;     // Keluhan / kebutuhan detail
+  preferredDate?: string;         // ISO date string
+  preferredTime?: string;         // "09:00", "14:00"
+  status: ServiceBookingStatus;
+  adminNotes?: string;
+  estimatedCost?: number;
+  finalCost?: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+/**
+ * Konfigurasi Toko (dapat diubah dari Admin Panel)
+ */
+export interface StoreSettings {
+  storeName: string;
+  storeAddress: string;
+  adminWhatsApp: string;
+  technicianWhatsApp: string;
+  tokopediaUrl: string;
+  defaultAssemblyFee: number;
+  defaultMarkupPercent: number;
+  warrantyText: string;
+  operationalHours: string;       // "Senin - Sabtu, 09:00 - 18:00 WIB"
 }

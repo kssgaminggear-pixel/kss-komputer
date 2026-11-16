@@ -1,6 +1,6 @@
 # MASTER BLUEPRINT & EXECUTION ROADMAP — KSS KOMPUTER
 
-> **Versi:** 3.0 · **Terakhir diperbarui:** 2026-11-15
+> **Versi:** 3.0 · **Terakhir diperbarui:** 2026-11-16
 > **Stack:** Next.js 16.4 · React 19 · TypeScript `strict` · Tailwind CSS 4 · Zustand · Prisma · PostgreSQL
 > **Deployment:** Vercel (CLI) → `https://kss-komputer-seven.vercel.app`
 > **Repo:** `github.com/kssgaminggear-pixel/kss-komputer`
@@ -481,15 +481,15 @@ Halaman utama yang memperkenalkan seluruh layanan KSS Komputer sebagai bengkel p
 - [x] **1.2** `src/lib/format.ts` — `formatIDR`, `formatDeltaIDR`, `formatWatt`, `generateWhatsAppOrderUrl`, `generateBuildPlainText`, `generateConsultationWAMessage`
 - [x] **1.3** `src/lib/mock-data.ts` — 45+ hardware parts, 6 prebuilt PCs, 4 services, 8 aksesoris, 1 sample quote
 - [x] **1.4** `src/lib/compatibility.ts` — Validasi socket, RAM type, form factor, GPU length, cooler height, wattage, bottleneck, `calculateBundleTotal`, `calculateDeltaPrice`
-- [ ] **1.5** Tambahkan tipe `BuildOrderTracking` di `types.ts` (stage enum, stageHistory, orderType: RAKIT/SERVIS/CLEANING/UPGRADE)
-- [ ] **1.6** Tambahkan tipe `ServiceBooking` di `types.ts` (bookingCode, deviceType, problemDescription, preferredDate, status)
-- [ ] **1.7** Tambahkan tipe `StoreSettings` di `types.ts` (adminWhatsApp, technicianWhatsApp, tokopediaUrl, operationalHours)
-- [ ] **1.8** Ekspansi `ServicePackage` di `types.ts` — Tambah field: `category`, `priceMax`, `includes[]`, `excludes[]`, `imageUrl`, `isActive`
-- [ ] **1.9** Refactor sanitizer: rename `server-dto.ts` → `sanitizer.ts`, pastikan `sanitizePrebuiltForPublic()` dan `sanitizeQuoteForPublic()` diimpor dan digunakan di halaman publik yang relevan
-- [ ] **1.10** Ekspansi `mock-data.ts`: tambah 10 paket jasa (total 10+), 12+ aksesoris (total 20+), 2 tambahan `ConsultationQuote`, 3 sample `BuildOrderTracking`, 3 sample `ServiceBooking`
-- [ ] **1.11** Tambahkan `generateServiceBookingWAMessage()`, `generateRetailCartWAMessage()`, `generateQuoteShareWAMessage()` di `format.ts`
-- [ ] **1.12** Buat `src/lib/constants.ts` — Centralize WA number (admin + teknisi), Tokopedia URL, store name, warranty text, operational hours
-- [ ] **1.13** Buat `src/lib/utils.ts` — `cn()` (clsx+twMerge), `slugify()`, `debounce()`, `clamp()`
+- [x] **1.5** Tambahkan tipe `BuildOrderTracking` di `types.ts` (stage enum, stageHistory, orderType: RAKIT/SERVIS/CLEANING/UPGRADE)
+- [x] **1.6** Tambahkan tipe `ServiceBooking` di `types.ts` (bookingCode, deviceType, problemDescription, preferredDate, status)
+- [x] **1.7** Tambahkan tipe `StoreSettings` di `types.ts` (adminWhatsApp, technicianWhatsApp, tokopediaUrl, operationalHours)
+- [x] **1.8** Ekspansi `ServicePackage` di `types.ts` — Tambah field: `category`, `priceMax`, `includes[]`, `excludes[]`, `imageUrl`, `isActive`
+- [x] **1.9** Refactor sanitizer: rename `server-dto.ts` → `sanitizer.ts`, pastikan `sanitizePrebuiltForPublic()` dan `sanitizeQuoteForPublic()` diimpor dan digunakan di halaman publik yang relevan
+- [x] **1.10** Ekspansi `mock-data.ts`: tambah 10 paket jasa (total 10+), 12+ aksesoris (total 20+), 2 tambahan `ConsultationQuote`, 3 sample `BuildOrderTracking`, 3 sample `ServiceBooking`
+- [x] **1.11** Tambahkan `generateServiceBookingWAMessage()`, `generateRetailCartWAMessage()`, `generateQuoteShareWAMessage()` di `format.ts`
+- [x] **1.12** Buat `src/lib/constants.ts` — Centralize WA number (admin + teknisi), Tokopedia URL, store name, warranty text, operational hours
+- [x] **1.13** Buat `src/lib/utils.ts` — `cn()` (clsx+twMerge), `slugify()`, `debounce()`, `clamp()`
 
 ---
 
@@ -692,7 +692,7 @@ git push origin main
 | Fase | Judul | Total | Selesai | Sisa |
 |------|-------|-------|---------|------|
 | 0 | Project Bootstrap | 4 | 4 | 0 |
-| 1 | Data Layer | 13 | 4 | 9 |
+| 1 | Data Layer | 13 | 13 | 0 |
 | 2 | State Management | 8 | 7 | 1 |
 | 3 | Layout & Shared | 17 | 8 | 9 |
 | 4 | Jasa & Servis ⭐ | 5 | 0 | 5 |
@@ -703,9 +703,9 @@ git push origin main
 | 9 | SEO, Performance, PWA | 8 | 0 | 8 |
 | 10 | API Routes | 4 | 0 | 4 |
 | 11 | Database & Final QA | 10 | 0 | 10 |
-| **TOTAL** | | **92** | **33** | **59** |
+| **TOTAL** | | **92** | **42** | **50** |
 
-> **Progress: 33 / 92 (35.9%)**
+> **Progress: 42 / 92 (45.7%)**
 >
 > **Prioritas Eksekusi Berikutnya:**
-> Fase 1 (sisa) → Fase 3 (sisa) → **Fase 4 (Jasa & Servis ⭐)** → Fase 5 → Fase 7 → sisanya
+> Fase 2 & 3 (sisa) → **Fase 4 (Jasa & Servis ⭐)** → Fase 5 → Fase 7 → sisanya

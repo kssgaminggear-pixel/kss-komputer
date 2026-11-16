@@ -194,3 +194,97 @@ export function generateConsultationWAMessage(
   const message = lines.join('\n');
   return `https://wa.me/${cleanPhone}?text=${encodeURIComponent(message)}`;
 }
+
+/**
+ * Payload untuk booking jasa servis via WhatsApp
+ */
+export interface ServiceBookingWAPayload {
+  serviceTitle: string;
+  customerName: string;
+  deviceType: string;
+  problemDescription: string;
+  preferredDate?: string;
+  preferredTime?: string;
+}
+
+/**
+ * Generate tautan WhatsApp booking jasa servis / jadwal teknisi
+ */
+export function generateServiceBookingWAMessage(
+  phone: string = DEFAULT_WHATSAPP_PHONE,
+  payload: ServiceBookingWAPayload
+): string {
+  const cleanPhone = phone.replace(/[^0-9]/g, '');
+  const lines: string[] = [
+    `*BOOKING JASA SERVIS — KSS KOMPUTER*`,
+    `━━━━━━━━━━━━━━━━━━━━━━━━━`,
+    `*Layanan:* ${payload.serviceTitle}`,
+    `*Nama:* ${payload.customerName}`,
+    `*Tipe Perangkat:* ${payload.deviceType}`,
+    `*Keluhan / Kebutuhan:*`,
+    payload.problemDescription,
+  ];
+  if (payload.preferredDate) {
+    lines.push(`*Tanggal Pilihan:* ${payload.preferredDate}`);
+  }
+  if (payload.preferredTime) {
+    lines.push(`*Jam Pilihan:* ${payload.preferredTime}`);
+  }
+  lines.push(`━━━━━━━━━━━━━━━━━━━━━━━━━`);
+  lines.push(`Mohon konfirmasi jadwal & estimasi biaya. Terima kasih!`);
+  const message = lines.join('\n');
+  return `https://wa.me/${cleanPhone}?text=${encodeURIComponent(message)}`;
+}
+
+/**
+ * Generate tautan WhatsApp checkout keranjang eceran (komponen & aksesoris)
+ */
+export function generateRetailCartWAMessage(
+  phone: string = DEFAULT_WHATSAPP_PHONE,
+  items: { name: string; quantity: number; unitPrice: number }[],
+  totalPrice: number,
+  customerName?: string
+): string {
+  const cleanPhone = phone.replace(/[^0-9]/g, '');
+  const lines: string[] = [
+    `*PESANAN KOMPONEN / AKSESORIS — KSS KOMPUTER*`,
+    `━━━━━━━━━━━━━━━━━━━━━━━━━`,
+  ];
+  if (customerName) lines.push(`*Nama:* ${customerName}`);
+  lines.push(`*Daftar Barang:*`);
+  items.forEach((item, i) => {
+    lines.push(`${i + 1}. ${item.name} (${item.quantity}x) — ${formatIDR(item.unitPrice * item.quantity)}`);
+  });
+  lines.push(`━━━━━━━━━━━━━━━━━━━━━━━━━`);
+  lines.push(`*TOTAL: ${formatIDR(totalPrice)}*`);
+  lines.push(`Mohon info ketersediaan stok & ongkir. Terima kasih!`);
+  const message = lines.join('\n');
+  return `https://wa.me/${cleanPhone}?text=${encodeURIComponent(message)}`;
+}
+
+/**
+ * Generate tautan WhatsApp untuk membagikan surat penawaran resmi ke konsumen
+ */
+export function generateQuoteShareWAMessage(
+  phone: string,
+  quoteCode: string,
+  customerName: string,
+  finalPrice: number,
+  siteUrl: string = 'https://kss-komputer-seven.vercel.app'
+): string {
+  const cleanPhone = phone.replace(/[^0-9]/g, '');
+  const lines: string[] = [
+    `*SURAT PENAWARAN RESMI — KSS KOMPUTER*`,
+    `━━━━━━━━━━━━━━━━━━━━━━━━━`,
+    `Halo ${customerName}, berikut surat penawaran rakitan PC Anda:`,
+    ``,
+    `📄 *No. Dokumen:* ${quoteCode}`,
+    `💰 *Total Harga Paket:* ${formatIDR(finalPrice)}`,
+    `🔗 *Lihat Detail:* ${siteUrl}/penawaran/${quoteCode}`,
+    ``,
+    `Silakan buka link di atas untuk melihat rincian spesifikasi lengkap.`,
+    `Klik tombol "Setujui & Pesan" jika cocok. Terima kasih!`,
+  ];
+  const message = lines.join('\n');
+  return `https://wa.me/${cleanPhone}?text=${encodeURIComponent(message)}`;
+}
