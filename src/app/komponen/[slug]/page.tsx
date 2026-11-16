@@ -9,7 +9,6 @@ import {
   Truck,
   ExternalLink,
   Layers,
-  Cpu,
 } from 'lucide-react';
 import {
   getPublicHardwarePartBySlug,
@@ -125,24 +124,29 @@ export default async function KomponenDetailPage({ params }: KomponenDetailPageP
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_380px]">
         <div className="space-y-6">
           <div className="rounded-md border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-900/60">
-            <div className="mb-4 flex h-40 items-center justify-center rounded-md border border-zinc-200 bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-950">
-              <div className="text-center">
-                <Cpu className="mx-auto h-10 w-10 text-zinc-300 dark:text-zinc-700" />
-                <div className="mt-2 font-mono text-[10px] uppercase tracking-wider text-zinc-400">
-                  {part.brand} · {part.sku}
+            <div className="mb-4 grid grid-cols-2 gap-px overflow-hidden rounded-md border border-zinc-200 bg-zinc-200 sm:grid-cols-4 dark:border-zinc-800 dark:bg-zinc-800">
+              {[
+                { label: 'Kategori', value: CATEGORY_LABELS[part.category] || part.category },
+                {
+                  label: 'Platform',
+                  value:
+                    part.specs.socket ||
+                    part.specs.ramType ||
+                    part.specs.formFactor ||
+                    part.brand,
+                },
+                { label: 'Daya', value: `${part.wattage}W` },
+                { label: 'Garansi', value: `${part.warrantyYears} Tahun` },
+              ].map((cell) => (
+                <div key={cell.label} className="bg-zinc-950 p-3">
+                  <div className="font-mono text-[9px] uppercase tracking-wider text-zinc-500">
+                    {cell.label}
+                  </div>
+                  <div className="mt-1 font-mono text-xs font-bold tabular-nums text-zinc-100">
+                    {cell.value}
+                  </div>
                 </div>
-                <div className="mt-2 flex justify-center gap-1.5 font-mono text-[10px]">
-                  <span className="rounded-sm border border-zinc-200 bg-white px-1.5 py-0.5 text-zinc-500 dark:border-zinc-800 dark:bg-zinc-900">
-                    {CATEGORY_LABELS[part.category] || part.category}
-                  </span>
-                  <span className="rounded-sm border border-zinc-200 bg-white px-1.5 py-0.5 text-zinc-500 dark:border-zinc-800 dark:bg-zinc-900">
-                    {part.wattage}W
-                  </span>
-                  <span className="rounded-sm border border-zinc-200 bg-white px-1.5 py-0.5 text-zinc-500 dark:border-zinc-800 dark:bg-zinc-900">
-                    {part.warrantyYears} Th
-                  </span>
-                </div>
-              </div>
+              ))}
             </div>
 
             <div className="flex flex-wrap items-center gap-2">

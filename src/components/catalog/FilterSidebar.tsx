@@ -689,11 +689,11 @@ export function FilterSidebar({
         <div className="fixed inset-0 z-50 flex lg:hidden">
           {/* Overlay */}
           <div
-            className="fixed inset-0 bg-black/60 backdrop-blur-xs transition-opacity"
+            className="fixed inset-0 bg-black/60 transition-opacity"
             onClick={onMobileClose}
           />
           {/* Drawer Body */}
-          <div className="relative w-4/5 max-w-sm h-full bg-white dark:bg-zinc-900 p-4 overflow-y-auto shadow-2xl flex flex-col justify-between">
+          <div className="relative w-4/5 max-w-sm h-full bg-white dark:bg-zinc-900 p-4 overflow-y-auto shadow-sm flex flex-col justify-between">
             <div>
               <div className="flex items-center justify-between pb-3 border-b border-zinc-200 dark:border-zinc-800 mb-4">
                 <span className="font-mono text-xs font-bold uppercase tracking-wider text-zinc-900 dark:text-zinc-100 flex items-center gap-2">

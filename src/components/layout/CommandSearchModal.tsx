@@ -117,9 +117,9 @@ export function CommandSearchModal({ isOpen, onClose, products }: CommandSearchM
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-start justify-center pt-14 sm:pt-20 px-3 bg-black/60 backdrop-blur-[2px] animate-in fade-in duration-150">
+    <div className="fixed inset-0 z-50 flex items-start justify-center px-3 pt-14 sm:pt-20 bg-black/60 animate-in fade-in duration-150">
       <div
-        className="w-full max-w-3xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-2xl rounded-md overflow-hidden flex flex-col max-h-[80vh]"
+        className="w-full max-w-3xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-sm rounded-md overflow-hidden flex flex-col max-h-[80vh]"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header Bar & Search Input */}

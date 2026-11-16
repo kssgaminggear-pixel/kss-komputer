@@ -127,7 +127,7 @@ export function BottomNav() {
         </div>
       )}
 
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-40 border-t border-zinc-200 bg-white/95 backdrop-blur-md dark:border-zinc-800 dark:bg-zinc-950/95 pb-[env(safe-area-inset-bottom)]">
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-40 border-t border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-950 pb-[env(safe-area-inset-bottom)]">
         <div className="grid grid-cols-5 h-14 items-center px-1">
           {navItems.map((item) => {
             const Icon = item.icon;

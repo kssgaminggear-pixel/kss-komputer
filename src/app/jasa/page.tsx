@@ -56,7 +56,7 @@ export default function JasaLayananPage() {
           {services.map((srv) => (
             <article
               key={srv.id}
-              className="group flex flex-col justify-between rounded-md border border-zinc-200 bg-white p-5 shadow-xs transition-all duration-200 hover:-translate-y-0.5 hover:border-zinc-300 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900/60 dark:hover:border-zinc-700"
+              className="group flex flex-col justify-between rounded-md border border-zinc-200 bg-white p-5 shadow-xs transition-all duration-200 hover:border-zinc-300 dark:border-zinc-800 dark:bg-zinc-900/60 dark:hover:border-zinc-700"
             >
               <div>
                 <div className="mb-3 flex items-center justify-between gap-2">

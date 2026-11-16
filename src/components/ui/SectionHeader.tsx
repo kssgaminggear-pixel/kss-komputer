@@ -27,7 +27,7 @@ export function SectionHeader({ eyebrow, title, description, action }: SectionHe
       {action && (
         <Link
           href={action.href}
-          className="inline-flex shrink-0 items-center gap-1.5 text-xs font-bold text-orange-600 transition-colors hover:text-orange-700 dark:text-orange-400 dark:hover:text-orange-300"
+          className="inline-flex shrink-0 items-center gap-1.5 text-xs font-bold text-zinc-700 transition-colors hover:text-orange-600 dark:text-zinc-300 dark:hover:text-orange-400"
         >
           <span>{action.label}</span>
           <ArrowRight className="h-3.5 w-3.5" />

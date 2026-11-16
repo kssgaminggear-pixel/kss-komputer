@@ -47,12 +47,12 @@ export function RetailCartDrawer() {
     <div className="fixed inset-0 z-50 flex justify-end">
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-black/60 backdrop-blur-[2px] transition-opacity"
+        className="fixed inset-0 bg-black/60 transition-opacity"
         onClick={closeCart}
       />
 
       {/* Drawer */}
-      <div className="relative z-10 flex h-full w-full max-w-md flex-col bg-white shadow-2xl dark:bg-zinc-950 dark:border-l dark:border-zinc-800">
+      <div className="relative z-10 flex h-full w-full max-w-md flex-col border-l border-zinc-200 bg-white shadow-sm dark:border-zinc-800 dark:bg-zinc-950">
         {/* Header */}
         <div className="flex items-center justify-between border-b border-zinc-200 px-4 py-3 dark:border-zinc-800">
           <div className="flex items-center gap-2">

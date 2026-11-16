@@ -67,7 +67,7 @@ export default function AksesorisPage({ accessories }: AksesorisClientProps) {
   return (
     <div>
       {toastMessage && (
-        <div className="fixed bottom-20 right-4 z-50 flex items-center gap-2 rounded-md border border-zinc-800 bg-zinc-900 px-4 py-2.5 text-xs font-semibold text-white shadow-lg">
+        <div className="fixed bottom-20 right-4 z-50 flex items-center gap-2 rounded-md border border-zinc-800 bg-zinc-900 px-4 py-2.5 text-xs font-semibold text-white shadow-sm">
           <CheckCircle2 className="h-4 w-4 text-emerald-400" />
           <span>{toastMessage}</span>
         </div>
@@ -199,19 +199,14 @@ export default function AksesorisPage({ accessories }: AksesorisClientProps) {
         /* GRID VIEW */
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {filteredAccessories.map((item) => {
-            const CategoryIcon = ACC_CATEGORIES.find((c) => c.id === item.category)?.icon || ShoppingBag;
             const hasDiscount = Boolean(item.originalPrice && item.originalPrice > item.retailPrice);
             const isReady = item.stockStatus === 'ready';
             return (
               <article
                 key={item.id}
-                className="group flex flex-col justify-between rounded-md border border-zinc-200 bg-white p-4 shadow-xs transition-all duration-200 hover:-translate-y-0.5 hover:border-zinc-300 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900/60 dark:hover:border-zinc-700"
+                className="group flex flex-col justify-between rounded-md border border-zinc-200 bg-white p-4 transition-colors duration-150 hover:border-zinc-400 dark:border-zinc-800 dark:bg-zinc-900/60 dark:hover:border-zinc-600"
               >
                 <div>
-                  <div className="mb-3 flex h-20 items-center justify-center rounded-md border border-zinc-100 bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-950">
-                    <CategoryIcon className="h-7 w-7 text-zinc-300 dark:text-zinc-700" />
-                  </div>
-
                   <div className="mb-1 flex items-center justify-between font-mono text-[10px]">
                     <span className="font-bold uppercase text-zinc-500">{item.brand}</span>
                     <span

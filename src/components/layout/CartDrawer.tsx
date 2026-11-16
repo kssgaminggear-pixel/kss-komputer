@@ -70,7 +70,7 @@ export function CartDrawer() {
       />
 
       {/* Drawer Container */}
-      <div className="relative z-10 flex h-full w-full max-w-md flex-col bg-white shadow-2xl dark:bg-zinc-950 dark:border-l dark:border-zinc-800">
+      <div className="relative z-10 flex h-full w-full max-w-md flex-col border-l border-zinc-200 bg-white shadow-sm dark:border-zinc-800 dark:bg-zinc-950">
         {/* Drawer Header */}
         <div className="flex items-center justify-between border-b border-zinc-200 px-4 py-3 dark:border-zinc-800">
           <div className="flex items-center gap-2">
