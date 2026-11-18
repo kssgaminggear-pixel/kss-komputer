@@ -7,6 +7,7 @@ import { Footer } from '@/components/layout/Footer';
 import { BottomNav } from '@/components/layout/BottomNav';
 import { CartDrawer } from '@/components/layout/CartDrawer';
 import { RetailCartDrawer } from '@/components/cart/RetailCartDrawer';
+import { CsAgent } from '@/components/cs/CsAgent';
 import { getPublicHardwareParts } from '@/lib/server-catalog';
 
 const geistSans = Geist({
@@ -90,6 +91,7 @@ export default function RootLayout({
         </Suspense>
         <CartDrawer />
         <RetailCartDrawer />
+        <CsAgent />
       </body>
     </html>
   );
