@@ -26,6 +26,7 @@ const GREETING: ChatMessage = {
 
 export function CsAgent() {
   const pathname = usePathname();
+  const [isEnabled, setIsEnabled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([GREETING]);
   const [input, setInput] = useState('');
@@ -33,6 +34,23 @@ export function CsAgent() {
   const [isOffline, setIsOffline] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    fetch('/api/cs', { cache: 'no-store' })
+      .then((response) => (response.ok ? response.json() : null))
+      .then((data: { configured?: boolean } | null) => {
+        if (!cancelled) setIsEnabled(Boolean(data?.configured));
+      })
+      .catch(() => {
+        if (!cancelled) setIsEnabled(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: 'smooth' });
@@ -51,7 +69,7 @@ export function CsAgent() {
     if (isOpen) inputRef.current?.focus();
   }, [isOpen]);
 
-  if (pathname.startsWith('/admin') || pathname.startsWith('/penawaran')) {
+  if (!isEnabled || pathname.startsWith('/admin') || pathname.startsWith('/penawaran')) {
     return null;
   }
 

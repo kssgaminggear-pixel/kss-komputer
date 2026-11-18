@@ -168,6 +168,20 @@ function isPrivateBase(baseUrl: string): boolean {
   }
 }
 
+function isConfigured(): boolean {
+  const baseUrl = process.env.NINEROUTER_BASE_URL || 'http://127.0.0.1:20128/v1';
+  if (!process.env.NINEROUTER_API_KEY) return false;
+  if (process.env.VERCEL && isPrivateBase(baseUrl)) return false;
+  return true;
+}
+
+export async function GET() {
+  return NextResponse.json(
+    { configured: isConfigured() },
+    { headers: { 'Cache-Control': 'no-store' } }
+  );
+}
+
 export async function POST(request: Request) {
   let body: unknown;
   try {

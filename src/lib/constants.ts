@@ -10,8 +10,8 @@ export const STORE_OPERATIONAL_HOURS = 'Senin - Sabtu, 09:00 - 18:00 WIB';
 export const STORE_WARRANTY_TEXT =
   'Garansi resmi distributor + garansi toko KSS Komputer. Stress-tested & QC verified.';
 
-export const ADMIN_WHATSAPP = '6281234567890';
-export const TECHNICIAN_WHATSAPP = '6281234567890';
+export const ADMIN_WHATSAPP = '6289675437066';
+export const TECHNICIAN_WHATSAPP = '6289675437066';
 export const TOKOPEDIA_URL = 'https://tk.tokopedia.com/ZSpeToWkH/';
 export const SITE_URL = 'https://kss-komputer-seven.vercel.app';
 
