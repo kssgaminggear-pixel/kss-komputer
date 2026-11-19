@@ -20,6 +20,7 @@ import {
 } from '@/lib/types';
 import { formatIDR } from '@/lib/format';
 import { useHydrated } from '@/lib/useHydrated';
+import { AdminLogoutButton } from '@/components/admin/AdminLogoutButton';
 
 const ESSENTIAL_SLOTS: { category: ProductCategory; label: string }[] = [
   { category: 'cpu', label: 'Processor (CPU)' },
@@ -177,6 +178,7 @@ export default function AdminQuotesClient({
         <Link href="/admin/pricing" className="hover:text-blue-600">Admin Portal</Link>
         <ChevronRight className="h-3.5 w-3.5 text-zinc-400" />
         <span className="text-zinc-900 dark:text-zinc-100 font-semibold">WA Consultation Quotation Maker</span>
+        <AdminLogoutButton />
       </nav>
 
       {/* Header Banner */}

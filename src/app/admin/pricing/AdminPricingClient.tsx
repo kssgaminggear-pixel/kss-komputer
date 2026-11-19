@@ -7,6 +7,7 @@ import { useAdminStore } from '@/store/useAdminStore';
 import { HardwarePart, ProductCategory } from '@/lib/types';
 import { formatIDR } from '@/lib/format';
 import { useHydrated } from '@/lib/useHydrated';
+import { AdminLogoutButton } from '@/components/admin/AdminLogoutButton';
 
 export default function AdminPricingClient({ parts }: { parts: HardwarePart[] }) {
   const isHydrated = useHydrated();
@@ -125,6 +126,7 @@ export default function AdminPricingClient({ parts }: { parts: HardwarePart[] })
         <Link href="/" className="hover:text-blue-600">Beranda</Link>
         <ChevronRight className="h-3.5 w-3.5 text-zinc-400" />
         <span className="text-zinc-900 dark:text-zinc-100 font-semibold">Admin Portal Pricing</span>
+        <AdminLogoutButton />
       </nav>
 
       {/* Header Banner */}

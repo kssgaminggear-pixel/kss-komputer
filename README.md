@@ -89,6 +89,35 @@ Produksi: <https://kss-komputer-seven.vercel.app>
 vercel deploy --prod --yes
 ```
 
+## Admin
+
+Area `/admin/*` dilindungi `src/proxy.ts` (Proxy Next 16, pengganti middleware):
+
+- Tanpa sesi valid → redirect ke `/admin/login`.
+- Endpoint `/api/admin/*` tanpa sesi → `401`.
+- Login dibatasi 5 percobaan / 5 menit per IP.
+- Sesi berupa cookie `kss_admin` (HttpOnly, SameSite=Lax, 12 jam) bertanda
+  tangan HMAC-SHA256.
+- Bila env belum diatur, area admin ditutup total (fail closed).
+
+Env yang dibutuhkan:
+
+| Variabel | Isi |
+| --- | --- |
+| `ADMIN_PASSWORD` | password login admin |
+| `ADMIN_SESSION_SECRET` | string acak panjang untuk menandatangani cookie |
+
+```bash
+# lokal
+npm run dev   # buka http://localhost:3000/admin/login
+
+# produksi: set kedua env di Vercel, lalu deploy ulang
+```
+
+Untuk merotasi kredensial: ganti `ADMIN_PASSWORD` dan/atau
+`ADMIN_SESSION_SECRET`, lalu deploy ulang. Semua sesi lama otomatis batal saat
+secret berubah.
+
 ## CS Agent 24 Jam
 
 Widget CS di pojok kanan bawah memanggil `/api/cs`, yang meneruskan percakapan

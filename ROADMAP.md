@@ -113,6 +113,9 @@
   - Gagal bila bundle client memuat nominal `costPrice`/`sellPrice`.
   - Halaman admin dipisah menjadi Server Component + client component agar
     katalog modal tidak ikut chunk publik.
+- [x] **7.7 Auth admin**
+  - `src/proxy.ts` mengunci `/admin/*` dan `/api/admin/*`.
+  - Login HMAC cookie 12 jam, rate limit 5 percobaan / 5 menit, fail closed.
 
 ---
 
@@ -126,8 +129,8 @@
 | 4 | 2 | 0 |
 | 5 | 1 | 0 |
 | 6 | 2 | 0 |
-| 7 | 6 | 6 |
-| **Total** | **18** | **11** |
+| 7 | 7 | 7 |
+| **Total** | **19** | **12** |
 
 ## Catatan Implementasi
 
