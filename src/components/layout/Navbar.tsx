@@ -27,7 +27,12 @@ import {
 } from 'lucide-react';
 import { useBuilderStore } from '@/store/useBuilderStore';
 import { useRetailCartStore } from '@/store/useRetailCartStore';
-import { formatIDR, TOKOPEDIA_OFFICIAL_STORE_URL, DEFAULT_WHATSAPP_PHONE } from '@/lib/format';
+import {
+  formatIDR,
+  TOKOPEDIA_OFFICIAL_STORE_URL,
+  DEFAULT_WHATSAPP_PHONE,
+  DEFAULT_WHATSAPP_DISPLAY,
+} from '@/lib/format';
 import { CommandSearchModal } from '@/components/layout/CommandSearchModal';
 import { useHydrated } from '@/lib/useHydrated';
 import type { PublicHardwarePart } from '@/lib/types';
@@ -124,7 +129,7 @@ export function Navbar({ searchProducts }: NavbarProps) {
                 className="flex items-center gap-1 font-mono text-zinc-700 transition-colors hover:text-orange-600"
               >
                 <PhoneCall className="h-3 w-3 text-emerald-500" />
-                <span>0812-3456-7890</span>
+                <span>{DEFAULT_WHATSAPP_DISPLAY}</span>
               </a>
             </div>
           </div>

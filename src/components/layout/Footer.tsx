@@ -1,6 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { DEFAULT_WHATSAPP_PHONE, DEFAULT_WHATSAPP_DISPLAY } from '@/lib/format';
 import {
   ShieldCheck,
   Truck,
@@ -88,7 +89,7 @@ export function Footer() {
               <ArrowRight className="h-3.5 w-3.5" />
             </Link>
             <a
-              href="https://wa.me/6281234567890"
+              href={`https://wa.me/${DEFAULT_WHATSAPP_PHONE}`}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex flex-1 items-center justify-center gap-2 rounded-md border border-zinc-700 bg-zinc-900 px-4 py-2.5 text-xs font-bold text-zinc-900 transition-colors hover:bg-zinc-800 sm:flex-none"
@@ -127,15 +128,15 @@ export function Footer() {
               </div>
               <div className="flex items-center gap-2">
                 <Clock className="h-3.5 w-3.5 shrink-0 text-zinc-600" />
-                <span>Senin - Sabtu: 10.00 - 18.00 WIB</span>
+                <span>Senin - Sabtu: 09.00 - 18.00 WIB</span>
               </div>
               <div className="flex items-center gap-2">
                 <Phone className="h-3.5 w-3.5 shrink-0 text-zinc-600" />
                 <a
-                  href="https://wa.me/6281234567890"
+                  href={`https://wa.me/${DEFAULT_WHATSAPP_PHONE}`}
                   className="font-mono font-medium text-emerald-400 hover:underline"
                 >
-                  WhatsApp: 0812-3456-7890
+                  WhatsApp: {DEFAULT_WHATSAPP_DISPLAY}
                 </a>
               </div>
               <div className="flex items-center gap-2">

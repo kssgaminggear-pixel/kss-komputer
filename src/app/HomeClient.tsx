@@ -30,7 +30,12 @@ import {
 } from 'lucide-react';
 import type { PublicPrebuiltPCDTO } from '@/lib/sanitizer';
 import type { PublicAccessory, ServicePackage } from '@/lib/types';
-import { formatIDR, generateConsultationWAMessage, DEFAULT_WHATSAPP_PHONE } from '@/lib/format';
+import {
+  formatIDR,
+  generateConsultationWAMessage,
+  DEFAULT_WHATSAPP_PHONE,
+  DEFAULT_WHATSAPP_DISPLAY,
+} from '@/lib/format';
 import { PrebuiltCard } from '@/components/prebuilt/PrebuiltCard';
 import { SectionHeader } from '@/components/ui/SectionHeader';
 import { useRetailCartStore } from '@/store/useRetailCartStore';
@@ -722,7 +727,7 @@ export default function HomeClient({ prebuilts, accessories, services }: HomeCli
         <div className="mt-4 flex flex-wrap items-center justify-center gap-4 text-[10px] font-mono text-zinc-500">
           <span className="flex items-center gap-1"><ShieldCheck className="h-3 w-3" /> Garansi Resmi</span>
           <span className="flex items-center gap-1"><Clock className="h-3 w-3" /> Senin - Sabtu 09.00 - 18.00</span>
-          <span className="flex items-center gap-1"><PhoneCall className="h-3 w-3" /> 0812-3456-7890</span>
+          <span className="flex items-center gap-1"><PhoneCall className="h-3 w-3" /> {DEFAULT_WHATSAPP_DISPLAY}</span>
         </div>
       </section>
     </div>

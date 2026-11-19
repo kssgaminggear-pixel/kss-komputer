@@ -4,6 +4,7 @@ export const TOKOPEDIA_OFFICIAL_STORE_URL = 'https://tk.tokopedia.com/ZSpeToWkH/
 /** Alias resmi sesuai kontrak bisnis KSS Komputer. */
 export const TOKOPEDIA_URL = TOKOPEDIA_OFFICIAL_STORE_URL;
 export const DEFAULT_WHATSAPP_PHONE = '6289675437066'; // Nomor CS WhatsApp KSS Komputer
+export const DEFAULT_WHATSAPP_DISPLAY = '0896-7543-7066';
 
 /**
  * Format angka ke format mata uang Rupiah Indonesia (Rp 8.500.000)

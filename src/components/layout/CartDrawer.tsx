@@ -4,7 +4,7 @@ import React, { useEffect } from 'react';
 import Link from 'next/link';
 import { X, Trash2, Plus, Minus, ShoppingBag, ArrowRight, MessageSquareCheck } from 'lucide-react';
 import { useCartStore } from '@/store/useCartStore';
-import { formatIDR, CATEGORY_LABELS } from '@/lib/format';
+import { formatIDR, CATEGORY_LABELS, DEFAULT_WHATSAPP_PHONE } from '@/lib/format';
 import { useHydrated } from '@/lib/useHydrated';
 
 export function CartDrawer() {
@@ -37,7 +37,7 @@ export function CartDrawer() {
   const handleWhatsAppCheckout = () => {
     if (items.length === 0) return;
 
-    const phone = '6281234567890'; // WhatsApp Sales KSS Komputer
+    const phone = DEFAULT_WHATSAPP_PHONE; // WhatsApp Sales KSS Komputer
     const lines: string[] = [
       '*PESANAN KERANJANG BELANJA — KSS KOMPUTER*',
       '----------------------------------------',

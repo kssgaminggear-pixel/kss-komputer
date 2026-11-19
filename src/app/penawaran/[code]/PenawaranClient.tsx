@@ -8,7 +8,12 @@ import {
   Truck,
   FileText,
 } from 'lucide-react';
-import { formatIDR, formatWatt, DEFAULT_WHATSAPP_PHONE } from '@/lib/format';
+import {
+  formatIDR,
+  formatWatt,
+  DEFAULT_WHATSAPP_PHONE,
+  DEFAULT_WHATSAPP_DISPLAY,
+} from '@/lib/format';
 import type { PublicQuoteDTO } from '@/lib/sanitizer';
 
 export default function CustomerQuotationContent({ quote }: { quote: PublicQuoteDTO }) {
@@ -80,7 +85,7 @@ export default function CustomerQuotationContent({ quote }: { quote: PublicQuote
                 Pusat System Integrator &amp; Perakitan PC Spesialis Harco Mangga Dua
               </div>
               <div className="text-[11px] text-zinc-500 font-mono">
-                Mall Harco Mangga Dua Lt. 4 Blok B No. 12, Jakarta Pusat • WA: 0812-3456-7890
+                Mangga Dua Mall Lt. 4 Blok A No. 12-14, Jakarta Pusat • WA: {DEFAULT_WHATSAPP_DISPLAY}
               </div>
             </div>
           </div>
