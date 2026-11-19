@@ -168,16 +168,47 @@ function isPrivateBase(baseUrl: string): boolean {
   }
 }
 
+function getUpstream(): { baseUrl: string; apiKey?: string; model: string } {
+  return {
+    baseUrl: (process.env.NINEROUTER_BASE_URL || 'http://127.0.0.1:20128/v1').replace(/\/+$/, ''),
+    apiKey: process.env.NINEROUTER_API_KEY,
+    model: process.env.NINEROUTER_MODEL || 'New-Combo',
+  };
+}
+
 function isConfigured(): boolean {
-  const baseUrl = process.env.NINEROUTER_BASE_URL || 'http://127.0.0.1:20128/v1';
-  if (!process.env.NINEROUTER_API_KEY) return false;
+  const { baseUrl, apiKey } = getUpstream();
+  if (!apiKey) return false;
   if (process.env.VERCEL && isPrivateBase(baseUrl)) return false;
   return true;
 }
 
+let healthCache = { at: 0, ok: false };
+
+/** Cek nyata ke 9Router, di-cache 30 detik agar tidak membebani tiap page load. */
+async function isReachable(): Promise<boolean> {
+  if (Date.now() - healthCache.at < 30_000) return healthCache.ok;
+
+  const { baseUrl, apiKey } = getUpstream();
+  try {
+    const response = await fetch(`${baseUrl}/models`, {
+      headers: { Authorization: `Bearer ${apiKey}` },
+      signal: AbortSignal.timeout(4000),
+      cache: 'no-store',
+    });
+    healthCache = { at: Date.now(), ok: response.ok };
+  } catch {
+    healthCache = { at: Date.now(), ok: false };
+  }
+  return healthCache.ok;
+}
+
 export async function GET() {
+  const configured = isConfigured();
+  const reachable = configured ? await isReachable() : false;
+
   return NextResponse.json(
-    { configured: isConfigured() },
+    { configured: configured && reachable },
     { headers: { 'Cache-Control': 'no-store' } }
   );
 }
