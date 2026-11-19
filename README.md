@@ -85,6 +85,47 @@ Produksi: <https://kss-komputer-seven.vercel.app>
 vercel deploy --prod --yes
 ```
 
+## CS Agent 24 Jam
+
+Widget CS di pojok kanan bawah memanggil `/api/cs`, yang meneruskan percakapan
+ke 9Router lokal lewat Tailscale Funnel. Harga satuan komponen dilarang muncul:
+`sanitizeReply()` di route akan meredaksi setiap nominal rupiah yang bukan total
+paket atau harga layanan.
+
+Alur produksi:
+
+```
+Browser -> Vercel /api/cs -> https://desktop-kqj59jg.tail588f47.ts.net
+        -> scripts/cs-proxy.mjs (127.0.0.1:20129, wajib secret)
+        -> 9Router (127.0.0.1:20128) -> combo New-Combo
+```
+
+- Proxy hanya mengizinkan `POST /v1/chat/completions` dan `GET /v1/models`.
+- Dashboard 9Router tidak ikut terekspos; root Funnel menjawab `401`.
+- Widget otomatis disembunyikan bila `/api/cs` melaporkan endpoint tidak siap,
+  jadi tidak ada tombol CS mati saat laptop/9Router offline.
+
+Env yang dibutuhkan (lokal di `.env.local`, produksi di Vercel):
+
+| Variabel | Isi |
+| --- | --- |
+| `NINEROUTER_BASE_URL` | `https://desktop-kqj59jg.tail588f47.ts.net/v1` |
+| `NINEROUTER_API_KEY` | secret proxy (bukan API key 9Router) |
+| `NINEROUTER_MODEL` | `New-Combo` |
+| `NINEROUTER_TUNNEL_SECRET` | secret yang sama, dibaca proxy lokal |
+
+Operasional:
+
+```bash
+npm run cs:proxy                      # jalankan proxy manual
+tailscale funnel status               # cek tunnel
+tailscale funnel --bg 20129           # arahkan Funnel ke proxy
+schtasks /Query /TN "KSS CS Proxy"    # cek autostart
+```
+
+Autostart proxy terdaftar sebagai scheduled task "KSS CS Proxy" (on logon).
+9Router harus tetap berjalan agar CS aktif.
+
 ---
 
 ## FigCraft
