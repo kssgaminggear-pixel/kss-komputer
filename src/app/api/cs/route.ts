@@ -5,18 +5,14 @@ import {
   DEFAULT_WHATSAPP_PHONE,
   TOKOPEDIA_OFFICIAL_STORE_URL,
 } from '@/lib/format';
+import {
+  getAllowedAmounts,
+  sanitizeMessages,
+  sanitizeReply,
+} from '@/lib/cs-guard';
 
 export const maxDuration = 60;
 
-type ChatRole = 'user' | 'assistant';
-
-interface ChatMessage {
-  role: ChatRole;
-  content: string;
-}
-
-const MAX_MESSAGES = 12;
-const MAX_CHARS = 1200;
 const MODEL_TIMEOUT_MS = 52_000;
 
 /** Batas kasar anti-abuse per instance (serverless bisa reset, tetap lebih baik dari nol). */
@@ -42,19 +38,11 @@ function isRateLimited(ip: string): boolean {
   return bucket.count > RATE_LIMIT;
 }
 
-function sanitizeMessages(raw: unknown): ChatMessage[] {
-  if (!Array.isArray(raw)) return [];
-
-  return raw
-    .filter((item): item is Record<string, unknown> => Boolean(item) && typeof item === 'object')
-    .map((item) => {
-      const role = item.role === 'assistant' ? 'assistant' : item.role === 'user' ? 'user' : null;
-      const content = typeof item.content === 'string' ? item.content.trim() : '';
-      if (!role || !content) return null;
-      return { role, content: content.slice(0, MAX_CHARS) } satisfies ChatMessage;
-    })
-    .filter((item): item is ChatMessage => item !== null)
-    .slice(-MAX_MESSAGES);
+function collectAllowedAmounts(): Set<string> {
+  return getAllowedAmounts({
+    packages: getPublicPrebuilts(),
+    services: getPublicServices(),
+  });
 }
 
 function buildSystemPrompt(): string {
@@ -104,52 +92,6 @@ KONTAK & INFO:
 
 Jika pengguna baru, tanyakan budget dan kebutuhan utamanya sebelum memberi rekomendasi.
 Selalu tutup rekomendasi dengan satu langkah berikutnya (link paket, simulasi, atau WhatsApp).`;
-}
-
-/** Semua nominal rupiah yang sah untuk tampil ke publik. */
-function collectAllowedAmounts(): Set<string> {
-  const allowed = new Set<string>();
-
-  for (const pkg of getPublicPrebuilts()) {
-    allowed.add(String(pkg.totalBundlePrice));
-  }
-
-  for (const service of getPublicServices()) {
-    if (service.price > 0) allowed.add(String(service.price));
-    if (service.priceMax) allowed.add(String(service.priceMax));
-  }
-
-  return allowed;
-}
-
-function normalizeDigits(raw: string): string {
-  const digits = raw.replace(/[^\d]/g, '').replace(/^0+(?=\d)/, '');
-  return digits === '' ? '0' : digits;
-}
-
-/**
- * Guard terakhir: hapus nominal rupiah yang bukan total paket / harga jasa.
- * Ini melindungi dari model yang tetap menuliskan harga part walau sudah dilarang.
- */
-function sanitizeReply(reply: string): { text: string; redacted: boolean } {
-  const allowed = collectAllowedAmounts();
-  let redacted = false;
-
-  const replaceAmount = (match: string, raw: string): string => {
-    if (allowed.has(normalizeDigits(raw))) return match;
-    redacted = true;
-    return '(harga part tidak ditampilkan)';
-  };
-
-  let text = reply.replace(/\bRp\.?\s?([\d][\d.,]*)/gi, replaceAmount);
-  // Nominal tanpa "Rp", mis. "1.650.000" atau "Rp1.650.000" yang terpotong.
-  text = text.replace(/\b\d{1,3}(?:\.\d{3})+\b/g, (match) => {
-    if (allowed.has(normalizeDigits(match))) return match;
-    redacted = true;
-    return '(harga part tidak ditampilkan)';
-  });
-
-  return { text: redacted ? `${text}` : text, redacted };
 }
 
 function isPrivateBase(baseUrl: string): boolean {
@@ -301,7 +243,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const { text: reply } = sanitizeReply(rawReply);
+    const { text: reply } = sanitizeReply(rawReply, collectAllowedAmounts());
 
     return NextResponse.json({
       reply,

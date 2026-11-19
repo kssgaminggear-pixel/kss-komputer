@@ -22,11 +22,17 @@ import {
   ADMIN_WHATSAPP,
 } from '@/lib/constants';
 import { DEFAULT_WHATSAPP_PHONE } from '@/lib/format';
+import { JsonLd } from '@/components/seo/JsonLd';
+import { faqSchema } from '@/lib/seo';
+import { STORE_FAQS } from '@/lib/faq';
 
 export const metadata: Metadata = {
   title: 'Tentang Kami — Bengkel Rakit & Servis PC KSS Komputer',
   description:
     'Profil KSS Komputer: bengkel rakit dan servis PC di Mangga Dua Mall Jakarta. Teknisi berpengalaman, standar QC, garansi toko, dan alur klaim yang jelas.',
+  alternates: {
+    canonical: '/tentang-kami',
+  },
 };
 
 const TEAM = [
@@ -47,34 +53,12 @@ const TEAM = [
   },
 ];
 
-const FAQS = [
-  {
-    q: 'Apakah KSS Komputer hanya toko online?',
-    a: 'Bukan. KSS Komputer adalah bengkel rakit dan servis PC dengan lokasi fisik di Mangga Dua Mall, Jakarta. Anda bisa datang langsung untuk konsultasi, perakitan, maupun klaim garansi.',
-  },
-  {
-    q: 'Bagaimana prosedur klaim garansi?',
-    a: 'Hubungi teknisi via WhatsApp dengan menyertakan kode order atau nota. Unit akan dicek ulang untuk memastikan penyebab masalah. Jika termasuk cakupan garansi, perbaikan dilakukan tanpa biaya jasa.',
-  },
-  {
-    q: 'Apakah komponen yang dibeli di luar KSS bisa dirakit?',
-    a: 'Bisa. Kami tetap memeriksa kompatibilitas, kelengkapan aksesori, dan kondisi fisik komponen sebelum proses perakitan dimulai.',
-  },
-  {
-    q: 'Berapa lama stress test sebelum unit diserahkan?',
-    a: 'Unit rakitan menjalani stress test dan QC. Durasi menyesuaikan kompleksitas build; hasil pengujian suhu dan stabilitas dilaporkan saat serah terima.',
-  },
-  {
-    q: 'Apakah bisa kirim unit ke luar kota?',
-    a: 'Bisa dengan packing kayu dan ekspedisi berasuransi. Biaya packing serta ongkir dihitung terpisah sesuai ukuran dan tujuan.',
-  },
-];
-
 export default function TentangKamiPage() {
   const waUrl = `https://wa.me/${ADMIN_WHATSAPP}`;
 
   return (
     <div className="kss-container py-8">
+      <JsonLd data={faqSchema(STORE_FAQS)} />
       <nav className="mb-4 flex items-center gap-1.5 font-mono text-xs text-zinc-500">
         <Link href="/" className="hover:text-orange-600">Beranda</Link>
         <ChevronRight className="h-3.5 w-3.5 text-zinc-400" />
@@ -316,7 +300,7 @@ export default function TentangKamiPage() {
           Pertanyaan Umum
         </h2>
         <div className="divide-y divide-zinc-200 rounded-md border border-zinc-200 bg-white dark:divide-zinc-800 dark:border-zinc-800 dark:bg-zinc-900/60">
-          {FAQS.map((faq) => (
+          {STORE_FAQS.map((faq) => (
             <details key={faq.q} className="group px-4 py-3">
               <summary className="flex cursor-pointer list-none items-center justify-between gap-3 text-xs font-bold text-zinc-900 dark:text-zinc-100">
                 <span>{faq.q}</span>

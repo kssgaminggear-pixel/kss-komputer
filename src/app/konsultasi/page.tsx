@@ -6,6 +6,9 @@ export const metadata: Metadata = {
   title: 'Konsultasi Rakit & Servis PC Sesuai Budget — KSS Komputer',
   description:
     'Wizard konsultasi 5 langkah: pilih tujuan, budget, kebutuhan, preferensi, lalu dapatkan rekomendasi paket dan kirim kebutuhan via WhatsApp.',
+  alternates: {
+    canonical: '/konsultasi',
+  },
 };
 
 export default function KonsultasiPage() {

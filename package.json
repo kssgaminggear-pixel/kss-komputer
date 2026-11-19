@@ -7,7 +7,10 @@
     "build": "next build",
     "start": "next start",
     "cs:proxy": "node scripts/cs-proxy.mjs",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "check:price": "node scripts/check-price-leak.mjs"
   },
   "dependencies": {
     "@next/env": "16.4.6",
@@ -30,6 +33,7 @@
     "eslint-config-next": "16.4.4",
     "tailwindcss": "^4",
     "typescript": "^5",
-    "vercel": "^65.11.0"
+    "vercel": "^65.11.0",
+    "vitest": "^3.2.7"
   }
 }

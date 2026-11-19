@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import type { Metadata } from 'next';
 import {
   Clock,
   ShieldCheck,
@@ -10,12 +11,25 @@ import {
 import { getPublicServices } from '@/lib/server-catalog';
 import { formatIDR, DEFAULT_WHATSAPP_PHONE } from '@/lib/format';
 import { PageHeader } from '@/components/ui/PageHeader';
+import { JsonLd } from '@/components/seo/JsonLd';
+import { faqSchema } from '@/lib/seo';
+import { SERVICE_FAQS } from '@/lib/faq';
+
+export const metadata: Metadata = {
+  title: 'Jasa Rakit, Servis & Maintenance PC — KSS Komputer',
+  description:
+    'Layanan rakit PC, servis, upgrade, instalasi ulang, dan maintenance oleh teknisi KSS Komputer di Mangga Dua Mall Jakarta. Booking via WhatsApp.',
+  alternates: {
+    canonical: '/jasa',
+  },
+};
 
 export default function JasaLayananPage() {
   const services = getPublicServices();
 
   return (
     <div>
+      <JsonLd data={faqSchema(SERVICE_FAQS)} />
       <PageHeader
         eyebrow="Service & Assembly Center"
         title="Layanan Jasa Rakit, Servis & Maintenance"
@@ -133,28 +147,7 @@ export default function JasaLayananPage() {
           <span>Pertanyaan yang Sering Diajukan</span>
         </h2>
         <div className="divide-y divide-zinc-200 dark:divide-zinc-800 rounded-md border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900/60">
-          {[
-            {
-              q: 'Apakah saya harus membeli komponen di KSS Komputer?',
-              a: 'Tidak. Anda boleh membawa komponen sendiri. Kami tetap melakukan pengecekan kompatibilitas dan kondisi fisik sebelum perakitan.',
-            },
-            {
-              q: 'Berapa lama pengerjaan rakit PC?',
-              a: 'Rakit standar 1 - 3 hari kerja, tergantung antrean dan ketersediaan komponen. Paket premium 2 - 4 hari kerja karena cable management dan dokumentasi build.',
-            },
-            {
-              q: 'Apakah ada garansi untuk jasa servis?',
-              a: 'Ya. Pengerjaan jasa bergaransi toko. Jika keluhan yang sama muncul kembali dalam masa garansi, pengecekan ulang tidak dikenakan biaya jasa.',
-            },
-            {
-              q: 'Bisakah booking di luar jam operasional?',
-              a: 'Jadwal normal Senin - Sabtu, 09:00 - 18:00 WIB. Untuk kebutuhan mendesak, silakan chat teknisi via WhatsApp terlebih dahulu.',
-            },
-            {
-              q: 'Apakah data saya aman saat instalasi ulang?',
-              a: 'Backup data tersedia sebagai opsi tambahan. Tanpa backup, proses fresh install akan menghapus data pada partisi sistem.',
-            },
-          ].map((faq) => (
+          {SERVICE_FAQS.map((faq) => (
             <details key={faq.q} className="group px-4 py-3">
               <summary className="flex cursor-pointer list-none items-center justify-between gap-3 text-xs font-bold text-zinc-900 dark:text-zinc-100">
                 <span>{faq.q}</span>

@@ -20,6 +20,8 @@ import {
 } from '@/lib/server-catalog';
 import { formatIDR, DEFAULT_WHATSAPP_PHONE } from '@/lib/format';
 import { BookingForm } from '@/components/service/BookingForm';
+import { JsonLd } from '@/components/seo/JsonLd';
+import { breadcrumbSchema, serviceSchema } from '@/lib/seo';
 
 interface JasaDetailPageProps {
   params: Promise<{ slug: string }>;
@@ -40,6 +42,21 @@ export async function generateMetadata({ params }: JasaDetailPageProps): Promise
   return {
     title: `${service.title} — Layanan KSS Komputer`,
     description: service.description,
+    alternates: {
+      canonical: `/jasa/${service.slug}`,
+    },
+    openGraph: {
+      type: 'website',
+      title: service.title,
+      description: service.description,
+      url: `/jasa/${service.slug}`,
+      ...(service.imageUrl ? { images: [{ url: service.imageUrl, alt: service.title }] } : {}),
+    },
+    twitter: {
+      card: 'summary',
+      title: service.title,
+      description: service.description,
+    },
   };
 }
 
@@ -73,7 +90,18 @@ export default async function JasaDetailPage({ params }: JasaDetailPageProps) {
   const priceLabel = getPriceLabel(service.price, service.priceMax);
 
   return (
-    <div className="kss-container py-8">
+    <>
+      <JsonLd
+        data={[
+          serviceSchema(service),
+          breadcrumbSchema([
+            { name: 'Beranda', path: '/' },
+            { name: 'Jasa & Servis', path: '/jasa' },
+            { name: service.title, path: `/jasa/${service.slug}` },
+          ]),
+        ]}
+      />
+      <div className="kss-container py-8">
       <nav className="mb-4 flex flex-wrap items-center gap-1.5 font-mono text-xs text-zinc-500">
         <Link href="/" className="hover:text-orange-600">
           Beranda
@@ -274,6 +302,7 @@ export default async function JasaDetailPage({ params }: JasaDetailPageProps) {
           </div>
         </aside>
       </div>
-    </div>
+      </div>
+    </>
   );
 }

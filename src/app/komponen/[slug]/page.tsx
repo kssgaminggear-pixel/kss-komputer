@@ -85,8 +85,11 @@ export async function generateMetadata({ params }: KomponenDetailPageProps): Pro
   }
 
   return {
-    title: `${part.name} — Harga Eceran KSS Komputer`,
+    title: `${part.name} - Harga Eceran KSS Komputer`,
     description: `${part.brand} ${part.name}. Harga eceran resmi, garansi ${part.warrantyYears} tahun, ${STOCK_LABELS[part.stockStatus] || part.stockStatus}.`,
+    alternates: {
+      canonical: `/komponen/${part.slug}`,
+    },
   };
 }
 

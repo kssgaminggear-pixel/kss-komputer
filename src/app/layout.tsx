@@ -8,7 +8,10 @@ import { BottomNav } from '@/components/layout/BottomNav';
 import { CartDrawer } from '@/components/layout/CartDrawer';
 import { RetailCartDrawer } from '@/components/cart/RetailCartDrawer';
 import { CsAgent } from '@/components/cs/CsAgent';
+import { JsonLd } from '@/components/seo/JsonLd';
 import { getPublicHardwareParts } from '@/lib/server-catalog';
+import { SITE_URL } from '@/lib/constants';
+import { organizationSchema, websiteSchema } from '@/lib/seo';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -28,11 +31,14 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://kss-komputer-seven.vercel.app'),
+  metadataBase: new URL(SITE_URL),
   title: 'KSS Komputer — System Integrator PC Rakitan & Hardware Eceran Jakarta',
   description:
     'Pusat PC rakitan jadi siap pakai (gaming, workstation, office), custom configurator kompatibilitas deterministik, konsultasi budget via WhatsApp, dan hardware eceran bergaransi resmi.',
   manifest: '/manifest.json',
+  alternates: {
+    canonical: '/',
+  },
   icons: {
     icon: '/icons/kss-192.png',
     apple: '/icons/kss-apple.png',
@@ -81,6 +87,7 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-zinc-50 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100 font-sans selection:bg-orange-600 selection:text-white pb-14 md:pb-0">
+        <JsonLd data={[organizationSchema(), websiteSchema()]} />
         <Suspense fallback={null}>
           <Navbar searchProducts={searchProducts} />
         </Suspense>

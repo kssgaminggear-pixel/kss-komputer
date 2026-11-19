@@ -96,6 +96,26 @@
 
 ---
 
+## FASE 7 — SEO, QA & Price Guard
+
+- [x] **7.1 `src/lib/seo.ts` + `src/components/seo/JsonLd.tsx`**
+  - Schema Organization/ComputerStore, WebSite, Product (total paket), Service,
+    BreadcrumbList, dan FAQPage.
+- [x] **7.2 `src/app/sitemap.ts`, `src/app/robots.ts`, `not-found`, `error`, `loading`**
+  - Sitemap 76 URL, robots memblokir /admin, /api, /penawaran.
+- [x] **7.3 Canonical + Open Graph**
+  - Canonical eksplisit untuk semua halaman statis dan detail paket/jasa/komponen.
+- [x] **7.4 FAQ bersama `src/lib/faq.ts`**
+  - Teks FAQ yang tampil identik dengan FAQPage JSON-LD.
+- [x] **7.5 Vitest + CI**
+  - 29 test: pricing, delta, kompatibilitas, sanitizer DTO, CS price guard.
+- [x] **7.6 `scripts/check-price-leak.mjs`**
+  - Gagal bila bundle client memuat nominal `costPrice`/`sellPrice`.
+  - Halaman admin dipisah menjadi Server Component + client component agar
+    katalog modal tidak ikut chunk publik.
+
+---
+
 ## Ringkasan Progres
 
 | Fase | Item | Selesai |
@@ -106,7 +126,8 @@
 | 4 | 2 | 0 |
 | 5 | 1 | 0 |
 | 6 | 2 | 0 |
-| **Total** | **12** | **5** |
+| 7 | 6 | 6 |
+| **Total** | **18** | **11** |
 
 ## Catatan Implementasi
 

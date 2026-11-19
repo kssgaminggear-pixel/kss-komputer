@@ -74,8 +74,12 @@ npm install
 npm run dev      # http://localhost:3000
 npm run lint
 npx tsc --noEmit
+npm run test     # Vitest: pricing, compatibility, sanitizer, CS price guard
 npm run build
+npm run check:price  # pastikan tidak ada nominal modal di bundle client
 ```
+
+CI menjalankan urutan yang sama lewat `.github/workflows/ci.yml`.
 
 ## Deploy
 
