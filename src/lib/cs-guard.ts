@@ -67,8 +67,61 @@ export function sanitizeReply(
     redacted = true;
     return REDACTION;
   });
+  // Bentuk jarang: "1 650 000" (pemisah spasi).
+  text = text.replace(/\b\d{1,3}(?:[ ]\d{3})+\b/g, (match) => {
+    if (allowed.has(normalizeDigits(match))) return match;
+    redacted = true;
+    return REDACTION;
+  });
 
   return { text, redacted };
+}
+
+/**
+ * Sanitizer untuk balasan streaming.
+ *
+ * Teks ditahan sampai ada batas kalimat/baris, lalu diredaksi utuh. Ini
+ * mencegah nominal terpotong antar-chunk lolos sebagai teks biasa.
+ */
+export function createStreamGuard(allowed: Set<string>) {
+  let pending = '';
+  let redacted = false;
+
+  const drain = (final: boolean): { text: string; redacted: boolean } => {
+    if (final) {
+      const rest = pending;
+      pending = '';
+      if (!rest) return { text: '', redacted };
+      const result = sanitizeReply(rest, allowed);
+      redacted = redacted || result.redacted;
+      return { text: result.text, redacted };
+    }
+
+    let cut = 0;
+    for (const match of pending.matchAll(/[.!?](?=\s)|\n/g)) {
+      cut = (match.index ?? 0) + match[0].length;
+    }
+    if (cut === 0) return { text: '', redacted };
+
+    const ready = pending.slice(0, cut);
+    pending = pending.slice(cut);
+    const result = sanitizeReply(ready, allowed);
+    redacted = redacted || result.redacted;
+    return { text: result.text, redacted };
+  };
+
+  return {
+    push(chunk: string) {
+      pending += chunk;
+      return drain(false);
+    },
+    flush() {
+      return drain(true);
+    },
+    get redacted() {
+      return redacted;
+    },
+  };
 }
 
 export function sanitizeMessages(raw: unknown): ChatMessage[] {

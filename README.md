@@ -122,8 +122,21 @@ secret berubah.
 
 Widget CS di pojok kanan bawah memanggil `/api/cs`, yang meneruskan percakapan
 ke 9Router lokal lewat Tailscale Funnel. Harga satuan komponen dilarang muncul:
-`sanitizeReply()` di route akan meredaksi setiap nominal rupiah yang bukan total
-paket atau harga layanan.
+`createStreamGuard()` menahan teks per batas kalimat lalu meredaksi setiap
+nominal rupiah yang bukan total paket atau harga layanan, sehingga angka yang
+terpotong antar-chunk tetap tidak bisa lolos.
+
+Balasan memakai Server-Sent Events:
+
+- Browser mengirim `{ stream: true }`; route membalas `text/event-stream`.
+- Event `delta` berisi potongan teks yang sudah tersanitasi, `done` menutup
+  balasan, dan `error` memicu fallback WhatsApp di widget.
+- Bila upstream mengembalikan JSON biasa, widget otomatis memakai jalur
+  non-streaming sebagai fallback.
+- Sanitizer menahan kalimat terakhir sampai stream selesai; ini disengaja agar
+  nominal harga part tidak pernah tampil setengah jadi.
+- Latensi token pertama ditentukan model 9Router (bisa 10-50 detik untuk
+  `New-Combo`), bukan oleh buffering sanitizer.
 
 Alur produksi:
 

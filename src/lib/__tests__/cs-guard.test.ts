@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import {
+  createStreamGuard,
   getAllowedAmounts,
   normalizeDigits,
   REDACTION,
@@ -84,6 +85,86 @@ describe('sanitizeReply', () => {
     const result = sanitizeReply(reply, allowed);
 
     expect(result).toEqual({ text: reply, redacted: false });
+  });
+});
+
+describe('createStreamGuard', () => {
+  it('menahan teks sampai ada batas kalimat', () => {
+    const guard = createStreamGuard(allowed);
+
+    expect(guard.push('Total paket Rp 9.440.000')).toEqual({ text: '', redacted: false });
+    expect(guard.push(' sudah termasuk rakit. ')).toEqual({
+      text: 'Total paket Rp 9.440.000 sudah termasuk rakit.',
+      redacted: false,
+    });
+  });
+
+  it('meredaksi harga part yang terpotong antar-chunk', () => {
+    const guard = createStreamGuard(allowed);
+
+    expect(guard.push('CPU Ryzen 5 harganya Rp 1.6')).toEqual({ text: '', redacted: false });
+    const result = guard.push('50.000. Selesai.');
+
+    expect(result.text).not.toContain('1.650.000');
+    expect(result.text).toContain(REDACTION);
+    expect(result.redacted).toBe(true);
+    expect(guard.redacted).toBe(true);
+  });
+
+  it('meredaksi nominal tanpa awalan Rp yang terpotong', () => {
+    const guard = createStreamGuard(allowed);
+
+    guard.push('VGA sekitar 5.4');
+    expect(guard.push('00.000 dan stok ready.')).toEqual({ text: '', redacted: false });
+    const result = guard.flush();
+
+    expect(result.text).not.toContain('5.400.000');
+    expect(result.text).toContain(REDACTION);
+  });
+
+  it('mempertahankan total paket yang sah walau terpotong', () => {
+    const guard = createStreamGuard(allowed);
+
+    guard.push('Paket termurah Rp 8.180');
+    const result = guard.push('.000. Cocok untuk 1080p.');
+
+    expect(result.text).toContain('Rp 8.180.000');
+    expect(result.redacted).toBe(false);
+  });
+
+  it('mengirim sisa buffer saat flush', () => {
+    const guard = createStreamGuard(allowed);
+
+    expect(guard.push('Harga VGA Rp 5.400.000')).toEqual({ text: '', redacted: false });
+    const result = guard.flush();
+
+    expect(result.text).not.toContain('5.400.000');
+    expect(result.text).toContain(REDACTION);
+    expect(result.redacted).toBe(true);
+    expect(guard.flush()).toEqual({ text: '', redacted: true });
+  });
+
+  it('memproses beberapa kalimat dalam satu chunk', () => {
+    const guard = createStreamGuard(allowed);
+
+    const first = guard.push('Paket Rp 8.180.000 cocok. CPU Rp 2.000.000 tidak kami sebut.');
+    expect(first.text).toBe('Paket Rp 8.180.000 cocok.');
+
+    const result = guard.flush();
+
+    expect(result.text).not.toContain('2.000.000');
+    expect(result.text).toContain(REDACTION);
+  });
+
+  it('memecah pada baris baru dan mempertahankan teks tanpa nominal', () => {
+    const guard = createStreamGuard(allowed);
+
+    expect(guard.push('Paket tersedia.\n')).toEqual({
+      text: 'Paket tersedia.\n',
+      redacted: false,
+    });
+    expect(guard.push('Lanjut ke WhatsApp.')).toEqual({ text: '', redacted: false });
+    expect(guard.flush().text).toBe('Lanjut ke WhatsApp.');
   });
 });
 

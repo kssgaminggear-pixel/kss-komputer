@@ -108,7 +108,8 @@
 - [x] **7.4 FAQ bersama `src/lib/faq.ts`**
   - Teks FAQ yang tampil identik dengan FAQPage JSON-LD.
 - [x] **7.5 Vitest + CI**
-  - 29 test: pricing, delta, kompatibilitas, sanitizer DTO, CS price guard.
+  - 51 test: pricing, delta, kompatibilitas, sanitizer DTO, CS price guard,
+    stream guard, parser SSE, dan auth admin.
 - [x] **7.6 `scripts/check-price-leak.mjs`**
   - Gagal bila bundle client memuat nominal `costPrice`/`sellPrice`.
   - Halaman admin dipisah menjadi Server Component + client component agar
@@ -116,6 +117,12 @@
 - [x] **7.7 Auth admin**
   - `src/proxy.ts` mengunci `/admin/*` dan `/api/admin/*`.
   - Login HMAC cookie 12 jam, rate limit 5 percobaan / 5 menit, fail closed.
+- [x] **7.8 Streaming CS Agent**
+  - `/api/cs` mendukung SSE (`delta`, `done`, `error`) dengan fallback JSON.
+  - `createStreamGuard()` menahan teks per kalimat agar harga part terpotong
+    antar-chunk tetap diredaksi; `src/lib/sse.ts` dipakai server dan widget.
+  - Widget menampilkan balasan bertahap dengan kursor, tetap punya fallback
+    WhatsApp saat stream gagal, dan tidak merender tombol CS saat offline.
 
 ---
 
@@ -129,8 +136,8 @@
 | 4 | 2 | 0 |
 | 5 | 1 | 0 |
 | 6 | 2 | 0 |
-| 7 | 7 | 7 |
-| **Total** | **19** | **12** |
+| 7 | 8 | 8 |
+| **Total** | **20** | **13** |
 
 ## Catatan Implementasi
 

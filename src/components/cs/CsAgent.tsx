@@ -5,10 +5,13 @@ import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { Loader2, MessageCircle, PhoneCall, Send, ShieldCheck, X } from 'lucide-react';
 import { DEFAULT_WHATSAPP_PHONE } from '@/lib/format';
+import { drainSseBuffer } from '@/lib/sse';
 
 interface ChatMessage {
   role: 'user' | 'assistant';
   content: string;
+  /** Hanya untuk UI: balasan sedang dialirkan. */
+  streaming?: boolean;
 }
 
 const QUICK_PROMPTS = [
@@ -31,6 +34,7 @@ export function CsAgent() {
   const [messages, setMessages] = useState<ChatMessage[]>([GREETING]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [hasStreaming, setHasStreaming] = useState(false);
   const [isOffline, setIsOffline] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
@@ -77,49 +81,134 @@ export function CsAgent() {
     const trimmed = text.trim();
     if (!trimmed || isLoading) return;
 
-    const nextMessages: ChatMessage[] = [...messages, { role: 'user', content: trimmed }];
+    const nextMessages: ChatMessage[] = [
+      ...messages.map(({ role, content }) => ({ role, content })),
+      { role: 'user', content: trimmed },
+    ];
     setMessages(nextMessages);
     setInput('');
     setIsLoading(true);
     setIsOffline(false);
+    setHasStreaming(false);
+
+    let received = '';
+    let bubbleOpen = false;
+
+    const pushDelta = (chunk: string) => {
+      if (!chunk) return;
+      received += chunk;
+      bubbleOpen = true;
+      setHasStreaming(true);
+      setMessages((current) => {
+        const last = current[current.length - 1];
+        if (last?.role === 'assistant' && last.streaming) {
+          return [...current.slice(0, -1), { ...last, content: last.content + chunk }];
+        }
+        return [...current, { role: 'assistant', content: chunk, streaming: true }];
+      });
+    };
+
+    const closeBubble = () => {
+      if (!bubbleOpen) return;
+      bubbleOpen = false;
+      setMessages((current) => {
+        const last = current[current.length - 1];
+        if (last?.role === 'assistant' && last.streaming) {
+          return [...current.slice(0, -1), { ...last, streaming: false }];
+        }
+        return current;
+      });
+    };
+
+    const fallback = (message: string) => {
+      setIsOffline(true);
+      setMessages((current) => [...current, { role: 'assistant', content: message }]);
+    };
 
     try {
       const response = await fetch('/api/cs', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: nextMessages }),
+        body: JSON.stringify({
+          messages: nextMessages.map(({ role, content }) => ({ role, content })),
+          stream: true,
+        }),
       });
-      const data = (await response.json()) as { reply?: string; message?: string };
 
-      if (!response.ok || !data.reply) {
-        setIsOffline(true);
-        setMessages((current) => [
-          ...current,
-          {
-            role: 'assistant',
-            content:
-              'Koneksi ke CS AI sedang terputus. Anda tetap bisa lanjut ke WhatsApp teknisi KSS untuk respon manual.',
-          },
-        ]);
+      const contentType = response.headers.get('content-type') || '';
+
+      if (!response.ok || !response.body || !contentType.includes('text/event-stream')) {
+        // Fallback: deployment lama atau error sebelum stream dimulai.
+        const data = (await response.json().catch(() => null)) as { reply?: string } | null;
+        if (response.ok && data?.reply) {
+          pushDelta(data.reply);
+          closeBubble();
+        } else {
+          fallback(
+            'Koneksi ke CS AI sedang terputus. Anda tetap bisa lanjut ke WhatsApp teknisi KSS untuk respon manual.'
+          );
+        }
         return;
       }
 
-      setMessages((current) => [
-        ...current,
-        { role: 'assistant', content: data.reply as string },
-      ]);
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
+      let buffer = '';
+      let finished = false;
+      let streamError: string | null = null;
+
+      while (!finished) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        buffer += decoder.decode(value, { stream: true });
+        const { blocks, rest } = drainSseBuffer(buffer);
+        buffer = rest;
+
+        for (const block of blocks) {
+          if (block.event === 'delta') {
+            let payload: { text?: string };
+            try {
+              payload = JSON.parse(block.data) as { text?: string };
+            } catch {
+              continue;
+            }
+            if (typeof payload.text === 'string') pushDelta(payload.text);
+          } else if (block.event === 'done') {
+            finished = true;
+            break;
+          } else if (block.event === 'error') {
+            let payload: { message?: string };
+            try {
+              payload = JSON.parse(block.data) as { message?: string };
+            } catch {
+              payload = {};
+            }
+            streamError =
+              payload.message || 'Koneksi CS AI terputus. Lanjut ke WhatsApp teknisi KSS.';
+            finished = true;
+            break;
+          }
+        }
+      }
+
+      closeBubble();
+
+      if (streamError) {
+        fallback(streamError);
+      } else if (!received) {
+        fallback('CS AI tidak mengirim balasan. Silakan lanjut ke WhatsApp teknisi KSS.');
+      }
     } catch {
-      setIsOffline(true);
-      setMessages((current) => [
-        ...current,
-        {
-          role: 'assistant',
-          content:
-            'CS AI tidak dapat dihubungi saat ini. Silakan lanjut ke WhatsApp teknisi KSS.',
-        },
-      ]);
+      closeBubble();
+      fallback(
+        received
+          ? 'Koneksi terputus sebelum balasan selesai. Lanjut ke WhatsApp teknisi KSS untuk respons manual.'
+          : 'CS AI tidak dapat dihubungi saat ini. Silakan lanjut ke WhatsApp teknisi KSS.'
+      );
     } finally {
       setIsLoading(false);
+      setHasStreaming(false);
     }
   };
 
@@ -213,11 +302,17 @@ export function CsAgent() {
                   }`}
                 >
                   {message.content}
+                  {message.streaming && (
+                    <span
+                      className="ml-0.5 inline-block h-3 w-1.5 animate-pulse rounded-[1px] bg-orange-500 align-middle"
+                      aria-hidden="true"
+                    />
+                  )}
                 </div>
               </div>
             ))}
 
-            {isLoading && (
+            {isLoading && !hasStreaming && (
               <div className="flex justify-start">
                 <div className="inline-flex items-center gap-1.5 rounded-md border border-zinc-200 bg-white px-3 py-2 text-[11px] text-zinc-500">
                   <Loader2 className="h-3 w-3 animate-spin" />

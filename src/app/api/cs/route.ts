@@ -6,14 +6,17 @@ import {
   TOKOPEDIA_OFFICIAL_STORE_URL,
 } from '@/lib/format';
 import {
+  createStreamGuard,
   getAllowedAmounts,
   sanitizeMessages,
   sanitizeReply,
 } from '@/lib/cs-guard';
+import { drainSseBuffer, formatSseEvent } from '@/lib/sse';
 
 export const maxDuration = 60;
 
 const MODEL_TIMEOUT_MS = 52_000;
+const MAX_REPLY_CHARS = 4000;
 
 /** Batas kasar anti-abuse per instance (serverless bisa reset, tetap lebih baik dari nol). */
 const RATE_WINDOW_MS = 60_000;
@@ -155,6 +158,165 @@ export async function GET() {
   );
 }
 
+interface ChatCompletionChunk {
+  model?: string;
+  choices?: { delta?: { content?: string } }[];
+}
+
+/**
+ * Balasan SSE: delta teks yang sudah tersanitasi, lalu event `done`.
+ *
+ * Sanitizer menahan teks sampai batas kalimat, sehingga nominal harga part yang
+ * terpotong antar-chunk tidak bisa lolos sebagai teks biasa.
+ */
+async function createStreamingResponse(
+  request: Request,
+  messages: { role: 'user' | 'assistant'; content: string }[]
+): Promise<Response> {
+  const { baseUrl, apiKey, model } = getUpstream();
+  const guard = createStreamGuard(collectAllowedAmounts());
+  const encoder = new TextEncoder();
+  const abortController = new AbortController();
+  const timer = setTimeout(() => abortController.abort(), MODEL_TIMEOUT_MS);
+  const onAbort = () => abortController.abort();
+  request.signal.addEventListener('abort', onAbort);
+
+  const cleanup = () => {
+    clearTimeout(timer);
+    request.signal.removeEventListener('abort', onAbort);
+  };
+
+  let upstream: Response;
+  try {
+    upstream = await fetch(`${baseUrl}/chat/completions`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${apiKey}`,
+      },
+      body: JSON.stringify({
+        model,
+        temperature: 0.3,
+        max_tokens: 420,
+        stream: true,
+        messages: [{ role: 'system', content: buildSystemPrompt() }, ...messages],
+      }),
+      signal: abortController.signal,
+      cache: 'no-store',
+    });
+  } catch {
+    cleanup();
+    return NextResponse.json(
+      { error: 'CS_OFFLINE', message: 'CS AI tidak dapat dihubungi saat ini.' },
+      { status: 503 }
+    );
+  }
+
+  if (!upstream.ok || !upstream.body) {
+    cleanup();
+    return NextResponse.json(
+      { error: 'CS_OFFLINE', message: 'CS AI sedang sibuk. Silakan coba lagi.' },
+      { status: 502 }
+    );
+  }
+
+  const upstreamBody = upstream.body;
+
+  const stream = new ReadableStream<Uint8Array>({
+    async start(streamController) {
+      let finished = false;
+      let buffer = '';
+      let chars = 0;
+      let replyModel = model;
+
+      const finish = () => {
+        if (finished) return;
+        finished = true;
+        cleanup();
+        try {
+          streamController.close();
+        } catch {
+          // Konsumen sudah menutup stream.
+        }
+      };
+
+      const send = (event: string, data: unknown) => {
+        if (finished) return;
+        try {
+          streamController.enqueue(encoder.encode(formatSseEvent(event, data)));
+        } catch {
+          finished = true;
+          cleanup();
+        }
+      };
+
+      try {
+        const reader = upstreamBody.getReader();
+        const decoder = new TextDecoder();
+
+        read: for (;;) {
+          const { done, value } = await reader.read();
+          if (done) break;
+
+          buffer += decoder.decode(value, { stream: true });
+          const { blocks, rest } = drainSseBuffer(buffer);
+          buffer = rest;
+
+          for (const block of blocks) {
+            if (block.data === '[DONE]') break read;
+
+            let chunk: ChatCompletionChunk;
+            try {
+              chunk = JSON.parse(block.data) as ChatCompletionChunk;
+            } catch {
+              continue;
+            }
+
+            if (chunk.model) replyModel = chunk.model;
+            const delta = chunk.choices?.[0]?.delta?.content;
+            if (!delta) continue;
+
+            chars += delta.length;
+            const guarded = guard.push(delta);
+            if (guarded.text) send('delta', { text: guarded.text });
+
+            if (chars >= MAX_REPLY_CHARS) {
+              const tail = guard.flush();
+              if (tail.text) send('delta', { text: tail.text });
+              send('done', { model: replyModel, redacted: guard.redacted, truncated: true });
+              await reader.cancel().catch(() => undefined);
+              return finish();
+            }
+          }
+        }
+
+        const tail = guard.flush();
+        if (tail.text) send('delta', { text: tail.text });
+        send('done', { model: replyModel, redacted: guard.redacted });
+      } catch {
+        send('error', {
+          message: 'Koneksi CS AI terputus. Silakan lanjut ke WhatsApp teknisi KSS.',
+        });
+      } finally {
+        finish();
+      }
+    },
+    cancel() {
+      cleanup();
+      abortController.abort();
+    },
+  });
+
+  return new Response(stream, {
+    headers: {
+      'Content-Type': 'text/event-stream; charset=utf-8',
+      'Cache-Control': 'no-cache, no-transform',
+      Connection: 'keep-alive',
+      'X-Accel-Buffering': 'no',
+    },
+  });
+}
+
 export async function POST(request: Request) {
   let body: unknown;
   try {
@@ -179,12 +341,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Pesan pengguna tidak ditemukan.' }, { status: 400 });
   }
 
-  const baseUrl = (process.env.NINEROUTER_BASE_URL || 'http://127.0.0.1:20128/v1').replace(
-    /\/+$/,
-    ''
-  );
-  const apiKey = process.env.NINEROUTER_API_KEY;
-  const model = process.env.NINEROUTER_MODEL || 'New-Combo';
+  const { baseUrl, apiKey, model } = getUpstream();
 
   if (!apiKey) {
     return NextResponse.json(
@@ -203,6 +360,10 @@ export async function POST(request: Request) {
       },
       { status: 503 }
     );
+  }
+
+  if (payload.stream === true) {
+    return createStreamingResponse(request, messages);
   }
 
   try {
