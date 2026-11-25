@@ -5,10 +5,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import {
   Sparkles,
-  Cpu,
   Wrench,
   ArrowRight,
-  SlidersHorizontal,
   PhoneCall,
   ShoppingBag,
   MessageSquareCheck,
@@ -33,6 +31,7 @@ import type { PublicAccessory, ServicePackage } from '@/lib/types';
 import {
   formatIDR,
   generateConsultationWAMessage,
+  generateCustomBuildWAMessage,
   DEFAULT_WHATSAPP_PHONE,
   DEFAULT_WHATSAPP_DISPLAY,
 } from '@/lib/format';
@@ -64,7 +63,7 @@ const ACCESSORY_ICONS: Record<string, React.ComponentType<{ className?: string }
 
 const CATEGORY_SHORTCUTS = [
   { href: '/paket-rakitan', label: 'Paket Siap Pakai', icon: Sparkles },
-  { href: '/simulasi', label: 'Rakit Custom', icon: Cpu },
+  { href: '/konsultasi', label: 'Konsultasi Rakit', icon: MessageSquareCheck },
   { href: '/komponen', label: 'Komponen', icon: Layers },
   { href: '/aksesoris', label: 'Aksesoris', icon: Headphones },
   { href: '/jasa', label: 'Jasa & Servis', icon: Wrench },
@@ -731,10 +730,15 @@ export default function HomeClient({ prebuilts, accessories, services }: HomeCli
             </div>
 
             <div className="mt-4 flex flex-col gap-2 sm:flex-row">
-              <Link href="/simulasi" className="kss-btn-primary h-10 px-4">
-                <SlidersHorizontal className="h-4 w-4" />
-                <span>Buka Simulasi</span>
-              </Link>
+              <a
+                href={generateCustomBuildWAMessage()}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="kss-btn-primary h-10 px-4"
+              >
+                <PhoneCall className="h-4 w-4" />
+                <span>Konsultasi Rakit via WA</span>
+              </a>
               <Link
                 href="/paket-rakitan"
                 className="inline-flex h-10 items-center justify-center gap-2 rounded-md border border-zinc-300 bg-white px-4 text-xs font-bold text-zinc-800 transition-colors hover:bg-zinc-100"

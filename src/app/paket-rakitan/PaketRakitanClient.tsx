@@ -6,8 +6,10 @@ import {
   SlidersHorizontal,
   ShieldCheck,
   RotateCcw,
+  MessageSquareCheck,
 } from 'lucide-react';
 import type { PublicPrebuiltPCDTO } from '@/lib/sanitizer';
+import { generateCustomBuildWAMessage } from '@/lib/format';
 import { PrebuiltCard } from '@/components/prebuilt/PrebuiltCard';
 import { PageHeader } from '@/components/ui/PageHeader';
 
@@ -78,9 +80,15 @@ export default function PaketRakitanPage({ packages }: PaketRakitanClientProps) 
             <Link href="/konsultasi" className="kss-btn-primary">
               Konsultasi Budget
             </Link>
-            <Link href="/simulasi" className="kss-btn-outline">
-              Rakit Custom
-            </Link>
+            <a
+              href={generateCustomBuildWAMessage()}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="kss-btn-outline"
+            >
+              <MessageSquareCheck className="h-3.5 w-3.5" />
+              <span>Rakit Custom via WA</span>
+            </a>
           </>
         }
       />

@@ -67,8 +67,9 @@ mock-data / database (costPrice, sellPrice)
           Server Component → props → Client Component
 ```
 
-Route estimasi `POST /api/build/estimate` menerima ID part + quantity, lalu
-mengembalikan `subtotal`, `totalPrice`, dan `deltas` saja.
+Rakit custom ditangani langsung oleh teknisi via WhatsApp. Tidak ada route
+estimasi publik: total paket dan delta upgrade dihitung server-side oleh
+`server-pricing`, lalu dikirim sebagai DTO tersanitasi.
 
 ---
 
@@ -79,7 +80,6 @@ src/
 ├── app/
 │   ├── page.tsx                 # Homepage retail-industrial
 │   ├── paket-rakitan/           # Katalog + detail quick-upgrade
-│   ├── simulasi/                # Custom configurator
 │   ├── jasa/                    # Katalog + detail layanan
 │   ├── konsultasi/              # Wizard budget
 │   ├── komponen/                # Katalog pendukung (retailPrice)
@@ -88,7 +88,6 @@ src/
 │   ├── penawaran/[code]/        # Surat penawaran
 │   ├── tentang-kami/
 │   ├── admin/pricing/           # Markup & profit (modal terlihat)
-│   └── api/build/estimate/      # Estimasi total + delta
 ├── components/
 │   ├── layout/                  # Navbar, Footer, BottomNav
 │   ├── prebuilt/                # Kartu paket + FPS telemetry
@@ -104,7 +103,6 @@ src/
 │   ├── server-catalog.ts        # Akses data server-only
 │   └── server-pricing.ts        # Estimasi total/delta server-only
 └── store/
-    ├── useBuilderStore.ts       # Konfigurator + delta
     ├── useAdminStore.ts         # Markup, modal, paket kustom
     ├── useCartStore.ts
     ├── useRetailCartStore.ts
@@ -158,14 +156,13 @@ Keduanya **server/admin-only** karena memakai `sellPrice`/`costPrice`.
 
 ## 6. State Management
 
-### 6.1 `useBuilderStore`
+### 6.1 Rakit Custom via WhatsApp
 
-- Slot komponen per kategori.
-- `loadPrebuilt`, `loadPrebuiltPackage`, `selectPart`.
-- `strictCompatibilityFilter` / `strictFilterEnabled`.
-- `publicTotalPrice` — satu-satunya harga rakitan di client.
-- `getBundleTotal()`.
-- Persist v3; selections lama dibersihkan untuk mencegah harga part tersimpan.
+- Tidak ada state konfigurator di client dan tidak ada route simulasi.
+- Paket siap pakai hanya membawa total harga + opsi delta upgrade.
+- Permintaan racikan di luar paket diarahkan ke WhatsApp
+  (`generateCustomBuildWAMessage`) dengan daftar komponen tanpa harga satuan.
+- Teknisi menyusun kompatibilitas, ketersediaan stok, dan total paket di server.
 
 ### 6.2 `useAdminStore`
 

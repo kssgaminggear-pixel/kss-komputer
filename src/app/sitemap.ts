@@ -12,7 +12,6 @@ const STATIC_ROUTES = [
   '/jasa',
   '/komponen',
   '/aksesoris',
-  '/simulasi',
   '/konsultasi',
   '/tentang-kami',
   '/cek-pesanan',

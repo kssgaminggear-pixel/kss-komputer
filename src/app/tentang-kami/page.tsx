@@ -21,7 +21,7 @@ import {
   STORE_WARRANTY_TEXT,
   ADMIN_WHATSAPP,
 } from '@/lib/constants';
-import { DEFAULT_WHATSAPP_PHONE } from '@/lib/format';
+import { DEFAULT_WHATSAPP_PHONE, generateCustomBuildWAMessage } from '@/lib/format';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { faqSchema } from '@/lib/seo';
 import { STORE_FAQS } from '@/lib/faq';
@@ -325,13 +325,15 @@ export default function TentangKamiPage() {
           </p>
         </div>
         <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row">
-          <Link
-            href="/simulasi"
+          <a
+            href={generateCustomBuildWAMessage()}
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-flex items-center justify-center gap-2 rounded-md bg-orange-700 px-4 py-2.5 text-xs font-bold text-white transition-colors hover:bg-orange-800"
           >
-            <Cpu className="h-4 w-4" />
-            <span>Simulasi Rakit</span>
-          </Link>
+            <MessageSquareCheck className="h-4 w-4" />
+            <span>Konsultasi Rakit via WA</span>
+          </a>
           <a
             href={waUrl}
             target="_blank"

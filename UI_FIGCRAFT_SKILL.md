@@ -85,7 +85,7 @@ Aturan:
 - Tampilkan 2–3 game; target resolusi harus eksplisit (1080p/1440p/4K).
 - Bar bukan grafik ilmiah: tujuannya perbandingan cepat.
 
-### 2.3 Delta Price Tag (wajib pada Upgrade/Simulasi)
+### 2.3 Delta Price Tag (wajib pada Upgrade Paket)
 
 ```tsx
 // Termasuk paket
@@ -161,11 +161,12 @@ Tidak boleh ada daftar harga per komponen.
 - Total paket diperbarui real-time; jangan menampilkan harga part.
 - Mobile: delta tag di baris terpisah dari nama agar tidak terpotong.
 
-### 3.4 Simulasi / Configurator
-- Slot list padat; setiap slot punya ikon, label, status terpasang, dan aksi.
-- Drawer: filter ketat + delta tag saja.
-- Sticky telemetry bar hanya pada desktop; pada mobile biarkan mengalir.
-- Tampilkan `100% Kompatibel`, watt, rekomendasi PSU, dan total.
+### 3.4 Rakit Custom via WhatsApp
+- Tidak ada simulator atau halaman configurator.
+- CTA racikan memakai `generateCustomBuildWAMessage()` dan membuka WhatsApp.
+- Pesan WA hanya berisi nama komponen/kebutuhan, tanpa harga satuan.
+- Tombol tetap memakai pola `kss-btn-primary` / `kss-btn-outline` dan ikon pesan.
+- Untuk upgrade paket, gunakan Quick-Upgrade Panel dengan delta tag.
 
 ---
 

@@ -3,7 +3,6 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import {
   Cpu,
   Disc3,
@@ -12,13 +11,16 @@ import {
   ShieldCheck,
   ExternalLink,
   MessageSquareCheck,
-  SlidersHorizontal,
   Gamepad2,
   ArrowRight,
 } from 'lucide-react';
 import { ProductCategory, PublicHardwarePart } from '@/lib/types';
-import { formatIDR, generateWhatsAppOrderUrl, TOKOPEDIA_OFFICIAL_STORE_URL } from '@/lib/format';
-import { useBuilderStore } from '@/store/useBuilderStore';
+import {
+  formatIDR,
+  generateWhatsAppOrderUrl,
+  generateCustomBuildWAMessage,
+  TOKOPEDIA_OFFICIAL_STORE_URL,
+} from '@/lib/format';
 import type { PublicPrebuiltPCDTO } from '@/lib/sanitizer';
 import { getPackageImage } from '@/lib/package-images';
 
@@ -27,9 +29,6 @@ export interface PrebuiltCardProps {
 }
 
 export function PrebuiltCard({ pkg }: PrebuiltCardProps) {
-  const router = useRouter();
-  const loadPrebuilt = useBuilderStore((state) => state.loadPrebuilt);
-
   const partsList: { category: ProductCategory; part: PublicHardwarePart; quantity: number }[] =
     pkg.parts.map((item) => ({
       category: item.category,
@@ -37,18 +36,21 @@ export function PrebuiltCard({ pkg }: PrebuiltCardProps) {
       quantity: item.quantity,
     }));
 
-  const partsMap: Record<string, PublicHardwarePart> = Object.fromEntries(
-    pkg.parts.map((item) => [item.partId, item.part])
-  );
-
   const cpuPart = partsList.find((p) => p.category === 'cpu')?.part;
   const gpuPart = partsList.find((p) => p.category === 'gpu')?.part;
   const ramPart = partsList.find((p) => p.category === 'ram')?.part;
   const ssdPart = partsList.find((p) => p.category === 'ssd')?.part;
 
   const handleCustomize = () => {
-    loadPrebuilt(pkg, partsMap, pkg.totalBundlePrice);
-    router.push('/simulasi');
+    const url = generateCustomBuildWAMessage(undefined, {
+      subject: `Rakit / upgrade dari paket ${pkg.name}`,
+      parts: partsList.map((p) => ({
+        category: p.category,
+        name: p.part.name,
+        quantity: p.quantity,
+      })),
+    });
+    window.open(url, '_blank', 'noopener,noreferrer');
   };
 
   const handleWhatsAppOrder = () => {
@@ -209,8 +211,8 @@ export function PrebuiltCard({ pkg }: PrebuiltCardProps) {
         </div>
 
         <button type="button" onClick={handleCustomize} className="kss-btn-primary h-10 w-full">
-          <SlidersHorizontal className="h-3.5 w-3.5" />
-          <span>Kustomisasi Paket</span>
+          <MessageSquareCheck className="h-3.5 w-3.5" />
+          <span>Konsultasi Upgrade via WA</span>
         </button>
 
         <div className="grid grid-cols-2 gap-2">

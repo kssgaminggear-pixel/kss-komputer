@@ -2,11 +2,10 @@
 
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import Link from 'next/link';
-import { Search, X, ShoppingCart, Cpu, Check, ArrowRight } from 'lucide-react';
+import { Search, X, ShoppingCart, MessageSquareCheck, Check, ArrowRight } from 'lucide-react';
 import { PublicHardwarePart } from '@/lib/types';
-import { formatIDR } from '@/lib/format';
+import { formatIDR, generateCustomBuildWAMessage } from '@/lib/format';
 import { SpecBadges, getProductSpecLabels } from '@/components/catalog/SpecBadges';
-import { useBuilderStore } from '@/store/useBuilderStore';
 import { useCartStore } from '@/store/useCartStore';
 
 export interface CommandSearchModalProps {
@@ -43,11 +42,9 @@ function matchesSearchTokens(product: PublicHardwarePart, tokens: string[]): boo
 
 export function CommandSearchModal({ isOpen, onClose, products }: CommandSearchModalProps) {
   const [query, setQuery] = useState('');
-  const [addedBuilderId, setAddedBuilderId] = useState<string | null>(null);
   const [addedCartId, setAddedCartId] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const addPart = useBuilderStore((state) => state.addPart);
   const addItem = useCartStore((state) => state.addItem);
 
   // Reset query jika modal ditutup
@@ -56,7 +53,6 @@ export function CommandSearchModal({ isOpen, onClose, products }: CommandSearchM
     setPrevIsOpen(isOpen);
     if (!isOpen) {
       setQuery('');
-      setAddedBuilderId(null);
       setAddedCartId(null);
     }
   }
@@ -93,16 +89,6 @@ export function CommandSearchModal({ isOpen, onClose, products }: CommandSearchM
     const tokens = trimmed.split(/\s+/).filter(Boolean);
     return products.filter((product) => matchesSearchTokens(product, tokens)).slice(0, 20);
   }, [query, products]);
-
-  const handleAddToBuilder = (e: React.MouseEvent, product: PublicHardwarePart) => {
-    e.preventDefault();
-    e.stopPropagation();
-    addPart(product.category, product);
-    setAddedBuilderId(product.id);
-    setTimeout(() => {
-      setAddedBuilderId((prev) => (prev === product.id ? null : prev));
-    }, 1500);
-  };
 
   const handleAddToCart = (e: React.MouseEvent, product: PublicHardwarePart) => {
     e.preventDefault();
@@ -175,7 +161,6 @@ export function CommandSearchModal({ isOpen, onClose, products }: CommandSearchM
             </div>
           ) : (
             searchResults.map((product) => {
-              const isAddedToBuilder = addedBuilderId === product.id;
               const isAddedToCart = addedCartId === product.id;
 
               return (
@@ -224,29 +209,20 @@ export function CommandSearchModal({ isOpen, onClose, products }: CommandSearchM
                     </div>
 
                     <div className="flex items-center gap-1.5 shrink-0">
-                      {/* Button + Simulasi */}
-                      <button
-                        type="button"
-                        onClick={(e) => handleAddToBuilder(e, product)}
-                        title="Tambahkan ke Simulasi Rakitan PC"
-                        className={`inline-flex items-center gap-1 px-2 py-1 text-xs font-mono font-medium border rounded-md transition-all ${
-                          isAddedToBuilder
-                            ? 'bg-emerald-700 border-emerald-600 text-white'
-                            : 'bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-800 dark:text-zinc-200 border-zinc-300 dark:border-zinc-700'
-                        }`}
+                      {/* Konsultasi rakit custom via WhatsApp */}
+                      <a
+                        href={generateCustomBuildWAMessage(undefined, {
+                          subject: `Rakit PC custom dengan ${product.name}`,
+                          parts: [{ category: product.category, name: product.name, quantity: 1 }],
+                        })}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        title="Konsultasi rakit PC custom dengan komponen ini via WhatsApp"
+                        className="inline-flex items-center gap-1 px-2 py-1 text-xs font-mono font-medium border rounded-md transition-all bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-800 dark:text-zinc-200 border-zinc-300 dark:border-zinc-700"
                       >
-                        {isAddedToBuilder ? (
-                          <>
-                            <Check className="w-3 h-3 text-white" />
-                            <span>Tersimpan</span>
-                          </>
-                        ) : (
-                          <>
-                            <Cpu className="w-3 h-3" />
-                            <span className="hidden sm:inline">+ Rakitan</span>
-                          </>
-                        )}
-                      </button>
+                        <MessageSquareCheck className="w-3 h-3" />
+                        <span className="hidden sm:inline">Rakit</span>
+                      </a>
 
                       {/* Button + Keranjang */}
                       <button

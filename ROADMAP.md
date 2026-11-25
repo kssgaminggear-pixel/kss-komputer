@@ -7,7 +7,8 @@
 > Aturan UI: `UI_FIGCRAFT_SKILL.md`. Aturan kerja: `AGENTS.md`.
 > Arsitektur: `ARCHITECTURE.md`.
 
-**Progress: 5 / 12 item (41.7%)** — Fase 1 & 2 selesai.
+**Progress: 21 / 21 item (100%)** — Fase 1–4 dan 6–8 selesai. Fase 5 (simulator)
+dibatalkan: rakit custom kini ditangani via WhatsApp.
 
 ---
 
@@ -42,55 +43,52 @@
   - `calculatePackageTotal(parts, assemblyFee, globalMarkupPercent)`.
   - `calculatePartDelta(currentPart, candidatePart, globalMarkupPercent)`.
 - [x] **2.2 Zustand stores**
-  - `useBuilderStore`: slot terpilih, `loadPrebuilt`, `loadPrebuiltPackage`,
-    `selectPart`, `strictCompatibilityFilter`, total bundel.
   - `useAdminStore`: markup global, assembly fee, edit cost/sell, profit paket,
     paket kustom (`upsertPackage`, `deletePackage`, `getMergedPackages`).
+  - `useBuilderStore` dihapus bersama simulator; rakit custom via WhatsApp.
 
 ---
 
 ## FASE 3 — Layout Industrial & Homepage High-Conversion
 
-- [ ] **3.1 `Navbar.tsx` & `Footer.tsx`**
+- [x] **3.1 `Navbar.tsx` & `Footer.tsx`**
   - Top bar status operasional, garansi rakitan, link Tokopedia resmi.
-  - Navbar: Paket PC, Custom Configurator, Layanan Jasa, Command Search
-    (`Cmd+K`), indikator total rakitan aktif.
-- [ ] **3.2 `src/app/page.tsx`**
+  - Navbar: Paket PC, Layanan Jasa, Command Search (`Cmd+K`), keranjang eceran.
+- [x] **3.2 `src/app/page.tsx`**
   - Tactical Split Header: value proposition + filter kebutuhan di kiri,
     Featured Flagship Rig dengan FPS telemetry di kanan.
   - Grid paket dengan Hardware Spec Pill, FPS Telemetry Bar, total harga,
-    tombol Kustomisasi dan Tokopedia/WA.
+    tombol konsultasi upgrade via WhatsApp dan Tokopedia.
   - Seksi layanan jasa interaktif.
 
 ---
 
 ## FASE 4 — Katalog Paket Rakitan & Quick-Upgrade
 
-- [ ] **4.1 `src/app/paket-rakitan/page.tsx`**
+- [x] **4.1 `src/app/paket-rakitan/page.tsx`**
   - Filter budget (`< 7 jt`, `7–12 jt`, `12–20 jt`, `> 20 jt`), kegunaan
     (Gaming, Editing/Render, Office), platform (AMD Ryzen / Intel Core).
-- [ ] **4.2 `src/app/paket-rakitan/[slug]/page.tsx`**
+- [x] **4.2 `src/app/paket-rakitan/[slug]/page.tsx`**
   - Rincian komponen, estimasi daya, FPS.
   - Quick-Upgrade Panel: RAM/SSD/GPU kompatibel, delta harga, total real-time.
   - CTA Checkout Tokopedia & Pesan WhatsApp.
 
 ---
 
-## FASE 5 — Custom PC Configurator dengan Delta Pricing
+## FASE 5 — ~~Custom PC Configurator~~ (DIBATALKAN)
 
-- [ ] **5.1 `src/app/simulasi/page.tsx`**
-  - 10 slot komponen.
-  - Drawer hanya menampilkan komponen kompatibel + delta tag.
-  - Sticky telemetry: kompatibilitas, watt, PSU, biaya rakit, total.
-  - Cetak quotation, salin spesifikasi, WhatsApp, link checkout Tokopedia.
+- ~~5.1 `src/app/simulasi/page.tsx`~~
+- Alasan bisnis: rakit PC custom ditangani langsung oleh teknisi via WhatsApp.
+  Route `/simulasi` dihapus dan diarahkan permanen ke `/paket-rakitan`.
+  Semua CTA memakai `generateCustomBuildWAMessage()`.
 
 ---
 
 ## FASE 6 — Halaman Jasa & Admin Markup Calculator
 
-- [ ] **6.1 `src/app/jasa/page.tsx`**
+- [x] **6.1 `src/app/jasa/page.tsx`**
   - Katalog layanan, estimasi biaya jasa, form booking WhatsApp.
-- [ ] **6.2 `src/app/admin/pricing/page.tsx`**
+- [x] **6.2 `src/app/admin/pricing/page.tsx`**
   - Dashboard spreadsheet: costPrice, markup per komponen/global, assemblyFee,
     estimasi profit per paket, edit link Tokopedia.
 
@@ -126,32 +124,48 @@
 
 ---
 
+## FASE 8 — QA Responsif & Aksesibilitas
+
+- [x] **8.1 Audit responsif 390–1440 px**
+  - 10 halaman × 4 viewport (390/768/1024/1440), nol horizontal overflow,
+    nol error console.
+- [x] **8.2 Lighthouse & perbaikan aksesibilitas**
+  - Kontras teks dinaikkan, label form/id ditambahkan, select diberi
+    `aria-label`, dan nama aksesibel tombol CS diselaraskan.
+  - Skor aksesibilitas 1.0 di home dan paket-detail (sebelumnya 0.86/0.96).
+
+---
+
 ## Ringkasan Progres
 
 | Fase | Item | Selesai |
 |---|---|---|
 | 1 | 3 | 3 |
 | 2 | 2 | 2 |
-| 3 | 2 | 0 |
-| 4 | 2 | 0 |
-| 5 | 1 | 0 |
-| 6 | 2 | 0 |
+| 3 | 2 | 2 |
+| 4 | 2 | 2 |
+| 5 | 0 (dibatalkan) | 0 |
+| 6 | 2 | 2 |
 | 7 | 8 | 8 |
-| **Total** | **20** | **13** |
+| 8 | 2 | 2 |
+| **Total** | **21** | **21** |
 
 ## Catatan Implementasi
 
 - Fase 1–2 ditambahkan sebagai domain layer v2 tanpa merusak halaman live.
 - Migrasi UI ke `PrebuiltPackage`/`ComputerService` dilakukan pada Fase 3–6.
-- Setiap fase wajib lulus `npx tsc --noEmit`, `npm run lint`, dan `npm run build`
-  sebelum commit.
+- Fase 5 dibatalkan; simulator dan `useBuilderStore` sudah dihapus.
+- Setiap fase wajib lulus `npx tsc --noEmit`, `npm run lint`, `npm run test`,
+  `npm run build`, dan `npm run check:price` sebelum commit.
 
-### Status per 2026-11-16
+### Status per 2026-11-26
 
 - Seluruh halaman publik sudah live di
   `https://kss-komputer-seven.vercel.app`.
 - Checklist Fase 3–6 menandai **migrasi ke domain v2** (data `PrebuiltPackage` /
   `ComputerService`), bukan pembuatan halaman dari nol.
+- Rakit custom diarahkan ke WhatsApp; tidak ada route `/simulasi` maupun API
+  estimasi publik. `/simulasi` melakukan redirect permanen ke `/paket-rakitan`.
 - Sumber desain FigCraft native ada di `design/figcraft/`; skill OpenCode di
   `.opencode/skills/figcraft/`.
 - Harga satuan komponen: 0 kebocoran di chunk publik (diverifikasi).

@@ -8,6 +8,7 @@ const nextConfig: NextConfig = {
     return [
       { source: '/produk/:slug', destination: '/komponen/:slug', permanent: true },
       { source: '/katalog', destination: '/komponen', permanent: true },
+      { source: '/simulasi', destination: '/paket-rakitan', permanent: true },
     ];
   },
   turbopack: {

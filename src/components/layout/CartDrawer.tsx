@@ -1,10 +1,14 @@
 'use client';
 
 import React, { useEffect } from 'react';
-import Link from 'next/link';
 import { X, Trash2, Plus, Minus, ShoppingBag, ArrowRight, MessageSquareCheck } from 'lucide-react';
 import { useCartStore } from '@/store/useCartStore';
-import { formatIDR, CATEGORY_LABELS, DEFAULT_WHATSAPP_PHONE } from '@/lib/format';
+import {
+  formatIDR,
+  CATEGORY_LABELS,
+  DEFAULT_WHATSAPP_PHONE,
+  generateCustomBuildWAMessage,
+} from '@/lib/format';
 import { useHydrated } from '@/lib/useHydrated';
 
 export function CartDrawer() {
@@ -194,13 +198,22 @@ export function CartDrawer() {
                 >
                   Kosongkan Keranjang
                 </button>
-                <Link
-                  href="/simulasi"
+                <a
+                  href={generateCustomBuildWAMessage(undefined, {
+                    subject: 'Rakit PC custom dari keranjang eceran',
+                    parts: items.map((item) => ({
+                      category: item.product.category,
+                      name: item.product.name,
+                      quantity: item.quantity,
+                    })),
+                  })}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   onClick={closeCart}
-                  className="inline-flex items-center gap-1 text-[11px] font-medium text-orange-700 hover:underline dark:text-orange-400"
+                  className="inline-flex items-center gap-1 text-[11px] font-medium text-emerald-700 hover:underline dark:text-emerald-400"
                 >
-                  Buka Simulasi Rakitan <ArrowRight className="h-3 w-3" />
-                </Link>
+                  Konsultasi Rakit via WA <ArrowRight className="h-3 w-3" />
+                </a>
               </div>
             </div>
           </div>

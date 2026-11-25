@@ -521,10 +521,10 @@ export default function KonsultasiClient({ prebuilts, services }: KonsultasiClie
                 <span>{goal === 'servis' ? 'Booking Servis via WA' : 'Minta Racikan Kustom via WA'}</span>
               </a>
               <Link
-                href={goal === 'servis' ? '/jasa' : '/simulasi'}
+                href={goal === 'servis' ? '/jasa' : '/paket-rakitan'}
                 className="flex flex-1 items-center justify-center gap-2 rounded-md border border-zinc-300 bg-white px-3 py-2.5 text-xs font-bold text-zinc-800 transition-colors hover:bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-200 dark:hover:bg-zinc-900"
               >
-                <span>{goal === 'servis' ? 'Lihat Semua Layanan' : 'Coba Simulasi Rakit'}</span>
+                <span>{goal === 'servis' ? 'Lihat Semua Layanan' : 'Lihat Paket Siap Pakai'}</span>
                 <ArrowRight className="h-3.5 w-3.5" />
               </Link>
             </div>

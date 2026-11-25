@@ -34,7 +34,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: 'KSS Komputer — System Integrator PC Rakitan & Hardware Eceran Jakarta',
   description:
-    'Pusat PC rakitan jadi siap pakai (gaming, workstation, office), custom configurator kompatibilitas deterministik, konsultasi budget via WhatsApp, dan hardware eceran bergaransi resmi.',
+    'Pusat PC rakitan jadi siap pakai (gaming, workstation, office), konsultasi dan rakit PC custom via WhatsApp, serta hardware eceran bergaransi resmi.',
   manifest: '/manifest.json',
   alternates: {
     canonical: '/',
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
   keywords: [
     'rakit pc jakarta',
     'kss komputer',
-    'simulasi rakitan pc',
+    'rakit pc custom whatsapp',
     'pc gaming mangga dua',
     'konsultasi rakit pc whatsapp',
     'hardware eceran resmi',

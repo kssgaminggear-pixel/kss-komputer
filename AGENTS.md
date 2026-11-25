@@ -67,7 +67,6 @@ tersanitasi.
   hanya boleh dipakai server/admin.
 - `src/lib/compatibility.ts` — validasi rakitan, total paket, delta harga.
 - `src/lib/format.ts` — format Rupiah, delta, generator pesan WhatsApp.
-- `src/store/useBuilderStore.ts` — state konfigurator dan delta.
 - `src/store/useAdminStore.ts` — markup, harga modal, paket kustom, profit.
 - `src/app/(public)` atau route publik — hanya menerima DTO tersanitasi.
 - `src/app/admin/*` — satu-satunya area yang boleh melihat harga modal.

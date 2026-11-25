@@ -6,7 +6,6 @@ import { usePathname } from 'next/navigation';
 import {
   Home,
   Sparkles,
-  Cpu,
   Layers,
   ShoppingBag,
   Wrench,
@@ -18,7 +17,6 @@ import {
   MessageSquareCheck,
   Building2,
 } from 'lucide-react';
-import { useBuilderStore } from '@/store/useBuilderStore';
 import { useRetailCartStore } from '@/store/useRetailCartStore';
 import { useHydrated } from '@/lib/useHydrated';
 
@@ -27,7 +25,6 @@ export function BottomNav() {
   const isHydrated = useHydrated();
   const [isMoreOpen, setIsMoreOpen] = useState(false);
 
-  const builderCount = useBuilderStore((state) => state.getItemCount());
   const retailCartCount = useRetailCartStore((state) => state.getTotalItemsCount());
   const openRetailCart = useRetailCartStore((state) => state.openCart);
 
@@ -52,11 +49,10 @@ export function BottomNav() {
       isActive: pathname.startsWith('/jasa'),
     },
     {
-      href: '/simulasi',
-      label: 'Rakit',
-      icon: Cpu,
-      badge: isHydrated && builderCount > 0 ? builderCount : null,
-      isActive: pathname.startsWith('/simulasi'),
+      href: '/paket-rakitan',
+      label: 'Paket',
+      icon: Sparkles,
+      isActive: pathname.startsWith('/paket-rakitan'),
     },
     {
       href: '/cek-pesanan',
@@ -143,11 +139,6 @@ export function BottomNav() {
               >
                 <div className="relative">
                   <Icon className="h-5 w-5" />
-                  {item.badge !== null && item.badge !== undefined && (
-                    <span className="absolute -top-1.5 -right-2 flex h-4 min-w-[16px] items-center justify-center rounded-full bg-orange-700 px-1 text-[9px] font-bold text-white">
-                      {item.badge}
-                    </span>
-                  )}
                 </div>
                 <span className="mt-0.5 tracking-tight truncate max-w-[64px]">{item.label}</span>
               </Link>

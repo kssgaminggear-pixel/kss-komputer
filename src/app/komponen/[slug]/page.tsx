@@ -15,7 +15,7 @@ import {
   getPublicHardwareParts,
   getRelatedPublicHardwareParts,
 } from '@/lib/server-catalog';
-import { formatIDR, CATEGORY_LABELS, TOKOPEDIA_OFFICIAL_STORE_URL, DEFAULT_WHATSAPP_PHONE } from '@/lib/format';
+import { formatIDR, CATEGORY_LABELS, TOKOPEDIA_OFFICIAL_STORE_URL, DEFAULT_WHATSAPP_PHONE, generateCustomBuildWAMessage } from '@/lib/format';
 import { KomponenDetailActions } from './KomponenDetailActions';
 
 interface KomponenDetailPageProps {
@@ -337,9 +337,17 @@ export default async function KomponenDetailPage({ params }: KomponenDetailPageP
 
           <div className="rounded-md border border-zinc-200 bg-zinc-50 p-4 text-[11px] leading-relaxed text-zinc-500 dark:border-zinc-800 dark:bg-zinc-900/40 dark:text-zinc-500">
             Butuh komponen ini dirakit menjadi PC siap pakai?{' '}
-            <Link href="/simulasi" className="font-bold text-orange-700 hover:text-orange-700 dark:text-orange-400">
-              Buka Simulasi Rakit
-            </Link>{' '}
+            <a
+              href={generateCustomBuildWAMessage(undefined, {
+                subject: `Rakit PC custom dengan ${part.name}`,
+                parts: [{ category: part.category, name: part.name, quantity: 1 }],
+              })}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-bold text-orange-700 hover:text-orange-800 dark:text-orange-400"
+            >
+              Konsultasi Rakit via WA
+            </a>{' '}
             atau{' '}
             <Link href="/konsultasi" className="font-bold text-emerald-700 hover:text-emerald-700 dark:text-emerald-400">
               konsultasi budget

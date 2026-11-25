@@ -154,7 +154,6 @@ export function Footer() {
               {[
                 { href: '/jasa', label: 'Layanan Jasa & Servis' },
                 { href: '/konsultasi', label: 'Konsultasi Budget' },
-                { href: '/simulasi', label: 'Custom PC Configurator' },
                 { href: '/paket-rakitan', label: 'Paket PC Siap Pakai' },
                 { href: '/cek-pesanan', label: 'Cek Status Pengerjaan' },
                 { href: '/komponen', label: 'Katalog Komponen' },

@@ -6,7 +6,6 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
   Search,
-  Cpu,
   Sparkles,
   Layers,
   Wrench,
@@ -25,10 +24,8 @@ import {
   Building2,
   MapPin,
 } from 'lucide-react';
-import { useBuilderStore } from '@/store/useBuilderStore';
 import { useRetailCartStore } from '@/store/useRetailCartStore';
 import {
-  formatIDR,
   TOKOPEDIA_OFFICIAL_STORE_URL,
   DEFAULT_WHATSAPP_PHONE,
   DEFAULT_WHATSAPP_DISPLAY,
@@ -54,8 +51,6 @@ export function Navbar({ searchProducts }: NavbarProps) {
     setIsMobileMenuOpen(false);
   }
 
-  const builderPartCount = useBuilderStore((state) => state.getItemCount());
-  const builderTotalPrice = useBuilderStore((state) => state.publicTotalPrice);
   const retailCartCount = useRetailCartStore((state) => state.getTotalItemsCount());
   const openRetailCart = useRetailCartStore((state) => state.openCart);
 
@@ -73,13 +68,6 @@ export function Navbar({ searchProducts }: NavbarProps) {
 
   const navLinks = [
     { href: '/jasa', label: 'Jasa & Servis', icon: Wrench },
-    {
-      href: '/simulasi',
-      label: 'Rakit PC',
-      icon: Cpu,
-      badge: isMounted && builderPartCount > 0 ? `${builderPartCount}` : null,
-      subBadge: isMounted && builderTotalPrice > 0 ? formatIDR(builderTotalPrice) : null,
-    },
     { href: '/paket-rakitan', label: 'Paket Siap Pakai', icon: Sparkles },
     { href: '/cek-pesanan', label: 'Cek Pesanan', icon: ClipboardList },
     { href: '/komponen', label: 'Komponen', icon: Layers },
@@ -174,11 +162,6 @@ export function Navbar({ searchProducts }: NavbarProps) {
                 >
                   <Icon className="h-3.5 w-3.5" />
                   <span>{item.label}</span>
-                  {item.badge && (
-                    <span className="rounded-md bg-orange-700 px-1 font-mono text-[9px] font-bold text-white">
-                      {item.badge}
-                    </span>
-                  )}
                 </Link>
               );
             })}
@@ -254,11 +237,6 @@ export function Navbar({ searchProducts }: NavbarProps) {
                         <span>{item.label}</span>
                       </span>
                       <span className="flex items-center gap-1.5">
-                        {item.badge && (
-                          <span className="rounded-md bg-orange-700 px-1.5 py-0.5 font-mono text-[10px] font-bold text-white">
-                            {item.badge}
-                          </span>
-                        )}
                         <ChevronRight className="h-3.5 w-3.5 text-zinc-500" />
                       </span>
                     </Link>

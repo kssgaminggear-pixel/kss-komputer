@@ -3,7 +3,6 @@
 import React, { useState, useMemo } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import {
   ChevronRight,
   ShieldCheck,
@@ -18,15 +17,12 @@ import {
 } from 'lucide-react';
 import { ProductCategory, PublicHardwarePart } from '@/lib/types';
 import { formatIDR, formatDeltaIDR, formatWatt, generateWhatsAppOrderUrl, TOKOPEDIA_OFFICIAL_STORE_URL } from '@/lib/format';
-import { useBuilderStore } from '@/store/useBuilderStore';
 import type { PublicPrebuiltDetailDTO } from '@/lib/sanitizer';
 import { getPackageImage } from '@/lib/package-images';
 
 const UPGRADEABLE_CATEGORIES: ProductCategory[] = ['gpu', 'ram', 'ssd', 'cooler', 'case'];
 
 export default function PaketDetailContent({ pkg }: { pkg: PublicPrebuiltDetailDTO }) {
-  const router = useRouter();
-
   // Peta part publik (base + seluruh opsi upgrade) — tanpa harga satuan.
   const partsMap = useMemo(() => {
     const map: Record<string, PublicHardwarePart> = {};
@@ -51,8 +47,6 @@ export default function PaketDetailContent({ pkg }: { pkg: PublicPrebuiltDetailD
     }
     return initial as Record<ProductCategory, string>;
   });
-
-  const loadPrebuilt = useBuilderStore((state) => state.loadPrebuilt);
 
   // Resolusi part objek saat ini
   const currentPartsList = useMemo(() => {
@@ -93,12 +87,6 @@ export default function PaketDetailContent({ pkg }: { pkg: PublicPrebuiltDetailD
       ...prev,
       [cat]: candidatePartId,
     }));
-  };
-
-  // Handler ke Configurator
-  const handleOpenInConfigurator = () => {
-    loadPrebuilt(pkg, partsMap, pkg.baseTotalPrice);
-    router.push('/simulasi');
   };
 
   // Handler WhatsApp Checkout
@@ -229,10 +217,15 @@ export default function PaketDetailContent({ pkg }: { pkg: PublicPrebuiltDetailD
                   <MessageSquareCheck className="h-4 w-4" />
                   <span>Pesan WA</span>
                 </button>
-                <button type="button" onClick={handleOpenInConfigurator} className="kss-btn-outline h-10">
-                  <SlidersHorizontal className="h-4 w-4 text-orange-700" />
-                  <span>Ubah Spek</span>
-                </button>
+                <a
+                  href={pkg.tokopediaUrl || TOKOPEDIA_OFFICIAL_STORE_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="kss-btn-outline h-10"
+                >
+                  <ExternalLink className="h-4 w-4 text-emerald-700" />
+                  <span>Tokopedia</span>
+                </a>
               </div>
             </div>
           </div>
@@ -437,15 +430,6 @@ export default function PaketDetailContent({ pkg }: { pkg: PublicPrebuiltDetailD
                 <span>Beli di Tokopedia Resmi</span>
                 <ExternalLink className="h-3.5 w-3.5" />
               </a>
-
-              <button
-                type="button"
-                onClick={handleOpenInConfigurator}
-                className="flex items-center justify-center gap-2 w-full rounded-md border border-zinc-300 dark:border-zinc-700 bg-zinc-50 hover:bg-zinc-100 dark:bg-zinc-950 dark:hover:bg-zinc-800 text-zinc-900 dark:text-zinc-100 py-2.5 text-xs font-bold transition-colors"
-              >
-                <SlidersHorizontal className="h-3.5 w-3.5 text-orange-700" />
-                <span>Buka di Custom Configurator</span>
-              </button>
             </div>
 
             {/* Keunggulan Toko */}

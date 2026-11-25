@@ -3,18 +3,17 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import {
-  Plus,
   ShoppingCart,
   Scale,
   Check,
   Shield,
   ExternalLink,
+  MessageSquareCheck,
 } from 'lucide-react';
 import { PublicHardwarePart } from '@/lib/types';
-import { formatIDR } from '@/lib/format';
+import { formatIDR, generateCustomBuildWAMessage } from '@/lib/format';
 import { useHydrated } from '@/lib/useHydrated';
 import { SpecBadges } from './SpecBadges';
-import { useBuilderStore } from '@/store/useBuilderStore';
 import { useCartStore } from '@/store/useCartStore';
 import { useCompareStore } from '@/store/useCompareStore';
 
@@ -32,11 +31,9 @@ export function ProductRowPricelist({
   showCategoryBadge = false,
 }: ProductRowPricelistProps) {
   const isHydrated = useHydrated();
-  const [justAddedSimulasi, setJustAddedSimulasi] = useState(false);
   const [justAddedCart, setJustAddedCart] = useState(false);
 
   // Zustand Store hooks
-  const addPart = useBuilderStore((state) => state.addPart);
   const addItem = useCartStore((state) => state.addItem);
   const isComparing = useCompareStore((state) => state.isComparing);
   const toggleCompare = useCompareStore((state) => state.toggleCompareProduct);
@@ -50,15 +47,6 @@ export function ProductRowPricelist({
   const distributor = product.officialDistributor || product.OfficialDistributor;
 
   // Handlers
-  const handleAddToSimulasi = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    addPart(product.category, product);
-    setJustAddedSimulasi(true);
-    setTimeout(() => setJustAddedSimulasi(false), 1500);
-    onActionFeedback?.(`${product.name} ditambahkan ke Simulasi Rakitan`);
-  };
-
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
@@ -178,29 +166,20 @@ export function ProductRowPricelist({
       {/* Kolom 5: Tombol Aksi Cepat */}
       <td className="py-2.5 px-3 align-top w-48 text-right whitespace-nowrap">
         <div className="flex items-center justify-end gap-1">
-          {/* Tombol + Simulasi */}
-          <button
-            type="button"
-            onClick={handleAddToSimulasi}
-            title="Tambahkan ke Simulasi Rakitan PC"
-            className={`inline-flex items-center gap-1 px-2 py-1 font-mono text-[11px] font-semibold rounded-md border transition-colors ${
-              justAddedSimulasi
-                ? 'bg-emerald-700 text-white border-emerald-600'
-                : 'bg-zinc-100 text-zinc-800 hover:bg-zinc-200 border-zinc-200 dark:bg-zinc-800 dark:text-zinc-200 dark:hover:bg-zinc-700 dark:border-zinc-700'
-            }`}
+          {/* Tombol Konsultasi Rakit via WhatsApp */}
+          <a
+            href={generateCustomBuildWAMessage(undefined, {
+              subject: `Rakit PC custom dengan ${product.name}`,
+              parts: [{ category: product.category, name: product.name, quantity: 1 }],
+            })}
+            target="_blank"
+            rel="noopener noreferrer"
+            title="Konsultasi rakit PC custom dengan komponen ini via WhatsApp"
+            className="inline-flex items-center gap-1 px-2 py-1 font-mono text-[11px] font-semibold rounded-md border bg-zinc-100 text-zinc-800 hover:bg-zinc-200 border-zinc-200 dark:bg-zinc-800 dark:text-zinc-200 dark:hover:bg-zinc-700 dark:border-zinc-700 transition-colors"
           >
-            {justAddedSimulasi ? (
-              <>
-                <Check className="w-3 h-3 text-white" />
-                <span>Simulasi</span>
-              </>
-            ) : (
-              <>
-                <Plus className="w-3 h-3 text-orange-700 dark:text-orange-400" />
-                <span>Simulasi</span>
-              </>
-            )}
-          </button>
+            <MessageSquareCheck className="w-3 h-3 text-emerald-700 dark:text-emerald-400" />
+            <span>Rakit</span>
+          </a>
 
           {/* Tombol Bandingkan */}
           <button

@@ -40,14 +40,15 @@ Sumber desain native FigCraft ada di `design/figcraft/` (lihat README folder).
    dengan estimasi FPS dan satu harga total.
 3. **Detail paket (`/paket-rakitan/[slug]`)** — quick upgrade dengan delta harga
    real-time, FPS benchmark, CTA WhatsApp/Tokopedia.
-4. **Simulasi (`/simulasi`)** — 10 slot komponen, validasi kompatibilitas,
-   delta pricing tanpa harga satuan, quotation cetak, salin spek, WhatsApp.
-5. **Konsultasi (`/konsultasi`)** — wizard 5 langkah + rekomendasi + WA.
-6. **Jasa (`/jasa`, `/jasa/[slug]`)** — katalog layanan, detail, booking WA.
-7. **Cek pesanan (`/cek-pesanan`)** — tracking `TRK-KSS-XXX` 9 tahap.
-8. **Penawaran (`/penawaran/[code]`)** — surat penawaran resmi, print/PDF.
-9. **Katalog pendukung** — `/komponen`, `/komponen/[slug]`, `/aksesoris`.
-10. **Tentang kami (`/tentang-kami`)** — profil bengkel, lokasi, garansi, FAQ.
+4. **Konsultasi (`/konsultasi`)** — wizard 5 langkah + rekomendasi + WA.
+5. **Jasa (`/jasa`, `/jasa/[slug]`)** — katalog layanan, detail, booking WA.
+6. **Cek pesanan (`/cek-pesanan`)** — tracking `TRK-KSS-XXX` 9 tahap.
+7. **Penawaran (`/penawaran/[code]`)** — surat penawaran resmi, print/PDF.
+8. **Katalog pendukung** — `/komponen`, `/komponen/[slug]`, `/aksesoris`.
+9. **Tentang kami (`/tentang-kami`)** — profil bengkel, lokasi, garansi, FAQ.
+
+Rakit PC custom tidak memakai simulator. Semua permintaan racikan di luar paket
+diarahkan ke teknisi via WhatsApp dengan pesan yang sudah berisi komponen minat.
 
 ## Area Internal
 
@@ -62,7 +63,8 @@ Sumber desain native FigCraft ada di `design/figcraft/` (lihat README folder).
   atau halaman publik.
 - Data mentah hanya diakses server/admin melalui `server-catalog` /
   `server-pricing` dan DTO `sanitizer.ts`.
-- Estimasi total/delta memakai `POST /api/build/estimate`.
+- Total paket dan delta upgrade dihitung server-side lewat `server-pricing`,
+  bukan dari perhitungan client.
 - ESLint memblokir import `mock-data` dari komponen/halaman publik.
 
 ---

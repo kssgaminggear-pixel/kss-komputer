@@ -21,7 +21,7 @@ import {
   PhoneCall,
 } from 'lucide-react';
 import { PublicHardwarePart, ProductCategory } from '@/lib/types';
-import { formatIDR, TOKOPEDIA_OFFICIAL_STORE_URL, DEFAULT_WHATSAPP_PHONE } from '@/lib/format';
+import { formatIDR, TOKOPEDIA_OFFICIAL_STORE_URL, DEFAULT_WHATSAPP_PHONE, generateCustomBuildWAMessage } from '@/lib/format';
 import { useRetailCartStore } from '@/store/useRetailCartStore';
 import { PageHeader } from '@/components/ui/PageHeader';
 
@@ -107,9 +107,15 @@ export default function KomponenEceranPage({ parts }: KomponenClientProps) {
               <span>Tokopedia Resmi</span>
               <ExternalLink className="h-3.5 w-3.5" />
             </a>
-            <Link href="/simulasi" className="kss-btn-outline">
-              Rakit di Simulasi
-            </Link>
+            <a
+              href={generateCustomBuildWAMessage()}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="kss-btn-outline"
+            >
+              <PhoneCall className="h-3.5 w-3.5" />
+              <span>Rakit via WA</span>
+            </a>
           </>
         }
       />

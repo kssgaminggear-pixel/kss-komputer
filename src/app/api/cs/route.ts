@@ -91,10 +91,10 @@ KONTAK & INFO:
 - Tokopedia resmi: ${TOKOPEDIA_OFFICIAL_STORE_URL}
 - Lokasi: Mangga Dua Mall Lt. 4, Jakarta Pusat
 - Jam toko: Senin-Sabtu 09.00-18.00 WIB (CS AI aktif 24 jam)
-- Halaman: /paket-rakitan, /simulasi, /jasa, /konsultasi, /cek-pesanan, /komponen, /aksesoris
+- Halaman: /paket-rakitan, /jasa, /konsultasi, /cek-pesanan, /komponen, /aksesoris
 
 Jika pengguna baru, tanyakan budget dan kebutuhan utamanya sebelum memberi rekomendasi.
-Selalu tutup rekomendasi dengan satu langkah berikutnya (link paket, simulasi, atau WhatsApp).`;
+Selalu tutup rekomendasi dengan satu langkah berikutnya (link paket, halaman konsultasi, atau WhatsApp). Untuk racikan PC di luar paket yang tersedia, arahkan ke WhatsApp agar teknisi menyusun spesifikasi dan total harga paket.`;
 }
 
 function isPrivateBase(baseUrl: string): boolean {
