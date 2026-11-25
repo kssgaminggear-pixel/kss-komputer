@@ -160,19 +160,19 @@ export default function HomeClient({ prebuilts, accessories, services }: HomeCli
                   <div className="absolute inset-x-0 bottom-0 border-t border-zinc-200 bg-white p-4">
                     <div className="flex flex-wrap items-end justify-between gap-3">
                       <div className="min-w-0">
-                        <div className="font-mono text-[9px] font-bold uppercase tracking-wider text-orange-600">
+                        <div className="font-mono text-[9px] font-bold uppercase tracking-wider text-orange-700">
                           Featured Rig
                         </div>
                         <Link
                           href={`/paket-rakitan/${featured.slug}`}
-                          className="line-clamp-1 text-sm font-bold text-zinc-900 hover:text-orange-600"
+                          className="line-clamp-1 text-sm font-bold text-zinc-900 hover:text-orange-700"
                         >
                           {featured.name}
                         </Link>
                       </div>
                       <div className="flex items-center gap-3">
                         <div className="text-right">
-                          <div className="font-mono text-[9px] uppercase tracking-tight text-zinc-400">
+                          <div className="font-mono text-[9px] uppercase tracking-tight text-zinc-500">
                             Harga Paket
                           </div>
                           <div className="kss-price text-base text-zinc-900">
@@ -192,7 +192,7 @@ export default function HomeClient({ prebuilts, accessories, services }: HomeCli
 
             {/* Copy */}
             <div className="order-last flex flex-col justify-center gap-4 lg:order-1 lg:col-span-5">
-              <div className="inline-flex w-fit items-center gap-2 rounded-md border border-orange-500/30 bg-orange-500/10 px-2.5 py-1 font-mono text-[10px] font-bold uppercase tracking-wider text-orange-700">
+              <div className="inline-flex w-fit items-center gap-2 rounded-md border border-orange-500/30 bg-orange-500/10 px-2.5 py-1 font-mono text-[10px] font-bold uppercase tracking-wider text-orange-800">
                 <span className="h-1.5 w-1.5 rounded-full bg-orange-500" />
                 System Integrator &amp; PC Builder Jakarta
               </div>
@@ -216,7 +216,7 @@ export default function HomeClient({ prebuilts, accessories, services }: HomeCli
                   href="/konsultasi"
                   className="inline-flex h-11 items-center justify-center gap-2 rounded-md border border-zinc-300 bg-white px-5 text-sm font-bold text-zinc-900 transition-colors hover:bg-zinc-100"
                 >
-                  <MessageSquareCheck className="h-4 w-4 text-emerald-600" />
+                  <MessageSquareCheck className="h-4 w-4 text-emerald-700" />
                   <span>Konsultasi Budget</span>
                 </Link>
               </div>
@@ -290,7 +290,7 @@ export default function HomeClient({ prebuilts, accessories, services }: HomeCli
                 <h3 className="text-sm font-bold leading-snug text-zinc-900 dark:text-zinc-100">
                   {srv.title}
                 </h3>
-                <p className="mt-1 line-clamp-2 text-[11px] leading-relaxed text-zinc-500 dark:text-zinc-400">
+                <p className="mt-1 line-clamp-2 text-[11px] leading-relaxed text-zinc-500 dark:text-zinc-500">
                   {srv.description}
                 </p>
 
@@ -298,7 +298,7 @@ export default function HomeClient({ prebuilts, accessories, services }: HomeCli
                   <span className="font-mono text-sm font-black text-zinc-900 dark:text-zinc-100">
                     {srv.price === 0 ? 'GRATIS' : formatIDR(srv.price)}
                   </span>
-                  <span className="font-mono text-[10px] text-zinc-400">{srv.duration}</span>
+                  <span className="font-mono text-[10px] text-zinc-500">{srv.duration}</span>
                 </div>
               </div>
 
@@ -336,7 +336,7 @@ export default function HomeClient({ prebuilts, accessories, services }: HomeCli
                   onClick={() => setSelectedUsage(tab.id as UsageFilter)}
                   className={`rounded-md px-3 py-1.5 text-xs font-semibold transition-colors ${
                     selectedUsage === tab.id
-                      ? 'bg-orange-600 text-white'
+                      ? 'bg-orange-700 text-white'
                       : 'border border-zinc-200 bg-white text-zinc-600 hover:border-zinc-300 hover:bg-zinc-100 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-300 dark:hover:bg-zinc-800'
                   }`}
                 >
@@ -346,6 +346,7 @@ export default function HomeClient({ prebuilts, accessories, services }: HomeCli
             </div>
 
             <select
+              aria-label="Filter budget paket"
               value={selectedBudget}
               onChange={(event) => setSelectedBudget(event.target.value as BudgetFilter)}
               className="rounded-md border border-zinc-200 bg-white px-3 py-2 text-xs text-zinc-700 focus:border-orange-600 focus:outline-none dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-300"
@@ -367,7 +368,7 @@ export default function HomeClient({ prebuilts, accessories, services }: HomeCli
                   setSelectedUsage('all');
                   setSelectedBudget('all');
                 }}
-                className="mt-2 text-xs font-semibold text-zinc-700 underline hover:text-orange-600 dark:text-zinc-300"
+                className="mt-2 text-xs font-semibold text-zinc-700 underline hover:text-orange-700 dark:text-zinc-300"
               >
                 Reset filter
               </button>
@@ -393,12 +394,12 @@ export default function HomeClient({ prebuilts, accessories, services }: HomeCli
             <h2 className="text-2xl font-black tracking-tight text-zinc-900 dark:text-zinc-100 sm:text-3xl">
               Belum yakin spesifikasinya?
             </h2>
-            <p className="mt-2 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
+            <p className="mt-2 text-sm leading-relaxed text-zinc-600 dark:text-zinc-500">
               Kirim budget dan kebutuhan Anda. Teknisi KSS akan menyusun racikan paling
               seimbang, lalu mengirimkan tautan penawaran resmi.
             </p>
 
-            <ul className="mt-5 space-y-2.5 text-xs text-zinc-600 dark:text-zinc-400">
+            <ul className="mt-5 space-y-2.5 text-xs text-zinc-600 dark:text-zinc-500">
               {[
                 'Tanpa biaya konsultasi',
                 'Rekomendasi bebas bottleneck',
@@ -413,14 +414,14 @@ export default function HomeClient({ prebuilts, accessories, services }: HomeCli
             </ul>
 
             <div className="mt-5 rounded-md border border-zinc-200 bg-zinc-50 p-3 dark:border-zinc-800 dark:bg-zinc-950">
-              <div className="font-mono text-[10px] uppercase tracking-tight text-zinc-400">
+              <div className="font-mono text-[10px] uppercase tracking-tight text-zinc-500">
                 Butuh jawaban cepat?
               </div>
               <a
                 href={`https://wa.me/${DEFAULT_WHATSAPP_PHONE}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-1 inline-flex items-center gap-1.5 text-xs font-bold text-emerald-600 hover:text-emerald-700 dark:text-emerald-400"
+                className="mt-1 inline-flex items-center gap-1.5 text-xs font-bold text-emerald-700 hover:text-emerald-700 dark:text-emerald-400"
               >
                 <PhoneCall className="h-3.5 w-3.5" />
                 <span>Chat teknisi via WhatsApp</span>
@@ -431,10 +432,14 @@ export default function HomeClient({ prebuilts, accessories, services }: HomeCli
           <form onSubmit={handleSendConsultation} className="space-y-3">
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
               <div>
-                <label className="mb-1 block font-mono text-[10px] font-bold uppercase tracking-tight text-zinc-500">
+                <label
+                  htmlFor="cust-name"
+                  className="mb-1 block font-mono text-[10px] font-bold uppercase tracking-tight text-zinc-500"
+                >
                   Nama
                 </label>
                 <input
+                  id="cust-name"
                   type="text"
                   required
                   placeholder="Nama lengkap"
@@ -446,7 +451,10 @@ export default function HomeClient({ prebuilts, accessories, services }: HomeCli
 
               <div>
                 <div className="mb-1 flex items-baseline justify-between">
-                  <label className="font-mono text-[10px] font-bold uppercase tracking-tight text-zinc-500">
+                  <label
+                    htmlFor="cust-budget"
+                    className="font-mono text-[10px] font-bold uppercase tracking-tight text-zinc-500"
+                  >
                     Budget
                   </label>
                   <span className="font-mono text-[11px] font-bold tabular-nums text-zinc-900 dark:text-zinc-100">
@@ -454,6 +462,7 @@ export default function HomeClient({ prebuilts, accessories, services }: HomeCli
                   </span>
                 </div>
                 <input
+                  id="cust-budget"
                   type="range"
                   min={4000000}
                   max={50000000}
@@ -466,10 +475,14 @@ export default function HomeClient({ prebuilts, accessories, services }: HomeCli
             </div>
 
             <div>
-              <label className="mb-1 block font-mono text-[10px] font-bold uppercase tracking-tight text-zinc-500">
+              <label
+                htmlFor="cust-usage"
+                className="mb-1 block font-mono text-[10px] font-bold uppercase tracking-tight text-zinc-500"
+              >
                 Kebutuhan Utama
               </label>
               <select
+                id="cust-usage"
                 value={custUsage}
                 onChange={(e) => setCustUsage(e.target.value)}
                 className="kss-input"
@@ -484,10 +497,14 @@ export default function HomeClient({ prebuilts, accessories, services }: HomeCli
             </div>
 
             <div>
-              <label className="mb-1 block font-mono text-[10px] font-bold uppercase tracking-tight text-zinc-500">
+              <label
+                htmlFor="cust-platform"
+                className="mb-1 block font-mono text-[10px] font-bold uppercase tracking-tight text-zinc-500"
+              >
                 Preferensi Platform
               </label>
               <select
+                id="cust-platform"
                 value={custPlatform}
                 onChange={(e) => setCustPlatform(e.target.value)}
                 className="kss-input"
@@ -500,10 +517,14 @@ export default function HomeClient({ prebuilts, accessories, services }: HomeCli
             </div>
 
             <div>
-              <label className="mb-1 block font-mono text-[10px] font-bold uppercase tracking-tight text-zinc-500">
+              <label
+                htmlFor="cust-notes"
+                className="mb-1 block font-mono text-[10px] font-bold uppercase tracking-tight text-zinc-500"
+              >
                 Catatan (opsional)
               </label>
               <input
+                id="cust-notes"
                 type="text"
                 placeholder="Contoh: sudah punya monitor 144Hz, ingin casing putih"
                 value={custNotes}
@@ -562,7 +583,7 @@ export default function HomeClient({ prebuilts, accessories, services }: HomeCli
                         {formatIDR(acc.retailPrice)}
                       </span>
                       {hasDiscount && (
-                        <span className="font-mono text-[10px] text-zinc-400 line-through tabular-nums">
+                        <span className="font-mono text-[10px] text-zinc-500 line-through tabular-nums">
                           {formatIDR(acc.originalPrice!)}
                         </span>
                       )}
@@ -606,10 +627,10 @@ export default function HomeClient({ prebuilts, accessories, services }: HomeCli
             return (
               <div key={item.title} className="rounded-md border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-900/60">
                 <span className="mb-3 flex h-9 w-9 items-center justify-center rounded-md bg-emerald-500/10">
-                  <Icon className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+                  <Icon className="h-4 w-4 text-emerald-700 dark:text-emerald-400" />
                 </span>
                 <h3 className="text-xs font-bold text-zinc-900 dark:text-zinc-100">{item.title}</h3>
-                <p className="mt-1 text-[11px] leading-relaxed text-zinc-500 dark:text-zinc-400">{item.text}</p>
+                <p className="mt-1 text-[11px] leading-relaxed text-zinc-500 dark:text-zinc-500">{item.text}</p>
               </div>
             );
           })}
@@ -619,7 +640,7 @@ export default function HomeClient({ prebuilts, accessories, services }: HomeCli
         <div className="mt-8 overflow-hidden rounded-md border border-zinc-200 dark:border-zinc-800 md:grid md:grid-cols-2">
           <div className="bg-white p-5 dark:bg-zinc-900/60">
             <div className="mb-3 flex items-center gap-2">
-              <span className="rounded-sm bg-orange-600 px-2 py-0.5 font-mono text-[10px] font-bold uppercase text-white">
+              <span className="rounded-sm bg-orange-700 px-2 py-0.5 font-mono text-[10px] font-bold uppercase text-white">
                 Rekomendasi
               </span>
               <span className="text-sm font-black text-zinc-900 dark:text-zinc-100">
@@ -647,7 +668,7 @@ export default function HomeClient({ prebuilts, accessories, services }: HomeCli
               <span className="rounded-sm border border-zinc-300 px-2 py-0.5 font-mono text-[10px] font-bold uppercase text-zinc-500 dark:border-zinc-700">
                 Pembanding
               </span>
-              <span className="text-sm font-black text-zinc-600 dark:text-zinc-400">
+              <span className="text-sm font-black text-zinc-600 dark:text-zinc-500">
                 Beli Part &amp; Rakit Sendiri
               </span>
             </div>
@@ -659,8 +680,8 @@ export default function HomeClient({ prebuilts, accessories, services }: HomeCli
                 'Klaim garansi masing-masing distributor',
                 'Risiko salah socket, RAM, atau ukuran casing',
               ].map((item) => (
-                <li key={item} className="flex items-start gap-2 text-[11px] text-zinc-500 dark:text-zinc-400">
-                  <X className="mt-0.5 h-3.5 w-3.5 shrink-0 text-zinc-400" />
+                <li key={item} className="flex items-start gap-2 text-[11px] text-zinc-500 dark:text-zinc-500">
+                  <X className="mt-0.5 h-3.5 w-3.5 shrink-0 text-zinc-500" />
                   <span>{item}</span>
                 </li>
               ))}
@@ -680,7 +701,7 @@ export default function HomeClient({ prebuilts, accessories, services }: HomeCli
           </div>
 
           <div className="p-6">
-            <div className="font-mono text-[10px] font-bold uppercase tracking-wider text-orange-600">
+            <div className="font-mono text-[10px] font-bold uppercase tracking-wider text-orange-700">
               Proses Rakitan KSS
             </div>
             <h3 className="mt-1 text-lg font-black tracking-tight text-zinc-900">
@@ -701,7 +722,7 @@ export default function HomeClient({ prebuilts, accessories, services }: HomeCli
                   key={step}
                   className="rounded-sm border border-zinc-200 bg-zinc-50 p-3"
                 >
-                  <span className="font-mono text-[10px] font-bold text-orange-600">
+                  <span className="font-mono text-[10px] font-bold text-orange-700">
                     0{index + 1}
                   </span>
                   <p className="mt-1 text-[11px] leading-relaxed text-zinc-600">{step}</p>

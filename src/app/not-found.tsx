@@ -4,10 +4,10 @@ import { ArrowLeft, Compass } from 'lucide-react';
 export default function NotFound() {
   return (
     <div className="kss-container flex min-h-[60vh] flex-col items-center justify-center py-16 text-center">
-      <div className="inline-flex h-12 w-12 items-center justify-center rounded-md border border-zinc-200 bg-white text-orange-600">
+      <div className="inline-flex h-12 w-12 items-center justify-center rounded-md border border-zinc-200 bg-white text-orange-700">
         <Compass className="h-6 w-6" />
       </div>
-      <div className="mt-4 font-mono text-[11px] font-bold uppercase tracking-wider text-orange-600">
+      <div className="mt-4 font-mono text-[11px] font-bold uppercase tracking-wider text-orange-700">
         Error 404
       </div>
       <h1 className="mt-1 text-2xl font-black tracking-tight text-zinc-900 sm:text-3xl">

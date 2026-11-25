@@ -21,13 +21,13 @@ export function SectionHeader({ eyebrow, title, description, action }: SectionHe
           {title}
         </h2>
         {description && (
-          <p className="mt-1 text-xs text-zinc-500 dark:text-zinc-400">{description}</p>
+          <p className="mt-1 text-xs text-zinc-500 dark:text-zinc-500">{description}</p>
         )}
       </div>
       {action && (
         <Link
           href={action.href}
-          className="inline-flex shrink-0 items-center gap-1.5 text-xs font-bold text-zinc-700 transition-colors hover:text-orange-600 dark:text-zinc-300 dark:hover:text-orange-400"
+          className="inline-flex shrink-0 items-center gap-1.5 text-xs font-bold text-zinc-700 transition-colors hover:text-orange-700 dark:text-zinc-300 dark:hover:text-orange-400"
         >
           <span>{action.label}</span>
           <ArrowRight className="h-3.5 w-3.5" />

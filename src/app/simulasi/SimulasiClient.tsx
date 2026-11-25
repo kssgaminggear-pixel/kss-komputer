@@ -302,8 +302,8 @@ export default function SimulasiPage({ parts }: SimulasiClientProps) {
 
       {/* Breadcrumb */}
       <nav className="flex items-center gap-1.5 text-xs text-zinc-500 mb-4 font-mono print:hidden">
-        <Link href="/" className="hover:text-orange-600">Beranda</Link>
-        <ChevronRight className="h-3.5 w-3.5 text-zinc-400" />
+        <Link href="/" className="hover:text-orange-700">Beranda</Link>
+        <ChevronRight className="h-3.5 w-3.5 text-zinc-500" />
         <span className="text-zinc-900 dark:text-zinc-100 font-semibold">Simulasi &amp; PC Configurator</span>
       </nav>
 
@@ -312,17 +312,17 @@ export default function SimulasiPage({ parts }: SimulasiClientProps) {
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
             <div className="mb-2 flex flex-wrap items-center gap-1.5">
-              <span className="rounded-md bg-orange-500/10 border border-orange-500/20 px-2 py-0.5 text-[10px] font-mono font-bold text-orange-600 dark:text-orange-400 uppercase">
+              <span className="rounded-md bg-orange-500/10 border border-orange-500/20 px-2 py-0.5 text-[10px] font-mono font-bold text-orange-700 dark:text-orange-400 uppercase">
                 Interactive PC Configurator
               </span>
-              <span className="rounded-md bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 text-[10px] font-mono font-bold text-emerald-600 dark:text-emerald-400">
+              <span className="rounded-md bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 text-[10px] font-mono font-bold text-emerald-700 dark:text-emerald-400">
                 Zero Part-Price Leak
               </span>
             </div>
             <h1 className="text-xl font-black tracking-tight text-zinc-900 dark:text-zinc-100 sm:text-3xl">
               Simulasi Rakitan &amp; Konsultasi Budget
             </h1>
-            <p className="mt-1 text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 max-w-3xl leading-relaxed">
+            <p className="mt-1 text-xs sm:text-sm text-zinc-600 dark:text-zinc-500 max-w-3xl leading-relaxed">
               Rancang spesifikasi PC impian Anda dengan validasi kompatibilitas soket, slot RAM, dan daya PSU otomatis. Harga satuan dirahasiakan, hanya menampilkan total rakitan siap pakai dan selisih upgrade (*Delta Pricing*).
             </p>
           </div>
@@ -334,7 +334,7 @@ export default function SimulasiPage({ parts }: SimulasiClientProps) {
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-bold transition-colors ${
                 activeTab === 'builder'
                   ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 shadow-xs'
-                  : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900'
+                  : 'text-zinc-600 dark:text-zinc-500 hover:text-zinc-900'
               }`}
             >
               <Cpu className="h-3.5 w-3.5" />
@@ -345,10 +345,10 @@ export default function SimulasiPage({ parts }: SimulasiClientProps) {
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-bold transition-colors ${
                 activeTab === 'consultation'
                   ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 shadow-xs'
-                  : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900'
+                  : 'text-zinc-600 dark:text-zinc-500 hover:text-zinc-900'
               }`}
             >
-              <PhoneCall className="h-3.5 w-3.5 text-emerald-600" />
+              <PhoneCall className="h-3.5 w-3.5 text-emerald-700" />
               <span>Konsultasi Budget (WA)</span>
             </button>
           </div>
@@ -359,7 +359,7 @@ export default function SimulasiPage({ parts }: SimulasiClientProps) {
         /* TAB 2: FORM KONSULTASI RAKITAN BY BUDGET (VIA WA) */
         <div className="rounded-md border border-zinc-200 bg-white p-6 sm:p-8 dark:border-zinc-800 dark:bg-zinc-900/60 shadow-xs max-w-3xl mx-auto">
           <div className="flex items-center gap-2 mb-2">
-            <PhoneCall className="h-5 w-5 text-emerald-600" />
+            <PhoneCall className="h-5 w-5 text-emerald-700" />
             <h2 className="text-xl font-bold text-zinc-900 dark:text-zinc-100">
               Form Konsultasi Budget ke Teknisi KSS
             </h2>
@@ -389,7 +389,7 @@ export default function SimulasiPage({ parts }: SimulasiClientProps) {
                   <label className="text-xs font-semibold text-zinc-700 dark:text-zinc-300">
                     Batas Maksimal Budget
                   </label>
-                  <span className="font-mono text-xs font-bold text-orange-600 dark:text-orange-400 tabular-nums">
+                  <span className="font-mono text-xs font-bold text-orange-700 dark:text-orange-400 tabular-nums">
                     {formatIDR(custBudget)}
                   </span>
                 </div>
@@ -449,13 +449,13 @@ export default function SimulasiPage({ parts }: SimulasiClientProps) {
                 placeholder="Contoh: Sudah punya monitor 144Hz, butuh casing warna putih, ingin SSD kapasitas 1TB..."
                 value={custNotes}
                 onChange={(e) => setCustNotes(e.target.value)}
-                className="w-full rounded-md border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950 px-3 py-2 text-xs text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 focus:outline-none focus:border-orange-600"
+                className="w-full rounded-md border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950 px-3 py-2 text-xs text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-500 focus:outline-none focus:border-orange-600"
               />
             </div>
 
             <button
               type="submit"
-              className="flex items-center justify-center gap-2 w-full rounded-md bg-emerald-600 hover:bg-emerald-700 text-white py-3 text-xs sm:text-sm font-bold transition-colors shadow-xs"
+              className="flex items-center justify-center gap-2 w-full rounded-md bg-emerald-700 hover:bg-emerald-800 text-white py-3 text-xs sm:text-sm font-bold transition-colors shadow-xs"
             >
               <MessageSquareCheck className="h-4 w-4" />
               <span>Kirimkan ke WhatsApp Konsultasi KSS</span>
@@ -470,7 +470,7 @@ export default function SimulasiPage({ parts }: SimulasiClientProps) {
             {/* Toolbar Konfigurator */}
             <div className="rounded-md border border-zinc-200 bg-white p-3.5 dark:border-zinc-800 dark:bg-zinc-900/60 shadow-xs flex flex-wrap items-center justify-between gap-3 print:hidden">
               <div className="flex items-center gap-2 flex-1 min-w-[200px]">
-                <span className="text-xs font-mono text-zinc-400">Nama Rakitan:</span>
+                <span className="text-xs font-mono text-zinc-500">Nama Rakitan:</span>
                 <input
                   type="text"
                   value={customBuildName}
@@ -486,7 +486,7 @@ export default function SimulasiPage({ parts }: SimulasiClientProps) {
                   onClick={toggleStrictFilter}
                   className={`px-2.5 py-1 rounded-md text-[11px] font-semibold border transition-colors ${
                     strictFilterEnabled
-                      ? 'border-emerald-500/30 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400'
+                      ? 'border-emerald-500/30 bg-emerald-500/10 text-emerald-700 dark:text-emerald-400'
                       : 'border-zinc-300 dark:border-zinc-700 text-zinc-500'
                   }`}
                   title="Otomatis hanya tampilkan komponen yang kompatibel di drawer"
@@ -523,14 +523,14 @@ export default function SimulasiPage({ parts }: SimulasiClientProps) {
                   <div key={slot.category} className="flex flex-col gap-3 p-4 sm:flex-row sm:items-center sm:justify-between">
                     {/* Icon & Label Kategori */}
                     <div className="flex w-full items-center gap-3 sm:w-48 sm:shrink-0">
-                      <div className="flex h-8 w-8 items-center justify-center rounded-md bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 shrink-0">
+                      <div className="flex h-8 w-8 items-center justify-center rounded-md bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-500 shrink-0">
                         <Icon className="h-4 w-4" />
                       </div>
                       <div className="min-w-0">
                         <div className="text-xs font-bold text-zinc-900 dark:text-zinc-100 truncate">
                           {slot.label}
                         </div>
-                        <div className="text-[10px] font-mono text-zinc-400 uppercase">
+                        <div className="text-[10px] font-mono text-zinc-500 uppercase">
                           {slot.category}
                         </div>
                       </div>
@@ -548,11 +548,11 @@ export default function SimulasiPage({ parts }: SimulasiClientProps) {
                             <span>•</span>
                             <span>{part.wattage}W</span>
                             <span>•</span>
-                            <span className="text-emerald-600 dark:text-emerald-400">{part.warrantyYears} Th Garansi</span>
+                            <span className="text-emerald-700 dark:text-emerald-400">{part.warrantyYears} Th Garansi</span>
                           </div>
                         </div>
                       ) : (
-                        <span className="text-xs text-zinc-400 italic">
+                        <span className="text-xs text-zinc-500 italic">
                           Belum ada komponen dipilih
                         </span>
                       )}
@@ -575,7 +575,7 @@ export default function SimulasiPage({ parts }: SimulasiClientProps) {
                               removePart(slot.category, 0);
                               showToast(`${part.name} dilepas dari slot.`);
                             }}
-                            className="p-1.5 text-zinc-400 hover:text-red-500 transition-colors"
+                            className="p-1.5 text-zinc-500 hover:text-red-500 transition-colors"
                             title="Lepas Komponen"
                           >
                             <Trash2 className="h-4 w-4" />
@@ -585,7 +585,7 @@ export default function SimulasiPage({ parts }: SimulasiClientProps) {
                         <button
                           type="button"
                           onClick={() => handleOpenDrawer(slot.category)}
-                          className="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-orange-600 hover:bg-orange-700 text-white text-xs font-bold transition-colors shadow-xs"
+                          className="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-orange-700 hover:bg-orange-800 text-white text-xs font-bold transition-colors shadow-xs"
                         >
                           <Plus className="h-3.5 w-3.5" />
                           <span>Pilih Komponen</span>
@@ -602,13 +602,13 @@ export default function SimulasiPage({ parts }: SimulasiClientProps) {
           <div className="space-y-4 lg:col-span-4 lg:sticky lg:top-24">
             <div className="rounded-md border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-900/90 shadow-sm space-y-4">
               <div className="border-b border-zinc-100 dark:border-zinc-800 pb-3">
-                <span className="text-[10px] font-mono text-zinc-400 uppercase tracking-tight block">
+                <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-tight block">
                   Total Harga Rakitan (Siap Pakai)
                 </span>
                 <div className="kss-price mt-0.5 text-2xl text-zinc-900 dark:text-zinc-100">
                   {formatIDR(totalPrice)}
                 </div>
-                <span className="text-[11px] text-emerald-600 dark:text-emerald-400 font-semibold block mt-0.5">
+                <span className="text-[11px] text-emerald-700 dark:text-emerald-400 font-semibold block mt-0.5">
                   Termasuk Jasa Rakit Rapi &amp; Pengujian Beban 24 Jam
                 </span>
               </div>
@@ -618,7 +618,7 @@ export default function SimulasiPage({ parts }: SimulasiClientProps) {
                 <div className="flex items-center justify-between">
                   <span className="font-semibold text-zinc-700 dark:text-zinc-300">Kompatibilitas:</span>
                   {compatibilityReport.isCompatible ? (
-                    <span className="flex items-center gap-1 font-bold text-emerald-600 dark:text-emerald-400">
+                    <span className="flex items-center gap-1 font-bold text-emerald-700 dark:text-emerald-400">
                       <CheckCircle2 className="h-4 w-4" />
                       100% Kompatibel
                     </span>
@@ -663,7 +663,7 @@ export default function SimulasiPage({ parts }: SimulasiClientProps) {
                 </div>
                 <div className="flex justify-between items-center bg-zinc-50 dark:bg-zinc-950 p-2.5 rounded-md border border-zinc-200 dark:border-zinc-800">
                   <span className="text-zinc-500">Rekomendasi PSU:</span>
-                  <span className="font-bold text-orange-600 dark:text-orange-400">
+                  <span className="font-bold text-orange-700 dark:text-orange-400">
                     Min. {compatibilityReport.recommendedPsuWatt}W
                   </span>
                 </div>
@@ -732,14 +732,14 @@ export default function SimulasiPage({ parts }: SimulasiClientProps) {
             {/* Drawer Header */}
             <div className="flex items-center justify-between border-b border-zinc-200 px-4 py-3 dark:border-zinc-800">
               <div className="flex items-center gap-2">
-                <SlidersHorizontal className="h-4 w-4 text-orange-600 dark:text-orange-400" />
+                <SlidersHorizontal className="h-4 w-4 text-orange-700 dark:text-orange-400" />
                 <h3 className="text-sm font-bold uppercase tracking-tight text-zinc-900 dark:text-zinc-100">
                   Pilih {CATEGORY_LABELS[activeDrawerCategory] || activeDrawerCategory}
                 </h3>
               </div>
               <button
                 onClick={() => setActiveDrawerCategory(null)}
-                className="rounded-md p-1.5 text-zinc-400 hover:bg-zinc-100 hover:text-zinc-700 dark:hover:bg-zinc-800 dark:hover:text-zinc-200"
+                className="rounded-md p-1.5 text-zinc-500 hover:bg-zinc-100 hover:text-zinc-700 dark:hover:bg-zinc-800 dark:hover:text-zinc-200"
               >
                 <X className="h-4 w-4" />
               </button>
@@ -748,7 +748,7 @@ export default function SimulasiPage({ parts }: SimulasiClientProps) {
             {/* Search Bar in Drawer */}
             <div className="p-3 border-b border-zinc-100 dark:border-zinc-900">
               <div className="relative">
-                <Search className="absolute left-2.5 top-2.5 h-3.5 w-3.5 text-zinc-400" />
+                <Search className="absolute left-2.5 top-2.5 h-3.5 w-3.5 text-zinc-500" />
                 <input
                   type="text"
                   placeholder="Cari brand, nama part, atau SKU..."
@@ -785,7 +785,7 @@ export default function SimulasiPage({ parts }: SimulasiClientProps) {
                           <span className="rounded-md bg-zinc-100 dark:bg-zinc-800 px-1.5 py-0.2 font-mono text-[9px] uppercase text-zinc-500">
                             {candidate.brand}
                           </span>
-                          <span className="font-mono text-[10px] text-zinc-400 truncate">
+                          <span className="font-mono text-[10px] text-zinc-500 truncate">
                             {candidate.sku}
                           </span>
                         </div>
@@ -797,7 +797,7 @@ export default function SimulasiPage({ parts }: SimulasiClientProps) {
                           <span>•</span>
                           <span>Garansi {candidate.warrantyYears} Th</span>
                           <span>•</span>
-                          <span className="text-emerald-600 dark:text-emerald-400">{candidate.stockStatus}</span>
+                          <span className="text-emerald-700 dark:text-emerald-400">{candidate.stockStatus}</span>
                         </div>
                       </div>
 
@@ -807,10 +807,10 @@ export default function SimulasiPage({ parts }: SimulasiClientProps) {
                           <span
                             className={`inline-block font-mono text-xs font-bold px-2 py-1 rounded-md tabular-nums ${
                               delta === 0
-                                ? 'bg-zinc-100 dark:bg-zinc-800/80 text-zinc-500 dark:text-zinc-400'
+                                ? 'bg-zinc-100 dark:bg-zinc-800/80 text-zinc-500 dark:text-zinc-500'
                                 : delta > 0
                                 ? 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/30'
-                                : 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30'
+                                : 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/30'
                             }`}
                           >
                             {formatDeltaIDR(delta, true)}
@@ -821,7 +821,7 @@ export default function SimulasiPage({ parts }: SimulasiClientProps) {
                           </span>
                         )}
                         {isCurrent && (
-                          <span className="block text-[10px] font-semibold text-orange-600 mt-1">
+                          <span className="block text-[10px] font-semibold text-orange-700 mt-1">
                             (Sedang Terpasang)
                           </span>
                         )}

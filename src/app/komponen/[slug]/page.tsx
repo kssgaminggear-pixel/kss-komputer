@@ -117,10 +117,10 @@ export default async function KomponenDetailPage({ params }: KomponenDetailPageP
   return (
     <div className="kss-container py-8">
       <nav className="mb-4 flex flex-wrap items-center gap-1.5 font-mono text-xs text-zinc-500">
-        <Link href="/" className="hover:text-orange-600">Beranda</Link>
-        <ChevronRight className="h-3.5 w-3.5 text-zinc-400" />
-        <Link href="/komponen" className="hover:text-orange-600">Komponen</Link>
-        <ChevronRight className="h-3.5 w-3.5 text-zinc-400" />
+        <Link href="/" className="hover:text-orange-700">Beranda</Link>
+        <ChevronRight className="h-3.5 w-3.5 text-zinc-500" />
+        <Link href="/komponen" className="hover:text-orange-700">Komponen</Link>
+        <ChevronRight className="h-3.5 w-3.5 text-zinc-500" />
         <span className="font-semibold text-zinc-900 dark:text-zinc-100">{part.name}</span>
       </nav>
 
@@ -153,7 +153,7 @@ export default async function KomponenDetailPage({ params }: KomponenDetailPageP
             </div>
 
             <div className="flex flex-wrap items-center gap-2">
-              <span className="rounded-md border border-orange-500/20 bg-orange-500/10 px-2 py-0.5 font-mono text-[10px] font-bold uppercase text-orange-600 dark:text-orange-400">
+              <span className="rounded-md border border-orange-500/20 bg-orange-500/10 px-2 py-0.5 font-mono text-[10px] font-bold uppercase text-orange-700 dark:text-orange-400">
                 {CATEGORY_LABELS[part.category] || part.category}
               </span>
               <span
@@ -165,7 +165,7 @@ export default async function KomponenDetailPage({ params }: KomponenDetailPageP
               >
                 {STOCK_LABELS[part.stockStatus] || part.stockStatus}
               </span>
-              <span className="font-mono text-[10px] text-zinc-400">{part.brand}</span>
+              <span className="font-mono text-[10px] text-zinc-500">{part.brand}</span>
             </div>
 
             <h1 className="mt-2 text-xl font-black tracking-tight text-zinc-900 dark:text-zinc-100 sm:text-2xl">
@@ -177,7 +177,7 @@ export default async function KomponenDetailPage({ params }: KomponenDetailPageP
                 {formatIDR(part.retailPrice)}
               </span>
               {hasDiscount && (
-                <span className="font-mono text-sm text-zinc-400 line-through tabular-nums">
+                <span className="font-mono text-sm text-zinc-500 line-through tabular-nums">
                   {formatIDR(part.originalPrice!)}
                 </span>
               )}
@@ -214,13 +214,13 @@ export default async function KomponenDetailPage({ params }: KomponenDetailPageP
 
           <section className="rounded-md border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-900/60">
             <h2 className="mb-3 flex items-center gap-2 text-sm font-bold text-zinc-900 dark:text-zinc-100">
-              <Layers className="h-4 w-4 text-orange-600 dark:text-orange-400" />
+              <Layers className="h-4 w-4 text-orange-700 dark:text-orange-400" />
               <span>Spesifikasi Lengkap</span>
             </h2>
             <dl className="divide-y divide-zinc-100 dark:divide-zinc-800">
               {specEntries.map(([key, value]) => (
                 <div key={key} className="flex items-start justify-between gap-4 py-2">
-                  <dt className="text-[11px] font-semibold text-zinc-500 dark:text-zinc-400">
+                  <dt className="text-[11px] font-semibold text-zinc-500 dark:text-zinc-500">
                     {SPEC_LABELS[key] || key}
                   </dt>
                   <dd className="text-right font-mono text-[11px] font-bold text-zinc-900 tabular-nums dark:text-zinc-100">
@@ -229,7 +229,7 @@ export default async function KomponenDetailPage({ params }: KomponenDetailPageP
                 </div>
               ))}
               <div className="flex items-start justify-between gap-4 py-2">
-                <dt className="text-[11px] font-semibold text-zinc-500 dark:text-zinc-400">
+                <dt className="text-[11px] font-semibold text-zinc-500 dark:text-zinc-500">
                   Konsumsi Daya
                 </dt>
                 <dd className="text-right font-mono text-[11px] font-bold text-zinc-900 tabular-nums dark:text-zinc-100">
@@ -238,7 +238,7 @@ export default async function KomponenDetailPage({ params }: KomponenDetailPageP
               </div>
               {part.officialDistributor && (
                 <div className="flex items-start justify-between gap-4 py-2">
-                  <dt className="text-[11px] font-semibold text-zinc-500 dark:text-zinc-400">
+                  <dt className="text-[11px] font-semibold text-zinc-500 dark:text-zinc-500">
                     Distributor Resmi
                   </dt>
                   <dd className="text-right font-mono text-[11px] font-bold text-zinc-900 dark:text-zinc-100">
@@ -262,14 +262,14 @@ export default async function KomponenDetailPage({ params }: KomponenDetailPageP
                     className="flex items-center justify-between gap-3 rounded-md border border-zinc-200 bg-white p-3 transition-colors hover:border-zinc-300 dark:border-zinc-800 dark:bg-zinc-900/60 dark:hover:border-zinc-700"
                   >
                     <div className="min-w-0">
-                      <div className="font-mono text-[10px] uppercase text-zinc-400">
+                      <div className="font-mono text-[10px] uppercase text-zinc-500">
                         {related.brand}
                       </div>
                       <div className="truncate text-xs font-bold text-zinc-900 dark:text-zinc-100">
                         {related.name}
                       </div>
                     </div>
-                    <div className="shrink-0 font-mono text-xs font-bold text-orange-600 tabular-nums dark:text-orange-400">
+                    <div className="shrink-0 font-mono text-xs font-bold text-orange-700 tabular-nums dark:text-orange-400">
                       {formatIDR(related.retailPrice)}
                     </div>
                   </Link>
@@ -284,7 +284,7 @@ export default async function KomponenDetailPage({ params }: KomponenDetailPageP
             <h2 className="mb-3 text-sm font-bold text-zinc-900 dark:text-zinc-100">
               Ringkasan Produk
             </h2>
-            <ul className="space-y-2.5 text-[11px] text-zinc-600 dark:text-zinc-400">
+            <ul className="space-y-2.5 text-[11px] text-zinc-600 dark:text-zinc-500">
               <li className="flex items-start gap-2">
                 <ShieldCheck className="mt-0.5 h-3.5 w-3.5 shrink-0 text-emerald-500" />
                 <span>Garansi resmi distributor selama {part.warrantyYears} tahun.</span>
@@ -294,11 +294,11 @@ export default async function KomponenDetailPage({ params }: KomponenDetailPageP
                 <span>Pengambilan di toko Mangga Dua Mall atau kirim via ekspedisi.</span>
               </li>
               <li className="flex items-start gap-2">
-                <Package className="mt-0.5 h-3.5 w-3.5 shrink-0 text-zinc-400" />
+                <Package className="mt-0.5 h-3.5 w-3.5 shrink-0 text-zinc-500" />
                 <span>Stok fisik diperbarui berkala. Konfirmasi via WhatsApp sebelum datang.</span>
               </li>
             </ul>
-            <div className="mt-4 rounded-md border border-zinc-200 bg-zinc-50 p-3 font-mono text-[10px] leading-relaxed text-zinc-500 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-400">
+            <div className="mt-4 rounded-md border border-zinc-200 bg-zinc-50 p-3 font-mono text-[10px] leading-relaxed text-zinc-500 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-500">
               SKU: {part.sku}
               <br />
               Diperbarui: {part.updatedAt}
@@ -316,7 +316,7 @@ export default async function KomponenDetailPage({ params }: KomponenDetailPageP
                 'Pembayaran transfer, QRIS, atau checkout Tokopedia.',
                 'Barang disiapkan, dicek, lalu dikirim/diambil.',
               ].map((step, index) => (
-                <li key={step} className="flex items-start gap-2 text-[11px] text-zinc-600 dark:text-zinc-400">
+                <li key={step} className="flex items-start gap-2 text-[11px] text-zinc-600 dark:text-zinc-500">
                   <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-sm bg-zinc-900 font-mono text-[10px] font-bold text-white dark:bg-zinc-100 dark:text-zinc-900">
                     {index + 1}
                   </span>
@@ -335,13 +335,13 @@ export default async function KomponenDetailPage({ params }: KomponenDetailPageP
             </a>
           </div>
 
-          <div className="rounded-md border border-zinc-200 bg-zinc-50 p-4 text-[11px] leading-relaxed text-zinc-500 dark:border-zinc-800 dark:bg-zinc-900/40 dark:text-zinc-400">
+          <div className="rounded-md border border-zinc-200 bg-zinc-50 p-4 text-[11px] leading-relaxed text-zinc-500 dark:border-zinc-800 dark:bg-zinc-900/40 dark:text-zinc-500">
             Butuh komponen ini dirakit menjadi PC siap pakai?{' '}
-            <Link href="/simulasi" className="font-bold text-orange-600 hover:text-orange-700 dark:text-orange-400">
+            <Link href="/simulasi" className="font-bold text-orange-700 hover:text-orange-700 dark:text-orange-400">
               Buka Simulasi Rakit
             </Link>{' '}
             atau{' '}
-            <Link href="/konsultasi" className="font-bold text-emerald-600 hover:text-emerald-700 dark:text-emerald-400">
+            <Link href="/konsultasi" className="font-bold text-emerald-700 hover:text-emerald-700 dark:text-emerald-400">
               konsultasi budget
             </Link>
             .

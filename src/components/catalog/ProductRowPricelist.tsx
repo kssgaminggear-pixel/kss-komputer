@@ -98,7 +98,7 @@ export function ProductRowPricelist({
           )}
         </div>
         <div
-          className="text-[10px] text-zinc-400 dark:text-zinc-500 truncate max-w-[110px]"
+          className="text-[10px] text-zinc-500 dark:text-zinc-500 truncate max-w-[110px]"
           title={`SKU: ${product.sku}`}
         >
           {product.sku}
@@ -110,7 +110,7 @@ export function ProductRowPricelist({
         <div className="flex items-start justify-between gap-2">
           <Link
             href={`/komponen/${product.slug}`}
-            className="font-semibold text-zinc-900 dark:text-zinc-100 hover:text-orange-600 dark:hover:text-orange-400 transition-colors leading-tight inline-flex items-center gap-1 group-hover:underline"
+            className="font-semibold text-zinc-900 dark:text-zinc-100 hover:text-orange-700 dark:hover:text-orange-400 transition-colors leading-tight inline-flex items-center gap-1 group-hover:underline"
           >
             <span>{product.name}</span>
             <ExternalLink className="w-3 h-3 opacity-0 group-hover:opacity-60 transition-opacity shrink-0" />
@@ -148,8 +148,8 @@ export function ProductRowPricelist({
           </div>
 
           {/* Garansi Resmi */}
-          <div className="flex items-center gap-1 text-[10px] font-mono text-zinc-500 dark:text-zinc-400">
-            <Shield className="w-3 h-3 shrink-0 text-zinc-400" />
+          <div className="flex items-center gap-1 text-[10px] font-mono text-zinc-500 dark:text-zinc-500">
+            <Shield className="w-3 h-3 shrink-0 text-zinc-500" />
             <span className="truncate" title={`Garansi Resmi ${product.warrantyYears} Tahun ${distributor ? `(${distributor})` : ''}`}>
               Resmi {product.warrantyYears} Thn
               {distributor ? ` (${distributor})` : ''}
@@ -165,7 +165,7 @@ export function ProductRowPricelist({
         </div>
         {hasDiscount && (
           <div className="flex items-center justify-end gap-1 font-mono text-[10px]">
-            <span className="text-zinc-400 line-through">
+            <span className="text-zinc-500 line-through">
               {formatIDR(product.originalPrice!)}
             </span>
             <span className="text-red-600 dark:text-red-400 font-bold">
@@ -185,7 +185,7 @@ export function ProductRowPricelist({
             title="Tambahkan ke Simulasi Rakitan PC"
             className={`inline-flex items-center gap-1 px-2 py-1 font-mono text-[11px] font-semibold rounded-md border transition-colors ${
               justAddedSimulasi
-                ? 'bg-emerald-600 text-white border-emerald-600'
+                ? 'bg-emerald-700 text-white border-emerald-600'
                 : 'bg-zinc-100 text-zinc-800 hover:bg-zinc-200 border-zinc-200 dark:bg-zinc-800 dark:text-zinc-200 dark:hover:bg-zinc-700 dark:border-zinc-700'
             }`}
           >
@@ -196,7 +196,7 @@ export function ProductRowPricelist({
               </>
             ) : (
               <>
-                <Plus className="w-3 h-3 text-orange-600 dark:text-orange-400" />
+                <Plus className="w-3 h-3 text-orange-700 dark:text-orange-400" />
                 <span>Simulasi</span>
               </>
             )}
@@ -209,7 +209,7 @@ export function ProductRowPricelist({
             title={comparing ? 'Hapus dari daftar perbandingan' : 'Bandingkan spesifikasi produk ini'}
             className={`p-1 rounded-md border transition-colors ${
               comparing
-                ? 'bg-orange-600 text-white border-orange-600'
+                ? 'bg-orange-700 text-white border-orange-600'
                 : 'bg-zinc-100 text-zinc-600 hover:bg-zinc-200 border-zinc-200 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700 dark:border-zinc-700'
             }`}
           >
@@ -228,10 +228,10 @@ export function ProductRowPricelist({
             }
             className={`inline-flex items-center gap-1 px-2 py-1 font-mono text-[11px] font-semibold rounded-md border transition-colors ${
               product.stockStatus === 'out_of_stock'
-                ? 'opacity-40 cursor-not-allowed bg-zinc-100 text-zinc-400 border-zinc-200 dark:bg-zinc-800 dark:border-zinc-700'
+                ? 'opacity-40 cursor-not-allowed bg-zinc-100 text-zinc-500 border-zinc-200 dark:bg-zinc-800 dark:border-zinc-700'
                 : justAddedCart
-                ? 'bg-emerald-600 text-white border-emerald-600'
-                : 'bg-orange-600 hover:bg-orange-700 text-white border-orange-600 dark:bg-orange-600 dark:hover:bg-orange-700'
+                ? 'bg-emerald-700 text-white border-emerald-600'
+                : 'bg-orange-700 hover:bg-orange-800 text-white border-orange-600 dark:bg-orange-700 dark:hover:bg-orange-800'
             }`}
           >
             {justAddedCart ? (

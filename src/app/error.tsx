@@ -27,12 +27,12 @@ export default function Error({
       <h1 className="mt-1 text-2xl font-black tracking-tight text-zinc-900 dark:text-zinc-100 sm:text-3xl">
         Halaman ini gagal dimuat
       </h1>
-      <p className="mt-2 max-w-md text-xs leading-relaxed text-zinc-600 dark:text-zinc-400">
+      <p className="mt-2 max-w-md text-xs leading-relaxed text-zinc-600 dark:text-zinc-500">
         Data paket atau layanan tidak sempat termuat. Coba muat ulang halaman.
         Kalau masih gagal, tim KSS siap membantu lewat WhatsApp.
       </p>
       {error.digest && (
-        <p className="mt-3 font-mono text-[10px] text-zinc-400">
+        <p className="mt-3 font-mono text-[10px] text-zinc-500">
           Kode laporan: {error.digest}
         </p>
       )}

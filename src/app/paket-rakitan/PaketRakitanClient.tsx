@@ -90,7 +90,7 @@ export default function PaketRakitanPage({ packages }: PaketRakitanClientProps) 
           <span>
             Menampilkan <span className="font-mono font-bold text-zinc-900 dark:text-zinc-100">{filteredPackages.length}</span> paket
           </span>
-          <span className="flex items-center gap-1.5 font-mono text-[11px] text-emerald-600 dark:text-emerald-400">
+          <span className="flex items-center gap-1.5 font-mono text-[11px] text-emerald-700 dark:text-emerald-400">
             <ShieldCheck className="h-3.5 w-3.5" />
             Garansi toko + distributor
           </span>
@@ -100,7 +100,7 @@ export default function PaketRakitanPage({ packages }: PaketRakitanClientProps) 
         <div className="mb-6 space-y-3 rounded-md border border-zinc-200 bg-white p-4 shadow-xs dark:border-zinc-800 dark:bg-zinc-900/60">
           <div className="flex items-center justify-between border-b border-zinc-100 pb-2.5 dark:border-zinc-800">
             <div className="flex items-center gap-2">
-              <SlidersHorizontal className="h-4 w-4 text-orange-600 dark:text-orange-400" />
+              <SlidersHorizontal className="h-4 w-4 text-orange-700 dark:text-orange-400" />
               <span className="text-xs font-bold uppercase tracking-tight text-zinc-900 dark:text-zinc-100">
                 Filter Spesifikasi &amp; Budget
               </span>
@@ -108,7 +108,7 @@ export default function PaketRakitanPage({ packages }: PaketRakitanClientProps) 
 
             <button
               onClick={handleResetFilters}
-              className="flex items-center gap-1 text-[11px] font-semibold text-zinc-500 hover:text-orange-600 dark:hover:text-orange-400"
+              className="flex items-center gap-1 text-[11px] font-semibold text-zinc-500 hover:text-orange-700 dark:hover:text-orange-400"
             >
               <RotateCcw className="h-3 w-3" />
               <span>Reset</span>
@@ -117,7 +117,7 @@ export default function PaketRakitanPage({ packages }: PaketRakitanClientProps) 
 
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
             <div>
-              <label className="mb-1 block font-mono text-[10px] uppercase text-zinc-400">Kebutuhan</label>
+              <label className="mb-1 block font-mono text-[10px] uppercase text-zinc-500">Kebutuhan</label>
               <select
                 value={selectedUsage}
                 onChange={(e) => setSelectedUsage(e.target.value as UsageFilter)}
@@ -132,7 +132,7 @@ export default function PaketRakitanPage({ packages }: PaketRakitanClientProps) 
             </div>
 
             <div>
-              <label className="mb-1 block font-mono text-[10px] uppercase text-zinc-400">Platform</label>
+              <label className="mb-1 block font-mono text-[10px] uppercase text-zinc-500">Platform</label>
               <select
                 value={selectedPlatform}
                 onChange={(e) => setSelectedPlatform(e.target.value as PlatformFilter)}
@@ -145,7 +145,7 @@ export default function PaketRakitanPage({ packages }: PaketRakitanClientProps) 
             </div>
 
             <div>
-              <label className="mb-1 block font-mono text-[10px] uppercase text-zinc-400">Budget</label>
+              <label className="mb-1 block font-mono text-[10px] uppercase text-zinc-500">Budget</label>
               <select
                 value={selectedBudget}
                 onChange={(e) => setSelectedBudget(e.target.value as BudgetFilter)}
@@ -160,7 +160,7 @@ export default function PaketRakitanPage({ packages }: PaketRakitanClientProps) 
             </div>
 
             <div>
-              <label className="mb-1 block font-mono text-[10px] uppercase text-zinc-400">Urutkan</label>
+              <label className="mb-1 block font-mono text-[10px] uppercase text-zinc-500">Urutkan</label>
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value as SortOption)}

@@ -70,14 +70,14 @@ function TrackingStatusContent({ trackings }: { trackings: BuildOrderTracking[] 
           <h1 className="text-2xl font-black tracking-tight text-zinc-900 dark:text-zinc-50 sm:text-3xl">
             Cek Status Rakit &amp; Servis PC
           </h1>
-          <p className="mt-2 max-w-2xl text-xs leading-relaxed text-zinc-600 dark:text-zinc-400 sm:text-sm">
+          <p className="mt-2 max-w-2xl text-xs leading-relaxed text-zinc-600 dark:text-zinc-500 sm:text-sm">
             Masukkan kode resi internal dari teknisi KSS untuk melihat progres pengerjaan
             secara real-time, dari verifikasi pembayaran sampai unit siap diambil.
           </p>
 
           <form onSubmit={handleSubmit} className="mt-5 flex max-w-2xl flex-col gap-2 sm:flex-row">
             <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-zinc-400" />
+              <Search className="absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-zinc-500" />
               <input
                 type="text"
                 value={inputCode}
@@ -92,7 +92,7 @@ function TrackingStatusContent({ trackings }: { trackings: BuildOrderTracking[] 
               <span>Cek Status</span>
             </button>
           </form>
-          <p className="mt-2 font-mono text-[11px] text-zinc-400">
+          <p className="mt-2 font-mono text-[11px] text-zinc-500">
             Kode demo: TRK-KSS-001 · TRK-KSS-002 · TRK-KSS-003
           </p>
         </div>
@@ -101,13 +101,13 @@ function TrackingStatusContent({ trackings }: { trackings: BuildOrderTracking[] 
       <div className="kss-container py-6">
       {/* Hasil */}
       {!isHydrated ? (
-        <div className="rounded-md border border-zinc-200 bg-white p-8 text-center text-xs text-zinc-400 font-mono dark:border-zinc-800 dark:bg-zinc-900/60">
+        <div className="rounded-md border border-zinc-200 bg-white p-8 text-center text-xs text-zinc-500 font-mono dark:border-zinc-800 dark:bg-zinc-900/60">
           Memuat data pengerjaan...
         </div>
       ) : !searchedCode ? (
         <div className="rounded-md border border-dashed border-zinc-300 bg-zinc-50 p-8 text-center dark:border-zinc-700 dark:bg-zinc-900/40">
-          <AlertCircle className="mx-auto h-6 w-6 text-zinc-400 mb-2" />
-          <p className="text-xs text-zinc-500 dark:text-zinc-400">
+          <AlertCircle className="mx-auto h-6 w-6 text-zinc-500 mb-2" />
+          <p className="text-xs text-zinc-500 dark:text-zinc-500">
             Belum ada kode resi yang dicek. Masukkan kode resi di atas untuk melihat progres pengerjaan.
           </p>
         </div>
@@ -132,10 +132,10 @@ function TrackingStatusContent({ trackings }: { trackings: BuildOrderTracking[] 
           <div className="lg:col-span-1 flex flex-col gap-4">
             <div className="rounded-md border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-900/60 shadow-xs">
               <div className="flex items-center justify-between mb-3">
-                <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-zinc-400">
+                <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-zinc-500">
                   Kode Resi
                 </span>
-                <span className="rounded-md border border-emerald-500/20 bg-emerald-500/10 px-2 py-0.5 font-mono text-[10px] font-bold text-emerald-600 dark:text-emerald-400">
+                <span className="rounded-md border border-emerald-500/20 bg-emerald-500/10 px-2 py-0.5 font-mono text-[10px] font-bold text-emerald-700 dark:text-emerald-400">
                   {tracking.trackingCode}
                 </span>
               </div>
@@ -146,24 +146,24 @@ function TrackingStatusContent({ trackings }: { trackings: BuildOrderTracking[] 
 
               <div className="mt-3 flex flex-col gap-2 text-xs">
                 <div className="flex items-start gap-2">
-                  <Package className="h-3.5 w-3.5 text-zinc-400 shrink-0 mt-0.5" />
-                  <span className="text-zinc-600 dark:text-zinc-400">
+                  <Package className="h-3.5 w-3.5 text-zinc-500 shrink-0 mt-0.5" />
+                  <span className="text-zinc-600 dark:text-zinc-500">
                     {ORDER_TYPE_LABELS[tracking.orderType] ?? tracking.orderType}
                   </span>
                 </div>
                 <div className="flex items-start gap-2">
-                  <Wrench className="h-3.5 w-3.5 text-zinc-400 shrink-0 mt-0.5" />
-                  <span className="text-zinc-600 dark:text-zinc-400">{tracking.customerName}</span>
+                  <Wrench className="h-3.5 w-3.5 text-zinc-500 shrink-0 mt-0.5" />
+                  <span className="text-zinc-600 dark:text-zinc-500">{tracking.customerName}</span>
                 </div>
                 <div className="flex items-start gap-2">
-                  <CalendarClock className="h-3.5 w-3.5 text-zinc-400 shrink-0 mt-0.5" />
-                  <span className="text-zinc-600 dark:text-zinc-400">
+                  <CalendarClock className="h-3.5 w-3.5 text-zinc-500 shrink-0 mt-0.5" />
+                  <span className="text-zinc-600 dark:text-zinc-500">
                     Estimasi selesai: {formatDateID(tracking.estimatedCompletion)}
                   </span>
                 </div>
                 <div className="flex items-start gap-2">
-                  <MessageSquare className="h-3.5 w-3.5 text-zinc-400 shrink-0 mt-0.5" />
-                  <span className="text-zinc-600 dark:text-zinc-400">
+                  <MessageSquare className="h-3.5 w-3.5 text-zinc-500 shrink-0 mt-0.5" />
+                  <span className="text-zinc-600 dark:text-zinc-500">
                     Update terakhir: {formatDateID(tracking.updatedAt)}
                   </span>
                 </div>
@@ -171,10 +171,10 @@ function TrackingStatusContent({ trackings }: { trackings: BuildOrderTracking[] 
 
               {tracking.adminNotes && (
                 <div className="mt-4 rounded-md border border-zinc-200 bg-zinc-50 p-3 dark:border-zinc-800 dark:bg-zinc-950">
-                  <div className="font-mono text-[10px] font-bold uppercase tracking-wider text-zinc-400 mb-1">
+                  <div className="font-mono text-[10px] font-bold uppercase tracking-wider text-zinc-500 mb-1">
                     Catatan Teknisi
                   </div>
-                  <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
+                  <p className="text-xs text-zinc-600 dark:text-zinc-500 leading-relaxed">
                     {tracking.adminNotes}
                   </p>
                 </div>
@@ -186,7 +186,7 @@ function TrackingStatusContent({ trackings }: { trackings: BuildOrderTracking[] 
                 )}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-md bg-emerald-600 hover:bg-emerald-700 px-4 py-2.5 text-xs font-bold text-white transition-colors"
+                className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-md bg-emerald-700 hover:bg-emerald-800 px-4 py-2.5 text-xs font-bold text-white transition-colors"
               >
                 <PhoneCall className="h-3.5 w-3.5" />
                 <span>Hubungi Teknisi via WA</span>
@@ -222,13 +222,13 @@ function TrackingStatusContent({ trackings }: { trackings: BuildOrderTracking[] 
                     {/* Ikon status */}
                     <span className="relative z-10 flex h-[19px] w-[19px] shrink-0 items-center justify-center">
                       {isDone ? (
-                        <CheckCircle2 className="h-[18px] w-[18px] text-emerald-600 dark:text-emerald-400" />
+                        <CheckCircle2 className="h-[18px] w-[18px] text-emerald-700 dark:text-emerald-400" />
                       ) : isActive ? (
-                        <Loader2 className="h-[18px] w-[18px] animate-spin text-orange-600 dark:text-orange-400" />
+                        <Loader2 className="h-[18px] w-[18px] animate-spin text-orange-700 dark:text-orange-400" />
                       ) : (
                         <Circle
                           className={`h-[18px] w-[18px] ${
-                            isPending ? 'text-zinc-300 dark:text-zinc-700' : 'text-zinc-400'
+                            isPending ? 'text-zinc-300 dark:text-zinc-700' : 'text-zinc-500'
                           }`}
                         />
                       )}
@@ -243,24 +243,24 @@ function TrackingStatusContent({ trackings }: { trackings: BuildOrderTracking[] 
                               ? 'text-emerald-700 dark:text-emerald-400'
                               : isActive
                                 ? 'text-orange-700 dark:text-orange-400'
-                                : 'text-zinc-400 dark:text-zinc-500'
+                                : 'text-zinc-500 dark:text-zinc-500'
                           }`}
                         >
                           {TRACKING_STAGE_LABELS[stage] ?? stage}
                         </span>
                         {isActive && (
-                          <span className="rounded-md border border-orange-500/20 bg-orange-500/10 px-1.5 py-0.5 font-mono text-[9px] font-bold uppercase text-orange-600 dark:text-orange-400">
+                          <span className="rounded-md border border-orange-500/20 bg-orange-500/10 px-1.5 py-0.5 font-mono text-[9px] font-bold uppercase text-orange-700 dark:text-orange-400">
                             Sedang Dikerjakan
                           </span>
                         )}
                         {entry?.timestamp && (
-                          <span className="font-mono text-[10px] text-zinc-400">
+                          <span className="font-mono text-[10px] text-zinc-500">
                             {formatDateID(entry.timestamp)}
                           </span>
                         )}
                       </div>
                       {entry?.notes && (
-                        <p className="mt-1 text-[11px] text-zinc-500 dark:text-zinc-400 leading-relaxed">
+                        <p className="mt-1 text-[11px] text-zinc-500 dark:text-zinc-500 leading-relaxed">
                           {entry.notes}
                         </p>
                       )}
@@ -281,7 +281,7 @@ export default function CekPesananClient({ trackings }: { trackings: BuildOrderT
   return (
     <Suspense
       fallback={
-        <div className="mx-auto max-w-7xl px-4 py-16 text-center text-xs text-zinc-400 font-mono">
+        <div className="mx-auto max-w-7xl px-4 py-16 text-center text-xs text-zinc-500 font-mono">
           Memuat halaman tracking...
         </div>
       }

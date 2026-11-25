@@ -124,7 +124,7 @@ export default function AdminPricingClient({ parts }: { parts: HardwarePart[] })
       {/* Breadcrumb */}
       <nav className="flex items-center gap-1.5 text-xs text-zinc-500 mb-4 font-mono">
         <Link href="/" className="hover:text-blue-600">Beranda</Link>
-        <ChevronRight className="h-3.5 w-3.5 text-zinc-400" />
+        <ChevronRight className="h-3.5 w-3.5 text-zinc-500" />
         <span className="text-zinc-900 dark:text-zinc-100 font-semibold">Admin Portal Pricing</span>
         <AdminLogoutButton />
       </nav>
@@ -137,12 +137,12 @@ export default function AdminPricingClient({ parts }: { parts: HardwarePart[] })
               <span className="rounded-xs bg-red-500/10 border border-red-500/20 px-2 py-0.5 text-[10px] font-mono font-bold text-red-600 dark:text-red-400 uppercase">
                 Owner Only • Confidential
               </span>
-              <span className="text-xs font-mono text-zinc-400">Database Margin &amp; Cost Control</span>
+              <span className="text-xs font-mono text-zinc-500">Database Margin &amp; Cost Control</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-zinc-900 dark:text-zinc-100">
               Admin Spreadsheet: Modal, Markup &amp; Harga Rakitan
             </h1>
-            <p className="mt-1 text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 max-w-3xl leading-relaxed">
+            <p className="mt-1 text-xs sm:text-sm text-zinc-600 dark:text-zinc-500 max-w-3xl leading-relaxed">
               Atur harga modal riil distributor (`costPrice`), tetapkan markup margin toko, dan kelola harga bundel rakitan secara langsung. Data ini dirahasiakan dan tidak pernah bocor ke antarmuka publik.
             </p>
           </div>
@@ -162,25 +162,25 @@ export default function AdminPricingClient({ parts }: { parts: HardwarePart[] })
       {/* KPI Stats Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 mb-6">
         <div className="rounded-sm border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900/60 shadow-xs font-mono">
-          <span className="text-[11px] text-zinc-400 uppercase">Rata-rata Margin Markup:</span>
+          <span className="text-[11px] text-zinc-500 uppercase">Rata-rata Margin Markup:</span>
           <div className="text-xl font-bold text-blue-600 dark:text-blue-400 mt-1">
             {stats.avgMargin.toFixed(1)}%
           </div>
         </div>
         <div className="rounded-sm border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900/60 shadow-xs font-mono">
-          <span className="text-[11px] text-zinc-400 uppercase">Akumulasi Modal ({parts.length} SKU):</span>
+          <span className="text-[11px] text-zinc-500 uppercase">Akumulasi Modal ({parts.length} SKU):</span>
           <div className="text-lg font-bold text-zinc-900 dark:text-zinc-100 mt-1 tabular-nums">
             {formatIDR(stats.totalCost)}
           </div>
         </div>
         <div className="rounded-sm border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900/60 shadow-xs font-mono">
-          <span className="text-[11px] text-zinc-400 uppercase">Akumulasi Nilai Jual:</span>
-          <div className="text-lg font-bold text-emerald-600 dark:text-emerald-400 mt-1 tabular-nums">
+          <span className="text-[11px] text-zinc-500 uppercase">Akumulasi Nilai Jual:</span>
+          <div className="text-lg font-bold text-emerald-700 dark:text-emerald-400 mt-1 tabular-nums">
             {formatIDR(stats.totalSell)}
           </div>
         </div>
         <div className="rounded-sm border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900/60 shadow-xs font-mono">
-          <span className="text-[11px] text-zinc-400 uppercase">Estimasi Laba Kotor Toko:</span>
+          <span className="text-[11px] text-zinc-500 uppercase">Estimasi Laba Kotor Toko:</span>
           <div className="text-lg font-bold text-purple-600 dark:text-purple-400 mt-1 tabular-nums">
             {formatIDR(stats.totalProfit)}
           </div>
@@ -254,13 +254,13 @@ export default function AdminPricingClient({ parts }: { parts: HardwarePart[] })
         {/* Search & Category Filter */}
         <div className="pt-3 border-t border-zinc-100 dark:border-zinc-800 flex items-center gap-3">
           <div className="relative flex-1 max-w-md">
-            <Search className="absolute left-2.5 top-2.5 h-3.5 w-3.5 text-zinc-400" />
+            <Search className="absolute left-2.5 top-2.5 h-3.5 w-3.5 text-zinc-500" />
             <input
               type="text"
               placeholder="Cari SKU atau nama komponen..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full rounded-sm border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-950 pl-8 pr-3 py-1.5 text-xs text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 focus:outline-none focus:border-blue-600"
+              className="w-full rounded-sm border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-950 pl-8 pr-3 py-1.5 text-xs text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-500 focus:outline-none focus:border-blue-600"
             />
           </div>
 
@@ -309,7 +309,7 @@ export default function AdminPricingClient({ parts }: { parts: HardwarePart[] })
                 >
                   <td className="py-2 px-3 whitespace-nowrap">
                     <span className="font-bold text-zinc-900 dark:text-zinc-100 block">{part.sku}</span>
-                    <span className="text-[10px] text-zinc-400">{part.brand}</span>
+                    <span className="text-[10px] text-zinc-500">{part.brand}</span>
                   </td>
 
                   <td className="py-2 px-3 font-sans font-semibold text-zinc-900 dark:text-zinc-100 max-w-sm">
@@ -336,7 +336,7 @@ export default function AdminPricingClient({ parts }: { parts: HardwarePart[] })
                     />
                   </td>
 
-                  <td className="py-2 px-3 text-right whitespace-nowrap font-bold text-emerald-600 dark:text-emerald-400 tabular-nums">
+                  <td className="py-2 px-3 text-right whitespace-nowrap font-bold text-emerald-700 dark:text-emerald-400 tabular-nums">
                     {formatIDR(prices.profit)}
                   </td>
 
@@ -344,7 +344,7 @@ export default function AdminPricingClient({ parts }: { parts: HardwarePart[] })
                     <span
                       className={`px-1.5 py-0.5 rounded-xs text-[11px] font-bold ${
                         prices.marginPercent >= 15
-                          ? 'bg-emerald-500/10 text-emerald-600'
+                          ? 'bg-emerald-500/10 text-emerald-700'
                           : prices.marginPercent >= 10
                           ? 'bg-blue-500/10 text-blue-600'
                           : 'bg-amber-500/10 text-amber-600'

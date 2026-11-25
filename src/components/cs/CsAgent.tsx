@@ -234,8 +234,8 @@ export function CsAgent() {
         <button
           type="button"
           onClick={() => setIsOpen(true)}
-          className="fixed bottom-20 right-4 z-40 inline-flex items-center gap-2 rounded-md border border-orange-500/30 bg-orange-600 px-3 py-2.5 text-xs font-bold text-white shadow-sm transition-colors hover:bg-orange-500 md:bottom-6 print:hidden"
-          aria-label="Buka CS Agent KSS 24 jam"
+          className="fixed bottom-20 right-4 z-40 inline-flex items-center gap-2 rounded-md border border-orange-500/30 bg-orange-700 px-3 py-2.5 text-xs font-bold text-white shadow-sm transition-colors hover:bg-orange-800 md:bottom-6 print:hidden"
+          aria-label="Buka CS 24 Jam"
         >
           <MessageCircle className="h-4 w-4" />
           <span>CS 24 Jam</span>
@@ -253,7 +253,7 @@ export function CsAgent() {
           className="fixed bottom-20 right-4 z-50 flex h-[min(560px,calc(100vh-7rem))] w-[calc(100vw-2rem)] max-w-[390px] flex-col overflow-hidden rounded-md border border-zinc-200 bg-white shadow-sm md:bottom-6 print:hidden"
         >
           {/* Header */}
-          <div className="flex items-center gap-2.5 bg-orange-600 px-3.5 py-3 text-white">
+          <div className="flex items-center gap-2.5 bg-orange-700 px-3.5 py-3 text-white">
             <Image
               src="/images/brand/kss-logo-light.png"
               width={32}
@@ -297,7 +297,7 @@ export function CsAgent() {
                 <div
                   className={`max-w-[85%] rounded-md px-3 py-2 text-[11px] leading-relaxed ${
                     message.role === 'user'
-                      ? 'bg-orange-600 text-white'
+                      ? 'bg-orange-700 text-white'
                       : 'border border-zinc-200 bg-white text-zinc-700'
                   }`}
                 >
@@ -328,7 +328,7 @@ export function CsAgent() {
                     key={prompt}
                     type="button"
                     onClick={() => void sendMessage(prompt)}
-                    className="rounded-sm border border-zinc-200 bg-white px-2 py-1 text-left text-[10px] font-semibold text-zinc-600 transition-colors hover:border-orange-300 hover:text-orange-600"
+                    className="rounded-sm border border-zinc-200 bg-white px-2 py-1 text-left text-[10px] font-semibold text-zinc-600 transition-colors hover:border-orange-300 hover:text-orange-700"
                   >
                     {prompt}
                   </button>
@@ -348,18 +348,18 @@ export function CsAgent() {
                 onKeyDown={handleKeyDown}
                 maxLength={1000}
                 placeholder="Tulis pertanyaan Anda..."
-                className="max-h-24 min-h-9 flex-1 resize-none rounded-md border border-zinc-300 bg-white px-2.5 py-2 text-xs text-zinc-900 placeholder:text-zinc-400 focus:border-orange-500 focus:outline-none"
+                className="max-h-24 min-h-9 flex-1 resize-none rounded-md border border-zinc-300 bg-white px-2.5 py-2 text-xs text-zinc-900 placeholder:text-zinc-500 focus:border-orange-500 focus:outline-none"
               />
               <button
                 type="submit"
                 disabled={!input.trim() || isLoading}
-                className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-orange-600 text-white transition-colors hover:bg-orange-500 disabled:cursor-not-allowed disabled:bg-zinc-300"
+                className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-orange-700 text-white transition-colors hover:bg-orange-800 disabled:cursor-not-allowed disabled:bg-zinc-300"
                 aria-label="Kirim pesan"
               >
                 <Send className="h-3.5 w-3.5" />
               </button>
             </form>
-            <div className="mt-1.5 flex items-center justify-between gap-2 font-mono text-[9px] text-zinc-400">
+            <div className="mt-1.5 flex items-center justify-between gap-2 font-mono text-[9px] text-zinc-500">
               <span className="flex items-center gap-1">
                 <ShieldCheck className="h-3 w-3 text-emerald-500" />
                 Harga part tidak ditampilkan
@@ -368,8 +368,8 @@ export function CsAgent() {
                 href={waUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`font-bold transition-colors hover:text-emerald-600 ${
-                  isOffline ? 'text-emerald-600' : 'text-zinc-500'
+                className={`font-bold transition-colors hover:text-emerald-700 ${
+                  isOffline ? 'text-emerald-700' : 'text-zinc-500'
                 }`}
               >
                 Lanjut ke WhatsApp teknisi

@@ -51,7 +51,7 @@ export function KomponenDetailActions({ part }: { part: PublicHardwarePart }) {
           type="button"
           onClick={handleAdd}
           className={`flex flex-1 items-center justify-center gap-2 rounded-md px-4 py-2.5 text-xs font-bold text-white transition-colors ${
-            added ? 'bg-emerald-600 hover:bg-emerald-700' : 'bg-orange-600 hover:bg-orange-700'
+            added ? 'bg-emerald-700 hover:bg-emerald-800' : 'bg-orange-700 hover:bg-orange-800'
           }`}
         >
           {added ? <Check className="h-4 w-4" /> : <ShoppingBag className="h-4 w-4" />}

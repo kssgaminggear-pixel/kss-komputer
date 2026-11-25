@@ -174,9 +174,9 @@ export default function AdminQuotesClient({
       {/* Breadcrumb */}
       <nav className="flex items-center gap-1.5 text-xs text-zinc-500 mb-4 font-mono">
         <Link href="/" className="hover:text-blue-600">Beranda</Link>
-        <ChevronRight className="h-3.5 w-3.5 text-zinc-400" />
+        <ChevronRight className="h-3.5 w-3.5 text-zinc-500" />
         <Link href="/admin/pricing" className="hover:text-blue-600">Admin Portal</Link>
-        <ChevronRight className="h-3.5 w-3.5 text-zinc-400" />
+        <ChevronRight className="h-3.5 w-3.5 text-zinc-500" />
         <span className="text-zinc-900 dark:text-zinc-100 font-semibold">WA Consultation Quotation Maker</span>
         <AdminLogoutButton />
       </nav>
@@ -189,14 +189,14 @@ export default function AdminQuotesClient({
               <span className="rounded-xs bg-blue-500/10 border border-blue-500/20 px-2 py-0.5 text-[10px] font-mono font-bold text-blue-600 dark:text-blue-400 uppercase">
                 Admin Quotation Generator
               </span>
-              <span className="text-xs font-mono text-zinc-400">
+              <span className="text-xs font-mono text-zinc-500">
                 {quotes.length} Dokumen Penawaran
               </span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-zinc-900 dark:text-zinc-100">
               Generator Surat Penawaran Konsultasi WhatsApp
             </h1>
-            <p className="mt-1 text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 max-w-3xl leading-relaxed">
+            <p className="mt-1 text-xs sm:text-sm text-zinc-600 dark:text-zinc-500 max-w-3xl leading-relaxed">
               Ketika konsumen meminta rakitan di WhatsApp dengan budget tertentu, buatkan penawaran resmi di sini. Anda dapat melihat modal riil toko dan menentukan harga paket final, lalu kirim link penawaran resmi langsung ke WA konsumen.
             </p>
           </div>
@@ -301,21 +301,21 @@ export default function AdminQuotesClient({
           {/* Kalkulasi Profit & Penetapan Harga Final */}
           <div className="rounded-sm border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 p-4 grid grid-cols-1 sm:grid-cols-4 gap-4 items-center">
             <div className="font-mono text-xs">
-              <span className="text-zinc-400 block">Total Modal Toko:</span>
+              <span className="text-zinc-500 block">Total Modal Toko:</span>
               <span className="text-sm font-bold text-zinc-700 dark:text-zinc-300 tabular-nums">
                 {formatIDR(totalCost)}
               </span>
             </div>
 
             <div className="font-mono text-xs">
-              <span className="text-zinc-400 block">Harga Normal + Rakit:</span>
+              <span className="text-zinc-500 block">Harga Normal + Rakit:</span>
               <span className="text-sm font-bold text-zinc-900 dark:text-zinc-100 tabular-nums">
                 {formatIDR(normalSellPrice)}
               </span>
             </div>
 
             <div>
-              <label className="block text-[11px] font-mono text-zinc-400 mb-0.5">
+              <label className="block text-[11px] font-mono text-zinc-500 mb-0.5">
                 Harga Final Penawaran (IDR):
               </label>
               <input
@@ -328,8 +328,8 @@ export default function AdminQuotesClient({
             </div>
 
             <div className="font-mono text-xs">
-              <span className="text-zinc-400 block">Estimasi Net Profit Toko:</span>
-              <span className="text-sm font-bold text-emerald-600 dark:text-emerald-400 tabular-nums">
+              <span className="text-zinc-500 block">Estimasi Net Profit Toko:</span>
+              <span className="text-sm font-bold text-emerald-700 dark:text-emerald-400 tabular-nums">
                 {formatIDR(netProfit)} (
                 {totalCost > 0 ? ((netProfit / totalCost) * 100).toFixed(1) : 0}%)
               </span>
@@ -374,7 +374,7 @@ export default function AdminQuotesClient({
                   <span className="font-bold text-blue-600 dark:text-blue-400 block">
                     {quote.quoteCode}
                   </span>
-                  <span className="text-[10px] text-zinc-400">Dibuat: {quote.createdAt}</span>
+                  <span className="text-[10px] text-zinc-500">Dibuat: {quote.createdAt}</span>
                 </td>
 
                 <td className="py-3 px-3 font-sans whitespace-nowrap">
@@ -394,7 +394,7 @@ export default function AdminQuotesClient({
                   <span
                     className={`px-2 py-0.5 rounded-xs text-[10px] font-bold uppercase ${
                       quote.status === 'accepted'
-                        ? 'bg-emerald-500/10 text-emerald-600 border border-emerald-500/20'
+                        ? 'bg-emerald-500/10 text-emerald-700 border border-emerald-500/20'
                         : quote.status === 'sent'
                         ? 'bg-blue-500/10 text-blue-600 border border-blue-500/20'
                         : 'bg-zinc-100 dark:bg-zinc-800 text-zinc-500'
@@ -409,7 +409,7 @@ export default function AdminQuotesClient({
                     <button
                       type="button"
                       onClick={() => handleSendWA(quote)}
-                      className="flex items-center gap-1 px-2.5 py-1 rounded-sm bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-bold transition-colors"
+                      className="flex items-center gap-1 px-2.5 py-1 rounded-sm bg-emerald-700 hover:bg-emerald-800 text-white text-[11px] font-bold transition-colors"
                       title="Kirim Link Penawaran Resmi via WhatsApp"
                     >
                       <Send className="h-3 w-3" />
@@ -433,7 +433,7 @@ export default function AdminQuotesClient({
                           showToast('Penawaran dihapus.');
                         }
                       }}
-                      className="p-1 rounded-sm text-zinc-400 hover:text-red-500"
+                      className="p-1 rounded-sm text-zinc-500 hover:text-red-500"
                       title="Hapus"
                     >
                       <Trash2 className="h-3.5 w-3.5" />

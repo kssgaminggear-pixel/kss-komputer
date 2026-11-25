@@ -60,21 +60,21 @@ export default function TentangKamiPage() {
     <div className="kss-container py-8">
       <JsonLd data={faqSchema(STORE_FAQS)} />
       <nav className="mb-4 flex items-center gap-1.5 font-mono text-xs text-zinc-500">
-        <Link href="/" className="hover:text-orange-600">Beranda</Link>
-        <ChevronRight className="h-3.5 w-3.5 text-zinc-400" />
+        <Link href="/" className="hover:text-orange-700">Beranda</Link>
+        <ChevronRight className="h-3.5 w-3.5 text-zinc-500" />
         <span className="font-semibold text-zinc-900 dark:text-zinc-100">Tentang Kami</span>
       </nav>
 
       {/* Hero */}
       <section className="rounded-md border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-900/60 sm:p-8">
-        <div className="mb-2 flex items-center gap-2 font-mono text-[11px] font-bold uppercase tracking-tight text-orange-600 dark:text-orange-400">
+        <div className="mb-2 flex items-center gap-2 font-mono text-[11px] font-bold uppercase tracking-tight text-orange-700 dark:text-orange-400">
           <Wrench className="h-3.5 w-3.5" />
           <span>Bengkel Rakit &amp; Servis PC</span>
         </div>
         <h1 className="max-w-3xl text-2xl font-black tracking-tight text-zinc-900 dark:text-zinc-100 sm:text-3xl">
           Bukan sekadar toko online — kami merakit, menguji, dan merawat PC Anda.
         </h1>
-        <p className="mt-2 max-w-3xl text-xs leading-relaxed text-zinc-600 dark:text-zinc-400 sm:text-sm">
+        <p className="mt-2 max-w-3xl text-xs leading-relaxed text-zinc-600 dark:text-zinc-500 sm:text-sm">
           KSS Komputer beroperasi sebagai system integrator dan service center di Mangga Dua
           Mall, Jakarta. Setiap unit melewati pemeriksaan kompatibilitas, perakitan rapi,
           stress test, dan quality control sebelum diserahkan ke konsumen.
@@ -106,7 +106,7 @@ export default function TentangKamiPage() {
             href={waUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 rounded-md bg-emerald-600 px-4 py-2.5 text-xs font-bold text-white transition-colors hover:bg-emerald-700"
+            className="inline-flex items-center justify-center gap-2 rounded-md bg-emerald-700 px-4 py-2.5 text-xs font-bold text-white transition-colors hover:bg-emerald-800"
           >
             <PhoneCall className="h-4 w-4" />
             <span>Konsultasi via WhatsApp</span>
@@ -115,7 +115,7 @@ export default function TentangKamiPage() {
             href="/konsultasi"
             className="inline-flex items-center justify-center gap-2 rounded-md border border-zinc-300 px-4 py-2.5 text-xs font-bold text-zinc-800 transition-colors hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-200 dark:hover:bg-zinc-900"
           >
-            <MessageSquareCheck className="h-4 w-4 text-orange-600 dark:text-orange-400" />
+            <MessageSquareCheck className="h-4 w-4 text-orange-700 dark:text-orange-400" />
             <span>Mulai Wizard Konsultasi</span>
           </Link>
         </div>
@@ -146,9 +146,9 @@ export default function TentangKamiPage() {
               key={item.title}
               className="rounded-md border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-900/60"
             >
-              <Icon className="mb-2 h-5 w-5 text-orange-600 dark:text-orange-400" />
+              <Icon className="mb-2 h-5 w-5 text-orange-700 dark:text-orange-400" />
               <h2 className="text-sm font-bold text-zinc-900 dark:text-zinc-100">{item.title}</h2>
-              <p className="mt-1 text-[11px] leading-relaxed text-zinc-500 dark:text-zinc-400">
+              <p className="mt-1 text-[11px] leading-relaxed text-zinc-500 dark:text-zinc-500">
                 {item.body}
               </p>
             </div>
@@ -160,7 +160,7 @@ export default function TentangKamiPage() {
       <section className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)]">
         <div>
           <h2 className="mb-3 flex items-center gap-2 text-sm font-bold text-zinc-900 dark:text-zinc-100">
-            <Users className="h-4 w-4 text-orange-600 dark:text-orange-400" />
+            <Users className="h-4 w-4 text-orange-700 dark:text-orange-400" />
             <span>Tim Teknisi</span>
           </h2>
           <div className="space-y-3">
@@ -178,7 +178,7 @@ export default function TentangKamiPage() {
                     <div className="text-xs font-bold text-zinc-900 dark:text-zinc-100">
                       {member.role}
                     </div>
-                    <p className="mt-0.5 text-[11px] leading-relaxed text-zinc-500 dark:text-zinc-400">
+                    <p className="mt-0.5 text-[11px] leading-relaxed text-zinc-500 dark:text-zinc-500">
                       {member.focus}
                     </p>
                   </div>
@@ -190,7 +190,7 @@ export default function TentangKamiPage() {
 
         <div>
           <h2 className="mb-3 flex items-center gap-2 text-sm font-bold text-zinc-900 dark:text-zinc-100">
-            <Cpu className="h-4 w-4 text-orange-600 dark:text-orange-400" />
+            <Cpu className="h-4 w-4 text-orange-700 dark:text-orange-400" />
             <span>Workstation &amp; Area Kerja</span>
           </h2>
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
@@ -208,7 +208,7 @@ export default function TentangKamiPage() {
                   <CheckCircle2 className="h-3 w-3 text-emerald-500" />
                   <span>{area.title}</span>
                 </div>
-                <p className="text-[11px] leading-relaxed text-zinc-600 dark:text-zinc-400">
+                <p className="text-[11px] leading-relaxed text-zinc-600 dark:text-zinc-500">
                   {area.text}
                 </p>
               </div>
@@ -233,13 +233,13 @@ export default function TentangKamiPage() {
           <h2 className="mb-3 text-sm font-bold text-zinc-900 dark:text-zinc-100">
             Lokasi &amp; Jam Operasional
           </h2>
-          <ul className="space-y-3 text-[11px] text-zinc-600 dark:text-zinc-400">
+          <ul className="space-y-3 text-[11px] text-zinc-600 dark:text-zinc-500">
             <li className="flex items-start gap-2">
-              <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-orange-600 dark:text-orange-400" />
+              <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-orange-700 dark:text-orange-400" />
               <span>{STORE_ADDRESS}</span>
             </li>
             <li className="flex items-start gap-2">
-              <Clock className="mt-0.5 h-4 w-4 shrink-0 text-orange-600 dark:text-orange-400" />
+              <Clock className="mt-0.5 h-4 w-4 shrink-0 text-orange-700 dark:text-orange-400" />
               <span>{STORE_OPERATIONAL_HOURS}</span>
             </li>
             <li className="flex items-start gap-2">
@@ -276,17 +276,17 @@ export default function TentangKamiPage() {
               key={step}
               className="rounded-md border border-zinc-200 bg-zinc-50 p-3 dark:border-zinc-800 dark:bg-zinc-950"
             >
-              <div className="mb-1 font-mono text-[10px] font-bold uppercase tracking-tight text-orange-600 dark:text-orange-400">
+              <div className="mb-1 font-mono text-[10px] font-bold uppercase tracking-tight text-orange-700 dark:text-orange-400">
                 Langkah {index + 1}
               </div>
-              <p className="text-[11px] leading-relaxed text-zinc-600 dark:text-zinc-400">
+              <p className="text-[11px] leading-relaxed text-zinc-600 dark:text-zinc-500">
                 {step}
               </p>
             </li>
           ))}
         </ol>
-        <div className="mt-4 flex items-center gap-2 rounded-md border border-zinc-200 bg-zinc-50 px-3 py-2 text-[11px] text-zinc-500 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-400">
-          <Truck className="h-3.5 w-3.5 shrink-0 text-zinc-400" />
+        <div className="mt-4 flex items-center gap-2 rounded-md border border-zinc-200 bg-zinc-50 px-3 py-2 text-[11px] text-zinc-500 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-500">
+          <Truck className="h-3.5 w-3.5 shrink-0 text-zinc-500" />
           <span>
             Untuk unit kiriman luar kota, biaya ekspedisi klaim ditanggung konsumen kecuali
             disepakati lain saat pembelian.
@@ -304,9 +304,9 @@ export default function TentangKamiPage() {
             <details key={faq.q} className="group px-4 py-3">
               <summary className="flex cursor-pointer list-none items-center justify-between gap-3 text-xs font-bold text-zinc-900 dark:text-zinc-100">
                 <span>{faq.q}</span>
-                <ChevronRight className="h-3.5 w-3.5 shrink-0 text-zinc-400 transition-transform group-open:rotate-90" />
+                <ChevronRight className="h-3.5 w-3.5 shrink-0 text-zinc-500 transition-transform group-open:rotate-90" />
               </summary>
-              <p className="mt-2 text-xs leading-relaxed text-zinc-600 dark:text-zinc-400">
+              <p className="mt-2 text-xs leading-relaxed text-zinc-600 dark:text-zinc-500">
                 {faq.a}
               </p>
             </details>
@@ -320,14 +320,14 @@ export default function TentangKamiPage() {
           <div className="text-sm font-bold text-zinc-900 dark:text-zinc-100">
             Siap merakit PC atau butuh servis?
           </div>
-          <p className="text-[11px] text-zinc-500 dark:text-zinc-400">
+          <p className="text-[11px] text-zinc-500 dark:text-zinc-500">
             Teknisi kami siap membantu memilih spesifikasi yang paling masuk akal untuk budget Anda.
           </p>
         </div>
         <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row">
           <Link
             href="/simulasi"
-            className="inline-flex items-center justify-center gap-2 rounded-md bg-orange-600 px-4 py-2.5 text-xs font-bold text-white transition-colors hover:bg-orange-700"
+            className="inline-flex items-center justify-center gap-2 rounded-md bg-orange-700 px-4 py-2.5 text-xs font-bold text-white transition-colors hover:bg-orange-800"
           >
             <Cpu className="h-4 w-4" />
             <span>Simulasi Rakit</span>
@@ -344,7 +344,7 @@ export default function TentangKamiPage() {
         </div>
       </section>
 
-      <p className="mt-4 text-center font-mono text-[10px] text-zinc-400">
+      <p className="mt-4 text-center font-mono text-[10px] text-zinc-500">
         KSS Komputer · {DEFAULT_WHATSAPP_PHONE.replace(/^62/, '0')} · {STORE_ADDRESS}
       </p>
     </div>

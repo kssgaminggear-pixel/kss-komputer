@@ -113,7 +113,7 @@ export default function AksesorisPage({ accessories }: AksesorisClientProps) {
                 onClick={() => setSelectedCat(cat.id)}
                 className={`inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-md px-3 py-2 text-xs font-semibold transition-colors ${
                   isSelected
-                    ? 'bg-orange-600 text-white'
+                    ? 'bg-orange-700 text-white'
                     : 'border border-zinc-200 bg-white text-zinc-600 hover:border-zinc-300 hover:bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-300 dark:hover:bg-zinc-800'
                 }`}
               >
@@ -136,7 +136,7 @@ export default function AksesorisPage({ accessories }: AksesorisClientProps) {
         {/* Filter & view controls */}
         <div className="mb-6 flex flex-wrap items-center justify-between gap-3 rounded-md border border-zinc-200 bg-white p-3 shadow-xs dark:border-zinc-800 dark:bg-zinc-900/60">
           <div className="relative max-w-md flex-1">
-            <Search className="absolute left-3 top-2.5 h-3.5 w-3.5 text-zinc-400" />
+            <Search className="absolute left-3 top-2.5 h-3.5 w-3.5 text-zinc-500" />
             <input
               type="text"
               placeholder="Cari keyboard, mouse, monitor..."
@@ -147,7 +147,7 @@ export default function AksesorisPage({ accessories }: AksesorisClientProps) {
           </div>
 
           <div className="flex items-center gap-3">
-            <span className="hidden font-mono text-[11px] text-zinc-400 sm:inline">
+            <span className="hidden font-mono text-[11px] text-zinc-500 sm:inline">
               {filteredAccessories.length} item
             </span>
             <div className="flex items-center gap-1 rounded-md border border-zinc-200 bg-zinc-50 p-0.5 dark:border-zinc-800 dark:bg-zinc-950">
@@ -156,8 +156,8 @@ export default function AksesorisPage({ accessories }: AksesorisClientProps) {
                 onClick={() => setViewMode('grid')}
                 className={`rounded-md p-1.5 transition-colors ${
                   viewMode === 'grid'
-                    ? 'bg-white text-orange-600 shadow-xs dark:bg-zinc-800 dark:text-orange-400'
-                    : 'text-zinc-400 hover:text-zinc-700'
+                    ? 'bg-white text-orange-700 shadow-xs dark:bg-zinc-800 dark:text-orange-400'
+                    : 'text-zinc-500 hover:text-zinc-700'
                 }`}
                 title="Tampilan grid"
               >
@@ -168,8 +168,8 @@ export default function AksesorisPage({ accessories }: AksesorisClientProps) {
                 onClick={() => setViewMode('table')}
                 className={`rounded-md p-1.5 transition-colors ${
                   viewMode === 'table'
-                    ? 'bg-white text-orange-600 shadow-xs dark:bg-zinc-800 dark:text-orange-400'
-                    : 'text-zinc-400 hover:text-zinc-700'
+                    ? 'bg-white text-orange-700 shadow-xs dark:bg-zinc-800 dark:text-orange-400'
+                    : 'text-zinc-500 hover:text-zinc-700'
                 }`}
                 title="Tampilan tabel"
               >
@@ -190,7 +190,7 @@ export default function AksesorisPage({ accessories }: AksesorisClientProps) {
               setSelectedCat('all');
               setSearchQuery('');
             }}
-            className="mt-3 text-xs font-bold text-orange-600 underline"
+            className="mt-3 text-xs font-bold text-orange-700 underline"
           >
             Reset Pencarian
           </button>
@@ -224,7 +224,7 @@ export default function AksesorisPage({ accessories }: AksesorisClientProps) {
                     {item.name}
                   </h3>
 
-                  <div className="mt-1 truncate font-mono text-[10px] text-zinc-400">
+                  <div className="mt-1 truncate font-mono text-[10px] text-zinc-500">
                     {item.sku} · {item.warrantyYears} Th Garansi
                   </div>
 
@@ -237,11 +237,11 @@ export default function AksesorisPage({ accessories }: AksesorisClientProps) {
                   )}
 
                   <div className="mt-2 flex items-baseline gap-2">
-                    <span className="kss-price text-base text-orange-600 dark:text-orange-400">
+                    <span className="kss-price text-base text-orange-700 dark:text-orange-400">
                       {formatIDR(item.retailPrice)}
                     </span>
                     {hasDiscount && (
-                      <span className="font-mono text-[10px] text-zinc-400 line-through tabular-nums">
+                      <span className="font-mono text-[10px] text-zinc-500 line-through tabular-nums">
                         {formatIDR(item.originalPrice!)}
                       </span>
                     )}
@@ -266,7 +266,7 @@ export default function AksesorisPage({ accessories }: AksesorisClientProps) {
                     )}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-zinc-200 text-emerald-600 transition-colors hover:bg-zinc-50 dark:border-zinc-700 dark:hover:bg-zinc-800"
+                    className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-zinc-200 text-emerald-700 transition-colors hover:bg-zinc-50 dark:border-zinc-700 dark:hover:bg-zinc-800"
                     title="Order via WhatsApp"
                   >
                     <PhoneCall className="h-4 w-4" />
@@ -296,7 +296,7 @@ export default function AksesorisPage({ accessories }: AksesorisClientProps) {
                 <tr key={item.id} className="hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-colors">
                   <td className="py-2.5 px-3 whitespace-nowrap">
                     <span className="font-bold text-zinc-900 dark:text-zinc-100 block">{item.brand}</span>
-                    <span className="text-[10px] text-zinc-400">{item.sku}</span>
+                    <span className="text-[10px] text-zinc-500">{item.sku}</span>
                   </td>
                   <td className="py-2.5 px-3 font-sans font-semibold text-zinc-900 dark:text-zinc-100 max-w-sm">
                     {item.name}
@@ -304,11 +304,11 @@ export default function AksesorisPage({ accessories }: AksesorisClientProps) {
                   <td className="py-2.5 px-3 text-center text-zinc-500 whitespace-nowrap text-[11px]">
                     {item.officialDistributor || 'Resmi ID'}
                   </td>
-                  <td className="py-2.5 px-3 text-center text-emerald-600 dark:text-emerald-400 font-bold whitespace-nowrap text-[11px]">
+                  <td className="py-2.5 px-3 text-center text-emerald-700 dark:text-emerald-400 font-bold whitespace-nowrap text-[11px]">
                     {item.warrantyYears} Tahun
                   </td>
                   <td className="py-2.5 px-3 text-right whitespace-nowrap">
-                    <span className="kss-price text-sm text-orange-600 dark:text-orange-400">
+                    <span className="kss-price text-sm text-orange-700 dark:text-orange-400">
                       {formatIDR(item.retailPrice)}
                     </span>
                   </td>
@@ -319,7 +319,7 @@ export default function AksesorisPage({ accessories }: AksesorisClientProps) {
                         addRetailItem(item, 1);
                         showToast(`${item.name} dimasukkan ke keranjang`);
                       }}
-                      className="inline-flex h-8 items-center gap-1 rounded-md bg-orange-600 px-2.5 font-sans text-[11px] font-bold text-white transition-colors hover:bg-orange-500"
+                      className="inline-flex h-8 items-center gap-1 rounded-md bg-orange-700 px-2.5 font-sans text-[11px] font-bold text-white transition-colors hover:bg-orange-800"
                     >
                       <ShoppingBag className="h-3 w-3" />
                       <span>+ Keranjang</span>

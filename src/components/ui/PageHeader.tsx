@@ -16,7 +16,7 @@ export function PageHeader({ eyebrow, title, description, actions, aside }: Page
           <div className="min-w-0 max-w-3xl">
             {eyebrow && (
               <div className="kss-eyebrow mb-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-orange-600" />
+                <span className="h-1.5 w-1.5 rounded-full bg-orange-700" />
                 <span>{eyebrow}</span>
               </div>
             )}
@@ -24,7 +24,7 @@ export function PageHeader({ eyebrow, title, description, actions, aside }: Page
               {title}
             </h1>
             {description && (
-              <p className="mt-2 text-xs leading-relaxed text-zinc-600 dark:text-zinc-400 sm:text-sm">
+              <p className="mt-2 text-xs leading-relaxed text-zinc-600 dark:text-zinc-500 sm:text-sm">
                 {description}
               </p>
             )}

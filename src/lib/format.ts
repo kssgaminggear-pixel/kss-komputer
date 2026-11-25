@@ -198,6 +198,52 @@ export function generateConsultationWAMessage(
   return `https://wa.me/${cleanPhone}?text=${encodeURIComponent(message)}`;
 }
 
+export interface CustomBuildWAPayload {
+  subject?: string;
+  parts?: { category: ProductCategory; name: string; quantity: number }[];
+  notes?: string;
+}
+
+/**
+ * Generate tautan WhatsApp untuk kebutuhan rakit PC custom.
+ * Rakit custom ditangani langsung oleh teknisi via WhatsApp, bukan simulator.
+ * Hanya nama komponen yang dikirim — tanpa harga satuan.
+ */
+export function generateCustomBuildWAMessage(
+  phone: string = DEFAULT_WHATSAPP_PHONE,
+  payload: CustomBuildWAPayload = {}
+): string {
+  const cleanPhone = phone.replace(/[^0-9]/g, '');
+  const lines: string[] = [
+    `*HALO TEKNISI KSS KOMPUTER, SAYA MAU RAKIT PC CUSTOM:*`,
+    `━━━━━━━━━━━━━━━━━━━━━━━━━`,
+  ];
+
+  if (payload.subject) {
+    lines.push(`*Kebutuhan:* ${payload.subject}`);
+  }
+
+  if (payload.parts && payload.parts.length > 0) {
+    lines.push(``, `*Komponen yang Saya Minati:*`);
+    payload.parts.forEach((item, index) => {
+      const catLabel = CATEGORY_LABELS[item.category] || item.category;
+      const qtyStr = item.quantity > 1 ? ` (${item.quantity}x)` : '';
+      lines.push(`${index + 1}. *${catLabel}*: ${item.name}${qtyStr}`);
+    });
+  }
+
+  if (payload.notes) {
+    lines.push(`*Catatan:* ${payload.notes}`);
+  }
+
+  lines.push(
+    `━━━━━━━━━━━━━━━━━━━━━━━━━`,
+    `Mohon dibantu cek kompatibilitas, rekomendasi komponen, dan total harga paket siap pakainya. Terima kasih!`
+  );
+
+  return `https://wa.me/${cleanPhone}?text=${encodeURIComponent(lines.join('\n'))}`;
+}
+
 /**
  * Payload untuk booking jasa servis via WhatsApp
  */

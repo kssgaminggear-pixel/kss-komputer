@@ -56,7 +56,7 @@ export function RetailCartDrawer() {
         {/* Header */}
         <div className="flex items-center justify-between border-b border-zinc-200 px-4 py-3 dark:border-zinc-800">
           <div className="flex items-center gap-2">
-            <ShoppingBag className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
+            <ShoppingBag className="h-5 w-5 text-emerald-700 dark:text-emerald-400" />
             <h2 className="text-sm font-bold uppercase tracking-tight text-zinc-900 dark:text-zinc-100">
               Keranjang Eceran &amp; Aksesoris
             </h2>
@@ -66,7 +66,7 @@ export function RetailCartDrawer() {
           </div>
           <button
             onClick={closeCart}
-            className="rounded-md p-1.5 text-zinc-400 hover:bg-zinc-100 hover:text-zinc-700 dark:hover:bg-zinc-800 dark:hover:text-zinc-200"
+            className="rounded-md p-1.5 text-zinc-500 hover:bg-zinc-100 hover:text-zinc-700 dark:hover:bg-zinc-800 dark:hover:text-zinc-200"
             title="Tutup (Esc)"
           >
             <X className="h-4 w-4" />
@@ -78,10 +78,10 @@ export function RetailCartDrawer() {
           {items.length === 0 ? (
             <div className="flex h-64 flex-col items-center justify-center text-center">
               <ShoppingBag className="mb-2 h-10 w-10 text-zinc-300 dark:text-zinc-700" />
-              <p className="text-xs font-medium text-zinc-500 dark:text-zinc-400">
+              <p className="text-xs font-medium text-zinc-500 dark:text-zinc-500">
                 Keranjang belanja eceran masih kosong
               </p>
-              <p className="mt-1 text-[11px] text-zinc-400">
+              <p className="mt-1 text-[11px] text-zinc-500">
                 Jelajahi halaman Komponen &amp; Aksesoris untuk menambahkan barang.
               </p>
             </div>
@@ -93,17 +93,17 @@ export function RetailCartDrawer() {
                     <span className="rounded-md bg-zinc-100 dark:bg-zinc-800 px-1 py-0.5 text-[9px] font-mono text-zinc-500 uppercase">
                       {item.brand}
                     </span>
-                    <span className="text-[10px] font-mono text-zinc-400 truncate">{item.sku}</span>
+                    <span className="text-[10px] font-mono text-zinc-500 truncate">{item.sku}</span>
                   </div>
                   <h3 className="mt-0.5 text-xs font-semibold text-zinc-900 dark:text-zinc-100 line-clamp-2">
                     {item.name}
                   </h3>
                   <div className="mt-1 flex items-baseline gap-2">
-                    <span className="font-mono text-xs font-bold text-orange-600 dark:text-orange-400 tabular-nums">
+                    <span className="font-mono text-xs font-bold text-orange-700 dark:text-orange-400 tabular-nums">
                       {formatIDR(item.unitPrice)}
                     </span>
                     {item.originalPrice && item.originalPrice > item.unitPrice && (
-                      <span className="font-mono text-[10px] text-zinc-400 line-through tabular-nums">
+                      <span className="font-mono text-[10px] text-zinc-500 line-through tabular-nums">
                         {formatIDR(item.originalPrice)}
                       </span>
                     )}
@@ -114,7 +114,7 @@ export function RetailCartDrawer() {
                 <div className="flex flex-col items-end gap-2 shrink-0">
                   <button
                     onClick={() => removeItem(item.id)}
-                    className="text-zinc-400 hover:text-red-500 transition-colors p-1"
+                    className="text-zinc-500 hover:text-red-500 transition-colors p-1"
                     title="Hapus"
                   >
                     <Trash2 className="h-3.5 w-3.5" />
@@ -123,7 +123,7 @@ export function RetailCartDrawer() {
                   <div className="flex items-center border border-zinc-200 dark:border-zinc-800 rounded-md overflow-hidden">
                     <button
                       onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                      className="px-2 py-1 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800"
+                      className="px-2 py-1 text-zinc-600 dark:text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-800"
                     >
                       <Minus className="h-3 w-3" />
                     </button>
@@ -132,7 +132,7 @@ export function RetailCartDrawer() {
                     </span>
                     <button
                       onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                      className="px-2 py-1 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800"
+                      className="px-2 py-1 text-zinc-600 dark:text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-800"
                     >
                       <Plus className="h-3 w-3" />
                     </button>
@@ -152,14 +152,14 @@ export function RetailCartDrawer() {
                 placeholder="Nama Anda (Opsional)"
                 value={customerName}
                 onChange={(e) => setCustomerName(e.target.value)}
-                className="w-full rounded-md border border-zinc-200 bg-white px-2.5 py-1.5 text-xs text-zinc-900 placeholder:text-zinc-400 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-100 focus:outline-none focus:border-orange-600"
+                className="w-full rounded-md border border-zinc-200 bg-white px-2.5 py-1.5 text-xs text-zinc-900 placeholder:text-zinc-500 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-100 focus:outline-none focus:border-orange-600"
               />
               <input
                 type="text"
                 placeholder="Catatan pesanan / pertanyaan stok..."
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
-                className="w-full rounded-md border border-zinc-200 bg-white px-2.5 py-1.5 text-xs text-zinc-900 placeholder:text-zinc-400 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-100 focus:outline-none focus:border-orange-600"
+                className="w-full rounded-md border border-zinc-200 bg-white px-2.5 py-1.5 text-xs text-zinc-900 placeholder:text-zinc-500 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-100 focus:outline-none focus:border-orange-600"
               />
             </div>
 
@@ -173,7 +173,7 @@ export function RetailCartDrawer() {
             <div className="flex flex-col gap-2">
               <button
                 onClick={handleCheckoutWA}
-                className="flex w-full items-center justify-center gap-2 rounded-md bg-emerald-600 px-4 py-2.5 text-xs font-bold text-white hover:bg-emerald-700 transition-colors shadow-xs"
+                className="flex w-full items-center justify-center gap-2 rounded-md bg-emerald-700 px-4 py-2.5 text-xs font-bold text-white hover:bg-emerald-800 transition-colors shadow-xs"
               >
                 <MessageSquareCheck className="h-4 w-4" />
                 Checkout Pesanan via WhatsApp
@@ -186,7 +186,7 @@ export function RetailCartDrawer() {
                   rel="noopener noreferrer"
                   className="flex flex-1 items-center justify-center gap-1.5 rounded-md border border-zinc-200 bg-white px-3 py-2 text-[11px] font-semibold text-zinc-700 hover:bg-zinc-100 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-200"
                 >
-                  <ExternalLink className="h-3.5 w-3.5 text-emerald-600" />
+                  <ExternalLink className="h-3.5 w-3.5 text-emerald-700" />
                   Buka Tokopedia Resmi
                 </a>
                 <button

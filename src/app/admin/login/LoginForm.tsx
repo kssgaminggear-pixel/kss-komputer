@@ -56,7 +56,7 @@ export function LoginForm({
             className="h-8 w-8 object-contain"
           />
           <div>
-            <div className="font-mono text-[10px] font-bold uppercase tracking-wider text-orange-600 dark:text-orange-400">
+            <div className="font-mono text-[10px] font-bold uppercase tracking-wider text-orange-700 dark:text-orange-400">
               Admin Portal
             </div>
             <div className="text-xs font-bold text-zinc-900 dark:text-zinc-100">KSS Komputer</div>
@@ -86,7 +86,7 @@ export function LoginForm({
               Password
             </span>
             <div className="relative">
-              <LockKeyhole className="absolute left-2.5 top-2.5 h-3.5 w-3.5 text-zinc-400" />
+              <LockKeyhole className="absolute left-2.5 top-2.5 h-3.5 w-3.5 text-zinc-500" />
               <input
                 type="password"
                 name="password"
@@ -96,7 +96,7 @@ export function LoginForm({
                 onChange={(event) => setPassword(event.target.value)}
                 disabled={!configured || loading}
                 placeholder="••••••••••••"
-                className="w-full rounded-sm border border-zinc-300 bg-zinc-50 py-2 pl-8 pr-3 text-xs text-zinc-900 placeholder:text-zinc-400 focus:border-orange-600 focus:outline-none disabled:opacity-50 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100"
+                className="w-full rounded-sm border border-zinc-300 bg-zinc-50 py-2 pl-8 pr-3 text-xs text-zinc-900 placeholder:text-zinc-500 focus:border-orange-600 focus:outline-none disabled:opacity-50 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100"
               />
             </div>
           </label>
@@ -117,7 +117,7 @@ export function LoginForm({
           </button>
         </form>
 
-        <p className="mt-4 text-center font-mono text-[10px] text-zinc-400">
+        <p className="mt-4 text-center font-mono text-[10px] text-zinc-500">
           KSS Komputer · akses terbatas
         </p>
       </div>

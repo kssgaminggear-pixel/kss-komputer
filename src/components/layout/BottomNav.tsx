@@ -80,13 +80,13 @@ export function BottomNav() {
       {isMoreOpen && (
         <div className="md:hidden fixed bottom-14 left-0 right-0 z-40 border-t border-zinc-200 bg-white px-3 py-3 dark:border-zinc-800 dark:bg-zinc-950 shadow-sm">
           <div className="flex items-center justify-between mb-2">
-            <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-zinc-400">
+            <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-zinc-500">
               Menu Lainnya
             </span>
             <button
               type="button"
               onClick={() => setIsMoreOpen(false)}
-              className="p-1 text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100"
+              className="p-1 text-zinc-500 hover:text-zinc-900 dark:text-zinc-500 dark:hover:text-zinc-100"
               aria-label="Tutup menu"
             >
               <X className="h-3.5 w-3.5" />
@@ -102,7 +102,7 @@ export function BottomNav() {
                   onClick={() => setIsMoreOpen(false)}
                   className="flex items-center gap-2 rounded-md border border-zinc-200 bg-zinc-50 px-2.5 py-2 text-[11px] font-semibold text-zinc-800 hover:bg-zinc-100 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-zinc-800"
                 >
-                  <Icon className="h-3.5 w-3.5 text-orange-600 dark:text-orange-400 shrink-0" />
+                  <Icon className="h-3.5 w-3.5 text-orange-700 dark:text-orange-400 shrink-0" />
                   <span className="truncate">{item.label}</span>
                 </Link>
               );
@@ -115,10 +115,10 @@ export function BottomNav() {
               }}
               className="flex items-center gap-2 rounded-md border border-zinc-200 bg-zinc-50 px-2.5 py-2 text-[11px] font-semibold text-zinc-800 hover:bg-zinc-100 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-zinc-800"
             >
-              <ShoppingBag className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400 shrink-0" />
+              <ShoppingBag className="h-3.5 w-3.5 text-emerald-700 dark:text-emerald-400 shrink-0" />
               <span className="truncate">Keranjang Eceran</span>
               {isHydrated && retailCartCount > 0 && (
-                <span className="ml-auto rounded-md bg-emerald-600 px-1 font-mono text-[10px] font-bold text-white">
+                <span className="ml-auto rounded-md bg-emerald-700 px-1 font-mono text-[10px] font-bold text-white">
                   {retailCartCount}
                 </span>
               )}
@@ -137,14 +137,14 @@ export function BottomNav() {
                 href={item.href}
                 className={`relative flex flex-col items-center justify-center h-full py-1 text-[10px] font-medium transition-colors ${
                   item.isActive
-                    ? 'text-orange-600 dark:text-orange-400 font-semibold'
-                    : 'text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-200'
+                    ? 'text-orange-700 dark:text-orange-400 font-semibold'
+                    : 'text-zinc-500 hover:text-zinc-900 dark:text-zinc-500 dark:hover:text-zinc-200'
                 }`}
               >
                 <div className="relative">
                   <Icon className="h-5 w-5" />
                   {item.badge !== null && item.badge !== undefined && (
-                    <span className="absolute -top-1.5 -right-2 flex h-4 min-w-[16px] items-center justify-center rounded-full bg-orange-600 px-1 text-[9px] font-bold text-white">
+                    <span className="absolute -top-1.5 -right-2 flex h-4 min-w-[16px] items-center justify-center rounded-full bg-orange-700 px-1 text-[9px] font-bold text-white">
                       {item.badge}
                     </span>
                   )}
@@ -160,15 +160,15 @@ export function BottomNav() {
             onClick={() => setIsMoreOpen((prev) => !prev)}
             className={`relative flex flex-col items-center justify-center h-full py-1 text-[10px] font-medium transition-colors ${
               isMoreOpen
-                ? 'text-orange-600 dark:text-orange-400 font-semibold'
-                : 'text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-200'
+                ? 'text-orange-700 dark:text-orange-400 font-semibold'
+                : 'text-zinc-500 hover:text-zinc-900 dark:text-zinc-500 dark:hover:text-zinc-200'
             }`}
             aria-expanded={isMoreOpen}
           >
             <div className="relative">
               {isMoreOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
               {!isMoreOpen && isHydrated && retailCartCount > 0 && (
-                <span className="absolute -top-1.5 -right-2 flex h-4 min-w-[16px] items-center justify-center rounded-full bg-emerald-600 px-1 text-[9px] font-bold text-white">
+                <span className="absolute -top-1.5 -right-2 flex h-4 min-w-[16px] items-center justify-center rounded-full bg-emerald-700 px-1 text-[9px] font-bold text-white">
                   {retailCartCount}
                 </span>
               )}

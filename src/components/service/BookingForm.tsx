@@ -53,7 +53,7 @@ export function BookingForm({ serviceTitle }: BookingFormProps) {
           value={customerName}
           onChange={(event) => setCustomerName(event.target.value)}
           placeholder="Contoh: Budi Santoso"
-          className="w-full rounded-md border border-zinc-300 bg-white px-3 py-2 text-xs text-zinc-900 placeholder:text-zinc-400 focus:border-orange-600 focus:outline-none dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100"
+          className="w-full rounded-md border border-zinc-300 bg-white px-3 py-2 text-xs text-zinc-900 placeholder:text-zinc-500 focus:border-orange-600 focus:outline-none dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100"
         />
       </div>
 
@@ -67,7 +67,7 @@ export function BookingForm({ serviceTitle }: BookingFormProps) {
           value={customerWa}
           onChange={(event) => setCustomerWa(event.target.value)}
           placeholder="08xxxxxxxxxx"
-          className="w-full rounded-md border border-zinc-300 bg-white px-3 py-2 font-mono text-xs tabular-nums text-zinc-900 placeholder:text-zinc-400 focus:border-orange-600 focus:outline-none dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100"
+          className="w-full rounded-md border border-zinc-300 bg-white px-3 py-2 font-mono text-xs tabular-nums text-zinc-900 placeholder:text-zinc-500 focus:border-orange-600 focus:outline-none dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100"
         />
       </div>
 
@@ -99,7 +99,7 @@ export function BookingForm({ serviceTitle }: BookingFormProps) {
           value={problemDescription}
           onChange={(event) => setProblemDescription(event.target.value)}
           placeholder="Ceritakan gejala kerusakan atau kebutuhan Anda..."
-          className="w-full rounded-md border border-zinc-300 bg-white px-3 py-2 text-xs text-zinc-900 placeholder:text-zinc-400 focus:border-orange-600 focus:outline-none dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100"
+          className="w-full rounded-md border border-zinc-300 bg-white px-3 py-2 text-xs text-zinc-900 placeholder:text-zinc-500 focus:border-orange-600 focus:outline-none dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100"
         />
       </div>
 
@@ -144,7 +144,7 @@ export function BookingForm({ serviceTitle }: BookingFormProps) {
 
       <button
         type="submit"
-        className="flex w-full items-center justify-center gap-2 rounded-md bg-emerald-600 py-2.5 text-xs font-bold text-white transition-colors hover:bg-emerald-700"
+        className="flex w-full items-center justify-center gap-2 rounded-md bg-emerald-700 py-2.5 text-xs font-bold text-white transition-colors hover:bg-emerald-800"
       >
         <MessageSquareCheck className="h-4 w-4" />
         <span>Kirim Booking via WhatsApp</span>
@@ -158,7 +158,7 @@ export function BookingForm({ serviceTitle }: BookingFormProps) {
         </span>
       </div>
 
-      <div className="flex items-center gap-1.5 font-mono text-[10px] text-zinc-400">
+      <div className="flex items-center gap-1.5 font-mono text-[10px] text-zinc-500">
         <CalendarClock className="h-3 w-3" />
         <span>Senin - Sabtu, 09:00 - 18:00 WIB</span>
       </div>

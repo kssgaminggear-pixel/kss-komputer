@@ -95,7 +95,7 @@ export function Navbar({ searchProducts }: NavbarProps) {
     <>
       <header className="sticky top-0 z-40 border-b border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-950">
         {/* Utility bar */}
-        <div className="hidden border-b border-zinc-200 bg-zinc-100 text-zinc-500 sm:block">
+        <div className="hidden border-b border-zinc-200 bg-zinc-100 text-zinc-600 sm:block">
           <div className="kss-container flex h-8 items-center justify-between text-[11px]">
             <div className="flex items-center gap-4">
               <span className="flex items-center gap-1.5">
@@ -117,7 +117,7 @@ export function Navbar({ searchProducts }: NavbarProps) {
                 href={TOKOPEDIA_OFFICIAL_STORE_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-1 font-semibold text-emerald-600 transition-colors hover:text-emerald-700 dark:text-emerald-400"
+                className="flex items-center gap-1 font-semibold text-emerald-700 transition-colors hover:text-emerald-700 dark:text-emerald-400"
               >
                 <span>Tokopedia</span>
                 <ExternalLink className="h-3 w-3" />
@@ -126,7 +126,7 @@ export function Navbar({ searchProducts }: NavbarProps) {
                 href={`https://wa.me/${DEFAULT_WHATSAPP_PHONE}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-1 font-mono text-zinc-700 transition-colors hover:text-orange-600"
+                className="flex items-center gap-1 font-mono text-zinc-700 transition-colors hover:text-orange-700"
               >
                 <PhoneCall className="h-3 w-3 text-emerald-500" />
                 <span>{DEFAULT_WHATSAPP_DISPLAY}</span>
@@ -150,7 +150,7 @@ export function Navbar({ searchProducts }: NavbarProps) {
               <span className="font-mono text-sm font-black tracking-tight text-zinc-900 dark:text-zinc-50">
                 KSS KOMPUTER
               </span>
-              <span className="mt-0.5 text-[10px] font-medium text-zinc-500 dark:text-zinc-400">
+              <span className="mt-0.5 text-[10px] font-medium text-zinc-500 dark:text-zinc-500">
                 PC Builder &amp; Hardware
               </span>
             </span>
@@ -175,7 +175,7 @@ export function Navbar({ searchProducts }: NavbarProps) {
                   <Icon className="h-3.5 w-3.5" />
                   <span>{item.label}</span>
                   {item.badge && (
-                    <span className="rounded-md bg-orange-600 px-1 font-mono text-[9px] font-bold text-white">
+                    <span className="rounded-md bg-orange-700 px-1 font-mono text-[9px] font-bold text-white">
                       {item.badge}
                     </span>
                   )}
@@ -188,7 +188,7 @@ export function Navbar({ searchProducts }: NavbarProps) {
             <button
               type="button"
               onClick={() => setIsSearchOpen(true)}
-              className="flex h-9 items-center gap-2 rounded-md border border-zinc-200 bg-zinc-50 px-2.5 text-xs text-zinc-500 transition-colors hover:border-zinc-300 hover:bg-white dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-400 dark:hover:border-zinc-700 dark:hover:bg-zinc-800 xl:w-52 xl:justify-between"
+              className="flex h-9 items-center gap-2 rounded-md border border-zinc-200 bg-zinc-50 px-2.5 text-xs text-zinc-500 transition-colors hover:border-zinc-300 hover:bg-white dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-500 dark:hover:border-zinc-700 dark:hover:bg-zinc-800 xl:w-52 xl:justify-between"
               title="Cari komponen, paket PC, atau aksesoris (Ctrl+K)"
             >
               <span className="flex items-center gap-1.5 truncate">
@@ -213,7 +213,7 @@ export function Navbar({ searchProducts }: NavbarProps) {
             >
               <ShoppingBag className="h-4 w-4" />
               {isMounted && retailCartCount > 0 && (
-                <span className="absolute -right-1.5 -top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-emerald-600 px-1 font-mono text-[10px] font-bold text-white">
+                <span className="absolute -right-1.5 -top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-emerald-700 px-1 font-mono text-[10px] font-bold text-white">
                   {retailCartCount}
                 </span>
               )}
@@ -255,11 +255,11 @@ export function Navbar({ searchProducts }: NavbarProps) {
                       </span>
                       <span className="flex items-center gap-1.5">
                         {item.badge && (
-                          <span className="rounded-md bg-orange-600 px-1.5 py-0.5 font-mono text-[10px] font-bold text-white">
+                          <span className="rounded-md bg-orange-700 px-1.5 py-0.5 font-mono text-[10px] font-bold text-white">
                             {item.badge}
                           </span>
                         )}
-                        <ChevronRight className="h-3.5 w-3.5 text-zinc-400" />
+                        <ChevronRight className="h-3.5 w-3.5 text-zinc-500" />
                       </span>
                     </Link>
                   );

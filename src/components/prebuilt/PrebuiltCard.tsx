@@ -104,7 +104,7 @@ export function PrebuiltCard({ pkg }: PrebuiltCardProps) {
 
           <div className="min-w-0 flex-1">
             <div className="mb-2 flex flex-wrap items-center gap-1.5">
-              <span className="rounded-md border border-orange-500/20 bg-orange-500/10 px-2 py-0.5 font-mono text-[10px] font-bold uppercase tracking-tight text-orange-600 dark:text-orange-400">
+              <span className="rounded-md border border-orange-500/20 bg-orange-500/10 px-2 py-0.5 font-mono text-[10px] font-bold uppercase tracking-tight text-orange-700 dark:text-orange-400">
                 {pkg.platform}
               </span>
               <span className="rounded-md bg-zinc-100 px-2 py-0.5 font-mono text-[10px] font-semibold text-zinc-600 dark:bg-zinc-800 dark:text-zinc-300">
@@ -115,16 +115,16 @@ export function PrebuiltCard({ pkg }: PrebuiltCardProps) {
                   Rekomendasi
                 </span>
               )}
-              <span className="ml-auto flex items-center gap-1 font-mono text-[10px] font-semibold text-emerald-600 dark:text-emerald-400">
+              <span className="ml-auto flex items-center gap-1 font-mono text-[10px] font-semibold text-emerald-700 dark:text-emerald-400">
                 <ShieldCheck className="h-3 w-3" />
                 {pkg.warrantyYears} Th
               </span>
             </div>
 
-            <h3 className="text-base font-black tracking-tight text-zinc-900 transition-colors group-hover:text-orange-600 dark:text-zinc-100 dark:group-hover:text-orange-400">
+            <h3 className="text-base font-black tracking-tight text-zinc-900 transition-colors group-hover:text-orange-700 dark:text-zinc-100 dark:group-hover:text-orange-400">
               <Link href={`/paket-rakitan/${pkg.slug}`}>{pkg.name}</Link>
             </h3>
-            <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-zinc-500 dark:text-zinc-400">
+            <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-zinc-500 dark:text-zinc-500">
               {pkg.description}
             </p>
           </div>
@@ -152,7 +152,7 @@ export function PrebuiltCard({ pkg }: PrebuiltCardProps) {
                 key={index}
                 className="flex items-start gap-1.5 rounded-md border border-zinc-100 bg-white px-2 py-1.5 dark:border-zinc-800 dark:bg-zinc-900"
               >
-                <Icon className="mt-0.5 h-3.5 w-3.5 shrink-0 text-zinc-400" />
+                <Icon className="mt-0.5 h-3.5 w-3.5 shrink-0 text-zinc-500" />
                 <span className="line-clamp-2 font-semibold text-zinc-700 dark:text-zinc-300">
                   {spec.value}
                 </span>
@@ -163,7 +163,7 @@ export function PrebuiltCard({ pkg }: PrebuiltCardProps) {
 
         {pkg.estimatedFps && pkg.estimatedFps.length > 0 && (
           <div className="space-y-1.5 rounded-sm border border-zinc-200 bg-white p-3 dark:border-zinc-800 dark:bg-zinc-950">
-            <div className="flex items-center justify-between font-mono text-[10px] font-semibold uppercase text-zinc-400">
+            <div className="flex items-center justify-between font-mono text-[10px] font-semibold uppercase text-zinc-500">
               <span className="flex items-center gap-1">
                 <Gamepad2 className="h-3 w-3 text-orange-500" />
                 Estimasi FPS
@@ -173,7 +173,7 @@ export function PrebuiltCard({ pkg }: PrebuiltCardProps) {
             {pkg.estimatedFps.slice(0, 2).map((bench, idx) => (
               <div key={idx} className="space-y-0.5">
                 <div className="flex justify-between text-[11px]">
-                  <span className="max-w-[180px] truncate text-zinc-600 dark:text-zinc-400">
+                  <span className="max-w-[180px] truncate text-zinc-600 dark:text-zinc-500">
                     {bench.game}
                   </span>
                   <span className="font-mono font-bold tabular-nums text-zinc-900 dark:text-zinc-100">
@@ -196,14 +196,14 @@ export function PrebuiltCard({ pkg }: PrebuiltCardProps) {
       <div className="flex flex-col gap-3 border-t border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-900/90">
         <div className="flex items-end justify-between gap-2">
           <div>
-            <span className="block font-mono text-[10px] uppercase tracking-tight text-zinc-400">
+            <span className="block font-mono text-[10px] uppercase tracking-tight text-zinc-500">
               Total Harga Paket
             </span>
             <span className="kss-price text-xl text-zinc-900 dark:text-zinc-100">
               {formatIDR(pkg.totalBundlePrice)}
             </span>
           </div>
-          <span className="rounded-md border border-emerald-500/20 bg-emerald-500/10 px-1.5 py-0.5 font-mono text-[10px] font-bold text-emerald-600 dark:text-emerald-400">
+          <span className="rounded-md border border-emerald-500/20 bg-emerald-500/10 px-1.5 py-0.5 font-mono text-[10px] font-bold text-emerald-700 dark:text-emerald-400">
             Termasuk Rakit
           </span>
         </div>
@@ -215,14 +215,14 @@ export function PrebuiltCard({ pkg }: PrebuiltCardProps) {
 
         <div className="grid grid-cols-2 gap-2">
           <button type="button" onClick={handleWhatsAppOrder} className="kss-btn-outline h-9 px-2">
-            <MessageSquareCheck className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" />
+            <MessageSquareCheck className="h-3.5 w-3.5 text-emerald-700 dark:text-emerald-400" />
             <span>Pesan WA</span>
           </button>
           <a
             href={pkg.tokopediaUrl || TOKOPEDIA_OFFICIAL_STORE_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex h-9 items-center justify-center gap-1 rounded-md bg-[#00AA5B] px-2 text-xs font-bold text-white transition-colors hover:bg-[#00924E]"
+            className="inline-flex h-9 items-center justify-center gap-1 rounded-md bg-emerald-700 px-2 text-xs font-bold text-white transition-colors hover:bg-emerald-800"
           >
             <span>Tokopedia</span>
             <ExternalLink className="h-3 w-3" />
@@ -232,12 +232,12 @@ export function PrebuiltCard({ pkg }: PrebuiltCardProps) {
         <div className="flex items-center justify-between">
           <Link
             href={`/paket-rakitan/${pkg.slug}`}
-            className="inline-flex items-center gap-1 text-[11px] font-bold text-zinc-700 transition-colors hover:text-orange-600 dark:text-zinc-300 dark:hover:text-orange-400"
+            className="inline-flex items-center gap-1 text-[11px] font-bold text-zinc-700 transition-colors hover:text-orange-700 dark:text-zinc-300 dark:hover:text-orange-400"
           >
             <span>Lihat Detail</span>
             <ArrowRight className="h-3 w-3" />
           </Link>
-          <span className="font-mono text-[10px] text-zinc-400">
+          <span className="font-mono text-[10px] text-zinc-500">
             {pkg.warrantyYears} Th Garansi
           </span>
         </div>

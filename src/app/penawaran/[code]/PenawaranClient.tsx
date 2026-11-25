@@ -42,7 +42,7 @@ export default function CustomerQuotationContent({ quote }: { quote: PublicQuote
       {/* Action Bar (Hidden on Print) */}
       <div className="rounded-md border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900/60 shadow-xs mb-6 flex flex-wrap items-center justify-between gap-3 print:hidden">
         <div className="flex items-center gap-2">
-          <FileText className="h-4 w-4 text-orange-600" />
+          <FileText className="h-4 w-4 text-orange-700" />
           <span className="text-xs font-bold text-zinc-900 dark:text-zinc-100">
             Surat Penawaran Resmi: {quote.quoteCode}
           </span>
@@ -61,7 +61,7 @@ export default function CustomerQuotationContent({ quote }: { quote: PublicQuote
           <button
             type="button"
             onClick={handleConfirmWA}
-            className="flex items-center gap-1.5 px-4 py-1.5 rounded-md bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition-colors shadow-xs"
+            className="flex items-center gap-1.5 px-4 py-1.5 rounded-md bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold transition-colors shadow-xs"
           >
             <MessageSquareCheck className="h-3.5 w-3.5" />
             <span>Konfirmasi Pesanan (WA)</span>
@@ -74,7 +74,7 @@ export default function CustomerQuotationContent({ quote }: { quote: PublicQuote
         {/* Kop Surat Resmi KSS Komputer */}
         <div className="border-b-2 border-zinc-900 pb-5 mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <div className="flex items-center gap-3">
-            <div className="flex h-12 w-12 items-center justify-center rounded-md bg-orange-600 text-white font-mono font-black text-xl tracking-wider">
+            <div className="flex h-12 w-12 items-center justify-center rounded-md bg-orange-700 text-white font-mono font-black text-xl tracking-wider">
               KSS
             </div>
             <div>
@@ -102,14 +102,14 @@ export default function CustomerQuotationContent({ quote }: { quote: PublicQuote
         {/* Info Konsumen & Validitas */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6 p-4 rounded-md bg-zinc-50 border border-zinc-200 text-xs font-mono">
           <div>
-            <span className="text-[10px] text-zinc-400 uppercase block">Ditujukan Kepada:</span>
+            <span className="text-[10px] text-zinc-500 uppercase block">Ditujukan Kepada:</span>
             <div className="font-bold text-sm text-zinc-900">{quote.customerName}</div>
             <div className="text-zinc-600">{quote.customerWa}</div>
             <div className="text-zinc-500 text-[11px] mt-1">Kebutuhan: {quote.usageNeed.toUpperCase()}</div>
           </div>
 
           <div className="sm:text-right">
-            <span className="text-[10px] text-zinc-400 uppercase block">Masa Berlaku Dokumen:</span>
+            <span className="text-[10px] text-zinc-500 uppercase block">Masa Berlaku Dokumen:</span>
             <div className="font-bold text-zinc-900">Sampai {quote.validUntil}</div>
             <div className="text-zinc-600 text-[11px] mt-1">
               Estimasi Daya: {formatWatt(quote.totalWattage)} (Min. PSU {quote.recommendedPsuWatt}W)
@@ -169,7 +169,7 @@ export default function CustomerQuotationContent({ quote }: { quote: PublicQuote
               <span>Sudah Termasuk Jasa Rakit Rapi &amp; Pengujian Beban 24 Jam</span>
             </div>
             <div className="flex items-center gap-1.5">
-              <Truck className="h-4 w-4 text-orange-600" />
+              <Truck className="h-4 w-4 text-orange-700" />
               <span>Gratis Pengemasan Kayu &amp; Asuransi Pengiriman Ekspedisi</span>
             </div>
           </div>
@@ -188,7 +188,7 @@ export default function CustomerQuotationContent({ quote }: { quote: PublicQuote
         {/* Tanda Tangan & Konfirmasi */}
         <div className="pt-6 border-t border-zinc-200 grid grid-cols-2 gap-8 text-xs font-mono">
           <div>
-            <div className="text-zinc-400 mb-12">Disiapkan Oleh:</div>
+            <div className="text-zinc-500 mb-12">Disiapkan Oleh:</div>
             <div className="font-bold text-zinc-900 border-t border-zinc-400 pt-1 w-44">
               Teknisi KSS Komputer
             </div>
@@ -196,7 +196,7 @@ export default function CustomerQuotationContent({ quote }: { quote: PublicQuote
           </div>
 
           <div className="text-right">
-            <div className="text-zinc-400 mb-12">Disetujui Oleh:</div>
+            <div className="text-zinc-500 mb-12">Disetujui Oleh:</div>
             <div className="font-bold text-zinc-900 border-t border-zinc-400 pt-1 w-44 ml-auto">
               {quote.customerName}
             </div>

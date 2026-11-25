@@ -92,7 +92,7 @@ export function Footer() {
               href={`https://wa.me/${DEFAULT_WHATSAPP_PHONE}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex flex-1 items-center justify-center gap-2 rounded-md border border-zinc-700 bg-zinc-900 px-4 py-2.5 text-xs font-bold text-zinc-900 transition-colors hover:bg-zinc-800 sm:flex-none"
+              className="inline-flex flex-1 items-center justify-center gap-2 rounded-md border border-zinc-700 bg-zinc-900 px-4 py-2.5 text-xs font-bold text-white transition-colors hover:bg-zinc-800 sm:flex-none"
             >
               WhatsApp
             </a>
@@ -134,7 +134,7 @@ export function Footer() {
                 <Phone className="h-3.5 w-3.5 shrink-0 text-zinc-600" />
                 <a
                   href={`https://wa.me/${DEFAULT_WHATSAPP_PHONE}`}
-                  className="font-mono font-medium text-emerald-400 hover:underline"
+                  className="font-mono font-medium text-emerald-700 hover:underline"
                 >
                   WhatsApp: {DEFAULT_WHATSAPP_DISPLAY}
                 </a>
@@ -164,7 +164,7 @@ export function Footer() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="transition-colors hover:text-orange-400"
+                    className="transition-colors hover:text-orange-700"
                   >
                     {link.label}
                   </Link>
@@ -200,7 +200,7 @@ export function Footer() {
                 'Dukungan faktur pajak untuk pengadaan kantor',
               ].map((item) => (
                 <li key={item} className="flex items-start gap-1.5">
-                  <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-emerald-400" />
+                  <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-emerald-700" />
                   <span>{item}</span>
                 </li>
               ))}
@@ -235,7 +235,7 @@ export function Footer() {
             <span>&bull;</span>
             <span>Faktur Pajak</span>
             <span>&bull;</span>
-            <span className="font-semibold text-emerald-400">Pricelist Terupdate</span>
+            <span className="font-semibold text-emerald-700">Pricelist Terupdate</span>
           </div>
         </div>
       </div>
