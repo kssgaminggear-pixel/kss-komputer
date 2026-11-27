@@ -5,8 +5,7 @@
  *  1. `.next/static`     : bundle client (tidak boleh ada nominal harga literal).
  *  2. `.next/server/app` : HTML dan payload RSC hasil prerender.
  *
- * `retailPrice` hanya boleh ada pada aksesoris eceran, yaitu di halaman
- * /aksesoris dan section aksesoris di beranda.
+ * `priceIdr` (harga produk eceran Toko) hanya boleh ada di /toko dan beranda.
  *
  * Batasan: halaman yang dirender saat request (tanpa file prerender) tidak
  * terpindai di sini. Bentuk DTO-nya dijaga oleh unit test sanitizer.
@@ -32,6 +31,7 @@ const STATIC_FORBIDDEN = [
 const SERVER_FORBIDDEN = [
   { label: 'field costPrice', pattern: /"costPrice"\s*:/ },
   { label: 'field sellPrice', pattern: /"sellPrice"\s*:/ },
+  { label: 'field retailPrice', pattern: /"retailPrice"\s*:/ },
   // Kategori khusus komponen rakitan tidak boleh membawa harga, di halaman mana pun.
   {
     label: 'harga pada komponen rakitan',
@@ -39,12 +39,8 @@ const SERVER_FORBIDDEN = [
   },
 ];
 
-const ACCESSORY_PRICE = { label: 'field retailPrice di luar halaman aksesoris', pattern: /"retailPrice"\s*:/ };
-const ACCESSORY_PAGES = /^(index|aksesoris)(\.|\/|$)/;
-
-/** Halaman komponen tidak boleh menampilkan nominal rupiah sama sekali. */
-const RENDERED_RUPIAH = { label: 'nominal rupiah di halaman komponen', pattern: /Rp(?:\s|&nbsp;| )?\d/ };
-const COMPONENT_PAGES = /^komponen(\.|\/|$)/;
+const STORE_PRICE = { label: 'harga produk Toko di luar /toko dan beranda', pattern: /"priceIdr"\s*:/ };
+const STORE_PAGES = /^(index|toko)(\.|\/|$)/;
 
 function walk(dir) {
   return fs.readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
@@ -89,10 +85,7 @@ for (const file of walk(SERVER_ROOT)) {
 
   // Payload RSC di dalam HTML meng-escape tanda kutip; samakan dulu bentuknya.
   const text = fs.readFileSync(file, 'utf8').replace(/\\+"/g, '"');
-  const rules = [...SERVER_FORBIDDEN];
-  if (!ACCESSORY_PAGES.test(relative)) rules.push(ACCESSORY_PRICE);
-  if (COMPONENT_PAGES.test(relative)) rules.push(RENDERED_RUPIAH);
-  scan(file, text, rules);
+  scan(file, text, STORE_PAGES.test(relative) ? SERVER_FORBIDDEN : [...SERVER_FORBIDDEN, STORE_PRICE]);
 }
 
 // Tanpa halaman paket yang terpindai, hasil "bersih" tidak berarti apa-apa.
@@ -108,4 +101,4 @@ if (hits.length > 0) {
   process.exit(1);
 }
 
-console.log(`[price-guard] Bersih: bundle client dan ${prerendered} file prerender tanpa harga part.`);
+console.log(`[price-guard] Bersih: paket tanpa harga komponen; harga Toko hanya di /toko dan beranda (${prerendered} file prerender).`);

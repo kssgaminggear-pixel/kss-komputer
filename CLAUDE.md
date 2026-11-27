@@ -18,12 +18,13 @@
 ## Riset harga/produk Tokopedia (wajib pakai skrip ini)
 - Jangan pakai WebFetch/WebSearch untuk halaman Tokopedia (butuh JS, diblokir). Pakai `tools/tokopedia-scraper` yang dijalankan PEMILIK di PC-nya (Chrome asli, sesi login tersimpan).
 - Setup sekali: `cd tools\tokopedia-scraper && npm install`.
-- Jalankan: `node scrape.mjs --query "rtx 4060" --pages 2` atau `--url "<url toko/etalase/produk>"`; opsi `--max N`, `--cdp http://localhost:9222` (tempel ke Chrome terbuka).
-- Keluaran: `tools/tokopedia-scraper/out/*.json|csv` (title, price, original_price, shop, location, rating, sold, url, image). Baca file hasilnya (stage), jangan scrape ulang.
-- Tanpa `device_bash` saya tidak bisa menjalankannya: minta pemilik menjalankan perintah lalu stage file `out/`. Captcha/blokir diselesaikan pemilik secara manual, jangan dilewati. Detail: `tools/tokopedia-scraper/README.md`.
+- Katalog Toko: `node collect-store.mjs` (semua produk + etalase toko sendiri), lalu dari root `node scripts/marketplace/import-snapshot.mjs` dan `npm run validate:marketplace`.
+- Satu halaman/URL: `node scrape.mjs --url "<url toko/etalase/produk>"`; opsi `--max N`, `--debug`, `--cdp http://localhost:9222`. Jangan pakai `--query` (`/search?` dilarang robots.txt).
+- Jangan baca keluaran mentah `out/` ke konteks; ringkas dengan skrip. Olah teks massal pakai Hydrogen via 9router (key di `%USERPROFILE%\.kss-sync\.env`).
+- Captcha/blokir diselesaikan pemilik secara manual, jangan dilewati. Detail: `tools/tokopedia-scraper/README.md`.
 
 ## Aturan bisnis
-- Dilarang harga satuan part di publik; hanya total paket, delta upgrade, harga jasa. Data harga hanya lewat server-catalog/server-pricing + DTO tersanitasi (AGENTS.md §1.1).
+- Dilarang harga satuan part paket di publik; hanya total paket, delta upgrade, harga jasa, dan harga produk eceran /toko (data sinkron Tokopedia di `data/marketplace`, domain terpisah). Data paket hanya lewat server-catalog/server-pricing + DTO tanpa harga (AGENTS.md §1.1).
 
 ## Visual v2 (detail: DESIGN.md; sumber kebenaran: src/app/globals.css)
 - Hero & footer chapter gelap `bg-zinc-950`, isi terang; hairline, bukan shadow besar.

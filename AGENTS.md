@@ -7,15 +7,16 @@
 
 KSS Komputer adalah **Custom PC System Integrator & Pusat Layanan Jasa Komputer**.
 
-- Toko resmi Tokopedia: <https://tk.tokopedia.com/ZSpeToWkH/>
+- Toko resmi Tokopedia: <https://www.tokopedia.com/ksskomputer>
 - Lokasi: Mangga Dua Mall, Jakarta
 - Fokus: paket PC rakitan jadi, upgrade terukur, dan jasa servis/maintenance.
 
 ### 1.1 Aturan Harga Mutlak (Zero Part-Price Leak)
 
-**DILARANG menampilkan harga satuan komponen** (CPU, motherboard, RAM, VGA, SSD,
-PSU, casing, cooler) kepada publik — baik di halaman, HTML, JSON, maupun bundle
-client.
+**DILARANG menampilkan harga satuan komponen yang menjadi bagian paket rakitan**
+(CPU, motherboard, RAM, VGA, SSD, PSU, casing, cooler) — di halaman, HTML,
+payload RSC, JSON, maupun bundle client. `PublicHardwarePart` tidak membawa field
+harga apa pun.
 
 Yang boleh tampil di publik hanya:
 
@@ -23,10 +24,15 @@ Yang boleh tampil di publik hanya:
 2. **Selisih harga upgrade** (`+ Rp xxx.xxx`, `- Rp xxx.xxx`, atau
    `[Termasuk Paket]`) saat komponen diganti.
 3. Harga layanan jasa (`priceStartFrom`) dan biaya rakit.
+4. Harga produk eceran **Toko** (`/toko` dan section "Terlaris di toko" di
+   beranda) yang bersumber dari listing Tokopedia resmi KSS
+   (`data/marketplace/products.json`, field `priceIdr`). Data ini terpisah total
+   dari `mock-data.ts`; dilarang menautkan atau menggabungkannya dengan komponen
+   paket.
 
-`costPrice` dan `sellPrice` hanya untuk admin/server. Akses data mentah wajib
-melewati modul server-only (`server-catalog`, `server-pricing`) dan DTO
-tersanitasi.
+`costPrice`, `sellPrice`, dan `retailPrice` hanya untuk admin/server. Akses data
+mentah wajib melewati modul server-only (`server-catalog`, `server-pricing`) dan
+DTO tersanitasi. Guard: `npm run check:price`.
 
 ### 1.2 Model Penjualan
 
