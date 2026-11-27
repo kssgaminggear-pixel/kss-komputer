@@ -1,0 +1,15 @@
+[
+  {
+    "id": "promo-11-11",
+    "image": "/images/tokopedia/banner-store-1.webp",
+    "alt": "Promo 11.11 KSS Komputer",
+    "href": "/toko",
+    "activeUntil": "2026-11-11"
+  },
+  {
+    "id": "pilih-casing",
+    "image": "/images/tokopedia/banner-store-2.webp",
+    "alt": "Pilih sendiri casing untuk PC rakitan kelas expert di KSS Komputer",
+    "href": "/toko/etalase/pc-game-dan-desain-expert"
+  }
+]
