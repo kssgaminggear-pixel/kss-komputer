@@ -11,10 +11,10 @@
  *   NINEROUTER_TUNNEL_SECRET  - secret yang dipakai Vercel untuk memanggil proxy
  */
 
-import http from 'node:http';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { createProxyServer } from './cs-proxy-lib.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const envPath = path.join(root, '.env.local');
@@ -31,58 +31,7 @@ if (!UPSTREAM_KEY || !SECRET) {
   process.exit(1);
 }
 
-const ALLOWED = new Set(['POST /v1/chat/completions', 'GET /v1/models']);
-
-const server = http.createServer((req, res) => {
-  const pathname = (req.url || '/').split('?')[0];
-  const route = `${req.method} ${pathname}`;
-  const bearer = req.headers.authorization?.replace(/^Bearer\s+/i, '');
-  const presented = req.headers['x-kss-tunnel'] || bearer;
-
-  if (presented !== SECRET) {
-    res.writeHead(401, { 'content-type': 'application/json' });
-    res.end(JSON.stringify({ error: 'unauthorized' }));
-    return;
-  }
-
-  if (!ALLOWED.has(route)) {
-    res.writeHead(404, { 'content-type': 'application/json' });
-    res.end(JSON.stringify({ error: 'not_found' }));
-    return;
-  }
-
-  const chunks = [];
-  req.on('data', (chunk) => chunks.push(chunk));
-  req.on('end', () => {
-    const body = Buffer.concat(chunks);
-    const upstream = http.request(
-      `${UPSTREAM}${pathname}`,
-      {
-        method: req.method,
-        headers: {
-          'content-type': req.headers['content-type'] || 'application/json',
-          'content-length': body.length,
-          authorization: `Bearer ${UPSTREAM_KEY}`,
-        },
-      },
-      (upstreamRes) => {
-        res.writeHead(upstreamRes.statusCode || 502, {
-          'content-type': upstreamRes.headers['content-type'] || 'application/json',
-        });
-        upstreamRes.pipe(res);
-      }
-    );
-
-    upstream.setTimeout(60_000, () => upstream.destroy(new Error('upstream timeout')));
-    upstream.on('error', () => {
-      if (!res.headersSent) {
-        res.writeHead(502, { 'content-type': 'application/json' });
-      }
-      res.end(JSON.stringify({ error: 'upstream_unreachable' }));
-    });
-    upstream.end(body);
-  });
-});
+const server = createProxyServer({ upstream: UPSTREAM, upstreamKey: UPSTREAM_KEY, secret: SECRET });
 
 server.listen(PORT, '127.0.0.1', () => {
   console.log(`[cs-proxy] listening on 127.0.0.1:${PORT} -> ${UPSTREAM}`);
