@@ -78,8 +78,8 @@ export async function TokoView({ activeEtalaseSlug }: { activeEtalaseSlug?: stri
           <TokoCatalogFromUrl {...catalog} />
         </Suspense>
         <p className="border-t border-zinc-200 pt-4 text-meta text-zinc-500">
-          Harga dan stok mengikuti listing Tokopedia pada tanggal data di atas. Harga yang berlaku adalah harga
-          saat checkout di Tokopedia.
+          Harga normal toko dan stok mengikuti listing Tokopedia pada tanggal data di atas. Harga di Tokopedia
+          dapat berbeda karena promo.
         </p>
       </div>
     </div>

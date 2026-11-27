@@ -28,6 +28,8 @@ Log: `%USERPROFILE%\.kss-sync\logs`, disimpan 30 hari. Hapus jadwal: `schtasks /
 
 ## Aturan
 
+- Harga yang disimpan (`priceIdr`) adalah **harga normal** toko (harga coret Tokopedia bila ada),
+  bukan harga setelah diskon. Perubahan diskon di Tokopedia tidak mengubah harga situs.
 - Produk hilang dua run berturut-turut disembunyikan, tidak dihapus. Slug tidak pernah berubah.
 - PR diberi label `needs-review` dan **tidak** di-merge bila: harga satu produk berubah >40%,
   >20% produk hilang sekaligus (hitungan takedown tidak naik), >30% harga berubah,

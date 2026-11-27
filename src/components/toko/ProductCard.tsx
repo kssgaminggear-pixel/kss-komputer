@@ -3,8 +3,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ExternalLink, Package, Star } from 'lucide-react';
 import { Price } from '@/components/ui/Price';
-import { formatIDR } from '@/lib/format';
-import { discountPercent } from '@/lib/marketplace/search';
 import type { PublicMarketplaceProduct } from '@/lib/marketplace/types';
 import { AddToCartButton } from './AddToCartButton';
 
@@ -24,7 +22,6 @@ export function RatingLine({ rating, soldLabel }: { rating: number; soldLabel: s
 }
 
 export function ProductCard({ product }: { product: PublicMarketplaceProduct }) {
-  const discount = discountPercent(product);
   const soldOut = product.stock === 'out_of_stock';
 
   return (
@@ -42,11 +39,7 @@ export function ProductCard({ product }: { product: PublicMarketplaceProduct }) 
           ) : (
             <Package aria-hidden className="absolute inset-0 m-auto h-8 w-8 text-zinc-400" />
           )}
-          {soldOut ? (
-            <span className="kss-tag kss-tag-warn absolute left-1.5 top-1.5">Stok habis</span>
-          ) : (
-            discount > 0 && <span className="kss-tag kss-tag-danger absolute left-1.5 top-1.5">−{discount}%</span>
-          )}
+          {soldOut && <span className="kss-tag kss-tag-warn absolute left-1.5 top-1.5">Stok habis</span>}
         </div>
         <h3 className="mt-2 line-clamp-2 min-h-[2.5rem] text-sm leading-snug text-zinc-900 group-hover:underline">
           {product.name}
@@ -55,11 +48,6 @@ export function ProductCard({ product }: { product: PublicMarketplaceProduct }) 
 
       <div className="mt-1">
         <Price value={product.priceIdr} className="text-base text-zinc-950" />
-        <p className="min-h-[1.25rem]">
-          {product.originalPriceIdr && (
-            <s className="kss-num text-meta text-zinc-500">{formatIDR(product.originalPriceIdr)}</s>
-          )}
-        </p>
         <RatingLine rating={product.rating} soldLabel={product.soldLabel} />
       </div>
 
@@ -82,7 +70,6 @@ export function ProductCard({ product }: { product: PublicMarketplaceProduct }) 
             slug: product.slug,
             name: product.name,
             unitPrice: product.priceIdr,
-            originalPrice: product.originalPriceIdr,
             tokopediaUrl: product.tokopediaUrl,
           }}
         />

@@ -9,8 +9,7 @@ import { AddToCartButton } from '@/components/toko/AddToCartButton';
 import { ProductCard, RatingLine } from '@/components/toko/ProductCard';
 import { Price } from '@/components/ui/Price';
 import { SITE_URL } from '@/lib/constants';
-import { DEFAULT_WHATSAPP_PHONE, formatIDR } from '@/lib/format';
-import { discountPercent } from '@/lib/marketplace/search';
+import { DEFAULT_WHATSAPP_PHONE } from '@/lib/format';
 import {
   getMarketplaceEtalase,
   getMarketplaceProductBySlug,
@@ -47,7 +46,6 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
   const shelf = getMarketplaceEtalase().find((item) => product.etalaseIds.includes(item.id));
   const related = getRelatedProducts(product);
-  const discount = discountPercent(product);
   const soldOut = product.stock === 'out_of_stock';
   const waUrl = `https://wa.me/${DEFAULT_WHATSAPP_PHONE}?text=${encodeURIComponent(
     `Halo KSS Komputer, saya mau tanya produk ini:\n*${product.name}*\n${SITE_URL}/toko/${product.slug}`
@@ -121,12 +119,6 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
           <div className="mt-4 border-y border-zinc-200 py-4">
             <Price value={product.priceIdr} className="text-3xl text-zinc-950" />
-            {product.originalPriceIdr && (
-              <p className="mt-1 flex items-center gap-2">
-                <s className="kss-num text-sm text-zinc-500">{formatIDR(product.originalPriceIdr)}</s>
-                {discount > 0 && <span className="kss-tag kss-tag-danger">−{discount}%</span>}
-              </p>
-            )}
             {soldOut && <p className="mt-2"><span className="kss-tag kss-tag-warn">Stok habis</span></p>}
           </div>
 
@@ -145,7 +137,6 @@ export default async function ProductPage({ params }: ProductPageProps) {
                   slug: product.slug,
                   name: product.name,
                   unitPrice: product.priceIdr,
-                  originalPrice: product.originalPriceIdr,
                   tokopediaUrl: product.tokopediaUrl,
                 }}
               />
@@ -162,7 +153,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
           <p className="mt-6 text-meta text-zinc-500">
             Data per{' '}
             {new Date(product.syncedAt).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Asia/Jakarta' })}.
-            Harga yang berlaku adalah harga saat checkout di Tokopedia.
+            Harga normal toko; harga di Tokopedia dapat berbeda karena promo.
           </p>
         </div>
       </div>

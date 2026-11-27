@@ -46,6 +46,15 @@ describe('diff sinkron katalog', () => {
     expect(find(back, 0)).toMatchObject({ status: 'active', missingRuns: 0, slug: find(first, 0).slug });
   });
 
+  it('memakai harga normal, jadi perubahan diskon tidak mengubah harga', () => {
+    const discounted = (price: number) => ({ ...row(0, price), originalPrice: 120_000 });
+    const before = diffCatalog([], [], snapshot([discounted(110_000), ...rows.slice(1)]));
+    const after = run([discounted(105_000), ...rows.slice(1)], before);
+    expect(find(after, 0)).toMatchObject({ priceIdr: 120_000 });
+    expect(find(after, 0)).not.toHaveProperty('originalPriceIdr');
+    expect(after.products).toEqual(before.products);
+  });
+
   it('nama berubah tidak mengubah slug', () => {
     const renamed = [{ ...rows[0], name: 'Nama baru' }, ...rows.slice(1)];
     expect(find(run(renamed), 0).slug).toBe(find(first, 0).slug);

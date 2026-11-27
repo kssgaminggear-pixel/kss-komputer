@@ -56,8 +56,3 @@ export function sortProducts(
     return bestSelling(a, b);
   });
 }
-
-export function discountPercent(product: { priceIdr: number; originalPriceIdr?: number }): number {
-  if (!product.originalPriceIdr || product.originalPriceIdr <= product.priceIdr) return 0;
-  return Math.floor((1 - product.priceIdr / product.originalPriceIdr) * 100);
-}

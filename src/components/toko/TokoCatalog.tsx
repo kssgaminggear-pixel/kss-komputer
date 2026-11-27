@@ -6,7 +6,6 @@ import { useSearchParams } from 'next/navigation';
 import { Search, X } from 'lucide-react';
 import {
   SORT_OPTIONS,
-  discountPercent,
   isSortValue,
   matchesTokens,
   normalizeSearch,
@@ -28,16 +27,14 @@ export interface TokoCatalogProps {
 interface Filters {
   q: string;
   sort: SortValue;
-  discountOnly: boolean;
 }
 
-const DEFAULT_FILTERS: Filters = { q: '', sort: 'terlaris', discountOnly: false };
+const DEFAULT_FILTERS: Filters = { q: '', sort: 'terlaris' };
 
 function toQuery(filters: Filters): string {
   const params = new URLSearchParams();
   if (filters.q) params.set('q', filters.q);
   if (filters.sort !== 'terlaris') params.set('sort', filters.sort);
-  if (filters.discountOnly) params.set('diskon', '1');
   const query = params.toString();
   return query ? `?${query}` : '';
 }
@@ -52,7 +49,6 @@ export function TokoCatalogFromUrl(props: TokoCatalogProps) {
       filters={{
         q: params.get('q') ?? '',
         sort: isSortValue(sort) ? sort : 'terlaris',
-        discountOnly: params.get('diskon') === '1',
       }}
     />
   );
@@ -80,12 +76,8 @@ export function TokoCatalog({
 
   const matches = useMemo(() => {
     const tokens = searchTokens(filters.q);
-    return products.filter(
-      (product) =>
-        matchesTokens(index.get(product.id) ?? '', tokens) &&
-        (!filters.discountOnly || discountPercent(product) > 0)
-    );
-  }, [products, index, filters.q, filters.discountOnly]);
+    return products.filter((product) => matchesTokens(index.get(product.id) ?? '', tokens));
+  }, [products, index, filters.q]);
 
   const results = useMemo(
     () =>
@@ -165,14 +157,6 @@ export function TokoCatalog({
             />
           </div>
           <div className="flex items-center gap-2">
-            <button
-              type="button"
-              aria-pressed={filters.discountOnly}
-              onClick={() => update({ discountOnly: !filters.discountOnly })}
-              className={`kss-chip ${filters.discountOnly ? 'kss-chip-active' : ''}`}
-            >
-              Diskon saja
-            </button>
             <select
               value={filters.sort}
               onChange={(event) => update({ sort: event.target.value as SortValue })}

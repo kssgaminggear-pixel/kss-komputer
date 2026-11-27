@@ -12,8 +12,8 @@ export interface MarketplaceProduct {
   slug: string;
   name: string;
   etalaseIds: string[];
+  /** Harga normal toko (sebelum diskon Tokopedia). */
   priceIdr: number;
-  originalPriceIdr?: number;
   rating: number;
   /** Angka bawah dari label: "1rb+" menjadi 1000. */
   sold: number;
@@ -49,7 +49,6 @@ export type PublicMarketplaceProduct = Pick<
   | 'name'
   | 'etalaseIds'
   | 'priceIdr'
-  | 'originalPriceIdr'
   | 'rating'
   | 'sold'
   | 'soldLabel'
