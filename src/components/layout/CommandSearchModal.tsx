@@ -5,54 +5,29 @@ import Link from 'next/link';
 import {
   Search,
   X,
-  ShoppingCart,
   MessageCircle,
-  Check,
   ArrowRight,
 } from 'lucide-react';
-import { PublicHardwarePart } from '@/lib/types';
-import { formatIDR, generateCustomBuildWAMessage } from '@/lib/format';
-import { SpecBadges, getProductSpecLabels } from '@/components/catalog/SpecBadges';
-import { useCartStore } from '@/store/useCartStore';
+import type { PartSearchEntry } from '@/lib/types';
+import { generateCustomBuildWAMessage } from '@/lib/format';
 
 export interface CommandSearchModalProps {
   isOpen: boolean;
   onClose: () => void;
-  products: PublicHardwarePart[];
+  products: PartSearchEntry[];
 }
 
 /**
  * Memeriksa apakah suatu produk cocok dengan seluruh token pencarian (multi-token search).
  * Contoh: "am5 ddr5 msi" harus cocok dengan socket AM5, ram DDR5, dan brand MSI.
  */
-function matchesSearchTokens(product: PublicHardwarePart, tokens: string[]): boolean {
-  if (tokens.length === 0) return true;
-
-  const specLabels = getProductSpecLabels(product).map((lbl) => lbl.toLowerCase());
-  const searchCorpus = [
-    product.name.toLowerCase(),
-    product.sku.toLowerCase(),
-    product.brand.toLowerCase(),
-    product.category.toLowerCase(),
-    product.specs.socket?.toLowerCase() || '',
-    product.specs.chipset?.toLowerCase() || '',
-    product.specs.ramType?.toLowerCase() || '',
-    product.specs.formFactor?.toLowerCase() || '',
-    product.specs.vramType?.toLowerCase() || '',
-    product.specs.storageInterface?.toLowerCase() || '',
-    product.specs.efficiencyRating?.toLowerCase() || '',
-    ...specLabels,
-  ].join(' ');
-
-  return tokens.every((token) => searchCorpus.includes(token));
+function matchesSearchTokens(product: PartSearchEntry, tokens: string[]): boolean {
+  return tokens.every((token) => product.keywords.includes(token));
 }
 
 export function CommandSearchModal({ isOpen, onClose, products }: CommandSearchModalProps) {
   const [query, setQuery] = useState('');
-  const [addedCartId, setAddedCartId] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-
-  const addItem = useCartStore((state) => state.addItem);
 
   // Reset query jika modal ditutup
   const [prevIsOpen, setPrevIsOpen] = useState(isOpen);
@@ -60,7 +35,6 @@ export function CommandSearchModal({ isOpen, onClose, products }: CommandSearchM
     setPrevIsOpen(isOpen);
     if (!isOpen) {
       setQuery('');
-      setAddedCartId(null);
     }
   }
 
@@ -96,16 +70,6 @@ export function CommandSearchModal({ isOpen, onClose, products }: CommandSearchM
     const tokens = trimmed.split(/\s+/).filter(Boolean);
     return products.filter((product) => matchesSearchTokens(product, tokens)).slice(0, 20);
   }, [query, products]);
-
-  const handleAddToCart = (e: React.MouseEvent, product: PublicHardwarePart) => {
-    e.preventDefault();
-    e.stopPropagation();
-    addItem(product, 1);
-    setAddedCartId(product.id);
-    setTimeout(() => {
-      setAddedCartId((prev) => (prev === product.id ? null : prev));
-    }, 1500);
-  };
 
   if (!isOpen) return null;
 
@@ -168,8 +132,6 @@ export function CommandSearchModal({ isOpen, onClose, products }: CommandSearchM
             </div>
           ) : (
             searchResults.map((product) => {
-              const isAddedToCart = addedCartId === product.id;
-
               return (
                 <div
                   key={product.id}
@@ -198,23 +160,18 @@ export function CommandSearchModal({ isOpen, onClose, products }: CommandSearchM
                       {product.name}
                     </Link>
                     <div className="mt-1.5">
-                      <SpecBadges product={product} limit={4} />
+                      <div className="flex flex-wrap items-center gap-1">
+                        {product.specLabels.map((label) => (
+                          <span key={label} className="inline-flex items-center px-1.5 py-0.5 text-meta font-mono font-medium bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-700 rounded-md whitespace-nowrap">
+                            {label}
+                          </span>
+                        ))}
+                      </div>
                     </div>
                   </div>
 
-                  {/* Right Column: Price & Quick Action Buttons */}
+                  {/* Kolom kanan: aksi cepat. Harga komponen tidak ditampilkan (AGENTS.md §1.1). */}
                   <div className="flex items-center justify-between sm:justify-end gap-3 pt-2 sm:pt-0 border-t sm:border-t-0 border-zinc-100 dark:border-zinc-800/60">
-                    <div className="text-left sm:text-right">
-                      <div className="font-mono font-semibold text-xs sm:text-sm text-zinc-900 dark:text-zinc-100 tabular-nums">
-                        {formatIDR(product.retailPrice)}
-                      </div>
-                      {product.originalPrice && product.originalPrice > product.retailPrice && (
-                        <div className="font-mono text-micro text-zinc-500 line-through tabular-nums">
-                          {formatIDR(product.originalPrice)}
-                        </div>
-                      )}
-                    </div>
-
                     <div className="flex items-center gap-1.5 shrink-0">
                       {/* Konsultasi rakit custom via WhatsApp */}
                       <a
@@ -230,30 +187,6 @@ export function CommandSearchModal({ isOpen, onClose, products }: CommandSearchM
                         <MessageCircle className="w-3 h-3" />
                         <span className="hidden sm:inline">Rakit</span>
                       </a>
-
-                      {/* Button + Keranjang */}
-                      <button
-                        type="button"
-                        onClick={(e) => handleAddToCart(e, product)}
-                        title="Tambahkan ke Keranjang Belanja"
-                        className={`inline-flex items-center gap-1 px-2 py-1 text-xs font-mono font-medium border rounded-md transition-all ${
-                          isAddedToCart
-                            ? 'bg-emerald-700 border-emerald-600 text-white'
-                            : 'bg-orange-700 hover:bg-orange-800 text-white border-orange-600'
-                        }`}
-                      >
-                        {isAddedToCart ? (
-                          <>
-                            <Check className="w-3 h-3 text-white" />
-                            <span>Di Keranjang</span>
-                          </>
-                        ) : (
-                          <>
-                            <ShoppingCart className="w-3 h-3" />
-                            <span className="hidden sm:inline">+ Beli</span>
-                          </>
-                        )}
-                      </button>
                     </div>
                   </div>
                 </div>

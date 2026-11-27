@@ -94,11 +94,26 @@ export interface HardwarePart {
 
 /**
  * Bentuk komponen yang aman dikirim ke client / halaman publik.
- * `costPrice`, `sellPrice`, dan alias `price` sengaja dihilangkan.
+ * Tidak membawa field harga apa pun (AGENTS.md §1.1): yang publik hanya
+ * total paket, delta upgrade, dan harga jasa.
  */
-export type PublicHardwarePart = Omit<HardwarePart, 'costPrice' | 'sellPrice' | 'price'> & {
-  retailPrice: number;
-};
+export type PublicHardwarePart = Omit<
+  HardwarePart,
+  'costPrice' | 'sellPrice' | 'price' | 'retailPrice' | 'isRetailAvailable' | 'originalPrice'
+>;
+
+/** Data ringan untuk pencarian global; dikirim ke setiap halaman, tanpa harga. */
+export interface PartSearchEntry {
+  id: string;
+  slug: string;
+  sku: string;
+  name: string;
+  brand: string;
+  category: ProductCategory;
+  stockStatus: StockStatus;
+  specLabels: string[];
+  keywords: string;
+}
 
 /**
  * Bentuk aksesoris yang aman dikirim ke client (tanpa harga modal).

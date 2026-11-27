@@ -72,8 +72,8 @@ export interface PublicPrebuiltDetailDTO extends PublicPrebuiltPCDTO {
 
 /**
  * Sanitize HardwarePart sebelum dikirim ke browser.
- * `retailPrice` adalah harga jual publik (fallback ke sellPrice selama
- * komponen belum punya harga eceran terpisah).
+ * Tidak ada field harga yang disalin. Daftar field ditulis eksplisit agar
+ * field harga baru tidak ikut terbawa.
  */
 export function sanitizeHardwarePartForPublic(part: HardwarePart): PublicHardwarePart {
   return {
@@ -83,9 +83,6 @@ export function sanitizeHardwarePartForPublic(part: HardwarePart): PublicHardwar
     slug: part.slug,
     brand: part.brand,
     category: part.category,
-    retailPrice: part.retailPrice ?? part.sellPrice,
-    isRetailAvailable: part.isRetailAvailable,
-    originalPrice: part.originalPrice,
     stockStatus: part.stockStatus,
     wattage: part.wattage,
     warrantyYears: part.warrantyYears,

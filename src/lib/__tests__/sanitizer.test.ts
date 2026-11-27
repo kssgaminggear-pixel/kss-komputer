@@ -3,6 +3,12 @@ import {
   sanitizeAccessoryForPublic,
   sanitizeHardwarePartForPublic,
 } from '@/lib/sanitizer';
+import {
+  getPartSearchEntries,
+  getPublicHardwareParts,
+  getPublicPrebuiltDetail,
+  getPublicPrebuilts,
+} from '@/lib/server-catalog';
 import type { AccessoryItem, HardwarePart } from '@/lib/types';
 
 const rawPart: HardwarePart = {
@@ -16,6 +22,7 @@ const rawPart: HardwarePart = {
   sellPrice: 2_450_000,
   price: 2_450_000,
   retailPrice: 2_590_000,
+  originalPrice: 2_700_000,
   stockStatus: 'ready',
   wattage: 65,
   warrantyYears: 3,
@@ -23,25 +30,32 @@ const rawPart: HardwarePart = {
   updatedAt: '2026-01-01T00:00:00.000Z',
 };
 
+const PART_PRICE_FIELD = /"(?:costPrice|sellPrice|retailPrice|originalPrice|price)":/;
+
 describe('sanitizeHardwarePartForPublic', () => {
-  it('tidak pernah membocorkan harga modal atau harga jual internal', () => {
-    const result = sanitizeHardwarePartForPublic(rawPart) as Record<string, unknown>;
-
-    expect(result).not.toHaveProperty('costPrice');
-    expect(result).not.toHaveProperty('sellPrice');
-    expect(result).not.toHaveProperty('price');
-  });
-
-  it('mempertahankan harga eceran resmi untuk katalog retail', () => {
+  it('tidak membawa field harga apa pun, termasuk retailPrice', () => {
     const result = sanitizeHardwarePartForPublic(rawPart);
 
-    expect(result.retailPrice).toBe(2_590_000);
+    expect(Object.keys(result).filter((key) => /price/i.test(key))).toEqual([]);
+  });
+});
+
+describe('DTO publik dari katalog', () => {
+  it('daftar komponen dan indeks pencarian tanpa harga', () => {
+    expect(JSON.stringify(getPublicHardwareParts())).not.toMatch(PART_PRICE_FIELD);
+    expect(JSON.stringify(getPartSearchEntries())).not.toMatch(/price/i);
   });
 
-  it('memakai sellPrice sebagai fallback bila retailPrice kosong', () => {
-    const result = sanitizeHardwarePartForPublic({ ...rawPart, retailPrice: undefined });
+  it('daftar dan detail paket hanya membawa total serta delta', () => {
+    const packages = getPublicPrebuilts();
+    expect(packages.length).toBeGreaterThan(0);
+    expect(JSON.stringify(packages)).not.toMatch(PART_PRICE_FIELD);
 
-    expect(result.retailPrice).toBe(2_450_000);
+    for (const pkg of packages) {
+      const detail = getPublicPrebuiltDetail(pkg.slug);
+      expect(detail?.baseTotalPrice).toBeGreaterThan(0);
+      expect(JSON.stringify(detail)).not.toMatch(PART_PRICE_FIELD);
+    }
   });
 });
 

@@ -5,11 +5,10 @@ import './globals.css';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { BottomNav } from '@/components/layout/BottomNav';
-import { CartDrawer } from '@/components/layout/CartDrawer';
 import { RetailCartDrawer } from '@/components/cart/RetailCartDrawer';
 import { CsAgent } from '@/components/cs/CsAgent';
 import { JsonLd } from '@/components/seo/JsonLd';
-import { getPublicHardwareParts } from '@/lib/server-catalog';
+import { getPartSearchEntries } from '@/lib/server-catalog';
 import { SITE_URL } from '@/lib/constants';
 import { organizationSchema, websiteSchema } from '@/lib/seo';
 
@@ -79,7 +78,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const searchProducts = getPublicHardwareParts();
+  const searchEntries = getPartSearchEntries();
 
   return (
     <html
@@ -89,14 +88,13 @@ export default function RootLayout({
       <body className="flex min-h-full flex-col bg-zinc-50 font-sans text-zinc-900 pb-[calc(3.5rem+env(safe-area-inset-bottom))] md:pb-0">
         <JsonLd data={[organizationSchema(), websiteSchema()]} />
         <Suspense fallback={null}>
-          <Navbar searchProducts={searchProducts} />
+          <Navbar searchEntries={searchEntries} />
         </Suspense>
         <main className="flex-1 w-full">{children}</main>
         <Footer />
         <Suspense fallback={null}>
           <BottomNav />
         </Suspense>
-        <CartDrawer />
         <RetailCartDrawer />
         <CsAgent />
       </body>
