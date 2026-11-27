@@ -88,6 +88,9 @@ src/
 │   ├── penawaran/[code]/        # Surat penawaran
 │   ├── tentang-kami/
 │   ├── admin/pricing/           # Markup & profit (modal terlihat)
+│   └── api/
+│       ├── cs/                  # Chat CS (streaming, health GET)
+│       └── health/              # Health check uptime (200/503)
 ├── components/
 │   ├── layout/                  # Navbar, Footer, BottomNav
 │   ├── prebuilt/                # Kartu paket + FPS telemetry
@@ -101,7 +104,8 @@ src/
 │   ├── format.ts                # Rupiah, delta, WhatsApp
 │   ├── sanitizer.ts             # DTO publik
 │   ├── server-catalog.ts        # Akses data server-only
-│   └── server-pricing.ts        # Estimasi total/delta server-only
+│   ├── server-pricing.ts        # Estimasi total/delta server-only
+│   └── cs-health.ts             # Konfigurasi + reachability upstream CS
 └── store/
     ├── useAdminStore.ts         # Markup, modal, paket kustom
     ├── useCartStore.ts

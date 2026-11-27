@@ -85,11 +85,23 @@ CI menjalankan urutan yang sama lewat `.github/workflows/ci.yml`.
 
 ## Deploy
 
-Produksi: <https://kss-komputer-seven.vercel.app>
+Produksi: <https://www.kssgo.com>
+
+Deploy otomatis berjalan dari GitHub Actions setelah job `verify` lulus pada
+branch `main`. Tambahkan repository secret `VERCEL_TOKEN` di
+**Settings → Secrets and variables → Actions**. Tanpa secret tersebut, job deploy
+dilewati dengan notice dan deploy manual tetap bisa dilakukan:
 
 ```bash
 vercel deploy --prod --yes
 ```
+
+## Monitoring
+
+- `GET /api/health` — `200` bila katalog, harga paket, dan koneksi CS sehat;
+  `503` bila salah satu gagal. Respons tidak memuat harga part atau token.
+- Workflow `.github/workflows/uptime.yml` memeriksa endpoint tersebut tiap 15
+  menit, membuka issue `[uptime]` saat gagal, dan menutupnya setelah pulih.
 
 ## Admin
 

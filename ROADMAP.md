@@ -7,8 +7,9 @@
 > Aturan UI: `UI_FIGCRAFT_SKILL.md`. Aturan kerja: `AGENTS.md`.
 > Arsitektur: `ARCHITECTURE.md`.
 
-**Progress: 21 / 21 item (100%)** — Fase 1–4 dan 6–8 selesai. Fase 5 (simulator)
-dibatalkan: rakit custom kini ditangani via WhatsApp.
+**Progress: 23 / 24 item (95.8%)** — Fase 1–4 dan 6–9 selesai; auto-deploy
+menunggu secret `VERCEL_TOKEN`. Fase 5 (simulator) dibatalkan: rakit custom kini
+ditangani via WhatsApp.
 
 ---
 
@@ -136,6 +137,21 @@ dibatalkan: rakit custom kini ditangani via WhatsApp.
 
 ---
 
+## FASE 9 — Observability & Delivery
+
+- [x] **9.1 `GET /api/health`**
+  - Memeriksa katalog, total harga paket, dan koneksi upstream CS.
+  - `200` sehat / `503` degraded; tanpa harga part atau token di respons.
+  - Logika CS dipusatkan di `src/lib/cs-health.ts` dan dipakai `/api/cs` juga.
+- [x] **9.2 Uptime workflow**
+  - `.github/workflows/uptime.yml` berjalan tiap 15 menit.
+  - Retry 3×, membuka issue `[uptime]` saat gagal, menutup otomatis saat pulih.
+- [ ] **9.3 Auto-deploy production**
+  - Job `deploy` sudah ada di `ci.yml` dan hanya jalan setelah `verify` lulus.
+  - Menunggu repository secret `VERCEL_TOKEN`; tanpa secret job dilewati.
+
+---
+
 ## Ringkasan Progres
 
 | Fase | Item | Selesai |
@@ -148,7 +164,8 @@ dibatalkan: rakit custom kini ditangani via WhatsApp.
 | 6 | 2 | 2 |
 | 7 | 8 | 8 |
 | 8 | 2 | 2 |
-| **Total** | **21** | **21** |
+| 9 | 3 | 2 |
+| **Total** | **24** | **23** |
 
 ## Catatan Implementasi
 
@@ -158,10 +175,9 @@ dibatalkan: rakit custom kini ditangani via WhatsApp.
 - Setiap fase wajib lulus `npx tsc --noEmit`, `npm run lint`, `npm run test`,
   `npm run build`, dan `npm run check:price` sebelum commit.
 
-### Status per 2026-11-26
+### Status per 2026-11-27
 
-- Seluruh halaman publik sudah live di
-  `https://kss-komputer-seven.vercel.app`.
+- Seluruh halaman publik sudah live di `https://www.kssgo.com`.
 - Checklist Fase 3–6 menandai **migrasi ke domain v2** (data `PrebuiltPackage` /
   `ComputerService`), bukan pembuatan halaman dari nol.
 - Rakit custom diarahkan ke WhatsApp; tidak ada route `/simulasi` maupun API
