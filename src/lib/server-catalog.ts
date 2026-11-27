@@ -11,9 +11,11 @@ import {
   BuildOrderTracking,
   PublicAccessory,
   PublicHardwarePart,
+  PartSearchEntry,
   ProductCategory,
   ServicePackage,
 } from './types';
+import { getProductSpecLabels } from '@/components/catalog/SpecBadges';
 import {
   PublicPrebuiltDetailDTO,
   PublicPrebuiltPCDTO,
@@ -36,6 +38,39 @@ export const UPGRADEABLE_CATEGORIES: ProductCategory[] = ['gpu', 'ram', 'ssd', '
 
 export function getPublicHardwareParts(): PublicHardwarePart[] {
   return MOCK_HARDWARE_PARTS.map(sanitizeHardwarePartForPublic);
+}
+
+export function getPartSearchEntries(): PartSearchEntry[] {
+  return getPublicHardwareParts().map((part) => {
+    const specLabels = getProductSpecLabels(part);
+    return {
+      id: part.id,
+      slug: part.slug,
+      sku: part.sku,
+      name: part.name,
+      brand: part.brand,
+      category: part.category,
+      stockStatus: part.stockStatus,
+      specLabels: specLabels.slice(0, 4),
+      keywords: [
+        part.name,
+        part.sku,
+        part.brand,
+        part.category,
+        part.specs.socket,
+        part.specs.chipset,
+        part.specs.ramType,
+        part.specs.formFactor,
+        part.specs.vramType,
+        part.specs.storageInterface,
+        part.specs.efficiencyRating,
+        ...specLabels,
+      ]
+        .filter(Boolean)
+        .join(' ')
+        .toLowerCase(),
+    };
+  });
 }
 
 export function getPublicAccessories(): PublicAccessory[] {

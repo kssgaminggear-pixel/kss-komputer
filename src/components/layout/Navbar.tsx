@@ -29,13 +29,13 @@ import {
 } from '@/lib/format';
 import { CommandSearchModal } from '@/components/layout/CommandSearchModal';
 import { useHydrated } from '@/lib/useHydrated';
-import type { PublicHardwarePart } from '@/lib/types';
+import type { PartSearchEntry } from '@/lib/types';
 
 export interface NavbarProps {
-  searchProducts: PublicHardwarePart[];
+  searchEntries: PartSearchEntry[];
 }
 
-export function Navbar({ searchProducts }: NavbarProps) {
+export function Navbar({ searchEntries }: NavbarProps) {
   const pathname = usePathname();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -258,7 +258,7 @@ export function Navbar({ searchProducts }: NavbarProps) {
       <CommandSearchModal
         isOpen={isSearchOpen}
         onClose={() => setIsSearchOpen(false)}
-        products={searchProducts}
+        products={searchEntries}
       />
     </>
   );

@@ -7,8 +7,6 @@ import {
   Search,
   LayoutGrid,
   ListFilter,
-  CheckCircle2,
-  ShoppingBag,
   ExternalLink,
   Cpu,
   CircuitBoard,
@@ -21,8 +19,7 @@ import {
   PhoneCall,
 } from 'lucide-react';
 import { PublicHardwarePart, ProductCategory } from '@/lib/types';
-import { formatIDR, TOKOPEDIA_OFFICIAL_STORE_URL, DEFAULT_WHATSAPP_PHONE, generateCustomBuildWAMessage } from '@/lib/format';
-import { useRetailCartStore } from '@/store/useRetailCartStore';
+import { TOKOPEDIA_OFFICIAL_STORE_URL, DEFAULT_WHATSAPP_PHONE, generateCustomBuildWAMessage } from '@/lib/format';
 import { PageHeader } from '@/components/ui/PageHeader';
 
 const CATEGORY_ITEMS: { id: ProductCategory | 'all'; label: string; icon: React.ComponentType<{ className?: string }> }[] = [
@@ -46,17 +43,6 @@ export default function KomponenEceranPage({ parts }: KomponenClientProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedBrand, setSelectedBrand] = useState('all');
   const [viewMode, setViewMode] = useState<'table' | 'grid'>('grid');
-  const [toastMessage, setToastMessage] = useState<string | null>(null);
-
-  const addRetailItem = useRetailCartStore((state) => state.addItem);
-
-  const showToast = (msg: string) => {
-    setToastMessage(msg);
-    setTimeout(() => {
-      setToastMessage(null);
-    }, 2500);
-  };
-
   // Distinct Brands
   const availableBrands = useMemo(() => {
     const brands = new Set<string>();
@@ -85,17 +71,10 @@ export default function KomponenEceranPage({ parts }: KomponenClientProps) {
 
   return (
     <div>
-      {toastMessage && (
-        <div className="fixed bottom-20 right-4 z-50 flex items-center gap-2 rounded-md border border-zinc-800 bg-zinc-900 px-4 py-2.5 text-xs font-semibold text-white shadow-sm">
-          <CheckCircle2 className="h-4 w-4 text-emerald-400" />
-          <span>{toastMessage}</span>
-        </div>
-      )}
-
       <PageHeader
         eyebrow="Katalog Eceran"
         title="Komponen PC & Upgrade"
-        description="Harga eceran resmi distributor, stok fisik, dan garansi resmi. Cocok untuk upgrade maupun rakitan sendiri."
+        description="Daftar komponen bergaransi resmi untuk upgrade maupun rakitan sendiri. Harga dan stok dikonfirmasi lewat WhatsApp."
         actions={
           <>
             <a
@@ -247,13 +226,11 @@ export default function KomponenEceranPage({ parts }: KomponenClientProps) {
                 <th className="py-2.5 px-3">Nama Produk &amp; Spesifikasi</th>
                 <th className="py-2.5 px-3 text-center">Distributor</th>
                 <th className="py-2.5 px-3 text-center">Garansi</th>
-                <th className="py-2.5 px-3 text-right">Harga Eceran Resmi</th>
                 <th className="py-2.5 px-3 text-center">Aksi</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-zinc-100 dark:divide-zinc-800/80 font-mono">
               {filteredParts.map((part) => {
-                const retailPrice = part.retailPrice;
                 return (
                   <tr
                     key={part.id}
@@ -283,37 +260,16 @@ export default function KomponenEceranPage({ parts }: KomponenClientProps) {
                       {part.warrantyYears} Tahun
                     </td>
 
-                    <td className="py-2.5 px-3 text-right whitespace-nowrap">
-                      <span className="kss-price text-sm text-orange-700 dark:text-orange-400">
-                        {formatIDR(retailPrice)}
-                      </span>
-                    </td>
-
                     <td className="py-2.5 px-3 text-center whitespace-nowrap">
                       <div className="flex items-center justify-center gap-1.5 font-sans">
-                        <button
-                          type="button"
-                          onClick={() => {
-                            addRetailItem(part, 1);
-                            showToast(`${part.name} dimasukkan ke keranjang`);
-                          }}
-                          className="inline-flex h-8 items-center gap-1 rounded-md bg-orange-700 px-2.5 text-meta font-bold text-white transition-colors hover:bg-orange-800"
-                          title="Tambahkan ke Keranjang Eceran"
-                        >
-                          <ShoppingBag className="h-3 w-3" />
-                          <span>+ Keranjang</span>
-                        </button>
-
                         <a
                           href={`https://wa.me/${DEFAULT_WHATSAPP_PHONE}?text=${encodeURIComponent(
-                            `Halo KSS Komputer, saya mau order eceran: *${part.name}* (${part.sku}) dengan harga ${formatIDR(
-                              retailPrice
-                            )}`
+                            `Halo KSS Komputer, saya mau tanya harga dan stok: *${part.name}* (${part.sku})`
                           )}`}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="p-1 rounded-md border border-zinc-200 dark:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-800 text-emerald-700"
-                          title="Chat Pembelian via WhatsApp"
+                          title="Tanya harga via WhatsApp"
                         >
                           <PhoneCall className="h-3.5 w-3.5" />
                         </a>
@@ -330,7 +286,6 @@ export default function KomponenEceranPage({ parts }: KomponenClientProps) {
         /* GRID VIEW */
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {filteredParts.map((part) => {
-            const retailPrice = part.retailPrice;
             const isReady = part.stockStatus === 'ready';
             return (
               <article
@@ -363,45 +318,23 @@ export default function KomponenEceranPage({ parts }: KomponenClientProps) {
                   <div className="mt-1 font-mono text-micro text-zinc-500">
                     {part.sku} · {part.wattage}W · {part.warrantyYears} Th
                   </div>
-
-                  <div className="mt-2 flex items-baseline gap-2">
-                    <span className="kss-price text-base text-orange-700 dark:text-orange-400">
-                      {formatIDR(retailPrice)}
-                    </span>
-                    {part.originalPrice && part.originalPrice > retailPrice && (
-                      <span className="font-mono text-micro text-zinc-500 line-through tabular-nums">
-                        {formatIDR(part.originalPrice)}
-                      </span>
-                    )}
-                  </div>
                 </div>
 
                 <div className="mt-3 flex items-center gap-2 border-t border-zinc-100 pt-3 dark:border-zinc-800">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      addRetailItem(part, 1);
-                      showToast(`${part.name} ditambahkan ke keranjang`);
-                    }}
-                    className="kss-btn-primary h-9 flex-1 px-2"
-                  >
-                    <ShoppingBag className="h-3.5 w-3.5" />
-                    <span>+ Keranjang</span>
-                  </button>
-                  <Link href={`/komponen/${part.slug}`} className="kss-btn-outline h-9 px-3">
-                    Detail
-                  </Link>
                   <a
                     href={`https://wa.me/${DEFAULT_WHATSAPP_PHONE}?text=${encodeURIComponent(
-                      `Halo KSS Komputer, saya mau tanya part eceran: *${part.name}*`
+                      `Halo KSS Komputer, saya mau tanya harga dan stok: *${part.name}* (${part.sku})`
                     )}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-zinc-200 text-emerald-700 transition-colors hover:bg-zinc-50 dark:border-zinc-700 dark:hover:bg-zinc-800"
-                    title="Order via WA"
+                    className="kss-btn-wa h-9 flex-1 px-2"
                   >
-                    <PhoneCall className="h-4 w-4" />
+                    <PhoneCall className="h-3.5 w-3.5" />
+                    <span>Tanya harga</span>
                   </a>
+                  <Link href={`/komponen/${part.slug}`} className="kss-btn-outline h-9 px-3">
+                    Detail
+                  </Link>
                 </div>
               </article>
             );

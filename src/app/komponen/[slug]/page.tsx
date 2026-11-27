@@ -15,8 +15,7 @@ import {
   getPublicHardwareParts,
   getRelatedPublicHardwareParts,
 } from '@/lib/server-catalog';
-import { formatIDR, CATEGORY_LABELS, TOKOPEDIA_OFFICIAL_STORE_URL, DEFAULT_WHATSAPP_PHONE, generateCustomBuildWAMessage } from '@/lib/format';
-import { KomponenDetailActions } from './KomponenDetailActions';
+import { CATEGORY_LABELS, TOKOPEDIA_OFFICIAL_STORE_URL, DEFAULT_WHATSAPP_PHONE, generateCustomBuildWAMessage } from '@/lib/format';
 
 interface KomponenDetailPageProps {
   params: Promise<{ slug: string }>;
@@ -85,8 +84,8 @@ export async function generateMetadata({ params }: KomponenDetailPageProps): Pro
   }
 
   return {
-    title: `${part.name} - Harga Eceran KSS Komputer`,
-    description: `${part.brand} ${part.name}. Harga eceran resmi, garansi ${part.warrantyYears} tahun, ${STOCK_LABELS[part.stockStatus] || part.stockStatus}.`,
+    title: `${part.name} - Komponen PC KSS Komputer`,
+    description: `${part.brand} ${part.name}. Garansi ${part.warrantyYears} tahun, ${STOCK_LABELS[part.stockStatus] || part.stockStatus}.`,
     alternates: {
       canonical: `/komponen/${part.slug}`,
     },
@@ -105,13 +104,12 @@ export default async function KomponenDetailPage({ params }: KomponenDetailPageP
   }
 
   const relatedParts = getRelatedPublicHardwareParts(part);
-  const hasDiscount = Boolean(part.originalPrice && part.originalPrice > part.retailPrice);
   const specEntries = Object.entries(part.specs).filter(
     ([, value]) => value !== undefined && value !== null && value !== ''
   );
 
   const waUrl = `https://wa.me/${DEFAULT_WHATSAPP_PHONE}?text=${encodeURIComponent(
-    `Halo KSS Komputer, saya ingin tanya stok & pembelian eceran:\n*${part.name}*\nSKU: ${part.sku}\nHarga: ${formatIDR(part.retailPrice)}`
+    `Halo KSS Komputer, saya ingin tanya harga, stok, dan pembelian eceran:\n*${part.name}*\nSKU: ${part.sku}`
   )}`;
 
   return (
@@ -173,21 +171,12 @@ export default async function KomponenDetailPage({ params }: KomponenDetailPageP
             </h1>
 
             <div className="mt-3 flex flex-wrap items-end gap-2 border-t border-zinc-100 pt-3 dark:border-zinc-800">
-              <span className="kss-price text-2xl text-zinc-900 dark:text-zinc-100">
-                {formatIDR(part.retailPrice)}
+              <span className="text-sm text-zinc-600 dark:text-zinc-400">
+                Harga dan stok dikonfirmasi via WhatsApp.
               </span>
-              {hasDiscount && (
-                <span className="font-mono text-sm text-zinc-500 line-through tabular-nums">
-                  {formatIDR(part.originalPrice!)}
-                </span>
-              )}
               <span className="ml-auto font-mono text-micro text-zinc-500">
                 Garansi {part.warrantyYears} tahun
               </span>
-            </div>
-
-            <div className="mt-4">
-              <KomponenDetailActions part={part} />
             </div>
 
             <div className="mt-4 flex flex-wrap gap-2 border-t border-zinc-100 pt-3 dark:border-zinc-800">
@@ -269,9 +258,6 @@ export default async function KomponenDetailPage({ params }: KomponenDetailPageP
                         {related.name}
                       </div>
                     </div>
-                    <div className="shrink-0 font-mono text-xs font-bold text-orange-700 tabular-nums dark:text-orange-400">
-                      {formatIDR(related.retailPrice)}
-                    </div>
                   </Link>
                 ))}
               </div>
@@ -311,7 +297,7 @@ export default async function KomponenDetailPage({ params }: KomponenDetailPageP
             </h2>
             <ol className="space-y-2.5">
               {[
-                'Konfirmasi stok via WhatsApp atau tambahkan ke keranjang.',
+                'Konfirmasi harga dan stok via WhatsApp.',
                 'Pilih ambil di toko atau kirim via ekspedisi.',
                 'Pembayaran transfer, QRIS, atau checkout Tokopedia.',
                 'Barang disiapkan, dicek, lalu dikirim/diambil.',

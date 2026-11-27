@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
-import { PublicHardwarePart, PublicAccessory } from '../lib/types';
+import { PublicAccessory } from '../lib/types';
 import { formatIDR, DEFAULT_WHATSAPP_PHONE } from '../lib/format';
 
 export interface RetailCartItem {
@@ -21,7 +21,7 @@ export interface RetailCartState {
   isOpen: boolean;
 
   // Actions
-  addItem: (product: PublicHardwarePart | PublicAccessory, quantity?: number) => void;
+  addItem: (product: PublicAccessory, quantity?: number) => void;
   removeItem: (itemId: string) => void;
   updateQuantity: (itemId: string, quantity: number) => void;
   clearCart: () => void;
@@ -49,7 +49,7 @@ export const useRetailCartStore = create<RetailCartState>()(
       items: [],
       isOpen: false,
 
-      addItem: (product: PublicHardwarePart | PublicAccessory, quantity = 1) => {
+      addItem: (product: PublicAccessory, quantity = 1) => {
         const safeQty = Math.max(1, Math.round(quantity));
         const unitPrice = product.retailPrice || 0;
 
@@ -75,7 +75,7 @@ export const useRetailCartStore = create<RetailCartState>()(
             originalPrice: product.originalPrice,
             quantity: safeQty,
             warrantyYears: product.warrantyYears,
-            isAccessory: !('wattage' in product),
+            isAccessory: true,
           };
 
           return { items: [...state.items, newItem], isOpen: true };
@@ -164,6 +164,12 @@ export const useRetailCartStore = create<RetailCartState>()(
     }),
     {
       name: 'kss-retail-cart-storage-v1',
+      version: 1,
+      // Keranjang lama bisa berisi komponen beserta harga satuannya; sisakan aksesoris saja.
+      migrate: (persisted) => {
+        const state = persisted as { items?: RetailCartItem[] } | undefined;
+        return { ...state, items: (state?.items ?? []).filter((item) => item.isAccessory) } as RetailCartState;
+      },
       storage: createJSONStorage(() =>
         typeof window !== 'undefined' ? window.localStorage : memoryStorage
       ),
