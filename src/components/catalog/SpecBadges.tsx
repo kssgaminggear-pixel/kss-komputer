@@ -138,7 +138,7 @@ export function SpecBadges({
   product,
   limit,
   className = 'flex flex-wrap items-center gap-1',
-  badgeClassName = 'inline-flex items-center px-1.5 py-0.5 text-[11px] font-mono font-medium bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-700 rounded-md whitespace-nowrap',
+  badgeClassName = 'inline-flex items-center px-1.5 py-0.5 text-meta font-mono font-medium bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-700 rounded-md whitespace-nowrap',
 }: SpecBadgesProps) {
   const allLabels = getProductSpecLabels(product);
   const displayedLabels = typeof limit === 'number' && limit > 0 ? allLabels.slice(0, limit) : allLabels;

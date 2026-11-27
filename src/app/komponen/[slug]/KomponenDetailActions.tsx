@@ -20,7 +20,7 @@ export function KomponenDetailActions({ part }: { part: PublicHardwarePart }) {
   return (
     <div className="space-y-3">
       <div className="flex items-center gap-3">
-        <span className="font-mono text-[10px] font-bold uppercase tracking-tight text-zinc-500">
+        <span className="font-mono text-micro font-bold uppercase tracking-tight text-zinc-500">
           Jumlah
         </span>
         <div className="inline-flex items-center rounded-md border border-zinc-300 dark:border-zinc-700">

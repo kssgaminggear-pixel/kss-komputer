@@ -56,22 +56,22 @@ export function LoginForm({
             className="h-8 w-8 object-contain"
           />
           <div>
-            <div className="font-mono text-[10px] font-bold uppercase tracking-wider text-orange-700 dark:text-orange-400">
+            <div className="font-mono text-micro font-bold uppercase tracking-wider text-orange-700 dark:text-orange-400">
               Admin Portal
             </div>
             <div className="text-xs font-bold text-zinc-900 dark:text-zinc-100">KSS Komputer</div>
           </div>
         </div>
 
-        <h1 className="text-lg font-black tracking-tight text-zinc-900 dark:text-zinc-100">
+        <h1 className="text-lg font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
           Masuk untuk kelola harga
         </h1>
-        <p className="mt-1 text-[11px] leading-relaxed text-zinc-500">
+        <p className="mt-1 text-meta leading-relaxed text-zinc-500">
           Area ini memuat harga modal dan markup toko. Sesi berlaku 12 jam.
         </p>
 
         {!configured && (
-          <div className="mt-4 flex items-start gap-2 rounded-sm border border-amber-300 bg-amber-50 p-3 text-[11px] leading-relaxed text-amber-800 dark:border-amber-900/50 dark:bg-amber-950/30 dark:text-amber-300">
+          <div className="mt-4 flex items-start gap-2 rounded-sm border border-amber-300 bg-amber-50 p-3 text-meta leading-relaxed text-amber-800 dark:border-amber-900/50 dark:bg-amber-950/30 dark:text-amber-300">
             <AlertTriangle className="mt-0.5 h-3.5 w-3.5 shrink-0" />
             <span>
               Admin belum dikonfigurasi. Set variabel <code className="font-mono">ADMIN_PASSWORD</code>{' '}
@@ -82,7 +82,7 @@ export function LoginForm({
 
         <form onSubmit={handleSubmit} className="mt-5 space-y-3">
           <label className="block">
-            <span className="mb-1 block font-mono text-[10px] font-bold uppercase tracking-wider text-zinc-500">
+            <span className="mb-1 block font-mono text-micro font-bold uppercase tracking-wider text-zinc-500">
               Password
             </span>
             <div className="relative">
@@ -102,7 +102,7 @@ export function LoginForm({
           </label>
 
           {error && (
-            <p className="rounded-sm border border-red-200 bg-red-50 px-2.5 py-2 text-[11px] font-semibold text-red-700 dark:border-red-900/50 dark:bg-red-950/30 dark:text-red-400">
+            <p className="rounded-sm border border-red-200 bg-red-50 px-2.5 py-2 text-meta font-semibold text-red-700 dark:border-red-900/50 dark:bg-red-950/30 dark:text-red-400">
               {error}
             </p>
           )}
@@ -117,7 +117,7 @@ export function LoginForm({
           </button>
         </form>
 
-        <p className="mt-4 text-center font-mono text-[10px] text-zinc-500">
+        <p className="mt-4 text-center font-mono text-micro text-zinc-500">
           KSS Komputer · akses terbatas
         </p>
       </div>

@@ -120,7 +120,7 @@ export default function AksesorisPage({ accessories }: AksesorisClientProps) {
                 <Icon className="h-3.5 w-3.5" />
                 <span>{cat.label}</span>
                 <span
-                  className={`ml-0.5 rounded-md px-1 font-mono text-[10px] ${
+                  className={`ml-0.5 rounded-md px-1 font-mono text-micro ${
                     isSelected
                       ? 'bg-zinc-700 text-white dark:bg-zinc-300 dark:text-zinc-900'
                       : 'bg-zinc-100 text-zinc-500 dark:bg-zinc-800'
@@ -147,7 +147,7 @@ export default function AksesorisPage({ accessories }: AksesorisClientProps) {
           </div>
 
           <div className="flex items-center gap-3">
-            <span className="hidden font-mono text-[11px] text-zinc-500 sm:inline">
+            <span className="hidden font-mono text-meta text-zinc-500 sm:inline">
               {filteredAccessories.length} item
             </span>
             <div className="flex items-center gap-1 rounded-md border border-zinc-200 bg-zinc-50 p-0.5 dark:border-zinc-800 dark:bg-zinc-950">
@@ -207,7 +207,7 @@ export default function AksesorisPage({ accessories }: AksesorisClientProps) {
                 className="group flex flex-col justify-between rounded-md border border-zinc-200 bg-white p-4 transition-colors duration-150 hover:border-zinc-400 dark:border-zinc-800 dark:bg-zinc-900/60 dark:hover:border-zinc-600"
               >
                 <div>
-                  <div className="mb-1 flex items-center justify-between font-mono text-[10px]">
+                  <div className="mb-1 flex items-center justify-between font-mono text-micro">
                     <span className="font-bold uppercase text-zinc-500">{item.brand}</span>
                     <span
                       className={`rounded-md border px-1.5 py-0.5 font-semibold ${
@@ -224,12 +224,12 @@ export default function AksesorisPage({ accessories }: AksesorisClientProps) {
                     {item.name}
                   </h3>
 
-                  <div className="mt-1 truncate font-mono text-[10px] text-zinc-500">
+                  <div className="mt-1 truncate font-mono text-micro text-zinc-500">
                     {item.sku} · {item.warrantyYears} Th Garansi
                   </div>
 
                   {item.features && item.features.length > 0 && (
-                    <ul className="mt-2 space-y-0.5 text-[10px] text-zinc-500">
+                    <ul className="mt-2 space-y-0.5 text-micro text-zinc-500">
                       {item.features.slice(0, 2).map((feat, i) => (
                         <li key={i} className="truncate">• {feat}</li>
                       ))}
@@ -241,7 +241,7 @@ export default function AksesorisPage({ accessories }: AksesorisClientProps) {
                       {formatIDR(item.retailPrice)}
                     </span>
                     {hasDiscount && (
-                      <span className="font-mono text-[10px] text-zinc-500 line-through tabular-nums">
+                      <span className="font-mono text-micro text-zinc-500 line-through tabular-nums">
                         {formatIDR(item.originalPrice!)}
                       </span>
                     )}
@@ -282,7 +282,7 @@ export default function AksesorisPage({ accessories }: AksesorisClientProps) {
           <div className="overflow-x-auto">
           <table className="w-full text-left text-xs border-collapse">
             <thead>
-              <tr className="border-b border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 text-zinc-500 font-mono text-[11px] uppercase">
+              <tr className="border-b border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 text-zinc-500 font-mono text-micro uppercase">
                 <th className="py-2.5 px-3">Brand / SKU</th>
                 <th className="py-2.5 px-3">Nama Produk</th>
                 <th className="py-2.5 px-3 text-center">Distributor</th>
@@ -296,15 +296,15 @@ export default function AksesorisPage({ accessories }: AksesorisClientProps) {
                 <tr key={item.id} className="hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-colors">
                   <td className="py-2.5 px-3 whitespace-nowrap">
                     <span className="font-bold text-zinc-900 dark:text-zinc-100 block">{item.brand}</span>
-                    <span className="text-[10px] text-zinc-500">{item.sku}</span>
+                    <span className="text-micro text-zinc-500">{item.sku}</span>
                   </td>
                   <td className="py-2.5 px-3 font-sans font-semibold text-zinc-900 dark:text-zinc-100 max-w-sm">
                     {item.name}
                   </td>
-                  <td className="py-2.5 px-3 text-center text-zinc-500 whitespace-nowrap text-[11px]">
+                  <td className="py-2.5 px-3 text-center text-zinc-500 whitespace-nowrap text-meta">
                     {item.officialDistributor || 'Resmi ID'}
                   </td>
-                  <td className="py-2.5 px-3 text-center text-emerald-700 dark:text-emerald-400 font-bold whitespace-nowrap text-[11px]">
+                  <td className="py-2.5 px-3 text-center text-emerald-700 dark:text-emerald-400 font-bold whitespace-nowrap text-meta">
                     {item.warrantyYears} Tahun
                   </td>
                   <td className="py-2.5 px-3 text-right whitespace-nowrap">
@@ -319,7 +319,7 @@ export default function AksesorisPage({ accessories }: AksesorisClientProps) {
                         addRetailItem(item, 1);
                         showToast(`${item.name} dimasukkan ke keranjang`);
                       }}
-                      className="inline-flex h-8 items-center gap-1 rounded-md bg-orange-700 px-2.5 font-sans text-[11px] font-bold text-white transition-colors hover:bg-orange-800"
+                      className="inline-flex h-8 items-center gap-1 rounded-md bg-orange-700 px-2.5 font-sans text-meta font-bold text-white transition-colors hover:bg-orange-800"
                     >
                       <ShoppingBag className="h-3 w-3" />
                       <span>+ Keranjang</span>

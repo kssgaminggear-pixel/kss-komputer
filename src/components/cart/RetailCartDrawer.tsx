@@ -1,7 +1,15 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { X, Trash2, Plus, Minus, ShoppingBag, ExternalLink, MessageSquareCheck } from 'lucide-react';
+import {
+  X,
+  Trash2,
+  Plus,
+  Minus,
+  ShoppingBag,
+  ExternalLink,
+  MessageCircle,
+} from 'lucide-react';
 import { useRetailCartStore } from '@/store/useRetailCartStore';
 import { formatIDR, TOKOPEDIA_OFFICIAL_STORE_URL } from '@/lib/format';
 import { useHydrated } from '@/lib/useHydrated';
@@ -60,7 +68,7 @@ export function RetailCartDrawer() {
             <h2 className="text-sm font-bold uppercase tracking-tight text-zinc-900 dark:text-zinc-100">
               Keranjang Eceran &amp; Aksesoris
             </h2>
-            <span className="rounded-md border border-emerald-500/20 bg-emerald-500/10 px-1.5 py-0.5 font-mono text-[11px] font-semibold text-emerald-700 dark:text-emerald-400">
+            <span className="rounded-md border border-emerald-500/20 bg-emerald-500/10 px-1.5 py-0.5 font-mono text-meta font-semibold text-emerald-700 dark:text-emerald-400">
               {totalCount} item
             </span>
           </div>
@@ -81,7 +89,7 @@ export function RetailCartDrawer() {
               <p className="text-xs font-medium text-zinc-500 dark:text-zinc-500">
                 Keranjang belanja eceran masih kosong
               </p>
-              <p className="mt-1 text-[11px] text-zinc-500">
+              <p className="mt-1 text-meta text-zinc-500">
                 Jelajahi halaman Komponen &amp; Aksesoris untuk menambahkan barang.
               </p>
             </div>
@@ -90,10 +98,10 @@ export function RetailCartDrawer() {
               <div key={item.id} className="py-3 flex items-start gap-3">
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-1.5">
-                    <span className="rounded-md bg-zinc-100 dark:bg-zinc-800 px-1 py-0.5 text-[9px] font-mono text-zinc-500 uppercase">
+                    <span className="rounded-md bg-zinc-100 dark:bg-zinc-800 px-1 py-0.5 text-micro font-mono text-zinc-500 uppercase">
                       {item.brand}
                     </span>
-                    <span className="text-[10px] font-mono text-zinc-500 truncate">{item.sku}</span>
+                    <span className="text-micro font-mono text-zinc-500 truncate">{item.sku}</span>
                   </div>
                   <h3 className="mt-0.5 text-xs font-semibold text-zinc-900 dark:text-zinc-100 line-clamp-2">
                     {item.name}
@@ -103,7 +111,7 @@ export function RetailCartDrawer() {
                       {formatIDR(item.unitPrice)}
                     </span>
                     {item.originalPrice && item.originalPrice > item.unitPrice && (
-                      <span className="font-mono text-[10px] text-zinc-500 line-through tabular-nums">
+                      <span className="font-mono text-micro text-zinc-500 line-through tabular-nums">
                         {formatIDR(item.originalPrice)}
                       </span>
                     )}
@@ -173,9 +181,9 @@ export function RetailCartDrawer() {
             <div className="flex flex-col gap-2">
               <button
                 onClick={handleCheckoutWA}
-                className="flex w-full items-center justify-center gap-2 rounded-md bg-emerald-700 px-4 py-2.5 text-xs font-bold text-white hover:bg-emerald-800 transition-colors shadow-xs"
+                className="flex w-full items-center justify-center gap-2 rounded-md bg-zinc-900 hover:bg-zinc-700 px-4 py-2.5 text-xs font-bold text-white transition-colors shadow-xs"
               >
-                <MessageSquareCheck className="h-4 w-4" />
+                <MessageCircle className="h-4 w-4" />
                 Checkout Pesanan via WhatsApp
               </button>
 
@@ -184,14 +192,14 @@ export function RetailCartDrawer() {
                   href={TOKOPEDIA_OFFICIAL_STORE_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex flex-1 items-center justify-center gap-1.5 rounded-md border border-zinc-200 bg-white px-3 py-2 text-[11px] font-semibold text-zinc-700 hover:bg-zinc-100 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-200"
+                  className="flex flex-1 items-center justify-center gap-1.5 rounded-md border border-zinc-200 bg-white px-3 py-2 text-meta font-semibold text-zinc-700 hover:bg-zinc-100 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-200"
                 >
                   <ExternalLink className="h-3.5 w-3.5 text-emerald-700" />
                   Buka Tokopedia Resmi
                 </a>
                 <button
                   onClick={clearCart}
-                  className="rounded-md border border-zinc-200 bg-white px-3 py-2 text-[11px] font-medium text-zinc-500 hover:text-red-600 dark:border-zinc-800 dark:bg-zinc-900"
+                  className="rounded-md border border-zinc-200 bg-white px-3 py-2 text-meta font-medium text-zinc-500 hover:text-red-600 dark:border-zinc-800 dark:bg-zinc-900"
                 >
                   Kosongkan
                 </button>

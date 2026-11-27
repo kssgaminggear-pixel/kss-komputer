@@ -2,7 +2,14 @@
 
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import Link from 'next/link';
-import { Search, X, ShoppingCart, MessageSquareCheck, Check, ArrowRight } from 'lucide-react';
+import {
+  Search,
+  X,
+  ShoppingCart,
+  MessageCircle,
+  Check,
+  ArrowRight,
+} from 'lucide-react';
 import { PublicHardwarePart } from '@/lib/types';
 import { formatIDR, generateCustomBuildWAMessage } from '@/lib/format';
 import { SpecBadges, getProductSpecLabels } from '@/components/catalog/SpecBadges';
@@ -128,7 +135,7 @@ export function CommandSearchModal({ isOpen, onClose, products }: CommandSearchM
               <X className="w-3.5 h-3.5" />
             </button>
           )}
-          <kbd className="hidden sm:inline-flex items-center gap-0.5 px-1.5 py-0.5 text-[10px] font-mono text-zinc-500 bg-zinc-200 dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 rounded-md">
+          <kbd className="hidden sm:inline-flex items-center gap-0.5 px-1.5 py-0.5 text-micro font-mono text-zinc-500 bg-zinc-200 dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 rounded-md">
             ESC
           </kbd>
           <button
@@ -141,7 +148,7 @@ export function CommandSearchModal({ isOpen, onClose, products }: CommandSearchM
         </div>
 
         {/* Quick Filter Info Tag */}
-        <div className="px-4 py-1.5 bg-zinc-100/70 dark:bg-zinc-950/40 border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-between text-[11px] text-zinc-500 font-mono">
+        <div className="px-4 py-1.5 bg-zinc-100/70 dark:bg-zinc-950/40 border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-between text-meta text-zinc-500 font-mono">
           <span>
             {query.trim()
               ? `Ditemukan ${searchResults.length} komponen`
@@ -171,14 +178,14 @@ export function CommandSearchModal({ isOpen, onClose, products }: CommandSearchM
                   {/* Left Column: Product Info & Spec Badges */}
                   <div className="flex-1 min-w-0 pr-2">
                     <div className="flex items-center gap-2 mb-1">
-                      <span className="font-mono text-[11px] text-zinc-500 dark:text-zinc-500 tracking-wider">
+                      <span className="font-mono text-meta text-zinc-500 dark:text-zinc-500 tracking-wider">
                         {product.sku}
                       </span>
-                      <span className="text-[10px] font-mono px-1 py-0.2 bg-zinc-200/60 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300 rounded-md uppercase">
+                      <span className="text-micro font-mono px-1 py-0.5 bg-zinc-200/60 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300 rounded-md uppercase">
                         {product.brand}
                       </span>
                       {product.stockStatus === 'ready' && (
-                        <span className="text-[10px] font-mono text-emerald-700 dark:text-emerald-400">
+                        <span className="text-micro font-mono text-emerald-700 dark:text-emerald-400">
                           ● Ready
                         </span>
                       )}
@@ -202,7 +209,7 @@ export function CommandSearchModal({ isOpen, onClose, products }: CommandSearchM
                         {formatIDR(product.retailPrice)}
                       </div>
                       {product.originalPrice && product.originalPrice > product.retailPrice && (
-                        <div className="font-mono text-[10px] text-zinc-500 line-through tabular-nums">
+                        <div className="font-mono text-micro text-zinc-500 line-through tabular-nums">
                           {formatIDR(product.originalPrice)}
                         </div>
                       )}
@@ -220,7 +227,7 @@ export function CommandSearchModal({ isOpen, onClose, products }: CommandSearchM
                         title="Konsultasi rakit PC custom dengan komponen ini via WhatsApp"
                         className="inline-flex items-center gap-1 px-2 py-1 text-xs font-mono font-medium border rounded-md transition-all bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-800 dark:text-zinc-200 border-zinc-300 dark:border-zinc-700"
                       >
-                        <MessageSquareCheck className="w-3 h-3" />
+                        <MessageCircle className="w-3 h-3" />
                         <span className="hidden sm:inline">Rakit</span>
                       </a>
 
@@ -256,7 +263,7 @@ export function CommandSearchModal({ isOpen, onClose, products }: CommandSearchM
         </div>
 
         {/* Footer Shortcut Bar */}
-        <div className="px-4 py-2 border-t border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950/70 flex items-center justify-between text-[11px] font-mono text-zinc-500">
+        <div className="px-4 py-2 border-t border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950/70 flex items-center justify-between text-meta font-mono text-zinc-500">
           <div className="flex items-center gap-3">
             <span>Tekan <kbd className="px-1 py-0.5 bg-zinc-200 dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 rounded-md">ESC</kbd> untuk menutup</span>
           </div>

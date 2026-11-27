@@ -302,7 +302,7 @@ export function FilterSidebar({
             Filter Spesifikasi
           </span>
           {activeFiltersCount > 0 && (
-            <span className="px-1.5 py-0.2 font-mono text-[10px] font-bold bg-orange-700 text-white rounded-md">
+            <span className="px-1.5 py-0.5 font-mono text-micro font-bold bg-orange-700 text-white rounded-md">
               {activeFiltersCount}
             </span>
           )}
@@ -311,7 +311,7 @@ export function FilterSidebar({
           <button
             type="button"
             onClick={onResetFilters}
-            className="inline-flex items-center gap-1 text-[11px] font-mono text-zinc-500 hover:text-red-600 dark:text-zinc-500 dark:hover:text-red-400 transition-colors"
+            className="inline-flex items-center gap-1 text-meta font-mono text-zinc-500 hover:text-red-600 dark:text-zinc-500 dark:hover:text-red-400 transition-colors"
             title="Reset semua filter ke kondisi awal"
           >
             <RotateCcw className="w-3 h-3" />
@@ -342,7 +342,7 @@ export function FilterSidebar({
 
       {/* 2. Pemilih Kategori Komponen */}
       <div className="space-y-1.5 pb-4 border-b border-zinc-200 dark:border-zinc-800">
-        <div className="font-mono text-[11px] font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-500 mb-2">
+        <div className="font-mono text-micro font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-500 mb-2">
           Kategori Hardware
         </div>
         <div className="space-y-0.5">
@@ -361,7 +361,7 @@ export function FilterSidebar({
               <span className="truncate">Semua Kategori</span>
             </div>
             <span
-              className={`font-mono text-[10px] tabular-nums ${
+              className={`font-mono text-micro tabular-nums ${
                 filters.category === 'all' ? 'text-orange-100' : 'text-zinc-500'
               }`}
             >
@@ -391,7 +391,7 @@ export function FilterSidebar({
                   <span className="truncate">{CATEGORY_LABELS[cat]}</span>
                 </div>
                 <span
-                  className={`font-mono text-[10px] tabular-nums ${
+                  className={`font-mono text-micro tabular-nums ${
                     isSelected ? 'text-orange-100' : 'text-zinc-500'
                   }`}
                 >
@@ -408,7 +408,7 @@ export function FilterSidebar({
         <button
           type="button"
           onClick={() => toggleSection('price')}
-          className="w-full flex items-center justify-between font-mono text-[11px] font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200"
+          className="w-full flex items-center justify-between font-mono text-micro font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200"
         >
           <span>Rentang Harga (Rp)</span>
           {collapsedSections.price ? (
@@ -422,7 +422,7 @@ export function FilterSidebar({
           <div className="space-y-2 pt-1">
             <div className="grid grid-cols-2 gap-2">
               <div>
-                <label className="block text-[10px] font-mono text-zinc-500 mb-0.5">
+                <label className="block text-micro font-mono text-zinc-500 mb-0.5">
                   Min (Rp)
                 </label>
                 <input
@@ -437,7 +437,7 @@ export function FilterSidebar({
                 />
               </div>
               <div>
-                <label className="block text-[10px] font-mono text-zinc-500 mb-0.5">
+                <label className="block text-micro font-mono text-zinc-500 mb-0.5">
                   Max (Rp)
                 </label>
                 <input
@@ -471,7 +471,7 @@ export function FilterSidebar({
                       maxPrice: preset.max,
                     })
                   }
-                  className="px-2 py-0.5 text-[10px] font-mono rounded-md border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-zinc-600 dark:text-zinc-500 hover:border-orange-500 hover:text-orange-700 dark:hover:text-orange-400 transition-colors"
+                  className="px-2 py-0.5 text-micro font-mono rounded-md border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-zinc-600 dark:text-zinc-500 hover:border-orange-500 hover:text-orange-700 dark:hover:text-orange-400 transition-colors"
                 >
                   {preset.label}
                 </button>
@@ -486,7 +486,7 @@ export function FilterSidebar({
         <button
           type="button"
           onClick={() => toggleSection('brand')}
-          className="w-full flex items-center justify-between font-mono text-[11px] font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200"
+          className="w-full flex items-center justify-between font-mono text-micro font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200"
         >
           <span>Brand ({uniqueBrands.length})</span>
           {collapsedSections.brand ? (
@@ -507,7 +507,7 @@ export function FilterSidebar({
                   placeholder="Cari brand..."
                   value={brandSearch}
                   onChange={(e) => setBrandSearch(e.target.value)}
-                  className="w-full pl-7 pr-2 py-1 font-mono text-[11px] rounded-md border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:border-orange-500"
+                  className="w-full pl-7 pr-2 py-1 font-mono text-meta rounded-md border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:border-orange-500"
                 />
               </div>
             )}
@@ -531,7 +531,7 @@ export function FilterSidebar({
                 );
               })}
               {filteredBrandsList.length === 0 && (
-                <div className="text-[11px] text-zinc-500 py-1 text-center">
+                <div className="text-meta text-zinc-500 py-1 text-center">
                   Brand tidak ditemukan.
                 </div>
               )}
@@ -546,7 +546,7 @@ export function FilterSidebar({
           <button
             type="button"
             onClick={() => toggleSection('socket')}
-            className="w-full flex items-center justify-between font-mono text-[11px] font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200"
+            className="w-full flex items-center justify-between font-mono text-micro font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200"
           >
             <span>Socket Processor</span>
             {collapsedSections.socket ? (
@@ -565,7 +565,7 @@ export function FilterSidebar({
                     key={socket}
                     type="button"
                     onClick={() => handleSocketToggle(socket)}
-                    className={`flex items-center justify-between px-2 py-1.5 rounded-md border font-mono text-[11px] font-semibold transition-colors ${
+                    className={`flex items-center justify-between px-2 py-1.5 rounded-md border font-mono text-meta font-semibold transition-colors ${
                       isSelected
                         ? 'border-orange-600 bg-orange-50 text-orange-700 dark:bg-orange-950/40 dark:text-orange-300 dark:border-orange-500'
                         : 'border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-600 dark:text-zinc-300 hover:border-zinc-300 dark:hover:border-zinc-700'
@@ -587,7 +587,7 @@ export function FilterSidebar({
           <button
             type="button"
             onClick={() => toggleSection('ramType')}
-            className="w-full flex items-center justify-between font-mono text-[11px] font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200"
+            className="w-full flex items-center justify-between font-mono text-micro font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200"
           >
             <span>Tipe RAM</span>
             {collapsedSections.ramType ? (
@@ -606,7 +606,7 @@ export function FilterSidebar({
                     key={ramType}
                     type="button"
                     onClick={() => handleRamTypeToggle(ramType)}
-                    className={`flex items-center justify-between px-2 py-1.5 rounded-md border font-mono text-[11px] font-semibold transition-colors ${
+                    className={`flex items-center justify-between px-2 py-1.5 rounded-md border font-mono text-meta font-semibold transition-colors ${
                       isSelected
                         ? 'border-orange-600 bg-orange-50 text-orange-700 dark:bg-orange-950/40 dark:text-orange-300 dark:border-orange-500'
                         : 'border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-600 dark:text-zinc-300 hover:border-zinc-300 dark:hover:border-zinc-700'
@@ -628,7 +628,7 @@ export function FilterSidebar({
           <button
             type="button"
             onClick={() => toggleSection('formFactor')}
-            className="w-full flex items-center justify-between font-mono text-[11px] font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200"
+            className="w-full flex items-center justify-between font-mono text-micro font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200"
           >
             <span>Form Factor (Ukuran)</span>
             {collapsedSections.formFactor ? (
@@ -647,7 +647,7 @@ export function FilterSidebar({
                     key={ff}
                     type="button"
                     onClick={() => handleFormFactorToggle(ff)}
-                    className={`flex items-center justify-between px-2 py-1.5 rounded-md border font-mono text-[11px] font-semibold transition-colors ${
+                    className={`flex items-center justify-between px-2 py-1.5 rounded-md border font-mono text-meta font-semibold transition-colors ${
                       isSelected
                         ? 'border-orange-600 bg-orange-50 text-orange-700 dark:bg-orange-950/40 dark:text-orange-300 dark:border-orange-500'
                         : 'border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-600 dark:text-zinc-300 hover:border-zinc-300 dark:hover:border-zinc-700'
@@ -665,7 +665,7 @@ export function FilterSidebar({
 
       {/* Info hasil hitung */}
       {filteredCount !== undefined && (
-        <div className="pt-3 border-t border-zinc-200 dark:border-zinc-800 text-[11px] font-mono text-zinc-500 dark:text-zinc-500 flex items-center justify-between">
+        <div className="pt-3 border-t border-zinc-200 dark:border-zinc-800 text-meta font-mono text-zinc-500 dark:text-zinc-500 flex items-center justify-between">
           <span>Menampilkan:</span>
           <span className="font-bold text-zinc-800 dark:text-zinc-200 tabular-nums">
             {filteredCount} SKU

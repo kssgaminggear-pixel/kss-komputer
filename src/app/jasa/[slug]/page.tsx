@@ -10,7 +10,6 @@ import {
   ShieldCheck,
   PhoneCall,
   Wrench,
-  Sparkles,
   CalendarClock,
 } from 'lucide-react';
 import {
@@ -118,21 +117,21 @@ export default async function JasaDetailPage({ params }: JasaDetailPageProps) {
         <div className="space-y-6">
           <header className="rounded-md border border-zinc-200 bg-white p-6 shadow-xs dark:border-zinc-800 dark:bg-zinc-900/60">
             <div className="mb-3 flex flex-wrap items-center gap-2">
-              <span className="rounded-md border border-orange-500/20 bg-orange-500/10 px-2 py-0.5 font-mono text-[10px] font-bold uppercase text-orange-700 dark:text-orange-400">
+              <span className="rounded-md border border-orange-500/20 bg-orange-500/10 px-2 py-0.5 font-mono text-micro font-bold uppercase text-orange-700 dark:text-orange-400">
                 Layanan Teknisi
               </span>
               {service.badge && (
-                <span className="rounded-md border border-amber-500/20 bg-amber-500/10 px-2 py-0.5 font-mono text-[10px] font-bold text-amber-700 dark:text-amber-400">
+                <span className="rounded-md border border-amber-500/20 bg-amber-500/10 px-2 py-0.5 font-mono text-micro font-bold text-amber-700 dark:text-amber-400">
                   {service.badge}
                 </span>
               )}
-              <span className="flex items-center gap-1 font-mono text-[11px] text-zinc-500">
+              <span className="flex items-center gap-1 font-mono text-meta text-zinc-500">
                 <Clock className="h-3.5 w-3.5" />
                 {service.duration}
               </span>
             </div>
 
-            <h1 className="text-2xl font-black tracking-tight text-zinc-900 dark:text-zinc-100 sm:text-3xl">
+            <h1 className="text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100 sm:text-3xl">
               {service.title}
             </h1>
             <p className="mt-2 max-w-3xl text-xs leading-relaxed text-zinc-600 dark:text-zinc-500 sm:text-sm">
@@ -141,7 +140,7 @@ export default async function JasaDetailPage({ params }: JasaDetailPageProps) {
 
             <div className="mt-4 flex flex-wrap items-end justify-between gap-3 border-t border-zinc-100 pt-4 dark:border-zinc-800">
               <div>
-                <div className="font-mono text-[10px] font-bold uppercase tracking-tight text-zinc-500">
+                <div className="font-mono text-micro font-bold uppercase tracking-tight text-zinc-500">
                   Estimasi Biaya Jasa
                 </div>
                 <div className="kss-price whitespace-nowrap text-xl text-zinc-900 dark:text-zinc-100 sm:text-2xl">
@@ -188,7 +187,7 @@ export default async function JasaDetailPage({ params }: JasaDetailPageProps) {
 
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <section className="rounded-md border border-emerald-500/20 bg-emerald-500/5 p-5">
-              <h2 className="mb-3 flex items-center gap-2 font-mono text-[11px] font-bold uppercase tracking-tight text-emerald-700 dark:text-emerald-400">
+              <h2 className="mb-3 flex items-center gap-2 font-mono text-micro font-bold uppercase tracking-tight text-emerald-700 dark:text-emerald-400">
                 <Check className="h-3.5 w-3.5" />
                 <span>Termasuk</span>
               </h2>
@@ -203,7 +202,7 @@ export default async function JasaDetailPage({ params }: JasaDetailPageProps) {
             </section>
 
             <section className="rounded-md border border-amber-500/20 bg-amber-500/5 p-5">
-              <h2 className="mb-3 flex items-center gap-2 font-mono text-[11px] font-bold uppercase tracking-tight text-amber-700 dark:text-amber-400">
+              <h2 className="mb-3 flex items-center gap-2 font-mono text-micro font-bold uppercase tracking-tight text-amber-700 dark:text-amber-400">
                 <X className="h-3.5 w-3.5" />
                 <span>Tidak Termasuk</span>
               </h2>
@@ -236,7 +235,7 @@ export default async function JasaDetailPage({ params }: JasaDetailPageProps) {
                   key={step}
                   className="flex items-start gap-3 rounded-md border border-zinc-200 bg-zinc-50 p-3 dark:border-zinc-800 dark:bg-zinc-950"
                 >
-                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-zinc-900 font-mono text-[11px] font-bold text-white dark:bg-zinc-100 dark:text-zinc-900">
+                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-zinc-900 font-mono text-meta font-bold text-white dark:bg-zinc-100 dark:text-zinc-900">
                     {index + 1}
                   </span>
                   <span className="text-xs text-zinc-700 dark:text-zinc-300">{step}</span>
@@ -248,7 +247,7 @@ export default async function JasaDetailPage({ params }: JasaDetailPageProps) {
           {relatedServices.length > 0 && (
             <section>
               <h2 className="mb-3 flex items-center gap-2 text-sm font-bold text-zinc-900 dark:text-zinc-100">
-                <Sparkles className="h-4 w-4 text-orange-700 dark:text-orange-400" />
+                <Wrench className="h-4 w-4 text-orange-700 dark:text-orange-400" />
                 <span>Layanan Terkait</span>
               </h2>
               <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
@@ -259,7 +258,7 @@ export default async function JasaDetailPage({ params }: JasaDetailPageProps) {
                     className="flex flex-col justify-between rounded-md border border-zinc-200 bg-white p-4 transition-colors hover:border-zinc-300 dark:border-zinc-800 dark:bg-zinc-900/60 dark:hover:border-zinc-700"
                   >
                     <div>
-                      <div className="mb-1 font-mono text-[10px] font-bold uppercase tracking-tight text-zinc-500">
+                      <div className="mb-1 font-mono text-micro font-bold uppercase tracking-tight text-zinc-500">
                         {related.duration}
                       </div>
                       <div className="text-xs font-bold text-zinc-900 dark:text-zinc-100">
@@ -282,7 +281,7 @@ export default async function JasaDetailPage({ params }: JasaDetailPageProps) {
               <Clock className="h-4 w-4 text-orange-700 dark:text-orange-400" />
               <span>Booking Jadwal</span>
             </h2>
-            <p className="mb-4 text-[11px] text-zinc-500 dark:text-zinc-500">
+            <p className="mb-4 text-meta text-zinc-500 dark:text-zinc-500">
               Isi form singkat, pesan WhatsApp terformat akan terbuka otomatis.
             </p>
             <BookingForm serviceTitle={service.title} />
@@ -291,7 +290,7 @@ export default async function JasaDetailPage({ params }: JasaDetailPageProps) {
           <div className="rounded-md border border-zinc-200 bg-zinc-50 p-4 dark:border-zinc-800 dark:bg-zinc-900/40">
             <div className="flex items-start gap-2">
               <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-emerald-500" />
-              <div className="text-[11px] leading-relaxed text-zinc-600 dark:text-zinc-500">
+              <div className="text-meta leading-relaxed text-zinc-600 dark:text-zinc-500">
                 <span className="font-bold text-zinc-900 dark:text-zinc-100">
                   Garansi pengerjaan KSS.
                 </span>{' '}

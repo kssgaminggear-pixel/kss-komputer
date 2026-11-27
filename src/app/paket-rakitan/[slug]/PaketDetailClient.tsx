@@ -7,7 +7,7 @@ import {
   ChevronRight,
   ShieldCheck,
   ExternalLink,
-  MessageSquareCheck,
+  MessageCircle,
   SlidersHorizontal,
   Check,
   Gamepad2,
@@ -149,18 +149,18 @@ export default function PaketDetailContent({ pkg }: { pkg: PublicPrebuiltDetailD
             <div className="flex items-start gap-4">
               <div className="min-w-0 flex-1">
                 <div className="flex flex-wrap items-center gap-2 mb-3">
-                  <span className="rounded-md bg-orange-500/10 border border-orange-500/20 px-2 py-0.5 text-[10px] font-mono font-bold text-orange-700 dark:text-orange-400 uppercase">
+                  <span className="rounded-md bg-orange-500/10 border border-orange-500/20 px-2 py-0.5 text-micro font-mono font-bold text-orange-700 dark:text-orange-400 uppercase">
                     {pkg.platform}
                   </span>
-                  <span className="rounded-md bg-zinc-100 dark:bg-zinc-800 px-2 py-0.5 text-[10px] font-mono text-zinc-700 dark:text-zinc-300">
+                  <span className="rounded-md bg-zinc-100 dark:bg-zinc-800 px-2 py-0.5 text-micro font-mono text-zinc-700 dark:text-zinc-300">
                     {pkg.targetResolution}
                   </span>
-                  <span className="rounded-md bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 text-[10px] font-mono font-bold text-emerald-700 dark:text-emerald-400">
+                  <span className="rounded-md bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 text-micro font-mono font-bold text-emerald-700 dark:text-emerald-400">
                     {pkg.tier}
                   </span>
                 </div>
 
-                <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-zinc-900 dark:text-zinc-100">
+                <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
                   {pkg.name}
                 </h1>
                 <p className="mt-2 text-xs sm:text-sm text-zinc-600 dark:text-zinc-500 leading-relaxed">
@@ -201,20 +201,20 @@ export default function PaketDetailContent({ pkg }: { pkg: PublicPrebuiltDetailD
             <div className="mt-4 space-y-2 border-t border-zinc-100 pt-3 dark:border-zinc-800 lg:hidden">
               <div className="flex items-end justify-between gap-2">
                 <div>
-                  <span className="block font-mono text-[10px] uppercase tracking-tight text-zinc-500">
+                  <span className="block font-mono text-micro uppercase tracking-tight text-zinc-500">
                     Total Harga Paket
                   </span>
                   <span className="kss-price text-xl text-zinc-900 dark:text-zinc-100">
                     {formatIDR(totalBundlePrice)}
                   </span>
                 </div>
-                <span className="rounded-sm border border-emerald-500/20 bg-emerald-500/10 px-1.5 py-0.5 font-mono text-[10px] font-bold text-emerald-700 dark:text-emerald-400">
+                <span className="rounded-sm border border-emerald-500/20 bg-emerald-500/10 px-1.5 py-0.5 font-mono text-micro font-bold text-emerald-700 dark:text-emerald-400">
                   Termasuk Rakit
                 </span>
               </div>
               <div className="grid grid-cols-2 gap-2">
                 <button type="button" onClick={handleWhatsAppCheckout} className="kss-btn-primary h-10">
-                  <MessageSquareCheck className="h-4 w-4" />
+                  <MessageCircle className="h-4 w-4" />
                   <span>Pesan WA</span>
                 </button>
                 <a
@@ -240,7 +240,7 @@ export default function PaketDetailContent({ pkg }: { pkg: PublicPrebuiltDetailD
                   Klik opsi di bawah untuk upgrade kapasitas atau performa. Selisih harga dihitung otomatis tanpa membongkar modal part.
                 </p>
               </div>
-              <span className="hidden shrink-0 rounded-sm bg-orange-500/10 border border-orange-500/20 px-2 py-1 font-mono text-[10px] font-bold text-orange-700 dark:text-orange-400 sm:inline-block">
+              <span className="hidden shrink-0 rounded-sm bg-orange-500/10 border border-orange-500/20 px-2 py-1 font-mono text-micro font-bold text-orange-700 dark:text-orange-400 sm:inline-block">
                 Delta Pricing
               </span>
             </div>
@@ -262,7 +262,7 @@ export default function PaketDetailContent({ pkg }: { pkg: PublicPrebuiltDetailD
                   <div key={cat} className="space-y-2">
                     <div className="flex items-center justify-between text-xs font-semibold text-zinc-800 dark:text-zinc-200">
                       <span>{catLabels[cat] || cat}</span>
-                      <span className="text-[11px] font-mono text-zinc-500">
+                      <span className="text-meta font-mono text-zinc-500">
                         {options.length} Opsi Kompatibel
                       </span>
                     </div>
@@ -285,17 +285,17 @@ export default function PaketDetailContent({ pkg }: { pkg: PublicPrebuiltDetailD
                                 <Check className="h-2.5 w-2.5" />
                               </span>
                             )}
-                            <span className="line-clamp-2 text-[11px] font-bold text-zinc-900 dark:text-zinc-100">
+                            <span className="line-clamp-2 text-meta font-bold text-zinc-900 dark:text-zinc-100">
                               {opt.part.name}
                             </span>
                           </div>
 
                           <div className="flex items-center justify-between gap-2">
-                            <span className="truncate font-mono text-[10px] text-zinc-500">
+                            <span className="truncate font-mono text-micro text-zinc-500">
                               {opt.part.sku} · {opt.part.warrantyYears} Th
                             </span>
                             <span
-                              className={`shrink-0 rounded-md px-1.5 py-0.5 font-mono text-[11px] font-bold tabular-nums ${
+                              className={`shrink-0 rounded-md px-1.5 py-0.5 font-mono text-meta font-bold tabular-nums ${
                                 opt.delta === 0
                                   ? 'bg-zinc-100 text-zinc-500 dark:bg-zinc-800/80 dark:text-zinc-500'
                                   : opt.delta > 0
@@ -326,17 +326,17 @@ export default function PaketDetailContent({ pkg }: { pkg: PublicPrebuiltDetailD
               {currentPartsList.map((item) => (
                 <div key={item.part.id} className="py-2.5 flex items-start justify-between gap-4">
                   <div className="flex-1 min-w-0">
-                    <span className="text-[10px] font-mono text-zinc-500 uppercase block mb-0.5">
+                    <span className="text-micro font-mono text-zinc-500 uppercase block mb-0.5">
                       {item.category}
                     </span>
                     <span className="font-semibold text-zinc-900 dark:text-zinc-100">
                       {item.part.name} {item.quantity > 1 ? `(${item.quantity}x)` : ''}
                     </span>
-                    <span className="text-[11px] text-zinc-500 block">
+                    <span className="text-meta text-zinc-500 block">
                       Distributor Resmi ID ({item.part.officialDistributor || 'Astrindo/EMD'}) • Garansi {item.part.warrantyYears} Tahun
                     </span>
                   </div>
-                  <span className="rounded-md bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 font-mono text-[10px] font-bold text-emerald-700 dark:text-emerald-400 shrink-0">
+                  <span className="rounded-md bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 font-mono text-micro font-bold text-emerald-700 dark:text-emerald-400 shrink-0">
                     Termasuk Paket
                   </span>
                 </div>
@@ -381,13 +381,13 @@ export default function PaketDetailContent({ pkg }: { pkg: PublicPrebuiltDetailD
         <div className="space-y-4 lg:col-span-4 lg:sticky lg:top-24">
           <div className="rounded-md border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-900/90 shadow-sm space-y-4">
             <div className="border-b border-zinc-100 dark:border-zinc-800 pb-3">
-              <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-tight block">
+              <span className="text-micro font-mono text-zinc-500 uppercase tracking-tight block">
                 Total Harga Paket (Siap Pakai)
               </span>
               <div className="kss-price mt-0.5 text-2xl text-zinc-900 dark:text-zinc-100">
                 {formatIDR(totalBundlePrice)}
               </div>
-              <span className="text-[11px] text-emerald-700 dark:text-emerald-400 font-semibold block mt-0.5">
+              <span className="text-meta text-emerald-700 dark:text-emerald-400 font-semibold block mt-0.5">
                 Sudah termasuk jasa rakit rapi, OS test &amp; stress test
               </span>
             </div>
@@ -417,7 +417,7 @@ export default function PaketDetailContent({ pkg }: { pkg: PublicPrebuiltDetailD
                 onClick={handleWhatsAppCheckout}
                 className="flex items-center justify-center gap-2 w-full rounded-md bg-orange-700 hover:bg-orange-800 text-white py-3 text-xs font-bold transition-colors"
               >
-                <MessageSquareCheck className="h-4 w-4" />
+                <MessageCircle className="h-4 w-4" />
                 <span>Pesan Paket Ini via WhatsApp</span>
               </button>
 
@@ -425,7 +425,7 @@ export default function PaketDetailContent({ pkg }: { pkg: PublicPrebuiltDetailD
                 href={pkg.tokopediaUrl || TOKOPEDIA_OFFICIAL_STORE_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 w-full rounded-md bg-emerald-700 hover:bg-emerald-800 text-white py-2.5 text-xs font-bold transition-colors"
+                className="flex items-center justify-center gap-2 w-full rounded-md bg-zinc-900 hover:bg-zinc-700 text-white py-2.5 text-xs font-bold transition-colors"
               >
                 <span>Beli di Tokopedia Resmi</span>
                 <ExternalLink className="h-3.5 w-3.5" />
@@ -433,7 +433,7 @@ export default function PaketDetailContent({ pkg }: { pkg: PublicPrebuiltDetailD
             </div>
 
             {/* Keunggulan Toko */}
-            <div className="pt-3 border-t border-zinc-100 dark:border-zinc-800 space-y-2 text-[11px] text-zinc-500">
+            <div className="pt-3 border-t border-zinc-100 dark:border-zinc-800 space-y-2 text-meta text-zinc-500">
               <div className="flex items-center gap-2">
                 <ShieldCheck className="h-3.5 w-3.5 text-orange-700" />
                 <span>Garansi Resmi Toko &amp; Distributor Indonesia</span>

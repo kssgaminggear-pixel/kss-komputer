@@ -8,11 +8,11 @@ import {
   Check,
   ChevronRight,
   Cpu,
-  MessageSquareCheck,
+  MessageCircle,
   PhoneCall,
   RotateCcw,
   ShieldCheck,
-  Sparkles,
+  Layers,
   Wrench,
 } from 'lucide-react';
 import type { PublicPrebuiltPCDTO } from '@/lib/sanitizer';
@@ -43,7 +43,7 @@ const GOAL_OPTIONS: { id: Goal; label: string; description: string; icon: React.
     id: 'upgrade',
     label: 'Upgrade PC Lama',
     description: 'Tambah performa tanpa membeli unit baru.',
-    icon: Sparkles,
+    icon: Layers,
   },
   {
     id: 'servis',
@@ -181,11 +181,11 @@ export default function KonsultasiClient({ prebuilts, services }: KonsultasiClie
       </nav>
 
       <header className="mb-6">
-        <div className="mb-1 flex items-center gap-2 font-mono text-[11px] font-bold uppercase tracking-tight text-orange-700 dark:text-orange-400">
-          <MessageSquareCheck className="h-3.5 w-3.5" />
+        <div className="mb-1 flex items-center gap-2 font-mono text-micro font-bold uppercase tracking-tight text-orange-700 dark:text-orange-400">
+          <MessageCircle className="h-3.5 w-3.5" />
           <span>Wizard Konsultasi</span>
         </div>
-        <h1 className="text-2xl font-black tracking-tight text-zinc-900 dark:text-zinc-100 sm:text-3xl">
+        <h1 className="text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100 sm:text-3xl">
           Konsultasi Rakit &amp; Servis Sesuai Budget
         </h1>
         <p className="mt-1 max-w-2xl text-xs leading-relaxed text-zinc-600 dark:text-zinc-500 sm:text-sm">
@@ -196,7 +196,7 @@ export default function KonsultasiClient({ prebuilts, services }: KonsultasiClie
 
       {/* Progress */}
       <div className="mb-5">
-        <div className="mb-2 flex items-center justify-between font-mono text-[10px] font-bold uppercase tracking-tight text-zinc-500">
+        <div className="mb-2 flex items-center justify-between font-mono text-micro font-bold uppercase tracking-tight text-zinc-500">
           <span>Langkah {step} dari 5</span>
           <span>{Math.round((step / 5) * 100)}%</span>
         </div>
@@ -241,7 +241,7 @@ export default function KonsultasiClient({ prebuilts, services }: KonsultasiClie
                     <div className="text-xs font-bold text-zinc-900 dark:text-zinc-100">
                       {option.label}
                     </div>
-                    <p className="mt-1 text-[11px] leading-relaxed text-zinc-500 dark:text-zinc-500">
+                    <p className="mt-1 text-meta leading-relaxed text-zinc-500 dark:text-zinc-500">
                       {option.description}
                     </p>
                   </button>
@@ -256,7 +256,7 @@ export default function KonsultasiClient({ prebuilts, services }: KonsultasiClie
             <h2 className="mb-1 text-sm font-bold text-zinc-900 dark:text-zinc-100">
               {goal === 'servis' ? 'Ceritakan masalahnya' : 'Berapa budget Anda?'}
             </h2>
-            <p className="mb-4 text-[11px] text-zinc-500 dark:text-zinc-500">
+            <p className="mb-4 text-meta text-zinc-500 dark:text-zinc-500">
               {goal === 'servis'
                 ? 'Jelaskan gejala yang muncul agar teknisi bisa menyiapkan estimasi.'
                 : 'Geser slider untuk memperkirakan budget. Rekomendasi mengikuti angka ini.'}
@@ -264,7 +264,7 @@ export default function KonsultasiClient({ prebuilts, services }: KonsultasiClie
 
             {goal !== 'servis' ? (
               <>
-                <div className="mb-2 font-mono text-2xl font-black tracking-tight text-zinc-900 tabular-nums dark:text-zinc-100">
+                <div className="mb-2 font-mono text-2xl font-bold tracking-tight text-zinc-900 tabular-nums dark:text-zinc-100">
                   {formatIDR(budget)}
                 </div>
                 <input
@@ -277,7 +277,7 @@ export default function KonsultasiClient({ prebuilts, services }: KonsultasiClie
                   className="w-full accent-orange-600"
                   aria-label="Budget konsultasi"
                 />
-                <div className="mt-1 flex justify-between font-mono text-[10px] text-zinc-500">
+                <div className="mt-1 flex justify-between font-mono text-micro text-zinc-500">
                   <span>{formatIDR(BUDGET_MIN)}</span>
                   <span>{formatIDR(BUDGET_MAX)}+</span>
                 </div>
@@ -299,7 +299,7 @@ export default function KonsultasiClient({ prebuilts, services }: KonsultasiClie
             <h2 className="mb-1 text-sm font-bold text-zinc-900 dark:text-zinc-100">
               {goal === 'servis' ? 'Jenis penanganan' : 'Kebutuhan utama'}
             </h2>
-            <p className="mb-4 text-[11px] text-zinc-500 dark:text-zinc-500">
+            <p className="mb-4 text-meta text-zinc-500 dark:text-zinc-500">
               Boleh pilih lebih dari satu.
             </p>
             <div className="flex flex-wrap gap-2">
@@ -316,7 +316,7 @@ export default function KonsultasiClient({ prebuilts, services }: KonsultasiClie
                     key={id}
                     type="button"
                     onClick={() => toggleNeed(id)}
-                    className={`inline-flex items-center gap-1.5 rounded-md border px-3 py-2 text-[11px] font-semibold transition-colors ${
+                    className={`inline-flex items-center gap-1.5 rounded-md border px-3 py-2 text-meta font-semibold transition-colors ${
                       isActive
                         ? 'border-orange-500/40 bg-orange-500/10 text-orange-700 dark:text-orange-400'
                         : 'border-zinc-200 text-zinc-600 hover:border-zinc-300 dark:border-zinc-800 dark:text-zinc-500 dark:hover:border-zinc-700'
@@ -339,7 +339,7 @@ export default function KonsultasiClient({ prebuilts, services }: KonsultasiClie
 
             {goal === 'servis' ? (
               <div>
-                <label htmlFor="device-type" className="mb-1 block font-mono text-[10px] font-bold uppercase tracking-tight text-zinc-500">
+                <label htmlFor="device-type" className="mb-1 block font-mono text-micro font-bold uppercase tracking-tight text-zinc-500">
                   Tipe Perangkat
                 </label>
                 <select
@@ -358,7 +358,7 @@ export default function KonsultasiClient({ prebuilts, services }: KonsultasiClie
             ) : (
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
                 <div>
-                  <span className="mb-1 block font-mono text-[10px] font-bold uppercase tracking-tight text-zinc-500">
+                  <span className="mb-1 block font-mono text-micro font-bold uppercase tracking-tight text-zinc-500">
                     Platform
                   </span>
                   <div className="flex flex-wrap gap-1.5">
@@ -367,7 +367,7 @@ export default function KonsultasiClient({ prebuilts, services }: KonsultasiClie
                         key={value}
                         type="button"
                         onClick={() => setPlatform(value)}
-                        className={`rounded-md border px-2.5 py-1.5 text-[11px] font-semibold ${
+                        className={`rounded-md border px-2.5 py-1.5 text-meta font-semibold ${
                           platform === value
                             ? 'border-orange-500/40 bg-orange-500/10 text-orange-700 dark:text-orange-400'
                             : 'border-zinc-200 text-zinc-600 dark:border-zinc-800 dark:text-zinc-500'
@@ -380,7 +380,7 @@ export default function KonsultasiClient({ prebuilts, services }: KonsultasiClie
                 </div>
 
                 <div>
-                  <span className="mb-1 block font-mono text-[10px] font-bold uppercase tracking-tight text-zinc-500">
+                  <span className="mb-1 block font-mono text-micro font-bold uppercase tracking-tight text-zinc-500">
                     Warna Casing
                   </span>
                   <div className="flex flex-wrap gap-1.5">
@@ -389,7 +389,7 @@ export default function KonsultasiClient({ prebuilts, services }: KonsultasiClie
                         key={value}
                         type="button"
                         onClick={() => setColor(value)}
-                        className={`rounded-md border px-2.5 py-1.5 text-[11px] font-semibold ${
+                        className={`rounded-md border px-2.5 py-1.5 text-meta font-semibold ${
                           color === value
                             ? 'border-orange-500/40 bg-orange-500/10 text-orange-700 dark:text-orange-400'
                             : 'border-zinc-200 text-zinc-600 dark:border-zinc-800 dark:text-zinc-500'
@@ -402,7 +402,7 @@ export default function KonsultasiClient({ prebuilts, services }: KonsultasiClie
                 </div>
 
                 <div>
-                  <span className="mb-1 block font-mono text-[10px] font-bold uppercase tracking-tight text-zinc-500">
+                  <span className="mb-1 block font-mono text-micro font-bold uppercase tracking-tight text-zinc-500">
                     Kelengkapan
                   </span>
                   <div className="flex flex-wrap gap-1.5">
@@ -411,7 +411,7 @@ export default function KonsultasiClient({ prebuilts, services }: KonsultasiClie
                         key={value}
                         type="button"
                         onClick={() => setFormFactor(value)}
-                        className={`rounded-md border px-2.5 py-1.5 text-[11px] font-semibold ${
+                        className={`rounded-md border px-2.5 py-1.5 text-meta font-semibold ${
                           formFactor === value
                             ? 'border-orange-500/40 bg-orange-500/10 text-orange-700 dark:text-orange-400'
                             : 'border-zinc-200 text-zinc-600 dark:border-zinc-800 dark:text-zinc-500'
@@ -426,7 +426,7 @@ export default function KonsultasiClient({ prebuilts, services }: KonsultasiClie
             )}
 
             <div className="mt-4">
-              <label htmlFor="consult-name" className="mb-1 block font-mono text-[10px] font-bold uppercase tracking-tight text-zinc-500">
+              <label htmlFor="consult-name" className="mb-1 block font-mono text-micro font-bold uppercase tracking-tight text-zinc-500">
                 Nama (opsional)
               </label>
               <input
@@ -446,7 +446,7 @@ export default function KonsultasiClient({ prebuilts, services }: KonsultasiClie
             <h2 className="mb-1 text-sm font-bold text-zinc-900 dark:text-zinc-100">
               Rekomendasi untuk Anda
             </h2>
-            <p className="mb-4 text-[11px] text-zinc-500 dark:text-zinc-500">
+            <p className="mb-4 text-meta text-zinc-500 dark:text-zinc-500">
               {goal === 'servis'
                 ? 'Layanan yang paling sering dipilih untuk keluhan serupa.'
                 : `Paket terdekat dari budget ${formatIDR(budget)} dan kebutuhan Anda.`}
@@ -466,7 +466,7 @@ export default function KonsultasiClient({ prebuilts, services }: KonsultasiClie
                         <div className="text-xs font-bold text-zinc-900 dark:text-zinc-100">
                           {srv.title}
                         </div>
-                        <p className="mt-1 line-clamp-3 text-[11px] leading-relaxed text-zinc-500 dark:text-zinc-500">
+                        <p className="mt-1 line-clamp-3 text-meta leading-relaxed text-zinc-500 dark:text-zinc-500">
                           {srv.description}
                         </p>
                       </div>
@@ -474,7 +474,7 @@ export default function KonsultasiClient({ prebuilts, services }: KonsultasiClie
                         <span className="font-mono text-xs font-bold text-zinc-900 tabular-nums dark:text-zinc-100">
                           {srv.price === 0 ? 'GRATIS' : formatIDR(srv.price)}
                         </span>
-                        <span className="font-mono text-[10px] text-zinc-500">{srv.duration}</span>
+                        <span className="font-mono text-micro text-zinc-500">{srv.duration}</span>
                       </div>
                     </Link>
                   );
@@ -491,17 +491,17 @@ export default function KonsultasiClient({ prebuilts, services }: KonsultasiClie
                       className="flex flex-col justify-between rounded-md border border-zinc-200 bg-zinc-50 p-4 transition-colors hover:border-zinc-300 dark:border-zinc-800 dark:bg-zinc-950 dark:hover:border-zinc-700"
                     >
                       <div>
-                        <div className="mb-1 font-mono text-[10px] font-bold uppercase tracking-tight text-orange-700 dark:text-orange-400">
+                        <div className="mb-1 font-mono text-micro font-bold uppercase tracking-tight text-orange-700 dark:text-orange-400">
                           {prebuilt.categoryTag.replace(/-/g, ' ')}
                         </div>
                         <div className="text-xs font-bold text-zinc-900 dark:text-zinc-100">
                           {prebuilt.name}
                         </div>
-                        <div className="mt-1 font-mono text-[10px] text-zinc-500">
+                        <div className="mt-1 font-mono text-micro text-zinc-500">
                           {prebuilt.parts.length} komponen · {prebuilt.targetResolution}
                         </div>
                       </div>
-                      <div className="mt-3 font-mono text-sm font-black text-zinc-900 tabular-nums dark:text-zinc-100">
+                      <div className="mt-3 font-mono text-sm font-bold text-zinc-900 tabular-nums dark:text-zinc-100">
                         {formatIDR(prebuilt.totalBundlePrice)}
                       </div>
                     </Link>
@@ -515,7 +515,7 @@ export default function KonsultasiClient({ prebuilts, services }: KonsultasiClie
                 href={buildWaUrl()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex flex-1 items-center justify-center gap-2 rounded-md bg-emerald-700 px-3 py-2.5 text-xs font-bold text-white transition-colors hover:bg-emerald-800"
+                className="flex flex-1 items-center justify-center gap-2 rounded-md bg-zinc-900 hover:bg-zinc-700 px-3 py-2.5 text-xs font-bold text-white transition-colors"
               >
                 <PhoneCall className="h-4 w-4" />
                 <span>{goal === 'servis' ? 'Booking Servis via WA' : 'Minta Racikan Kustom via WA'}</span>
@@ -532,7 +532,7 @@ export default function KonsultasiClient({ prebuilts, services }: KonsultasiClie
         )}
 
         {error && (
-          <p className="mt-4 rounded-md border border-red-500/20 bg-red-500/5 px-3 py-2 text-[11px] font-semibold text-red-600 dark:text-red-400">
+          <p className="mt-4 rounded-md border border-red-500/20 bg-red-500/5 px-3 py-2 text-meta font-semibold text-red-600 dark:text-red-400">
             {error}
           </p>
         )}
@@ -580,7 +580,7 @@ export default function KonsultasiClient({ prebuilts, services }: KonsultasiClie
         </div>
       </div>
 
-      <div className="mt-4 flex items-start gap-2 rounded-md border border-zinc-200 bg-zinc-50 px-4 py-3 text-[11px] leading-relaxed text-zinc-500 dark:border-zinc-800 dark:bg-zinc-900/40 dark:text-zinc-500">
+      <div className="mt-4 flex items-start gap-2 rounded-md border border-zinc-200 bg-zinc-50 px-4 py-3 text-meta leading-relaxed text-zinc-500 dark:border-zinc-800 dark:bg-zinc-900/40 dark:text-zinc-500">
         <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-emerald-500" />
         <span>
           Harga paket yang tampil adalah harga total siap pakai. Harga satuan komponen

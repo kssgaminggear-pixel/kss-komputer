@@ -145,7 +145,7 @@ export default function KomponenEceranPage({ parts }: KomponenClientProps) {
                 <Icon className="h-3.5 w-3.5" />
                 <span>{cat.label}</span>
                 <span
-                  className={`ml-0.5 rounded-md px-1 font-mono text-[10px] ${
+                  className={`ml-0.5 rounded-md px-1 font-mono text-micro ${
                     isSelected
                       ? 'bg-zinc-700 text-white dark:bg-zinc-300 dark:text-zinc-900'
                       : 'bg-zinc-100 text-zinc-500 dark:bg-zinc-800'
@@ -187,7 +187,7 @@ export default function KomponenEceranPage({ parts }: KomponenClientProps) {
           </div>
 
           <div className="flex items-center gap-3">
-            <span className="hidden font-mono text-[11px] text-zinc-500 sm:inline">
+            <span className="hidden font-mono text-meta text-zinc-500 sm:inline">
               {filteredParts.length} item
             </span>
             <div className="flex items-center gap-1 rounded-md border border-zinc-200 bg-zinc-50 p-0.5 dark:border-zinc-800 dark:bg-zinc-950">
@@ -242,7 +242,7 @@ export default function KomponenEceranPage({ parts }: KomponenClientProps) {
           <div className="overflow-x-auto">
           <table className="w-full text-left text-xs border-collapse">
             <thead>
-              <tr className="border-b border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 text-zinc-500 font-mono text-[11px] uppercase">
+              <tr className="border-b border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 text-zinc-500 font-mono text-micro uppercase">
                 <th className="py-2.5 px-3">Brand / SKU</th>
                 <th className="py-2.5 px-3">Nama Produk &amp; Spesifikasi</th>
                 <th className="py-2.5 px-3 text-center">Distributor</th>
@@ -263,23 +263,23 @@ export default function KomponenEceranPage({ parts }: KomponenClientProps) {
                       <span className="font-bold text-zinc-900 dark:text-zinc-100 block">
                         {part.brand}
                       </span>
-                      <span className="text-[10px] text-zinc-500">{part.sku}</span>
+                      <span className="text-micro text-zinc-500">{part.sku}</span>
                     </td>
 
                     <td className="py-2.5 px-3 font-sans font-semibold text-zinc-900 dark:text-zinc-100 max-w-md">
                       <Link href={`/komponen/${part.slug}`} className="hover:text-orange-700 dark:hover:text-orange-400">
                         {part.name}
                       </Link>
-                      <div className="font-mono text-[10px] text-zinc-500 font-normal mt-0.5">
+                      <div className="font-mono text-micro text-zinc-500 font-normal mt-0.5">
                         {part.wattage}W TDP • {part.category.toUpperCase()}
                       </div>
                     </td>
 
-                    <td className="py-2.5 px-3 text-center text-[11px] text-zinc-500 whitespace-nowrap">
+                    <td className="py-2.5 px-3 text-center text-meta text-zinc-500 whitespace-nowrap">
                       {part.officialDistributor || 'Astrindo/EMD'}
                     </td>
 
-                    <td className="py-2.5 px-3 text-center text-[11px] text-emerald-700 dark:text-emerald-400 font-bold whitespace-nowrap">
+                    <td className="py-2.5 px-3 text-center text-meta text-emerald-700 dark:text-emerald-400 font-bold whitespace-nowrap">
                       {part.warrantyYears} Tahun
                     </td>
 
@@ -297,7 +297,7 @@ export default function KomponenEceranPage({ parts }: KomponenClientProps) {
                             addRetailItem(part, 1);
                             showToast(`${part.name} dimasukkan ke keranjang`);
                           }}
-                          className="inline-flex h-8 items-center gap-1 rounded-md bg-orange-700 px-2.5 text-[11px] font-bold text-white transition-colors hover:bg-orange-800"
+                          className="inline-flex h-8 items-center gap-1 rounded-md bg-orange-700 px-2.5 text-meta font-bold text-white transition-colors hover:bg-orange-800"
                           title="Tambahkan ke Keranjang Eceran"
                         >
                           <ShoppingBag className="h-3 w-3" />
@@ -338,7 +338,7 @@ export default function KomponenEceranPage({ parts }: KomponenClientProps) {
                 className="group flex flex-col justify-between rounded-md border border-zinc-200 bg-white p-4 transition-colors duration-150 hover:border-zinc-400 dark:border-zinc-800 dark:bg-zinc-900/60 dark:hover:border-zinc-600"
               >
                 <div>
-                  <div className="mb-1 flex items-center justify-between font-mono text-[10px]">
+                  <div className="mb-1 flex items-center justify-between font-mono text-micro">
                     <span className="font-bold uppercase text-zinc-500">{part.brand}</span>
                     <span
                       className={`rounded-md border px-1.5 py-0.5 font-semibold ${
@@ -360,7 +360,7 @@ export default function KomponenEceranPage({ parts }: KomponenClientProps) {
                     </Link>
                   </h3>
 
-                  <div className="mt-1 font-mono text-[10px] text-zinc-500">
+                  <div className="mt-1 font-mono text-micro text-zinc-500">
                     {part.sku} · {part.wattage}W · {part.warrantyYears} Th
                   </div>
 
@@ -369,7 +369,7 @@ export default function KomponenEceranPage({ parts }: KomponenClientProps) {
                       {formatIDR(retailPrice)}
                     </span>
                     {part.originalPrice && part.originalPrice > retailPrice && (
-                      <span className="font-mono text-[10px] text-zinc-500 line-through tabular-nums">
+                      <span className="font-mono text-micro text-zinc-500 line-through tabular-nums">
                         {formatIDR(part.originalPrice)}
                       </span>
                     )}

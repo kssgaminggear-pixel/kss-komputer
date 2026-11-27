@@ -3,7 +3,7 @@
 import React from 'react';
 import {
   Printer,
-  MessageSquareCheck,
+  MessageCircle,
   CheckCircle2,
   Truck,
   FileText,
@@ -61,9 +61,9 @@ export default function CustomerQuotationContent({ quote }: { quote: PublicQuote
           <button
             type="button"
             onClick={handleConfirmWA}
-            className="flex items-center gap-1.5 px-4 py-1.5 rounded-md bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold transition-colors shadow-xs"
+            className="flex items-center gap-1.5 px-4 py-1.5 rounded-md bg-zinc-900 hover:bg-zinc-700 text-white text-xs font-bold transition-colors shadow-xs"
           >
-            <MessageSquareCheck className="h-3.5 w-3.5" />
+            <MessageCircle className="h-3.5 w-3.5" />
             <span>Konfirmasi Pesanan (WA)</span>
           </button>
         </div>
@@ -74,44 +74,44 @@ export default function CustomerQuotationContent({ quote }: { quote: PublicQuote
         {/* Kop Surat Resmi KSS Komputer */}
         <div className="border-b-2 border-zinc-900 pb-5 mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <div className="flex items-center gap-3">
-            <div className="flex h-12 w-12 items-center justify-center rounded-md bg-orange-700 text-white font-mono font-black text-xl tracking-wider">
+            <div className="flex h-12 w-12 items-center justify-center rounded-md bg-orange-700 text-white font-mono font-bold text-xl tracking-wider">
               KSS
             </div>
             <div>
-              <div className="font-mono text-xl font-black tracking-tight text-zinc-950 uppercase">
+              <div className="font-mono text-xl font-bold tracking-tight text-zinc-950 uppercase">
                 KSS KOMPUTER
               </div>
               <div className="text-xs text-zinc-600">
                 Pusat System Integrator &amp; Perakitan PC Spesialis Harco Mangga Dua
               </div>
-              <div className="text-[11px] text-zinc-500 font-mono">
+              <div className="text-meta text-zinc-500 font-mono">
                 Mangga Dua Mall Lt. 4 Blok A No. 12-14, Jakarta Pusat • WA: {DEFAULT_WHATSAPP_DISPLAY}
               </div>
             </div>
           </div>
 
           <div className="text-left sm:text-right font-mono text-xs">
-            <span className="inline-block rounded-md bg-zinc-100 border border-zinc-300 px-2 py-0.5 text-[10px] font-bold uppercase text-zinc-800 mb-1">
+            <span className="inline-block rounded-md bg-zinc-100 border border-zinc-300 px-2 py-0.5 text-micro font-bold uppercase text-zinc-800 mb-1">
               Dokumen Penawaran Resmi
             </span>
             <div className="font-bold text-sm text-zinc-900">{quote.quoteCode}</div>
-            <div className="text-zinc-500 text-[11px]">Tanggal: {quote.createdAt}</div>
+            <div className="text-zinc-500 text-meta">Tanggal: {quote.createdAt}</div>
           </div>
         </div>
 
         {/* Info Konsumen & Validitas */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6 p-4 rounded-md bg-zinc-50 border border-zinc-200 text-xs font-mono">
           <div>
-            <span className="text-[10px] text-zinc-500 uppercase block">Ditujukan Kepada:</span>
+            <span className="text-micro text-zinc-500 uppercase block">Ditujukan Kepada:</span>
             <div className="font-bold text-sm text-zinc-900">{quote.customerName}</div>
             <div className="text-zinc-600">{quote.customerWa}</div>
-            <div className="text-zinc-500 text-[11px] mt-1">Kebutuhan: {quote.usageNeed.toUpperCase()}</div>
+            <div className="text-zinc-500 text-meta mt-1">Kebutuhan: {quote.usageNeed.toUpperCase()}</div>
           </div>
 
           <div className="sm:text-right">
-            <span className="text-[10px] text-zinc-500 uppercase block">Masa Berlaku Dokumen:</span>
+            <span className="text-micro text-zinc-500 uppercase block">Masa Berlaku Dokumen:</span>
             <div className="font-bold text-zinc-900">Sampai {quote.validUntil}</div>
-            <div className="text-zinc-600 text-[11px] mt-1">
+            <div className="text-zinc-600 text-meta mt-1">
               Estimasi Daya: {formatWatt(quote.totalWattage)} (Min. PSU {quote.recommendedPsuWatt}W)
             </div>
           </div>
@@ -121,7 +121,7 @@ export default function CustomerQuotationContent({ quote }: { quote: PublicQuote
         <div className="border border-zinc-300 rounded-md overflow-hidden mb-6">
           <table className="w-full text-left text-xs border-collapse">
             <thead>
-              <tr className="bg-zinc-100 border-b border-zinc-300 font-mono text-[11px] uppercase text-zinc-700">
+              <tr className="bg-zinc-100 border-b border-zinc-300 font-mono text-micro uppercase text-zinc-700">
                 <th className="py-2.5 px-3 w-10 text-center">No</th>
                 <th className="py-2.5 px-3 w-36">Kategori</th>
                 <th className="py-2.5 px-3">Rincian Komponen Terpasang</th>
@@ -133,7 +133,7 @@ export default function CustomerQuotationContent({ quote }: { quote: PublicQuote
               {quote.selectedParts.map((item, idx) => (
                 <tr key={idx} className="hover:bg-zinc-50">
                   <td className="py-2.5 px-3 text-center font-mono text-zinc-500">{idx + 1}</td>
-                  <td className="py-2.5 px-3 font-mono text-[11px] uppercase text-zinc-600 font-bold">
+                  <td className="py-2.5 px-3 font-mono text-micro uppercase text-zinc-600 font-bold">
                     {item.category}
                   </td>
                   <td className="py-2.5 px-3 font-semibold text-zinc-900">
@@ -142,7 +142,7 @@ export default function CustomerQuotationContent({ quote }: { quote: PublicQuote
                   <td className="py-2.5 px-3 text-center font-mono font-bold text-zinc-800">
                     {item.quantity} Unit
                   </td>
-                  <td className="py-2.5 px-3 text-center font-mono text-[11px] text-emerald-700 font-semibold whitespace-nowrap">
+                  <td className="py-2.5 px-3 text-center font-mono text-meta text-emerald-700 font-semibold whitespace-nowrap">
                     Resmi Distributor
                   </td>
                 </tr>
@@ -154,7 +154,7 @@ export default function CustomerQuotationContent({ quote }: { quote: PublicQuote
         {/* Catatan Khusus */}
         {quote.notes && (
           <div className="mb-6 p-3 rounded-md bg-zinc-50 border border-zinc-200 text-xs">
-            <span className="font-mono text-[10px] uppercase font-bold text-zinc-500 block mb-1">
+            <span className="font-mono text-micro uppercase font-bold text-zinc-500 block mb-1">
               Catatan &amp; Rekomendasi Teknisi:
             </span>
             <p className="text-zinc-700 leading-relaxed">{quote.notes}</p>
@@ -175,13 +175,13 @@ export default function CustomerQuotationContent({ quote }: { quote: PublicQuote
           </div>
 
           <div className="text-left sm:text-right font-mono">
-            <span className="text-[11px] text-zinc-500 uppercase block">
+            <span className="text-micro text-zinc-500 uppercase block">
               TOTAL HARGA PAKET PENAWARAN
             </span>
-            <div className="text-2xl sm:text-3xl font-black text-zinc-950 tabular-nums">
+            <div className="text-2xl sm:text-3xl font-bold text-zinc-950 tabular-nums">
               {formatIDR(quote.finalBundlePrice)}
             </div>
-            <span className="text-[11px] text-zinc-500">(Nett / Tanpa Biaya Tersembunyi)</span>
+            <span className="text-meta text-zinc-500">(Nett / Tanpa Biaya Tersembunyi)</span>
           </div>
         </div>
 
@@ -192,7 +192,7 @@ export default function CustomerQuotationContent({ quote }: { quote: PublicQuote
             <div className="font-bold text-zinc-900 border-t border-zinc-400 pt-1 w-44">
               Teknisi KSS Komputer
             </div>
-            <div className="text-[11px] text-zinc-500">System Integrator Dept.</div>
+            <div className="text-meta text-zinc-500">System Integrator Dept.</div>
           </div>
 
           <div className="text-right">
@@ -200,7 +200,7 @@ export default function CustomerQuotationContent({ quote }: { quote: PublicQuote
             <div className="font-bold text-zinc-900 border-t border-zinc-400 pt-1 w-44 ml-auto">
               {quote.customerName}
             </div>
-            <div className="text-[11px] text-zinc-500">Customer</div>
+            <div className="text-meta text-zinc-500">Customer</div>
           </div>
         </div>
       </div>
