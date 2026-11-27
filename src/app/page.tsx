@@ -1,15 +1,12 @@
 import HomeClient from './HomeClient';
-import {
-  getPublicAccessories,
-  getPublicPrebuilts,
-  getPublicServices,
-} from '@/lib/server-catalog';
+import { getTopSellers } from '@/lib/marketplace/server';
+import { getPublicPrebuilts, getPublicServices } from '@/lib/server-catalog';
 
 export default function HomePage() {
   return (
     <HomeClient
       prebuilts={getPublicPrebuilts()}
-      accessories={getPublicAccessories()}
+      topSellers={getTopSellers(6)}
       services={getPublicServices()}
     />
   );

@@ -1,5 +1,4 @@
 import {
-  MOCK_ACCESSORIES,
   MOCK_BUILD_TRACKINGS,
   MOCK_CONSULTATION_QUOTES,
   MOCK_HARDWARE_PARTS,
@@ -9,17 +8,13 @@ import {
 } from './mock-data';
 import {
   BuildOrderTracking,
-  PublicAccessory,
   PublicHardwarePart,
-  PartSearchEntry,
   ProductCategory,
   ServicePackage,
 } from './types';
-import { getProductSpecLabels } from '@/components/catalog/SpecBadges';
 import {
   PublicPrebuiltDetailDTO,
   PublicPrebuiltPCDTO,
-  sanitizeAccessoryForPublic,
   sanitizeHardwarePartForPublic,
   sanitizePrebuiltDetailForPublic,
   sanitizePrebuiltPCForPublic,
@@ -40,43 +35,6 @@ export function getPublicHardwareParts(): PublicHardwarePart[] {
   return MOCK_HARDWARE_PARTS.map(sanitizeHardwarePartForPublic);
 }
 
-export function getPartSearchEntries(): PartSearchEntry[] {
-  return getPublicHardwareParts().map((part) => {
-    const specLabels = getProductSpecLabels(part);
-    return {
-      id: part.id,
-      slug: part.slug,
-      sku: part.sku,
-      name: part.name,
-      brand: part.brand,
-      category: part.category,
-      stockStatus: part.stockStatus,
-      specLabels: specLabels.slice(0, 4),
-      keywords: [
-        part.name,
-        part.sku,
-        part.brand,
-        part.category,
-        part.specs.socket,
-        part.specs.chipset,
-        part.specs.ramType,
-        part.specs.formFactor,
-        part.specs.vramType,
-        part.specs.storageInterface,
-        part.specs.efficiencyRating,
-        ...specLabels,
-      ]
-        .filter(Boolean)
-        .join(' ')
-        .toLowerCase(),
-    };
-  });
-}
-
-export function getPublicAccessories(): PublicAccessory[] {
-  return MOCK_ACCESSORIES.map(sanitizeAccessoryForPublic);
-}
-
 export function getPublicServices(): ServicePackage[] {
   return MOCK_SERVICES;
 }
@@ -87,22 +45,6 @@ export function getPublicServiceBySlug(slug: string): ServicePackage | undefined
 
 export function getPublicServiceSlugs(): string[] {
   return MOCK_SERVICES.map((service) => service.slug);
-}
-
-export function getPublicHardwarePartBySlug(slug: string): PublicHardwarePart | undefined {
-  const part = MOCK_HARDWARE_PARTS.find((item) => item.slug === slug);
-  return part ? sanitizeHardwarePartForPublic(part) : undefined;
-}
-
-export function getRelatedPublicHardwareParts(
-  part: PublicHardwarePart,
-  limit = 4
-): PublicHardwarePart[] {
-  return MOCK_HARDWARE_PARTS.filter(
-    (item) => item.category === part.category && item.slug !== part.slug
-  )
-    .slice(0, limit)
-    .map(sanitizeHardwarePartForPublic);
 }
 
 export function getPublicPrebuilts(): PublicPrebuiltPCDTO[] {

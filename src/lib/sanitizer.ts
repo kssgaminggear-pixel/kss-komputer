@@ -1,11 +1,9 @@
 import {
-  AccessoryItem,
   ConsultationQuote,
   HardwarePart,
   PrebuiltPC,
   PrebuiltPCItem,
   ProductCategory,
-  PublicAccessory,
   PublicHardwarePart,
 } from './types';
 
@@ -14,11 +12,6 @@ import {
  * `costPrice`, `sellPrice`, dan alias `price` tidak pernah ikut.
  */
 export type PublicHardwarePartDTO = PublicHardwarePart;
-
-/**
- * Public Accessory — aman dikirim ke client (tanpa `costPrice`).
- */
-export type PublicAccessoryDTO = PublicAccessory;
 
 /**
  * Satu komponen di dalam paket PC rakitan yang boleh ditampilkan publik.
@@ -89,29 +82,6 @@ export function sanitizeHardwarePartForPublic(part: HardwarePart): PublicHardwar
     officialDistributor: part.officialDistributor,
     specs: part.specs,
     updatedAt: part.updatedAt,
-  };
-}
-
-/**
- * Sanitize AccessoryItem sebelum dikirim ke browser.
- */
-export function sanitizeAccessoryForPublic(acc: AccessoryItem): PublicAccessory {
-  return {
-    id: acc.id,
-    sku: acc.sku,
-    name: acc.name,
-    slug: acc.slug,
-    brand: acc.brand,
-    category: acc.category,
-    retailPrice: acc.retailPrice,
-    originalPrice: acc.originalPrice,
-    stockStatus: acc.stockStatus,
-    warrantyYears: acc.warrantyYears,
-    officialDistributor: acc.officialDistributor,
-    image: acc.image,
-    features: acc.features,
-    specs: acc.specs,
-    updatedAt: acc.updatedAt,
   };
 }
 

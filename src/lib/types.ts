@@ -102,24 +102,6 @@ export type PublicHardwarePart = Omit<
   'costPrice' | 'sellPrice' | 'price' | 'retailPrice' | 'isRetailAvailable' | 'originalPrice'
 >;
 
-/** Data ringan untuk pencarian global; dikirim ke setiap halaman, tanpa harga. */
-export interface PartSearchEntry {
-  id: string;
-  slug: string;
-  sku: string;
-  name: string;
-  brand: string;
-  category: ProductCategory;
-  stockStatus: StockStatus;
-  specLabels: string[];
-  keywords: string;
-}
-
-/**
- * Bentuk aksesoris yang aman dikirim ke client (tanpa harga modal).
- */
-export type PublicAccessory = Omit<AccessoryItem, 'costPrice'>;
-
 // Alias untuk menjaga backward compatibility dengan kode sebelumnya
 export type Product = HardwarePart;
 export type ProductSpecs = PartSpecs;

@@ -8,7 +8,7 @@ import { BottomNav } from '@/components/layout/BottomNav';
 import { RetailCartDrawer } from '@/components/cart/RetailCartDrawer';
 import { CsAgent } from '@/components/cs/CsAgent';
 import { JsonLd } from '@/components/seo/JsonLd';
-import { getPartSearchEntries } from '@/lib/server-catalog';
+import { getSearchEntries } from '@/lib/marketplace/server';
 import { SITE_URL } from '@/lib/constants';
 import { organizationSchema, websiteSchema } from '@/lib/seo';
 
@@ -78,7 +78,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const searchEntries = getPartSearchEntries();
+  const searchEntries = getSearchEntries();
 
   return (
     <html

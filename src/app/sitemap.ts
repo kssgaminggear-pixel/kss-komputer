@@ -1,17 +1,16 @@
 import type { MetadataRoute } from 'next';
 import { SITE_URL } from '@/lib/constants';
 import {
-  getPublicHardwareParts,
   getPublicPrebuilts,
   getPublicServices,
 } from '@/lib/server-catalog';
+import { getMarketplaceEtalase, getMarketplaceProducts, getMarketplaceMeta } from '@/lib/marketplace/server';
 
 const STATIC_ROUTES = [
   '/',
   '/paket-rakitan',
   '/jasa',
-  '/komponen',
-  '/aksesoris',
+  '/toko',
   '/konsultasi',
   '/tentang-kami',
   '/cek-pesanan',
@@ -36,11 +35,21 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
-  const parts: MetadataRoute.Sitemap = getPublicHardwareParts().map((part) => ({
-    url: `${SITE_URL}/komponen/${part.slug}`,
-    changeFrequency: 'monthly',
-    priority: 0.5,
-  }));
+  const synced = getMarketplaceMeta().lastSuccessAt;
+  const store: MetadataRoute.Sitemap = [
+    ...getMarketplaceEtalase().map((shelf) => ({
+      url: `${SITE_URL}/toko/etalase/${shelf.slug}`,
+      lastModified: synced,
+      changeFrequency: 'daily' as const,
+      priority: 0.5,
+    })),
+    ...getMarketplaceProducts().map((product) => ({
+      url: `${SITE_URL}/toko/${product.slug}`,
+      lastModified: synced,
+      changeFrequency: 'daily' as const,
+      priority: 0.6,
+    })),
+  ];
 
-  return [...staticEntries, ...packages, ...services, ...parts];
+  return [...staticEntries, ...packages, ...services, ...store];
 }

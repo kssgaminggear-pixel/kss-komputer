@@ -7,14 +7,13 @@ import { usePathname } from 'next/navigation';
 import {
   Search,
   PcCase,
-  Layers,
+  Store,
   Wrench,
   ShoppingBag,
   Menu,
   X,
   ChevronRight,
   ArrowUpRight,
-  Headphones,
   ClipboardList,
   MessageSquareText,
   MessageCircle,
@@ -29,10 +28,10 @@ import {
 } from '@/lib/format';
 import { CommandSearchModal } from '@/components/layout/CommandSearchModal';
 import { useHydrated } from '@/lib/useHydrated';
-import type { PartSearchEntry } from '@/lib/types';
+import type { SearchEntry } from '@/lib/marketplace/types';
 
 export interface NavbarProps {
-  searchEntries: PartSearchEntry[];
+  searchEntries: SearchEntry[];
 }
 
 export function Navbar({ searchEntries }: NavbarProps) {
@@ -66,9 +65,8 @@ export function Navbar({ searchEntries }: NavbarProps) {
   const navLinks = [
     { href: '/jasa', label: 'Jasa & Servis', icon: Wrench },
     { href: '/paket-rakitan', label: 'Paket Siap Pakai', icon: PcCase },
+    { href: '/toko', label: 'Toko', icon: Store },
     { href: '/cek-pesanan', label: 'Cek Pesanan', icon: ClipboardList },
-    { href: '/komponen', label: 'Komponen', icon: Layers },
-    { href: '/aksesoris', label: 'Aksesoris', icon: Headphones },
     { href: '/konsultasi', label: 'Konsultasi', icon: MessageSquareText, desktopHidden: true },
     { href: '/tentang-kami', label: 'Tentang Kami', icon: Building2, desktopHidden: true },
   ];

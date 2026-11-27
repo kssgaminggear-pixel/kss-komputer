@@ -13,19 +13,15 @@ import {
   MessageSquareText,
   Check,
   CheckCircle2,
-  Headphones,
   Clock,
-  Layers,
-  Keyboard,
-  Mouse,
-  Monitor,
-  Zap,
   Package,
+  Store,
   Plus,
   BadgeCheck,
 } from 'lucide-react';
 import type { PublicPrebuiltPCDTO } from '@/lib/sanitizer';
-import type { PublicAccessory, ServicePackage } from '@/lib/types';
+import type { ServicePackage } from '@/lib/types';
+import type { PublicMarketplaceProduct } from '@/lib/marketplace/types';
 import {
   formatIDR,
   generateConsultationWAMessage,
@@ -42,28 +38,14 @@ type UsageFilter = 'all' | 'gaming-1080p' | 'gaming-1440p' | 'creator' | 'office
 
 export interface HomeClientProps {
   prebuilts: PublicPrebuiltPCDTO[];
-  accessories: PublicAccessory[];
+  topSellers: PublicMarketplaceProduct[];
   services: ServicePackage[];
 }
-
-const ACCESSORY_ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
-  keyboard: Keyboard,
-  mouse: Mouse,
-  headset: Headphones,
-  monitor: Monitor,
-  ups: Zap,
-  speaker: Headphones,
-  webcam: Monitor,
-  chair: Package,
-  mousepad: Layers,
-  other: Package,
-};
 
 const CATEGORY_SHORTCUTS = [
   { href: '/paket-rakitan', label: 'Paket siap pakai', icon: PcCase },
   { href: '/konsultasi', label: 'Konsultasi rakit', icon: MessageSquareText },
-  { href: '/komponen', label: 'Komponen', icon: Layers },
-  { href: '/aksesoris', label: 'Aksesoris', icon: Headphones },
+  { href: '/toko', label: 'Toko produk', icon: Store },
   { href: '/jasa', label: 'Jasa & servis', icon: Wrench },
   { href: '/cek-pesanan', label: 'Cek pesanan', icon: Clock },
 ];
@@ -91,7 +73,7 @@ const COMPARISON: Array<[string, string, string]> = [
   ['Kompatibilitas', 'Divalidasi sebelum rakit', 'Risiko salah socket, RAM, atau casing'],
 ];
 
-export default function HomeClient({ prebuilts, accessories, services }: HomeClientProps) {
+export default function HomeClient({ prebuilts, topSellers, services }: HomeClientProps) {
   const addRetailItem = useRetailCartStore((state) => state.addItem);
 
   const [selectedUsage, setSelectedUsage] = useState<UsageFilter>('all');
@@ -520,52 +502,59 @@ export default function HomeClient({ prebuilts, accessories, services }: HomeCli
         </div>
       </section>
 
-      {/* AKSESORIS */}
+      {/* TERLARIS DI TOKO */}
       <section className="kss-section-alt">
         <div className="kss-container">
           <SectionHeader
-            eyebrow="Katalog eceran"
-            title="Aksesoris & gaming gear"
-            description="Harga eceran resmi distributor, stok fisik, dan garansi resmi."
-            action={{ href: '/aksesoris', label: `Semua aksesoris (${accessories.length})` }}
+            eyebrow="Toko resmi"
+            title="Terlaris di toko"
+            description="Produk toko KSS di Tokopedia yang paling banyak terjual."
+            action={{ href: '/toko', label: 'Lihat semua produk' }}
           />
 
           <ul className="grid grid-cols-1 border-t border-zinc-200 md:grid-cols-2 md:gap-x-10">
-            {accessories.slice(0, 6).map((acc) => {
-              const Icon = ACCESSORY_ICONS[acc.category] || Package;
-              const hasDiscount = Boolean(acc.originalPrice && acc.originalPrice > acc.retailPrice);
-              return (
-                <li key={acc.id} className="flex items-center gap-4 border-b border-zinc-200 py-4">
-                  <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-sm bg-zinc-100">
-                    <Icon aria-hidden className="h-5 w-5 text-zinc-500" />
-                  </span>
-                  <div className="min-w-0 flex-1">
-                    <div className="flex items-center gap-2">
-                      <span className="kss-label text-zinc-500">{acc.brand}</span>
-                      {hasDiscount && <span className="kss-tag kss-tag-accent">Promo</span>}
-                    </div>
-                    <h3 className="mt-0.5 truncate text-[14px] font-medium text-zinc-900">{acc.name}</h3>
-                    <div className="mt-0.5 flex items-baseline gap-2">
-                      <Price value={acc.retailPrice} className="text-[14px] text-zinc-950" />
-                      {hasDiscount && (
-                        <s className="kss-num text-meta text-zinc-500">{formatIDR(acc.originalPrice!)}</s>
-                      )}
-                    </div>
+            {topSellers.map((item) => (
+              <li key={item.id} className="flex items-center gap-4 border-b border-zinc-200 py-4">
+                <span className="relative h-12 w-12 shrink-0 overflow-hidden rounded-sm bg-zinc-100">
+                  {item.image ? (
+                    <Image src={item.image} alt="" fill sizes="48px" className="object-contain" />
+                  ) : (
+                    <Package aria-hidden className="absolute inset-0 m-auto h-5 w-5 text-zinc-500" />
+                  )}
+                </span>
+                <div className="min-w-0 flex-1">
+                  <h3 className="truncate text-[14px] font-medium text-zinc-900">
+                    <Link href={`/toko/${item.slug}`} className="hover:underline">{item.name}</Link>
+                  </h3>
+                  <div className="mt-0.5 flex flex-wrap items-baseline gap-x-2">
+                    <Price value={item.priceIdr} className="text-[14px] text-zinc-950" />
+                    {item.originalPriceIdr && (
+                      <s className="kss-num text-meta text-zinc-500">{formatIDR(item.originalPriceIdr)}</s>
+                    )}
+                    <span className="kss-num text-meta text-zinc-500">{item.soldLabel} terjual</span>
                   </div>
-                  <button
-                    type="button"
-                    aria-label={`Tambah ${acc.name} ke keranjang`}
-                    onClick={() => {
-                      addRetailItem(acc, 1);
-                      showToast(`${acc.name} ditambahkan ke keranjang`);
-                    }}
-                    className="kss-icon-btn hover:bg-zinc-900 hover:text-white"
-                  >
-                    <Plus aria-hidden className="h-4 w-4" />
-                  </button>
-                </li>
-              );
-            })}
+                </div>
+                <button
+                  type="button"
+                  disabled={item.stock === 'out_of_stock'}
+                  aria-label={`Tambah ${item.name} ke keranjang`}
+                  onClick={() => {
+                    addRetailItem({
+                      id: item.id,
+                      slug: item.slug,
+                      name: item.name,
+                      unitPrice: item.priceIdr,
+                      originalPrice: item.originalPriceIdr,
+                      tokopediaUrl: item.tokopediaUrl,
+                    });
+                    showToast(`${item.name} ditambahkan ke keranjang`);
+                  }}
+                  className="kss-icon-btn hover:bg-zinc-900 hover:text-white disabled:opacity-40"
+                >
+                  <Plus aria-hidden className="h-4 w-4" />
+                </button>
+              </li>
+            ))}
           </ul>
         </div>
       </section>

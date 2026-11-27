@@ -66,7 +66,7 @@ export function RetailCartDrawer() {
           <div className="flex items-center gap-2">
             <ShoppingBag className="h-5 w-5 text-emerald-700 dark:text-emerald-400" />
             <h2 className="text-sm font-bold uppercase tracking-tight text-zinc-900 dark:text-zinc-100">
-              Keranjang Eceran &amp; Aksesoris
+              Keranjang toko
             </h2>
             <span className="rounded-md border border-emerald-500/20 bg-emerald-500/10 px-1.5 py-0.5 font-mono text-meta font-semibold text-emerald-700 dark:text-emerald-400">
               {totalCount} item
@@ -90,19 +90,13 @@ export function RetailCartDrawer() {
                 Keranjang belanja eceran masih kosong
               </p>
               <p className="mt-1 text-meta text-zinc-500">
-                Jelajahi halaman Komponen &amp; Aksesoris untuk menambahkan barang.
+                Buka halaman Toko untuk menambahkan barang.
               </p>
             </div>
           ) : (
             items.map((item) => (
               <div key={item.id} className="py-3 flex items-start gap-3">
                 <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-1.5">
-                    <span className="rounded-md bg-zinc-100 dark:bg-zinc-800 px-1 py-0.5 text-micro font-mono text-zinc-500 uppercase">
-                      {item.brand}
-                    </span>
-                    <span className="text-micro font-mono text-zinc-500 truncate">{item.sku}</span>
-                  </div>
                   <h3 className="mt-0.5 text-xs font-semibold text-zinc-900 dark:text-zinc-100 line-clamp-2">
                     {item.name}
                   </h3>
