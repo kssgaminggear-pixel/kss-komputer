@@ -1,194 +1,78 @@
-# UI_FIGCRAFT_SKILL.md — KSS Komputer High-Craft UI System
+# UI_FIGCRAFT_SKILL.md — Pola Komponen KSS Komputer (v2)
 
-> **Wajib dibaca setiap kali membuat atau mengubah komponen `.tsx`.**
-> Skill ini adalah kontrak visual KSS Komputer. Jika sebuah komponen bertentangan
-> dengan aturan di sini, komponen tersebut salah — bukan skill-nya.
+> Dibaca saat membuat/mengubah komponen `.tsx`. Token dan alasan: `DESIGN.md`.
+> Kelas `kss-*` didefinisikan di `src/app/globals.css` — itu sumber kebenaran.
+> Jika komponen bertentangan dengan dokumen ini, komponennya yang salah.
 
----
-
-## 1. Arah Estetika: Industrial System Integrator
-
-Referensi rasa: **Aftershock PC + Linear + Vercel**. Presisi, tenang, padat data,
-dan terasa seperti perangkat teknis mahal — bukan landing page agensi.
-
-### 1.1 DILARANG KERAS — Anti-AI-Slop
+## 1. Anti-AI-slop (dilarang)
 
 | Dilarang | Alasan |
 |---|---|
-| `bg-gradient-to-*` warna-warni | Menghilangkan kesan presisi industrial |
-| `rounded-2xl` / `rounded-3xl` | Terlalu lembut; KSS memakai sudut tegas |
-| `backdrop-blur` berlebihan | Berat, tidak perlu, dan mengaburkan hierarki |
-| Hero kosong setinggi 1 layar | Membuang ruang dan memperlambat konversi |
-| Emoji sebagai ikon UI | Gunakan `lucide-react` |
-| Placeholder `// TODO` | Wajib implementasi utuh |
-| Harga satuan part di UI publik | Melanggar aturan bisnis B2 |
+| `bg-gradient-*` | Merusak kesan presisi |
+| `rounded-lg` ke atas (kini dikunci 6px) | Sudut tegas |
+| `backdrop-blur`, `shadow-md` ke atas | Berat dan mengaburkan hierarki |
+| Ikon dalam kotak tint, ikon `Sparkles`, emoji | Pola template generik |
+| Badge pill di atas H1, judul Title Case | Klise; pakai eyebrow + sentence case |
+| `font-black` di judul kartu/harga | Pakai 600–800 sesuai skala |
+| Teks < 11px, body 11px | Terbaca seperti panel admin |
+| `// TODO`, handler palsu | Wajib implementasi utuh |
+| Harga satuan part di UI publik | Aturan bisnis (AGENTS.md §1.1) |
 
-### 1.2 Surface & Hairline Grid
+## 2. Permukaan & aksi
 
-- Latar halaman: `bg-zinc-950` (dark) atau `bg-zinc-50` (light).
-- Surface kartu: `bg-zinc-900/90` + `border border-zinc-800`.
-- Hover: `hover:border-zinc-700 transition-colors duration-150`.
-- Sudut: `rounded-sm` atau `rounded-md`. Tidak ada radius lebih besar.
-- Shadow: maksimum `shadow-xs` / `shadow-sm`. Tidak ada `shadow-2xl`.
-- Jarak: gunakan `gap-2` sampai `gap-6`; section `py-8` sampai `py-12`.
-- Container: `mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8`.
+- Halaman: `bg-zinc-50`; section selang-seling `kss-section` / `kss-section-alt`. Hero & footer: `kss-chapter-dark`.
+- Kartu: `kss-card` (+ `kss-card-hover` = border saja). Kelompok sejajar: `kss-grid-hairline`.
+- Hierarki aksi (maks satu orange per fold):
+  - Utama: `kss-btn-primary` (orange-700)
+  - Kuat sekunder & WhatsApp: `kss-btn-dark` / `kss-btn-wa` (ink)
+  - Tersier: `kss-btn-outline`
+  - Tokopedia: `kss-btn-tokopedia` (`#00803F`)
+  - Status saja: emerald (ok), amber (tambah biaya), red (error)
+- Tombol ikon wajib `aria-label`. Ikon dekoratif `aria-hidden`.
+- Fokus: outline global orange-600; jangan menambah `ring-*`.
 
-### 1.3 Aksen Fungsional (hanya untuk aksi, bukan dekorasi)
+## 3. Pola mikro
 
-| Fungsi | Kelas |
-|---|---|
-| CTA utama (Checkout / Kustomisasi) | `bg-orange-600 hover:bg-orange-500 text-white` |
-| Tokopedia resmi | `bg-[#00AA5B] hover:bg-[#00924E] text-white` |
-| WhatsApp / booking | `bg-emerald-600 hover:bg-emerald-700 text-white` |
-| Status ready / kompatibel | `text-emerald-400 border-emerald-500/30 bg-emerald-500/10` |
-| Peringatan / tambah biaya | `text-amber-400 border-amber-500/30 bg-amber-500/10` |
-| Error / tidak kompatibel | `text-red-400 border-red-500/30 bg-red-500/10` |
-
-Jangan memakai lebih dari satu warna aksen dalam satu baris aksi.
-
----
-
-## 2. Komponen Mikro Wajib (FigCraft Patterns)
-
-### 2.1 Hardware Spec Pill
-
-Setiap komponen wajib punya badge teknis dengan margin rapat:
-
+**Spec pill** (socket, RAM, watt; tanpa harga; maks 3 per baris):
 ```tsx
-<span className="inline-flex items-center px-1.5 py-0.5 text-[11px] font-mono uppercase tracking-wider bg-zinc-800 text-zinc-300 border border-zinc-700 rounded-sm">
-  AM5 · DDR5 · 170W
-</span>
+<span className="kss-spec-pill">AM5 · DDR5 · 170W</span>
 ```
 
-Aturan:
-- Maksimal 3 pill per baris; sisanya masuk baris baru.
-- Isi pill: socket, tipe RAM, wattage, form factor, atau kapasitas.
-- Jangan memakai pill untuk harga.
+**Tabel spesifikasi kartu:** `<dl>` dengan `grid-cols-[40px_1fr]`, `dt` = `kss-label`, `dd` = `text-body-sm` (CPU/GPU/RAM/SSD).
 
-### 2.2 FPS Telemetry Bar (wajib pada kartu Paket PC)
-
+**FPS telemetry** (2–3 game, resolusi eksplisit):
 ```tsx
-<div className="space-y-1">
-  <div className="flex items-center justify-between gap-2">
-    <span className="text-[11px] text-zinc-400">Valorant</span>
-    <span className="font-mono tabular-nums text-xs text-zinc-100">300+ FPS</span>
-  </div>
-  <div className="h-1.5 bg-zinc-800 overflow-hidden rounded-none">
-    <div className="h-full bg-orange-500" style={{ width: '88%' }} />
-  </div>
-</div>
+<div className="kss-fps-track"><div className="kss-fps-fill" style={{ width: '88%' }} /></div>
 ```
+Angka: `kss-num text-meta font-semibold`.
 
-Aturan:
-- Track `h-1.5 bg-zinc-800 rounded-none`; isi `bg-orange-500`.
-- Angka FPS: `font-mono tabular-nums text-xs`.
-- Tampilkan 2–3 game; target resolusi harus eksplisit (1080p/1440p/4K).
-- Bar bukan grafik ilmiah: tujuannya perbandingan cepat.
+**Delta upgrade:** `kss-delta-included` → `[Termasuk Paket]`; `kss-delta-plus` → `[+ Rp …]`; `kss-delta-minus` → `[- Rp …]`. Nol delta bukan `+ Rp 0`. Jangan tampilkan `sellPrice`/`costPrice` part.
 
-### 2.3 Delta Price Tag (wajib pada Upgrade Paket)
+**Angka:** semua harga lewat `<Price value={…} />`; FPS/watt/SKU pakai `kss-num` (`font-mono tabular-nums tracking-tight`).
 
-```tsx
-// Termasuk paket
-<span className="text-xs font-mono text-zinc-400 bg-zinc-800/80 px-2 py-0.5 rounded-sm">
-  [Termasuk Paket]
-</span>
+**Eyebrow:** `<p className="kss-eyebrow"><span aria-hidden className="h-1.5 w-1.5 bg-orange-600" />Teks</p>`.
 
-// Tambah biaya
-<span className="text-xs font-mono font-semibold text-amber-400 bg-amber-500/10 border border-amber-500/30 px-2 py-0.5 rounded-sm">
-  [+ Rp 650.000]
-</span>
+## 4. Struktur halaman
 
-// Lebih hemat
-<span className="text-xs font-mono font-semibold text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 px-2 py-0.5 rounded-sm">
-  [- Rp 250.000]
-</span>
-```
+- **Header halaman:** `PageHeader` (eyebrow, judul sentence case, deskripsi maks ~2 baris di mobile, aksi di kanan/bawah, `breadcrumb` opsional).
+- **Header section:** `SectionHeader`.
+- **Kartu paket PC**, urutan: tag (platform, resolusi, rekomendasi) → nama + deskripsi → tabel spesifikasi → FPS → total harga (satu-satunya harga) → "Detail & upgrade" (ink) → WA (outline) + Tokopedia → tautan "Ubah spesifikasi via WhatsApp". Tanpa harga per komponen.
+- **Quick-Upgrade Panel:** opsi = nama part + delta tag; terpasang ditandai border orange + `[Termasuk Paket]`; total diperbarui real-time; mobile: delta di baris terpisah.
+- **Rakit custom:** via WhatsApp (`generateCustomBuildWAMessage()`), pesan tanpa harga satuan. Tidak ada simulator.
 
-Aturan:
-- Nol delta = `[Termasuk Paket]`, bukan `+ Rp 0`.
-- Positif = amber, negatif = emerald.
-- Jangan pernah menampilkan `sellPrice`/`costPrice` part di samping tag ini.
+## 5. Responsif & aksesibilitas
 
-### 2.4 Tipografi Angka Mutlak
+- Uji 390, 768, 1024, 1280, 1440. Tanpa horizontal overflow pada body (strip chip boleh scroll horizontal).
+- Target sentuh: tombol 40px, chip/toolbar 36px, baris menu 48px.
+- Kontras ≥ 4,5:1. Status tidak hanya warna (sertakan teks/ikon).
+- Gambar/iframe wajib `alt`/`title`. Select punya label (`sr-only` bila perlu). Nav aktif `aria-current`, chip `aria-pressed`.
+- Gerak 150ms; `prefers-reduced-motion` ditangani global.
 
-Semua angka berikut **wajib** memakai `font-mono tabular-nums tracking-tight`:
+## 6. Checklist sebelum commit
 
-- Harga dan total paket (`Rp 9.450.000`)
-- Selisih harga (`+ Rp 550.000`, `- Rp 200.000`)
-- Daya (`450W`, `170W`)
-- FPS (`144 FPS`)
-- SKU dan nomor resi
-
-Jangan memakai font sans untuk angka teknis. Jangan memakai `tracking-wide`
-pada angka panjang karena menghambat pemindaian.
-
-### 2.5 Tombol & Input
-
-```tsx
-// CTA utama
-<button className="inline-flex h-10 items-center justify-center gap-2 rounded-md bg-orange-600 px-4 text-xs font-bold text-white transition-colors hover:bg-orange-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950">
-```
-
-- Tinggi tombol: `h-9` (sekunder) atau `h-10`–`h-11` (utama).
-- Input: `rounded-md border border-zinc-700 bg-zinc-950 px-3 py-2 text-xs text-zinc-100 focus:border-orange-500 focus:outline-none`.
-- Radius input maksimum `rounded-md`.
-- Semua tombol ikon wajib punya `aria-label` atau `title`.
-
----
-
-## 3. Struktur Halaman
-
-### 3.1 Header Halaman
-- Eyebrow mono uppercase 10–11px.
-- Judul `text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight`.
-- Deskripsi maksimum 2 baris pada mobile.
-- Aksi di kanan pada desktop, turun ke bawah pada mobile.
-
-### 3.2 Kartu Paket PC
-Wajib memuat, dalam urutan:
-1. Tier + resolusi + garansi.
-2. Nama paket.
-3. 3–4 Hardware Spec Pill.
-4. 2–3 FPS Telemetry Bar.
-5. Total harga paket (satu-satunya harga).
-6. CTA Kustomisasi (orange) + Tokopedia/WA (sesuai konteks).
-
-Tidak boleh ada daftar harga per komponen.
-
-### 3.3 Quick-Upgrade Panel
-- Setiap opsi: nama part + delta tag.
-- Opsi terpasang ditandai border oranye dan label `[Termasuk Paket]`.
-- Total paket diperbarui real-time; jangan menampilkan harga part.
-- Mobile: delta tag di baris terpisah dari nama agar tidak terpotong.
-
-### 3.4 Rakit Custom via WhatsApp
-- Tidak ada simulator atau halaman configurator.
-- CTA racikan memakai `generateCustomBuildWAMessage()` dan membuka WhatsApp.
-- Pesan WA hanya berisi nama komponen/kebutuhan, tanpa harga satuan.
-- Tombol tetap memakai pola `kss-btn-primary` / `kss-btn-outline` dan ikon pesan.
-- Untuk upgrade paket, gunakan Quick-Upgrade Panel dengan delta tag.
-
----
-
-## 4. Responsif & Aksesibilitas
-
-- Uji minimal pada **390px, 768px, 1024px, 1280px, 1440px**.
-- Tidak boleh ada horizontal overflow pada body.
-- Strip kategori/filter boleh `overflow-x-auto`, tetapi halaman tidak.
-- Target sentuh minimum 36×36px.
-- Kontras teks minimal 4.5:1.
-- Jangan mengandalkan warna saja: sertakan ikon atau teks status.
-- Semua gambar/iframe wajib punya `alt`/`title`.
-- Hormati `prefers-reduced-motion`; animasi hanya 150–200ms.
-
----
-
-## 5. Checklist Sebelum Commit
-
-- [ ] Tidak ada gradient, radius > `md`, atau blur berlebihan.
-- [ ] Semua harga/FPS/watt memakai mono tabular-nums.
-- [ ] Tidak ada harga satuan part di halaman publik.
-- [ ] FPS bar dan delta tag mengikuti pola di atas.
+- [ ] Satu tombol orange per fold; WhatsApp ink; hijau hanya Tokopedia/status.
+- [ ] Tanpa gradient, blur, radius > 6px, shadow besar, `Sparkles`, emoji.
+- [ ] Harga via `Price`; FPS/watt via `kss-num`; tidak ada harga satuan part.
+- [ ] Sentence case; tidak ada teks < 11px.
 - [ ] Responsif 390–1440 tanpa overflow.
-- [ ] `npx tsc --noEmit` bersih.
-- [ ] `npm run lint` bersih.
+- [ ] `npx tsc --noEmit`, `npm run lint`, `npm run build`, `npm run check:price` bersih.

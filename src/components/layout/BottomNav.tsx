@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
   Home,
-  Sparkles,
+  PcCase,
   Layers,
   ShoppingBag,
   Wrench,
@@ -13,9 +13,9 @@ import {
   Menu,
   X,
   Headphones,
-  Database,
-  MessageSquareCheck,
+  MessageSquareText,
   Building2,
+  ChevronRight,
 } from 'lucide-react';
 import { useRetailCartStore } from '@/store/useRetailCartStore';
 import { useHydrated } from '@/lib/useHydrated';
@@ -36,22 +36,12 @@ export function BottomNav() {
   }
 
   const navItems = [
-    {
-      href: '/',
-      label: 'Beranda',
-      icon: Home,
-      isActive: pathname === '/',
-    },
-    {
-      href: '/jasa',
-      label: 'Jasa',
-      icon: Wrench,
-      isActive: pathname.startsWith('/jasa'),
-    },
+    { href: '/', label: 'Beranda', icon: Home, isActive: pathname === '/' },
+    { href: '/jasa', label: 'Jasa', icon: Wrench, isActive: pathname.startsWith('/jasa') },
     {
       href: '/paket-rakitan',
       label: 'Paket',
-      icon: Sparkles,
+      icon: PcCase,
       isActive: pathname.startsWith('/paket-rakitan'),
     },
     {
@@ -63,108 +53,110 @@ export function BottomNav() {
   ];
 
   const moreItems = [
-    { href: '/paket-rakitan', label: 'Paket Siap Pakai', icon: Sparkles },
-    { href: '/konsultasi', label: 'Konsultasi Budget', icon: MessageSquareCheck },
-    { href: '/komponen', label: 'Komponen Eceran', icon: Layers },
-    { href: '/aksesoris', label: 'Aksesoris & Gear', icon: Headphones },
-    { href: '/tentang-kami', label: 'Tentang Kami', icon: Building2 },
-    { href: '/admin/pricing', label: 'Admin Portal', icon: Database },
+    { href: '/konsultasi', label: 'Konsultasi budget', icon: MessageSquareText },
+    { href: '/komponen', label: 'Komponen eceran', icon: Layers },
+    { href: '/aksesoris', label: 'Aksesoris & gear', icon: Headphones },
+    { href: '/tentang-kami', label: 'Tentang kami', icon: Building2 },
   ];
+
+  const itemBase =
+    'relative flex flex-col items-center justify-center gap-1 text-[11px] transition-colors duration-150';
 
   return (
     <>
       {isMoreOpen && (
-        <div className="md:hidden fixed bottom-14 left-0 right-0 z-40 border-t border-zinc-200 bg-white px-3 py-3 dark:border-zinc-800 dark:bg-zinc-950 shadow-sm">
-          <div className="flex items-center justify-between mb-2">
-            <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-zinc-500">
-              Menu Lainnya
-            </span>
-            <button
-              type="button"
-              onClick={() => setIsMoreOpen(false)}
-              className="p-1 text-zinc-500 hover:text-zinc-900 dark:text-zinc-500 dark:hover:text-zinc-100"
-              aria-label="Tutup menu"
-            >
-              <X className="h-3.5 w-3.5" />
-            </button>
-          </div>
-          <div className="grid grid-cols-2 gap-2">
-            {moreItems.map((item) => {
-              const Icon = item.icon;
-              return (
+        <>
+          <button
+            type="button"
+            aria-label="Tutup menu"
+            onClick={() => setIsMoreOpen(false)}
+            className="fixed inset-0 z-30 bg-zinc-950/40 md:hidden"
+          />
+          <div className="fixed inset-x-0 bottom-[calc(3.5rem+env(safe-area-inset-bottom))] z-40 border-t border-zinc-200 bg-white motion-safe:animate-sheet-in md:hidden">
+            <div className="kss-container flex h-11 items-center justify-between border-b border-zinc-100">
+              <span className="kss-label text-zinc-500">Menu lainnya</span>
+            </div>
+            <nav aria-label="Menu lainnya" className="kss-container divide-y divide-zinc-100">
+              {moreItems.map(({ href, label, icon: Icon }) => (
                 <Link
-                  key={item.href}
-                  href={item.href}
+                  key={href}
+                  href={href}
                   onClick={() => setIsMoreOpen(false)}
-                  className="flex items-center gap-2 rounded-md border border-zinc-200 bg-zinc-50 px-2.5 py-2 text-[11px] font-semibold text-zinc-800 hover:bg-zinc-100 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-zinc-800"
+                  className="flex h-12 items-center gap-3 text-[15px] text-zinc-800"
                 >
-                  <Icon className="h-3.5 w-3.5 text-orange-700 dark:text-orange-400 shrink-0" />
-                  <span className="truncate">{item.label}</span>
+                  <Icon aria-hidden className="h-4 w-4 text-zinc-400" />
+                  {label}
+                  <ChevronRight aria-hidden className="ml-auto h-4 w-4 text-zinc-300" />
                 </Link>
-              );
-            })}
-            <button
-              type="button"
-              onClick={() => {
-                setIsMoreOpen(false);
-                openRetailCart();
-              }}
-              className="flex items-center gap-2 rounded-md border border-zinc-200 bg-zinc-50 px-2.5 py-2 text-[11px] font-semibold text-zinc-800 hover:bg-zinc-100 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-zinc-800"
-            >
-              <ShoppingBag className="h-3.5 w-3.5 text-emerald-700 dark:text-emerald-400 shrink-0" />
-              <span className="truncate">Keranjang Eceran</span>
-              {isHydrated && retailCartCount > 0 && (
-                <span className="ml-auto rounded-md bg-emerald-700 px-1 font-mono text-[10px] font-bold text-white">
-                  {retailCartCount}
-                </span>
-              )}
-            </button>
+              ))}
+              <button
+                type="button"
+                onClick={() => {
+                  setIsMoreOpen(false);
+                  openRetailCart();
+                }}
+                className="flex h-12 w-full items-center gap-3 text-[15px] text-zinc-800"
+              >
+                <ShoppingBag aria-hidden className="h-4 w-4 text-zinc-400" />
+                Keranjang eceran
+                {isHydrated && retailCartCount > 0 && (
+                  <span className="kss-tag kss-tag-ink ml-auto tabular-nums">{retailCartCount}</span>
+                )}
+              </button>
+            </nav>
           </div>
-        </div>
+        </>
       )}
 
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-40 border-t border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-950 pb-[env(safe-area-inset-bottom)]">
-        <div className="grid grid-cols-5 h-14 items-center px-1">
-          {navItems.map((item) => {
-            const Icon = item.icon;
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`relative flex flex-col items-center justify-center h-full py-1 text-[10px] font-medium transition-colors ${
-                  item.isActive
-                    ? 'text-orange-700 dark:text-orange-400 font-semibold'
-                    : 'text-zinc-500 hover:text-zinc-900 dark:text-zinc-500 dark:hover:text-zinc-200'
-                }`}
-              >
-                <div className="relative">
-                  <Icon className="h-5 w-5" />
-                </div>
-                <span className="mt-0.5 tracking-tight truncate max-w-[64px]">{item.label}</span>
-              </Link>
-            );
-          })}
+      <nav
+        aria-label="Navigasi bawah"
+        className="fixed inset-x-0 bottom-0 z-40 border-t border-zinc-200 bg-white pb-[env(safe-area-inset-bottom)] md:hidden"
+      >
+        <div className="grid h-14 grid-cols-5">
+          {navItems.map(({ href, label, icon: Icon, isActive }) => (
+            <Link
+              key={href}
+              href={href}
+              aria-current={isActive ? 'page' : undefined}
+              className={`${itemBase} ${
+                isActive ? 'font-semibold text-zinc-950' : 'font-medium text-zinc-500'
+              }`}
+            >
+              {isActive && (
+                <span aria-hidden className="absolute inset-x-5 top-0 h-0.5 bg-orange-600" />
+              )}
+              <Icon
+                aria-hidden
+                className={`h-5 w-5 ${isActive ? 'text-zinc-950' : 'text-zinc-400'}`}
+              />
+              {label}
+            </Link>
+          ))}
 
-          {/* Tombol Menu "Lainnya" */}
           <button
             type="button"
             onClick={() => setIsMoreOpen((prev) => !prev)}
-            className={`relative flex flex-col items-center justify-center h-full py-1 text-[10px] font-medium transition-colors ${
-              isMoreOpen
-                ? 'text-orange-700 dark:text-orange-400 font-semibold'
-                : 'text-zinc-500 hover:text-zinc-900 dark:text-zinc-500 dark:hover:text-zinc-200'
-            }`}
             aria-expanded={isMoreOpen}
+            className={`${itemBase} ${
+              isMoreOpen ? 'font-semibold text-zinc-950' : 'font-medium text-zinc-500'
+            }`}
           >
-            <div className="relative">
-              {isMoreOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            {isMoreOpen && (
+              <span aria-hidden className="absolute inset-x-5 top-0 h-0.5 bg-orange-600" />
+            )}
+            <span className="relative">
+              {isMoreOpen ? (
+                <X aria-hidden className="h-5 w-5 text-zinc-950" />
+              ) : (
+                <Menu aria-hidden className="h-5 w-5 text-zinc-400" />
+              )}
               {!isMoreOpen && isHydrated && retailCartCount > 0 && (
-                <span className="absolute -top-1.5 -right-2 flex h-4 min-w-[16px] items-center justify-center rounded-full bg-emerald-700 px-1 text-[9px] font-bold text-white">
+                <span className="absolute -right-2 -top-1.5 flex h-4 min-w-4 items-center justify-center rounded-xs bg-zinc-900 px-1 font-mono text-[11px] font-semibold tabular-nums text-white">
                   {retailCartCount}
                 </span>
               )}
-            </div>
-            <span className="mt-0.5 tracking-tight">Lainnya</span>
+            </span>
+            Lainnya
           </button>
         </div>
       </nav>

@@ -14,23 +14,29 @@ export interface SectionHeaderProps {
 
 export function SectionHeader({ eyebrow, title, description, action }: SectionHeaderProps) {
   return (
-    <div className="mb-5 flex flex-col gap-3 border-b border-zinc-200 pb-4 dark:border-zinc-800 sm:flex-row sm:items-end sm:justify-between">
-      <div className="min-w-0">
-        {eyebrow && <div className="kss-eyebrow mb-1">{eyebrow}</div>}
-        <h2 className="text-xl font-black tracking-tight text-zinc-900 dark:text-zinc-100 sm:text-2xl">
-          {title}
-        </h2>
+    <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+      <div className="min-w-0 max-w-2xl">
+        {eyebrow && (
+          <p className="kss-eyebrow">
+            <span aria-hidden className="h-1.5 w-1.5 bg-orange-600" />
+            {eyebrow}
+          </p>
+        )}
+        <h2 className="mt-2 text-h2 text-balance text-zinc-950">{title}</h2>
         {description && (
-          <p className="mt-1 text-xs text-zinc-500 dark:text-zinc-500">{description}</p>
+          <p className="mt-2 text-body text-pretty text-zinc-600">{description}</p>
         )}
       </div>
       {action && (
         <Link
           href={action.href}
-          className="inline-flex shrink-0 items-center gap-1.5 text-xs font-bold text-zinc-700 transition-colors hover:text-orange-700 dark:text-zinc-300 dark:hover:text-orange-400"
+          className="group inline-flex shrink-0 items-center gap-1.5 text-[13px] font-semibold text-zinc-900 transition-colors hover:text-orange-700"
         >
-          <span>{action.label}</span>
-          <ArrowRight className="h-3.5 w-3.5" />
+          {action.label}
+          <ArrowRight
+            aria-hidden
+            className="h-4 w-4 transition-transform duration-150 group-hover:translate-x-0.5 motion-reduce:transform-none"
+          />
         </Link>
       )}
     </div>

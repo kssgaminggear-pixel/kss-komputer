@@ -1,241 +1,180 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { ArrowRight, Check, MessageCircle } from 'lucide-react';
 import { DEFAULT_WHATSAPP_PHONE, DEFAULT_WHATSAPP_DISPLAY } from '@/lib/format';
-import {
-  ShieldCheck,
-  Truck,
-  Wrench,
-  Headphones,
-  CheckCircle2,
-  MapPin,
-  Clock,
-  Phone,
-  Mail,
-  ArrowRight,
-} from 'lucide-react';
+import { STORE_OPERATIONAL_HOURS } from '@/lib/constants';
+
+const DISTRIBUTORS = [
+  { name: 'PT Astrindo Senayasa', brands: 'ASUS, Intel, ASRock' },
+  { name: 'PT EMD Pratama', brands: 'AMD, Sapphire' },
+  { name: 'PT Nusantara Jaya Teknologi (NJT)', brands: 'Gigabyte, Kingston' },
+  { name: 'PT WPG Indonesia', brands: 'Corsair, MSI, Lexar' },
+  { name: 'PT Synnex Metrodata', brands: 'Samsung, HP, Dell' },
+  { name: 'PT Cahaya Distribusi', brands: 'Thermalright, Tecware' },
+];
+
+const FOOTER_LINKS = [
+  { href: '/jasa', label: 'Layanan jasa & servis' },
+  { href: '/konsultasi', label: 'Konsultasi budget' },
+  { href: '/paket-rakitan', label: 'Paket PC siap pakai' },
+  { href: '/cek-pesanan', label: 'Cek status pengerjaan' },
+  { href: '/komponen', label: 'Katalog komponen' },
+  { href: '/aksesoris', label: 'Aksesoris & gaming gear' },
+  { href: '/tentang-kami', label: 'Tentang KSS Komputer' },
+];
+
+const POLICIES = [
+  'Garansi 1 to 1 replacement (7 hari pertama)',
+  'Bebas biaya rakitan dan instalasi OS trial',
+  'Dukungan faktur pajak untuk pengadaan kantor',
+];
 
 export function Footer() {
   const currentYear = 2026;
 
-  const distributors = [
-    { name: 'PT Astrindo Senayasa', brands: 'ASUS, Intel, ASRock' },
-    { name: 'PT EMD Pratama', brands: 'AMD, Sapphire' },
-    { name: 'PT Nusantara Jaya Teknologi (NJT)', brands: 'Gigabyte, Kingston' },
-    { name: 'PT WPG Indonesia', brands: 'Corsair, MSI, Lexar' },
-    { name: 'PT Synnex Metrodata', brands: 'Samsung, HP, Dell' },
-    { name: 'PT Cahaya Distribusi', brands: 'Thermalright, Tecware' },
+  const contact: Array<[string, React.ReactNode]> = [
+    ['Alamat', 'Mangga Dua Mall Lt. 4 Blok A No. 12-14, Jakarta Pusat'],
+    ['Jam', STORE_OPERATIONAL_HOURS],
+    [
+      'WhatsApp',
+      <a
+        key="wa"
+        href={`https://wa.me/${DEFAULT_WHATSAPP_PHONE}`}
+        className="kss-num transition-colors hover:text-white"
+      >
+        {DEFAULT_WHATSAPP_DISPLAY}
+      </a>,
+    ],
+    [
+      'Email',
+      <a
+        key="mail"
+        href="mailto:sales@ksskomputer.id"
+        className="kss-num transition-colors hover:text-white"
+      >
+        sales@ksskomputer.id
+      </a>,
+    ],
   ];
 
   return (
-    <footer className="border-t border-zinc-200 bg-zinc-50 text-zinc-600">
-      {/* Value bar */}
-      <div className="border-b border-zinc-200">
-        <div className="kss-container grid grid-cols-2 gap-4 py-5 md:grid-cols-4">
-          {[
-            {
-              icon: ShieldCheck,
-              title: '100% Garansi Resmi',
-              text: 'Semua part bersegel distributor resmi Indonesia.',
-            },
-            {
-              icon: Wrench,
-              title: 'Quality Assembly',
-              text: 'Cable management rapi, stress test, dan update BIOS.',
-            },
-            {
-              icon: Truck,
-              title: 'Packing Aman',
-              text: 'Packing kayu dan asuransi pengiriman Nusantara.',
-            },
-            {
-              icon: Headphones,
-              title: 'Konsultasi & RMA',
-              text: 'Bantuan klaim garansi langsung di Mangga Dua.',
-            },
-          ].map((item) => {
-            const Icon = item.icon;
-            return (
-              <div key={item.title} className="flex items-start gap-2.5">
-                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md border border-orange-500/20 bg-orange-500/10">
-                  <Icon className="h-4 w-4 text-orange-500" />
-                </span>
-                <div>
-                  <div className="text-xs font-bold text-zinc-900">{item.title}</div>
-                  <div className="mt-0.5 text-[11px] leading-relaxed text-zinc-500">
-                    {item.text}
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-
+    <footer className="kss-chapter-dark">
       {/* CTA band */}
-      <div className="border-b border-zinc-200">
-        <div className="kss-container flex flex-col items-start justify-between gap-3 py-6 sm:flex-row sm:items-center">
-          <div>
-            <div className="text-sm font-black tracking-tight text-zinc-900">
+      <div className="border-b border-zinc-800">
+        <div className="kss-container flex flex-col gap-6 py-12 lg:flex-row lg:items-end lg:justify-between lg:py-16">
+          <div className="max-w-xl">
+            <p className="kss-eyebrow text-orange-400">
+              <span aria-hidden className="h-1.5 w-1.5 bg-orange-500" />
+              Konsultasi gratis
+            </p>
+            <h2 className="mt-3 text-h2 text-balance text-zinc-50">
               Butuh bantuan memilih spesifikasi?
-            </div>
-            <p className="text-xs text-zinc-500">
-              Konsultasi gratis dengan teknisi KSS, tanpa harus langsung membeli.
+            </h2>
+            <p className="mt-2 text-body text-zinc-400">
+              Ngobrol dengan teknisi KSS, tanpa harus langsung membeli.
             </p>
           </div>
-          <div className="flex w-full gap-2 sm:w-auto">
-            <Link href="/konsultasi" className="kss-btn-primary flex-1 sm:flex-none">
-              Konsultasi Budget
-              <ArrowRight className="h-3.5 w-3.5" />
+          <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row">
+            <Link href="/konsultasi" className="kss-btn-primary h-11 px-5 text-sm">
+              Konsultasi budget
+              <ArrowRight aria-hidden className="h-4 w-4" />
             </Link>
             <a
               href={`https://wa.me/${DEFAULT_WHATSAPP_PHONE}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex flex-1 items-center justify-center gap-2 rounded-md border border-zinc-700 bg-zinc-900 px-4 py-2.5 text-xs font-bold text-white transition-colors hover:bg-zinc-800 sm:flex-none"
+              className="kss-btn-inverse h-11 px-5 text-sm"
             >
+              <MessageCircle aria-hidden className="h-4 w-4" />
               WhatsApp
             </a>
           </div>
         </div>
       </div>
 
-      {/* Main columns */}
-      <div className="kss-container py-10">
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
-          <div className="flex flex-col gap-3">
-            <div className="flex items-center gap-2">
+      {/* Kolom */}
+      <div className="kss-container grid grid-cols-1 gap-10 py-12 sm:grid-cols-2 lg:grid-cols-12 lg:gap-8">
+        <div className="lg:col-span-4">
+          <div className="flex items-center gap-2.5">
+            <span className="rounded-xs bg-white p-1">
               <Image
                 src="/images/brand/kss-logo-light.png"
-                width={32}
-                height={32}
-                alt="Logo KSS Komputer"
-                className="h-8 w-8 rounded-sm"
+                width={28}
+                height={28}
+                alt=""
+                className="h-7 w-7"
               />
-              <span className="font-mono text-sm font-black tracking-tight text-zinc-900">
-                KSS KOMPUTER
+            </span>
+            <span className="text-[15px] font-bold tracking-[-0.02em] text-zinc-50">
+              KSS Komputer
+            </span>
+          </div>
+          <p className="mt-4 max-w-[40ch] text-body-sm text-zinc-400">
+            System integrator PC rakitan &amp; pusat jasa komputer. Paket siap pakai, upgrade
+            terukur, servis bergaransi.
+          </p>
+          <dl className="mt-6 space-y-3 text-body-sm">
+            {contact.map(([k, v]) => (
+              <div key={k} className="grid grid-cols-[80px_1fr] gap-3">
+                <dt className="kss-label pt-0.5 text-zinc-400">{k}</dt>
+                <dd className="text-zinc-200">{v}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+
+        <div className="lg:col-span-2">
+          <h3 className="kss-label text-zinc-400">Navigasi</h3>
+          <ul className="mt-4 space-y-2.5 text-body-sm">
+            {FOOTER_LINKS.map((link) => (
+              <li key={link.href}>
+                <Link href={link.href} className="text-zinc-300 transition-colors hover:text-white">
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="lg:col-span-3">
+          <h3 className="kss-label text-zinc-400">Distributor resmi</h3>
+          <ul className="mt-4 divide-y divide-zinc-900 border-y border-zinc-900">
+            {DISTRIBUTORS.map((d) => (
+              <li key={d.name} className="py-2.5">
+                <div className="text-body-sm text-zinc-200">{d.name}</div>
+                <div className="font-mono text-micro text-zinc-400">{d.brands}</div>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="lg:col-span-3">
+          <h3 className="kss-label text-zinc-400">Kebijakan</h3>
+          <ul className="mt-4 space-y-2.5 text-body-sm text-zinc-300">
+            {POLICIES.map((item) => (
+              <li key={item} className="flex items-start gap-2">
+                <Check aria-hidden className="mt-0.5 h-4 w-4 shrink-0 text-zinc-400" />
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+          <h3 className="kss-label mt-8 text-zinc-400">Pembayaran</h3>
+          <div className="mt-3 flex flex-wrap gap-1.5">
+            {['BCA', 'Mandiri', 'QRIS', 'Tokopedia', 'Shopee'].map((p) => (
+              <span key={p} className="kss-tag kss-tag-on-dark">
+                {p}
               </span>
-            </div>
-            <p className="text-xs leading-relaxed text-zinc-500">
-              Custom PC system integrator dan pusat layanan jasa komputer. Paket
-              rakitan siap pakai, upgrade terukur, dan servis bergaransi.
-            </p>
-
-            <div className="mt-1 flex flex-col gap-2 text-xs">
-              <div className="flex items-start gap-2">
-                <MapPin className="mt-0.5 h-3.5 w-3.5 shrink-0 text-zinc-600" />
-                <span>Mangga Dua Mall Lt. 4 Blok A No. 12-14, Jakarta Pusat</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Clock className="h-3.5 w-3.5 shrink-0 text-zinc-600" />
-                <span>Senin - Sabtu: 09.00 - 18.00 WIB</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Phone className="h-3.5 w-3.5 shrink-0 text-zinc-600" />
-                <a
-                  href={`https://wa.me/${DEFAULT_WHATSAPP_PHONE}`}
-                  className="font-mono font-medium text-emerald-700 hover:underline"
-                >
-                  WhatsApp: {DEFAULT_WHATSAPP_DISPLAY}
-                </a>
-              </div>
-              <div className="flex items-center gap-2">
-                <Mail className="h-3.5 w-3.5 shrink-0 text-zinc-600" />
-                <span className="font-mono">sales@ksskomputer.id</span>
-              </div>
-            </div>
-          </div>
-
-          <div>
-            <h3 className="mb-3 font-mono text-xs font-bold uppercase tracking-wider text-zinc-900">
-              Navigasi Cepat
-            </h3>
-            <ul className="flex flex-col gap-2 text-xs">
-              {[
-                { href: '/jasa', label: 'Layanan Jasa & Servis' },
-                { href: '/konsultasi', label: 'Konsultasi Budget' },
-                { href: '/paket-rakitan', label: 'Paket PC Siap Pakai' },
-                { href: '/cek-pesanan', label: 'Cek Status Pengerjaan' },
-                { href: '/komponen', label: 'Katalog Komponen' },
-                { href: '/aksesoris', label: 'Aksesoris & Gaming Gear' },
-                { href: '/tentang-kami', label: 'Tentang KSS Komputer' },
-              ].map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="transition-colors hover:text-orange-700"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="mb-3 font-mono text-xs font-bold uppercase tracking-wider text-zinc-900">
-              Distributor Resmi
-            </h3>
-            <div className="flex flex-col gap-2 text-xs">
-              {distributors.map((dist) => (
-                <div key={dist.name} className="border-b border-zinc-200/70 pb-1.5">
-                  <div className="text-[11px] font-semibold text-zinc-700">
-                    {dist.name}
-                  </div>
-                  <div className="font-mono text-[10px] text-zinc-500">{dist.brands}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <h3 className="mb-3 font-mono text-xs font-bold uppercase tracking-wider text-zinc-900">
-              Kebijakan &amp; Pembayaran
-            </h3>
-            <ul className="flex flex-col gap-2 text-xs">
-              {[
-                'Garansi 1 to 1 Replacement (7 Hari Pertama)',
-                'Bebas biaya rakitan dan instalasi OS trial',
-                'Dukungan faktur pajak untuk pengadaan kantor',
-              ].map((item) => (
-                <li key={item} className="flex items-start gap-1.5">
-                  <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-emerald-700" />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-
-            <div className="mt-4">
-              <div className="mb-1.5 font-mono text-[11px] font-semibold uppercase tracking-wider text-zinc-700">
-                Metode Pembayaran
-              </div>
-              <div className="flex flex-wrap gap-1.5 font-mono text-[10px]">
-                {['BCA', 'Mandiri', 'QRIS', 'Tokopedia', 'Shopee'].map((pay) => (
-                  <span
-                    key={pay}
-                    className="rounded-sm border border-zinc-200 bg-white px-1.5 py-0.5 text-zinc-600"
-                  >
-                    {pay}
-                  </span>
-                ))}
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </div>
 
-      <div className="border-t border-zinc-200 bg-white px-4 py-3">
-        <div className="kss-container flex flex-col items-center justify-between gap-2 text-[11px] text-zinc-500 sm:flex-row">
-          <div className="text-center font-mono sm:text-left">
-            &copy; {currentYear} KSS Komputer Jakarta. Seluruh hak cipta dilindungi.
-          </div>
-          <div className="flex items-center gap-3 font-mono text-[10px]">
-            <span>Garansi Resmi</span>
-            <span>&bull;</span>
-            <span>Faktur Pajak</span>
-            <span>&bull;</span>
-            <span className="font-semibold text-emerald-700">Pricelist Terupdate</span>
-          </div>
+      {/* Bottom bar */}
+      <div className="border-t border-zinc-800">
+        <div className="kss-container flex flex-col gap-2 py-4 font-mono text-micro text-zinc-400 sm:flex-row sm:items-center sm:justify-between">
+          <span>© {currentYear} KSS Komputer · Jakarta</span>
+          <span>Garansi resmi · Faktur pajak</span>
         </div>
       </div>
     </footer>
