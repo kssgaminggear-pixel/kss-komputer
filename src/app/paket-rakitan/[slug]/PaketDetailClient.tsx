@@ -19,6 +19,7 @@ import { ProductCategory, PublicHardwarePart } from '@/lib/types';
 import { formatIDR, formatDeltaIDR, formatWatt, generateWhatsAppOrderUrl, TOKOPEDIA_OFFICIAL_STORE_URL } from '@/lib/format';
 import type { PublicPrebuiltDetailDTO } from '@/lib/sanitizer';
 import { getPackageImage } from '@/lib/package-images';
+import { PaymentInfo } from '@/components/payment/PaymentInfo';
 
 const UPGRADEABLE_CATEGORIES: ProductCategory[] = ['gpu', 'ram', 'ssd', 'cooler', 'case'];
 
@@ -430,6 +431,7 @@ export default function PaketDetailContent({ pkg }: { pkg: PublicPrebuiltDetailD
                 <span>Beli di Tokopedia Resmi</span>
                 <ExternalLink className="h-3.5 w-3.5" />
               </a>
+              <PaymentInfo />
             </div>
 
             {/* Keunggulan Toko */}

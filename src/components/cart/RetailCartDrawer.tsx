@@ -13,6 +13,7 @@ import {
 import { useRetailCartStore } from '@/store/useRetailCartStore';
 import { formatIDR, TOKOPEDIA_OFFICIAL_STORE_URL } from '@/lib/format';
 import { useHydrated } from '@/lib/useHydrated';
+import { PaymentInfo } from '@/components/payment/PaymentInfo';
 
 export function RetailCartDrawer() {
   const isHydrated = useHydrated();
@@ -142,7 +143,7 @@ export function RetailCartDrawer() {
 
         {/* Footer Checkout */}
         {items.length > 0 && (
-          <div className="border-t border-zinc-200 bg-zinc-50/70 p-4 dark:border-zinc-800 dark:bg-zinc-900/40">
+          <div className="max-h-[65vh] overflow-y-auto border-t border-zinc-200 bg-zinc-50/70 p-4 dark:border-zinc-800 dark:bg-zinc-900/40">
             <div className="mb-3 space-y-2">
               <input
                 type="text"
@@ -165,6 +166,10 @@ export function RetailCartDrawer() {
               <span className="font-mono text-base font-bold text-zinc-900 dark:text-zinc-100 tabular-nums">
                 {formatIDR(totalPrice)}
               </span>
+            </div>
+
+            <div className="mb-3">
+              <PaymentInfo />
             </div>
 
             <div className="flex flex-col gap-2">

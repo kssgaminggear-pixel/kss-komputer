@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { formatIDR, DEFAULT_WHATSAPP_PHONE } from '../lib/format';
+import { PAYMENT_WA_LINE } from '../lib/payment';
 
 /** Produk eceran Toko yang bisa masuk keranjang. */
 export interface RetailCartInput {
@@ -128,9 +129,8 @@ export const useRetailCartStore = create<RetailCartState>()(
           lines.push(`\n*Catatan:* ${notes}`);
         }
 
-        lines.push(
-          `\nMohon konfirmasi harga terbaru, ketersediaan stok, dan ongkos kirim. Terima kasih!`
-        );
+        lines.push(`\n${PAYMENT_WA_LINE}`);
+        lines.push(`Mohon konfirmasi harga terbaru, ketersediaan stok, dan ongkos kirim. Terima kasih!`);
 
         return `https://wa.me/${cleanPhone}?text=${encodeURIComponent(lines.join('\n'))}`;
       },

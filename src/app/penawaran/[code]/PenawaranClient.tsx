@@ -14,6 +14,8 @@ import {
   DEFAULT_WHATSAPP_PHONE,
   DEFAULT_WHATSAPP_DISPLAY,
 } from '@/lib/format';
+import { PAYMENT_WA_LINE } from '@/lib/payment';
+import { PaymentInfo } from '@/components/payment/PaymentInfo';
 import type { PublicQuoteDTO } from '@/lib/sanitizer';
 
 export default function CustomerQuotationContent({ quote }: { quote: PublicQuoteDTO }) {
@@ -30,7 +32,9 @@ export default function CustomerQuotationContent({ quote }: { quote: PublicQuote
       `\n📄 *No. Dokumen:* ${quote.quoteCode}`,
       `👤 *Nama Pemesan:* ${quote.customerName}`,
       `💰 *Total Harga Paket:* ${formatIDR(quote.finalBundlePrice)}`,
-      `\nSaya setuju dengan rincian spesifikasi tersebut. Mohon info nomor rekening toko / proses pembayaran via Tokopedia. Terima kasih!`,
+      `\nSaya setuju dengan rincian spesifikasi tersebut.`,
+      PAYMENT_WA_LINE,
+      `Terima kasih!`,
     ];
 
     const url = `https://wa.me/${cleanPhone}?text=${encodeURIComponent(lines.join('\n'))}`;
@@ -67,6 +71,10 @@ export default function CustomerQuotationContent({ quote }: { quote: PublicQuote
             <span>Konfirmasi Pesanan (WA)</span>
           </button>
         </div>
+      </div>
+
+      <div className="mb-6 print:hidden">
+        <PaymentInfo />
       </div>
 
       {/* Dokumen Fisik Surat Penawaran (Print-Optimized) */}

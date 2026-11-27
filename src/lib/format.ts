@@ -1,4 +1,5 @@
 import { TOKOPEDIA_STORE_URL } from './constants';
+import { PAYMENT_WA_LINE } from './payment';
 import { ProductCategory } from './types';
 
 export const TOKOPEDIA_OFFICIAL_STORE_URL = TOKOPEDIA_STORE_URL;
@@ -114,7 +115,8 @@ export function generateWhatsAppOrderUrl(
 
   lines.push(`━━━━━━━━━━━━━━━━━━━━━━`);
   lines.push(`*TOTAL HARGA PAKET: ${formatIDR(payload.totalPrice)}*`);
-  lines.push(`\nMohon info ketersediaan stok & jadwal perakitan/pengiriman. Terima kasih!`);
+  lines.push(`\n${PAYMENT_WA_LINE}`);
+  lines.push(`Mohon info ketersediaan stok & jadwal perakitan/pengiriman. Terima kasih!`);
 
   const message = lines.join('\n');
   return `https://wa.me/${cleanPhone}?text=${encodeURIComponent(message)}`;
