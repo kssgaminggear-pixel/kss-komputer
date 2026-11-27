@@ -4,15 +4,16 @@ import React, { useState, useMemo } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import {
-  Sparkles,
+  PcCase,
   Wrench,
   ArrowRight,
-  PhoneCall,
-  ShoppingBag,
-  MessageSquareCheck,
+  ArrowUpRight,
+  ChevronRight,
+  MessageCircle,
+  MessageSquareText,
+  Check,
   CheckCircle2,
   Headphones,
-  ShieldCheck,
   Clock,
   Layers,
   Keyboard,
@@ -20,11 +21,8 @@ import {
   Monitor,
   Zap,
   Package,
-  Truck,
+  Plus,
   BadgeCheck,
-  ChevronRight,
-  Gamepad2,
-  X,
 } from 'lucide-react';
 import type { PublicPrebuiltPCDTO } from '@/lib/sanitizer';
 import type { PublicAccessory, ServicePackage } from '@/lib/types';
@@ -33,10 +31,10 @@ import {
   generateConsultationWAMessage,
   generateCustomBuildWAMessage,
   DEFAULT_WHATSAPP_PHONE,
-  DEFAULT_WHATSAPP_DISPLAY,
 } from '@/lib/format';
 import { PrebuiltCard } from '@/components/prebuilt/PrebuiltCard';
 import { SectionHeader } from '@/components/ui/SectionHeader';
+import { Price } from '@/components/ui/Price';
 import { useRetailCartStore } from '@/store/useRetailCartStore';
 
 type BudgetFilter = 'all' | 'under-7m' | '7-12m' | '12-20m' | 'above-20m';
@@ -62,12 +60,35 @@ const ACCESSORY_ICONS: Record<string, React.ComponentType<{ className?: string }
 };
 
 const CATEGORY_SHORTCUTS = [
-  { href: '/paket-rakitan', label: 'Paket Siap Pakai', icon: Sparkles },
-  { href: '/konsultasi', label: 'Konsultasi Rakit', icon: MessageSquareCheck },
+  { href: '/paket-rakitan', label: 'Paket siap pakai', icon: PcCase },
+  { href: '/konsultasi', label: 'Konsultasi rakit', icon: MessageSquareText },
   { href: '/komponen', label: 'Komponen', icon: Layers },
   { href: '/aksesoris', label: 'Aksesoris', icon: Headphones },
-  { href: '/jasa', label: 'Jasa & Servis', icon: Wrench },
-  { href: '/cek-pesanan', label: 'Cek Pesanan', icon: Clock },
+  { href: '/jasa', label: 'Jasa & servis', icon: Wrench },
+  { href: '/cek-pesanan', label: 'Cek pesanan', icon: Clock },
+];
+
+const USAGE_TABS = [
+  { id: 'all', label: 'Semua' },
+  { id: 'gaming-1080p', label: 'Gaming 1080p' },
+  { id: 'gaming-1440p', label: 'Gaming 1440p / 4K' },
+  { id: 'creator', label: 'Creator & 3D' },
+  { id: 'office', label: 'Office' },
+];
+
+const PROCESS_STEPS: Array<[string, string]> = [
+  ['Validasi', 'Cek socket, RAM, clearance, dan daya.'],
+  ['Rakit', 'Perakitan rapi dengan cable management.'],
+  ['Stress test', 'Uji beban CPU/GPU, pantau suhu.'],
+  ['Serah terima', 'QC akhir, packing aman, garansi aktif.'],
+];
+
+const COMPARISON: Array<[string, string, string]> = [
+  ['Harga', 'Satu harga total di awal', 'Total baru diketahui setelah semua part dibeli'],
+  ['Perakitan', 'Teknisi KSS + cable management', 'Sendiri atau cari jasa terpisah'],
+  ['Pengujian', 'Stress test & QC sebelum serah terima', 'Tidak terjamin'],
+  ['Garansi', 'Toko + distributor, klaim dibantu KSS', 'Klaim ke tiap distributor'],
+  ['Kompatibilitas', 'Divalidasi sebelum rakit', 'Risiko salah socket, RAM, atau casing'],
 ];
 
 export default function HomeClient({ prebuilts, accessories, services }: HomeClientProps) {
@@ -124,220 +145,205 @@ export default function HomeClient({ prebuilts, accessories, services }: HomeCli
   return (
     <div className="flex min-h-screen flex-col">
       {toastMessage && (
-        <div className="fixed bottom-20 right-4 z-50 flex items-center gap-2 rounded-md border border-zinc-800 bg-zinc-900 px-4 py-2.5 text-xs font-semibold text-white shadow-sm">
-          <CheckCircle2 className="h-4 w-4 text-emerald-400" />
+        <div
+          role="status"
+          aria-live="polite"
+          className="fixed bottom-20 right-4 z-50 flex items-center gap-2 rounded-sm border border-zinc-800 bg-zinc-950 px-4 py-2.5 text-[13px] font-medium text-white"
+        >
+          <CheckCircle2 aria-hidden className="h-4 w-4 text-emerald-400" />
           <span>{toastMessage}</span>
         </div>
       )}
 
       {/* HERO */}
-      <section className="border-b border-zinc-200 bg-zinc-50">
-        <div className="kss-container py-8 sm:py-10 lg:py-14">
-          <div className="grid grid-cols-1 items-stretch gap-6 lg:grid-cols-12 lg:gap-8">
-            {/* Banner visual */}
-            <div className="order-first lg:order-2 lg:col-span-7">
-              <div className="relative min-h-[300px] overflow-hidden rounded-md border border-zinc-200 bg-zinc-100 sm:min-h-[360px] lg:h-full lg:min-h-[430px]">
-                <Image
-                  src="/images/tokopedia/banner-pc-store.webp"
-                  alt="PC rakitan dan gaming setup KSS Komputer"
-                  fill
-                  loading="eager"
-                  fetchPriority="high"
-                  sizes="(max-width: 1024px) 100vw, 58vw"
-                  className="object-cover object-center"
-                />
-                <span className="absolute left-0 top-0 h-3 w-3 bg-orange-500" />
-                <div className="absolute left-4 top-4 flex items-center gap-1.5 rounded-sm border border-emerald-600/30 bg-white px-2 py-1 font-mono text-[10px] font-bold uppercase tracking-wider text-emerald-700">
-                  <BadgeCheck className="h-3 w-3" />
-                  Official Store
-                </div>
-                <div className="absolute right-4 top-4 rounded-sm border border-zinc-200 bg-white px-2 py-1 font-mono text-[10px] font-semibold text-zinc-600">
-                  4.9 · 33 rb terjual
-                </div>
-
-                {featured && (
-                  <div className="absolute inset-x-0 bottom-0 border-t border-zinc-200 bg-white p-4">
-                    <div className="flex flex-wrap items-end justify-between gap-3">
-                      <div className="min-w-0">
-                        <div className="font-mono text-[9px] font-bold uppercase tracking-wider text-orange-700">
-                          Featured Rig
-                        </div>
-                        <Link
-                          href={`/paket-rakitan/${featured.slug}`}
-                          className="line-clamp-1 text-sm font-bold text-zinc-900 hover:text-orange-700"
-                        >
-                          {featured.name}
-                        </Link>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <div className="text-right">
-                          <div className="font-mono text-[9px] uppercase tracking-tight text-zinc-500">
-                            Harga Paket
-                          </div>
-                          <div className="kss-price text-base text-zinc-900">
-                            {formatIDR(featured.totalBundlePrice)}
-                          </div>
-                        </div>
-                        <Link href={`/paket-rakitan/${featured.slug}`} className="kss-btn-primary h-8 px-3">
-                          <span>Detail</span>
-                          <ArrowRight className="h-3 w-3" />
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
+      <section className="kss-chapter-dark border-b border-zinc-800">
+        <div className="kss-container grid grid-cols-1 gap-8 pb-10 pt-4 sm:pt-8 lg:grid-cols-12 lg:gap-12 lg:py-16">
+          {/* Foto */}
+          <figure className="relative order-first overflow-hidden rounded-md border border-zinc-800 bg-zinc-900 lg:order-2 lg:col-span-7">
+            <div className="relative aspect-[4/3] sm:aspect-[16/10] lg:aspect-auto lg:h-full lg:min-h-[480px]">
+              <Image
+                src="/images/tokopedia/banner-pc-store.webp"
+                alt="Etalase PC rakitan KSS Komputer di Mangga Dua Mall"
+                fill
+                loading="eager"
+                fetchPriority="high"
+                sizes="(max-width: 1024px) 100vw, 720px"
+                className="object-cover object-center"
+              />
             </div>
-
-            {/* Copy */}
-            <div className="order-last flex flex-col justify-center gap-4 lg:order-1 lg:col-span-5">
-              <div className="inline-flex w-fit items-center gap-2 rounded-md border border-orange-500/30 bg-orange-500/10 px-2.5 py-1 font-mono text-[10px] font-bold uppercase tracking-wider text-orange-800">
-                <span className="h-1.5 w-1.5 rounded-full bg-orange-500" />
-                System Integrator &amp; PC Builder Jakarta
-              </div>
-
-              <h1 className="text-3xl font-black leading-[1.05] tracking-[-0.04em] text-zinc-900 sm:text-4xl lg:text-[46px]">
-                PC Rakitan Siap Pakai,<br className="hidden sm:block" /> Harga Jelas &amp; Bergaransi.
-              </h1>
-
-              <p className="max-w-xl text-sm leading-relaxed text-zinc-600">
-                Pilih paket siap pakai atau rakit sendiri. Semua unit melalui validasi
-                kompatibilitas, cable management rapi, stress test, dan garansi resmi
-                distributor.
-              </p>
-
-              <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row">
-                <a href="#paket-terlaris" className="kss-btn-primary h-11 px-5 text-sm">
-                  <Sparkles className="h-4 w-4" />
-                  <span>Lihat Paket Siap Pakai</span>
-                </a>
-                <Link
-                  href="/konsultasi"
-                  className="inline-flex h-11 items-center justify-center gap-2 rounded-md border border-zinc-300 bg-white px-5 text-sm font-bold text-zinc-900 transition-colors hover:bg-zinc-100"
-                >
-                  <MessageSquareCheck className="h-4 w-4 text-emerald-700" />
-                  <span>Konsultasi Budget</span>
-                </Link>
-              </div>
-
-              <div className="grid w-full grid-cols-2 gap-3 border-t border-zinc-200 pt-4 sm:grid-cols-4">
-                {[
-                  { value: '100%', label: 'Garansi Resmi' },
-                  { value: '24 Jam', label: 'Stress Test' },
-                  { value: '1 Harga', label: 'Tanpa Part Leak' },
-                  { value: 'Same Day', label: 'Siap Ambil' },
-                ].map((stat) => (
-                  <div key={stat.label}>
-                    <div className="font-mono text-sm font-black tracking-tight text-zinc-900">
-                      {stat.value}
-                    </div>
-                    <div className="text-[11px] text-zinc-500">{stat.label}</div>
-                  </div>
-                ))}
-              </div>
+            <span aria-hidden className="absolute left-0 top-0 h-3 w-3 bg-orange-500" />
+            <div className="absolute left-3 top-3 flex flex-wrap gap-1.5 sm:left-4 sm:top-4">
+              <span className="kss-tag kss-tag-on-dark">
+                <BadgeCheck aria-hidden className="h-3 w-3 text-emerald-400" />
+                Official Store
+              </span>
+              <span className="kss-tag kss-tag-on-dark tabular-nums">4.9 · 33 rb terjual</span>
             </div>
+            {featured && (
+              <figcaption className="absolute inset-x-0 bottom-0 flex items-center justify-between gap-4 border-t border-zinc-800 bg-zinc-950 px-4 py-3 sm:px-5 sm:py-4">
+                <div className="min-w-0">
+                  <div className="kss-label text-zinc-400">Paket unggulan</div>
+                  <Link
+                    href={`/paket-rakitan/${featured.slug}`}
+                    className="mt-1 block truncate text-[14px] font-semibold text-zinc-50 transition-colors hover:text-orange-400"
+                  >
+                    {featured.name}
+                  </Link>
+                </div>
+                <div className="flex shrink-0 items-center gap-3 sm:gap-4">
+                  <div className="text-right">
+                    <div className="kss-label hidden text-zinc-400 sm:block">Total paket</div>
+                    <Price value={featured.totalBundlePrice} className="text-base text-zinc-50 sm:text-lg" />
+                  </div>
+                  <Link
+                    href={`/paket-rakitan/${featured.slug}`}
+                    aria-label={`Detail ${featured.name}`}
+                    className="inline-flex h-10 w-10 items-center justify-center rounded-sm border border-zinc-700 text-zinc-100 transition-colors hover:border-zinc-400 hover:bg-zinc-900"
+                  >
+                    <ArrowUpRight aria-hidden className="h-4 w-4" />
+                  </Link>
+                </div>
+              </figcaption>
+            )}
+          </figure>
+
+          {/* Copy */}
+          <div className="flex flex-col justify-center lg:order-1 lg:col-span-5">
+            <p className="kss-eyebrow text-orange-400">
+              <span aria-hidden className="h-1.5 w-1.5 bg-orange-500" />
+              System integrator · Mangga Dua Mall
+            </p>
+            <h1 className="mt-4 text-h1 text-balance text-zinc-50">
+              PC rakitan siap pakai. Satu harga, sudah diuji.
+            </h1>
+            <p className="mt-4 max-w-[52ch] text-body text-pretty text-zinc-400">
+              Pilih paket jadi atau konsultasikan racikan sendiri. Setiap unit divalidasi
+              kompatibilitasnya, dirakit rapi, di-stress test, dan bergaransi resmi distributor.
+            </p>
+            <div className="mt-7 flex flex-col gap-2 sm:flex-row">
+              <a href="#paket-terlaris" className="kss-btn-primary h-11 px-5 text-sm">
+                Lihat paket siap pakai
+                <ArrowRight aria-hidden className="h-4 w-4" />
+              </a>
+              <Link href="/konsultasi" className="kss-btn-outline-dark h-11 px-5 text-sm">
+                <MessageSquareText aria-hidden className="h-4 w-4" />
+                Konsultasi budget
+              </Link>
+            </div>
+            <dl className="kss-grid-hairline-dark mt-8 grid-cols-2 sm:grid-cols-4">
+              {[
+                { label: 'Garansi', value: 'Resmi' },
+                { label: 'Stress test', value: '24 jam' },
+                { label: 'Harga', value: '1 total' },
+                { label: 'Siap ambil', value: 'Same day' },
+              ].map((s) => (
+                <div key={s.label} className="px-3 py-3">
+                  <dt className="kss-label text-zinc-400">{s.label}</dt>
+                  <dd className="mt-1 font-mono text-[14px] font-semibold tabular-nums text-zinc-50">
+                    {s.value}
+                  </dd>
+                </div>
+              ))}
+            </dl>
           </div>
         </div>
       </section>
 
-      {/* CATEGORY SHORTCUTS */}
-      <div className="border-b border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-950">
-        <div className="kss-container flex gap-2 overflow-x-auto py-3">
-          {CATEGORY_SHORTCUTS.map((item) => {
-            const Icon = item.icon;
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="inline-flex shrink-0 items-center gap-2 rounded-md border border-zinc-200 px-3 py-2 text-[11px] font-semibold text-zinc-600 transition-colors hover:border-zinc-300 hover:bg-zinc-50 dark:border-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-900"
-              >
-                <Icon className="h-3.5 w-3.5 text-zinc-500" />
-                <span>{item.label}</span>
-              </Link>
-            );
-          })}
+      {/* PINTASAN KATEGORI */}
+      <nav aria-label="Pintasan kategori" className="border-b border-zinc-200 bg-white">
+        <div className="kss-container">
+          <ul className="-mx-4 flex divide-x divide-zinc-200 overflow-x-auto px-4 sm:mx-0 sm:px-0 lg:grid lg:grid-cols-6 lg:border-x lg:border-zinc-200">
+            {CATEGORY_SHORTCUTS.map(({ href, label, icon: Icon }) => (
+              <li key={href} className="shrink-0">
+                <Link
+                  href={href}
+                  className="group flex h-12 items-center gap-2 whitespace-nowrap px-4 text-[13px] font-medium text-zinc-700 transition-colors duration-150 hover:bg-zinc-50 hover:text-zinc-950"
+                >
+                  <Icon
+                    aria-hidden
+                    className="h-4 w-4 text-zinc-400 transition-colors group-hover:text-orange-600"
+                  />
+                  {label}
+                  <ChevronRight aria-hidden className="ml-auto hidden h-3.5 w-3.5 text-zinc-300 lg:block" />
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
-      </div>
+      </nav>
 
-      {/* SERVICES */}
-      <section className="kss-container py-10 sm:py-12">
-        <SectionHeader
-          eyebrow="Layanan Teknisi"
-          title="Jasa Rakit, Servis & Maintenance"
-          description="Dikerjakan teknisi KSS dengan standar QC dan garansi pengerjaan."
-          action={{ href: '/jasa', label: 'Lihat Semua Layanan' }}
-        />
-
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {services.slice(0, 4).map((srv) => (
-            <article
-              key={srv.id}
-              className="group flex flex-col justify-between rounded-md border border-zinc-200 bg-white p-5 shadow-xs transition-all hover:border-zinc-300 dark:border-zinc-800 dark:bg-zinc-900/60 dark:hover:border-zinc-700"
-            >
-              <div>
-                <div className="mb-3 flex items-center justify-between">
-                  <span className="flex h-9 w-9 items-center justify-center rounded-md bg-zinc-100 dark:bg-zinc-800">
-                    <Wrench className="h-4 w-4 text-zinc-600 dark:text-zinc-300" />
-                  </span>
-                  {srv.badge && (
-                    <span className="rounded-md border border-amber-500/20 bg-amber-500/10 px-1.5 py-0.5 font-mono text-[9px] font-bold uppercase text-amber-700 dark:text-amber-400">
-                      {srv.badge}
-                    </span>
-                  )}
-                </div>
-
-                <h3 className="text-sm font-bold leading-snug text-zinc-900 dark:text-zinc-100">
-                  {srv.title}
-                </h3>
-                <p className="mt-1 line-clamp-2 text-[11px] leading-relaxed text-zinc-500 dark:text-zinc-500">
-                  {srv.description}
-                </p>
-
-                <div className="mt-3 flex items-end justify-between border-t border-zinc-100 pt-3 dark:border-zinc-800">
-                  <span className="font-mono text-sm font-black text-zinc-900 dark:text-zinc-100">
-                    {srv.price === 0 ? 'GRATIS' : formatIDR(srv.price)}
-                  </span>
-                  <span className="font-mono text-[10px] text-zinc-500">{srv.duration}</span>
-                </div>
-              </div>
-
-              <Link href={`/jasa/${srv.slug}`} className="kss-btn-outline mt-3 h-9 px-2">
-                <span>Lihat Detail</span>
-                <ChevronRight className="h-3.5 w-3.5" />
-              </Link>
-            </article>
-          ))}
+      {/* JASA */}
+      <section className="kss-section">
+        <div className="kss-container">
+          <SectionHeader
+            eyebrow="Layanan teknisi"
+            title="Jasa rakit, servis & maintenance"
+            description="Dikerjakan teknisi KSS dengan standar QC dan garansi pengerjaan."
+            action={{ href: '/jasa', label: 'Semua layanan' }}
+          />
+          <ul
+            className={
+              services.slice(0, 4).length === 4
+                ? 'kss-grid-hairline sm:grid-cols-2 lg:grid-cols-4'
+                : 'grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4'
+            }
+          >
+            {services.slice(0, 4).map((srv) => (
+              <li key={srv.id} className={services.slice(0, 4).length === 4 ? '' : 'kss-card'}>
+                <Link
+                  href={`/jasa/${srv.slug}`}
+                  className="group flex h-full flex-col p-5 transition-colors duration-150 hover:bg-zinc-50"
+                >
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="kss-label text-zinc-500">{srv.duration}</span>
+                    {srv.badge && <span className="kss-tag kss-tag-ink">{srv.badge}</span>}
+                  </div>
+                  <h3 className="mt-6 text-title text-zinc-950">{srv.title}</h3>
+                  <p className="mt-1.5 line-clamp-2 text-body-sm text-zinc-600">{srv.description}</p>
+                  <div className="mt-auto flex items-end justify-between pt-6">
+                    <div>
+                      <div className="kss-label text-zinc-500">Biaya jasa</div>
+                      {srv.price === 0 ? (
+                        <span className="kss-price text-lg text-zinc-950">Gratis</span>
+                      ) : (
+                        <Price value={srv.price} className="text-lg text-zinc-950" />
+                      )}
+                    </div>
+                    <ArrowUpRight
+                      aria-hidden
+                      className="h-4 w-4 text-zinc-400 transition-colors group-hover:text-orange-600"
+                    />
+                  </div>
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 
-      {/* PREBUILTS */}
-      <section id="paket-terlaris" className="border-y border-zinc-200 bg-zinc-50/70 py-10 dark:border-zinc-800 dark:bg-zinc-900/30 sm:py-12">
+      {/* PAKET */}
+      <section id="paket-terlaris" className="kss-section-alt scroll-mt-20">
         <div className="kss-container">
           <SectionHeader
-            eyebrow="Paket Siap Pakai"
-            title="Paket PC Rakitan Terlaris"
+            eyebrow="Paket siap pakai"
+            title="Paket PC rakitan terlaris"
             description="Spesifikasi seimbang, estimasi FPS nyata, dan satu harga total siap pakai."
-            action={{ href: '/paket-rakitan', label: `Lihat Semua Paket (${prebuilts.length})` }}
+            action={{ href: '/paket-rakitan', label: `Semua paket (${prebuilts.length})` }}
           />
 
-          <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <div className="flex flex-wrap gap-1.5">
-              {[
-                { id: 'all', label: 'Semua' },
-                { id: 'gaming-1080p', label: 'Gaming 1080p' },
-                { id: 'gaming-1440p', label: 'Gaming 1440p / 4K' },
-                { id: 'creator', label: 'Creator & 3D' },
-                { id: 'office', label: 'Office' },
-              ].map((tab) => (
+          <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div
+              role="group"
+              aria-label="Filter kebutuhan"
+              className="-mx-4 flex gap-1.5 overflow-x-auto px-4 sm:mx-0 sm:flex-wrap sm:px-0"
+            >
+              {USAGE_TABS.map((tab) => (
                 <button
                   key={tab.id}
                   type="button"
+                  aria-pressed={selectedUsage === tab.id}
                   onClick={() => setSelectedUsage(tab.id as UsageFilter)}
-                  className={`rounded-md px-3 py-1.5 text-xs font-semibold transition-colors ${
-                    selectedUsage === tab.id
-                      ? 'bg-orange-700 text-white'
-                      : 'border border-zinc-200 bg-white text-zinc-600 hover:border-zinc-300 hover:bg-zinc-100 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-300 dark:hover:bg-zinc-800'
-                  }`}
+                  className={`kss-chip ${selectedUsage === tab.id ? 'kss-chip-active' : ''}`}
                 >
                   {tab.label}
                 </button>
@@ -348,32 +354,32 @@ export default function HomeClient({ prebuilts, accessories, services }: HomeCli
               aria-label="Filter budget paket"
               value={selectedBudget}
               onChange={(event) => setSelectedBudget(event.target.value as BudgetFilter)}
-              className="rounded-md border border-zinc-200 bg-white px-3 py-2 text-xs text-zinc-700 focus:border-orange-600 focus:outline-none dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-300"
+              className="kss-input sm:w-48"
             >
-              <option value="all">Semua Budget</option>
+              <option value="all">Semua budget</option>
               <option value="under-7m">&lt; Rp 7.000.000</option>
-              <option value="7-12m">Rp 7 - 12 Juta</option>
-              <option value="12-20m">Rp 12 - 20 Juta</option>
-              <option value="above-20m">&gt; Rp 20 Juta</option>
+              <option value="7-12m">Rp 7 - 12 juta</option>
+              <option value="12-20m">Rp 12 - 20 juta</option>
+              <option value="above-20m">&gt; Rp 20 juta</option>
             </select>
           </div>
 
           {filteredPrebuilts.length === 0 ? (
-            <div className="rounded-md border border-dashed border-zinc-300 p-10 text-center dark:border-zinc-700">
-              <p className="text-xs text-zinc-500">Tidak ada paket yang sesuai filter.</p>
+            <div className="rounded-md border border-dashed border-zinc-300 bg-white p-10 text-center">
+              <p className="text-body-sm text-zinc-600">Tidak ada paket yang sesuai filter.</p>
               <button
                 type="button"
                 onClick={() => {
                   setSelectedUsage('all');
                   setSelectedBudget('all');
                 }}
-                className="mt-2 text-xs font-semibold text-zinc-700 underline hover:text-orange-700 dark:text-zinc-300"
+                className="kss-btn-outline mt-4"
               >
                 Reset filter
               </button>
             </div>
           ) : (
-            <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 lg:gap-5">
               {filteredPrebuilts.map((pkg) => (
                 <PrebuiltCard key={pkg.id} pkg={pkg} />
               ))}
@@ -382,59 +388,47 @@ export default function HomeClient({ prebuilts, accessories, services }: HomeCli
         </div>
       </section>
 
-      {/* CONSULTATION */}
-      <section id="konsultasi-budget" className="kss-container py-10 sm:py-12">
-        <div className="grid grid-cols-1 gap-6 rounded-md border border-zinc-200 bg-white p-6 shadow-xs dark:border-zinc-800 dark:bg-zinc-900/60 sm:p-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)]">
-          <div>
-            <div className="kss-eyebrow mb-2">
-              <PhoneCall className="h-3.5 w-3.5" />
-              <span>Konsultasi Gratis</span>
-            </div>
-            <h2 className="text-2xl font-black tracking-tight text-zinc-900 dark:text-zinc-100 sm:text-3xl">
-              Belum yakin spesifikasinya?
-            </h2>
-            <p className="mt-2 text-sm leading-relaxed text-zinc-600 dark:text-zinc-500">
-              Kirim budget dan kebutuhan Anda. Teknisi KSS akan menyusun racikan paling
-              seimbang, lalu mengirimkan tautan penawaran resmi.
+      {/* KONSULTASI */}
+      <section id="konsultasi-budget" className="kss-section scroll-mt-20">
+        <div className="kss-container grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-12">
+          <div className="lg:col-span-5">
+            <p className="kss-eyebrow">
+              <span aria-hidden className="h-1.5 w-1.5 bg-orange-600" />
+              Konsultasi gratis
             </p>
-
-            <ul className="mt-5 space-y-2.5 text-xs text-zinc-600 dark:text-zinc-500">
+            <h2 className="mt-3 text-h2 text-balance text-zinc-950">Belum yakin spesifikasinya?</h2>
+            <p className="mt-3 max-w-[48ch] text-body text-zinc-600">
+              Kirim budget dan kebutuhan Anda. Teknisi KSS menyusun racikan paling seimbang,
+              lalu mengirim penawaran resmi dengan satu harga total.
+            </p>
+            <ul className="mt-6 divide-y divide-zinc-200 border-y border-zinc-200">
               {[
                 'Tanpa biaya konsultasi',
                 'Rekomendasi bebas bottleneck',
-                'Penawaran resmi dengan satu harga total',
+                'Penawaran resmi, satu harga total',
                 'Bisa lanjut rakit atau beli komponen saja',
-              ].map((item) => (
-                <li key={item} className="flex items-start gap-2">
-                  <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-emerald-500" />
-                  <span>{item}</span>
+              ].map((t) => (
+                <li key={t} className="flex items-center gap-3 py-3 text-body-sm text-zinc-800">
+                  <Check aria-hidden className="h-4 w-4 shrink-0 text-zinc-900" />
+                  {t}
                 </li>
               ))}
             </ul>
-
-            <div className="mt-5 rounded-md border border-zinc-200 bg-zinc-50 p-3 dark:border-zinc-800 dark:bg-zinc-950">
-              <div className="font-mono text-[10px] uppercase tracking-tight text-zinc-500">
-                Butuh jawaban cepat?
-              </div>
-              <a
-                href={`https://wa.me/${DEFAULT_WHATSAPP_PHONE}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-1 inline-flex items-center gap-1.5 text-xs font-bold text-emerald-700 hover:text-emerald-700 dark:text-emerald-400"
-              >
-                <PhoneCall className="h-3.5 w-3.5" />
-                <span>Chat teknisi via WhatsApp</span>
-              </a>
-            </div>
+            <a
+              href={`https://wa.me/${DEFAULT_WHATSAPP_PHONE}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="kss-link mt-5 inline-flex items-center gap-2 text-body-sm"
+            >
+              <MessageCircle aria-hidden className="h-4 w-4" />
+              Butuh jawaban cepat? Chat teknisi
+            </a>
           </div>
 
-          <form onSubmit={handleSendConsultation} className="space-y-3">
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+          <form onSubmit={handleSendConsultation} className="kss-card space-y-4 p-5 sm:p-6 lg:col-span-7">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div>
-                <label
-                  htmlFor="cust-name"
-                  className="mb-1 block font-mono text-[10px] font-bold uppercase tracking-tight text-zinc-500"
-                >
+                <label htmlFor="cust-name" className="kss-field-label">
                   Nama
                 </label>
                 <input
@@ -449,16 +443,11 @@ export default function HomeClient({ prebuilts, accessories, services }: HomeCli
               </div>
 
               <div>
-                <div className="mb-1 flex items-baseline justify-between">
-                  <label
-                    htmlFor="cust-budget"
-                    className="font-mono text-[10px] font-bold uppercase tracking-tight text-zinc-500"
-                  >
+                <div className="mb-1.5 flex items-baseline justify-between">
+                  <label htmlFor="cust-budget" className="kss-field-label mb-0">
                     Budget
                   </label>
-                  <span className="font-mono text-[11px] font-bold tabular-nums text-zinc-900 dark:text-zinc-100">
-                    {formatIDR(custBudget)}
-                  </span>
+                  <Price value={custBudget} className="text-[14px] text-zinc-950" />
                 </div>
                 <input
                   id="cust-budget"
@@ -468,17 +457,14 @@ export default function HomeClient({ prebuilts, accessories, services }: HomeCli
                   step={500000}
                   value={custBudget}
                   onChange={(e) => setCustBudget(Number(e.target.value))}
-                  className="mt-2 w-full accent-orange-600"
+                  className="h-10 w-full accent-orange-700"
                 />
               </div>
             </div>
 
             <div>
-              <label
-                htmlFor="cust-usage"
-                className="mb-1 block font-mono text-[10px] font-bold uppercase tracking-tight text-zinc-500"
-              >
-                Kebutuhan Utama
+              <label htmlFor="cust-usage" className="kss-field-label">
+                Kebutuhan utama
               </label>
               <select
                 id="cust-usage"
@@ -496,11 +482,8 @@ export default function HomeClient({ prebuilts, accessories, services }: HomeCli
             </div>
 
             <div>
-              <label
-                htmlFor="cust-platform"
-                className="mb-1 block font-mono text-[10px] font-bold uppercase tracking-tight text-zinc-500"
-              >
-                Preferensi Platform
+              <label htmlFor="cust-platform" className="kss-field-label">
+                Preferensi platform
               </label>
               <select
                 id="cust-platform"
@@ -516,10 +499,7 @@ export default function HomeClient({ prebuilts, accessories, services }: HomeCli
             </div>
 
             <div>
-              <label
-                htmlFor="cust-notes"
-                className="mb-1 block font-mono text-[10px] font-bold uppercase tracking-tight text-zinc-500"
-              >
+              <label htmlFor="cust-notes" className="kss-field-label">
                 Catatan (opsional)
               </label>
               <input
@@ -533,226 +513,141 @@ export default function HomeClient({ prebuilts, accessories, services }: HomeCli
             </div>
 
             <button type="submit" className="kss-btn-wa h-11 w-full text-sm">
-              <MessageSquareCheck className="h-4 w-4" />
-              <span>Kirim ke WhatsApp Teknisi</span>
+              <MessageCircle aria-hidden className="h-4 w-4" />
+              Kirim ke WhatsApp teknisi
             </button>
           </form>
         </div>
       </section>
 
-      {/* ACCESSORIES */}
-      <section className="border-y border-zinc-200 bg-zinc-50/70 py-10 dark:border-zinc-800 dark:bg-zinc-900/30 sm:py-12">
+      {/* AKSESORIS */}
+      <section className="kss-section-alt">
         <div className="kss-container">
           <SectionHeader
-            eyebrow="Katalog Eceran"
-            title="Aksesoris & Gaming Gear"
+            eyebrow="Katalog eceran"
+            title="Aksesoris & gaming gear"
             description="Harga eceran resmi distributor, stok fisik, dan garansi resmi."
-            action={{ href: '/aksesoris', label: `Lihat Semua (${accessories.length})` }}
+            action={{ href: '/aksesoris', label: `Semua aksesoris (${accessories.length})` }}
           />
 
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {accessories.slice(0, 4).map((acc) => {
+          <ul className="grid grid-cols-1 border-t border-zinc-200 md:grid-cols-2 md:gap-x-10">
+            {accessories.slice(0, 6).map((acc) => {
               const Icon = ACCESSORY_ICONS[acc.category] || Package;
               const hasDiscount = Boolean(acc.originalPrice && acc.originalPrice > acc.retailPrice);
               return (
-                <article
-                  key={acc.id}
-                  className="group flex flex-col justify-between rounded-md border border-zinc-200 bg-white p-4 shadow-xs transition-all hover:border-zinc-300 dark:border-zinc-800 dark:bg-zinc-900/60 dark:hover:border-zinc-700"
-                >
-                  <div>
-                    <div className="mb-3 flex h-24 items-center justify-center rounded-md border border-zinc-100 bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-950">
-                      <Icon className="h-8 w-8 text-zinc-300 dark:text-zinc-700" />
+                <li key={acc.id} className="flex items-center gap-4 border-b border-zinc-200 py-4">
+                  <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-sm bg-zinc-100">
+                    <Icon aria-hidden className="h-5 w-5 text-zinc-500" />
+                  </span>
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-center gap-2">
+                      <span className="kss-label text-zinc-500">{acc.brand}</span>
+                      {hasDiscount && <span className="kss-tag kss-tag-accent">Promo</span>}
                     </div>
-
-                    <div className="flex items-center justify-between font-mono text-[10px]">
-                      <span className="font-bold uppercase text-zinc-500">{acc.brand}</span>
+                    <h3 className="mt-0.5 truncate text-[14px] font-medium text-zinc-900">{acc.name}</h3>
+                    <div className="mt-0.5 flex items-baseline gap-2">
+                      <Price value={acc.retailPrice} className="text-[14px] text-zinc-950" />
                       {hasDiscount && (
-                        <span className="rounded-md border border-amber-500/20 bg-amber-500/10 px-1 py-0.2 font-bold text-amber-700 dark:text-amber-400">
-                          Promo
-                        </span>
-                      )}
-                    </div>
-
-                    <h3 className="mt-1 line-clamp-2 text-xs font-bold text-zinc-900 dark:text-zinc-100">
-                      {acc.name}
-                    </h3>
-
-                    <div className="mt-2 flex items-baseline gap-2">
-                      <span className="kss-price text-sm text-zinc-900 dark:text-zinc-100">
-                        {formatIDR(acc.retailPrice)}
-                      </span>
-                      {hasDiscount && (
-                        <span className="font-mono text-[10px] text-zinc-500 line-through tabular-nums">
-                          {formatIDR(acc.originalPrice!)}
-                        </span>
+                        <s className="kss-num text-meta text-zinc-500">{formatIDR(acc.originalPrice!)}</s>
                       )}
                     </div>
                   </div>
-
                   <button
                     type="button"
+                    aria-label={`Tambah ${acc.name} ke keranjang`}
                     onClick={() => {
                       addRetailItem(acc, 1);
                       showToast(`${acc.name} ditambahkan ke keranjang`);
                     }}
-                    className="kss-btn-dark mt-3 h-9"
+                    className="kss-icon-btn hover:bg-zinc-900 hover:text-white"
                   >
-                    <ShoppingBag className="h-3.5 w-3.5" />
-                    <span>Tambah ke Keranjang</span>
+                    <Plus aria-hidden className="h-4 w-4" />
                   </button>
-                </article>
+                </li>
               );
             })}
-          </div>
+          </ul>
         </div>
       </section>
 
-      {/* WHY KSS */}
-      <section className="kss-container py-10 sm:py-12">
-        <SectionHeader
-          eyebrow="Kenapa KSS"
-          title="Standar Toko, Bukan Rakitan Amatir"
-          description="Kualitas dan garansi yang bisa ditagih setelah pembelian."
-        />
+      {/* KENAPA KSS */}
+      <section className="kss-section">
+        <div className="kss-container">
+          <SectionHeader
+            eyebrow="Kenapa KSS"
+            title="Standar toko, bukan rakitan amatir"
+            description="Kualitas dan garansi yang bisa ditagih setelah pembelian."
+          />
 
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {[
-            { icon: BadgeCheck, title: 'Part Resmi', text: 'Bersegel distributor resmi Indonesia.' },
-            { icon: Wrench, title: 'Rakit Rapi', text: 'Cable management dan QC sebelum serah terima.' },
-            { icon: Gamepad2, title: 'Stress Test', text: 'Uji beban CPU/GPU dan pemantauan suhu.' },
-            { icon: Truck, title: 'Packing Aman', text: 'Packing kayu dan asuransi pengiriman.' },
-          ].map((item) => {
-            const Icon = item.icon;
-            return (
-              <div key={item.title} className="rounded-md border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-900/60">
-                <span className="mb-3 flex h-9 w-9 items-center justify-center rounded-md bg-emerald-500/10">
-                  <Icon className="h-4 w-4 text-emerald-700 dark:text-emerald-400" />
-                </span>
-                <h3 className="text-xs font-bold text-zinc-900 dark:text-zinc-100">{item.title}</h3>
-                <p className="mt-1 text-[11px] leading-relaxed text-zinc-500 dark:text-zinc-500">{item.text}</p>
-              </div>
-            );
-          })}
-        </div>
-
-        {/* KSS vs beli part sendiri */}
-        <div className="mt-8 overflow-hidden rounded-md border border-zinc-200 dark:border-zinc-800 md:grid md:grid-cols-2">
-          <div className="bg-white p-5 dark:bg-zinc-900/60">
-            <div className="mb-3 flex items-center gap-2">
-              <span className="rounded-sm bg-orange-700 px-2 py-0.5 font-mono text-[10px] font-bold uppercase text-white">
-                Rekomendasi
-              </span>
-              <span className="text-sm font-black text-zinc-900 dark:text-zinc-100">
-                Paket Rakitan KSS
-              </span>
+          <div className="grid grid-cols-1 overflow-hidden rounded-md border border-zinc-200 bg-white lg:grid-cols-12">
+            <div className="relative aspect-[4/3] border-b border-zinc-200 bg-zinc-100 lg:col-span-4 lg:aspect-auto lg:border-b-0 lg:border-r">
+              <Image
+                src="/images/tokopedia/package-esports-case.webp"
+                alt="Unit PC rakitan KSS setelah QC"
+                fill
+                sizes="(max-width: 1024px) 100vw, 400px"
+                className="object-cover"
+              />
             </div>
-            <ul className="space-y-2.5">
-              {[
-                'Satu harga total, tanpa menghitung part satu per satu',
-                'Dirakit teknisi + cable management rapi',
-                'Stress test dan QC sebelum serah terima',
-                'Garansi toko + distributor, klaim dibantu KSS',
-                'Konsultasi dan upgrade terukur setelah pembelian',
-              ].map((item) => (
-                <li key={item} className="flex items-start gap-2 text-[11px] text-zinc-700 dark:text-zinc-300">
-                  <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-emerald-500" />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="border-t border-zinc-200 bg-zinc-50 p-5 dark:border-zinc-800 dark:bg-zinc-950 md:border-l md:border-t-0">
-            <div className="mb-3 flex items-center gap-2">
-              <span className="rounded-sm border border-zinc-300 px-2 py-0.5 font-mono text-[10px] font-bold uppercase text-zinc-500 dark:border-zinc-700">
-                Pembanding
-              </span>
-              <span className="text-sm font-black text-zinc-600 dark:text-zinc-500">
-                Beli Part &amp; Rakit Sendiri
-              </span>
-            </div>
-            <ul className="space-y-2.5">
-              {[
-                'Harga part terpisah, total baru diketahui di akhir',
-                'Rakit sendiri atau cari jasa tambahan',
-                'Belum tentu lolos stress test dan QC',
-                'Klaim garansi masing-masing distributor',
-                'Risiko salah socket, RAM, atau ukuran casing',
-              ].map((item) => (
-                <li key={item} className="flex items-start gap-2 text-[11px] text-zinc-500 dark:text-zinc-500">
-                  <X className="mt-0.5 h-3.5 w-3.5 shrink-0 text-zinc-500" />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-
-        <div className="mt-6 overflow-hidden rounded-md border border-zinc-200 bg-white md:grid md:grid-cols-[280px_1fr]">
-          <div className="flex items-center justify-center border-b border-zinc-200 bg-zinc-50 p-6 md:border-b-0 md:border-r">
-            <Image
-              src="/images/kss-pc-blueprint.svg"
-              width={420}
-              height={460}
-              alt="Blueprint PC rakitan KSS Komputer"
-              className="h-48 w-auto"
-            />
-          </div>
-
-          <div className="p-6">
-            <div className="font-mono text-[10px] font-bold uppercase tracking-wider text-orange-700">
-              Proses Rakitan KSS
-            </div>
-            <h3 className="mt-1 text-lg font-black tracking-tight text-zinc-900">
-              Validasi → Rakit → Stress Test
-            </h3>
-            <p className="mt-1 max-w-xl text-xs leading-relaxed text-zinc-600">
-              Setiap unit melewati urutan yang sama. Tidak ada komponen yang dipasang
-              tanpa cek kompatibilitas, dan tidak ada unit yang keluar tanpa pengujian.
-            </p>
-
-            <div className="mt-4 grid grid-cols-1 gap-2 sm:grid-cols-3">
-              {[
-                'Cek socket, RAM, clearance, dan daya',
-                'Rakit rapi + cable management',
-                'Stress test, QC, lalu serah terima',
-              ].map((step, index) => (
-                <div
-                  key={step}
-                  className="rounded-sm border border-zinc-200 bg-zinc-50 p-3"
+            <div className="p-5 sm:p-8 lg:col-span-8">
+              <p className="kss-eyebrow">Proses rakitan KSS</p>
+              <h3 className="mt-2 text-h3 text-zinc-950">Tidak ada unit keluar tanpa diuji.</h3>
+              <ol className="mt-6 grid grid-cols-1 border-t border-zinc-200 sm:grid-cols-2 lg:grid-cols-4">
+                {PROCESS_STEPS.map(([t, d], i) => (
+                  <li
+                    key={t}
+                    className="border-b border-zinc-200 py-4 sm:pr-4 lg:border-b-0 lg:border-r lg:px-4 lg:first:pl-0 lg:last:border-r-0"
+                  >
+                    <span className="kss-num text-micro font-semibold text-orange-700">0{i + 1}</span>
+                    <div className="mt-2 text-[14px] font-semibold text-zinc-950">{t}</div>
+                    <p className="mt-1 text-body-sm text-zinc-600">{d}</p>
+                  </li>
+                ))}
+              </ol>
+              <div className="mt-6 flex flex-col gap-2 sm:flex-row">
+                <a
+                  href={generateCustomBuildWAMessage()}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="kss-btn-dark"
                 >
-                  <span className="font-mono text-[10px] font-bold text-orange-700">
-                    0{index + 1}
+                  <MessageCircle aria-hidden className="h-4 w-4" />
+                  Konsultasi rakit via WA
+                </a>
+                <Link href="/paket-rakitan" className="kss-btn-outline">
+                  Lihat paket siap pakai
+                </Link>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-10">
+            <h3 className="text-h3 text-zinc-950">Paket KSS vs beli part &amp; rakit sendiri</h3>
+            <div role="table" className="mt-4 border-t-2 border-zinc-900 text-body-sm">
+              <div
+                role="row"
+                className="hidden grid-cols-[180px_1fr_1fr] gap-6 border-b border-zinc-200 py-3 sm:grid"
+              >
+                <span role="columnheader" className="kss-label text-zinc-500">Aspek</span>
+                <span role="columnheader" className="kss-label text-zinc-950">Paket rakitan KSS</span>
+                <span role="columnheader" className="kss-label text-zinc-500">Rakit sendiri</span>
+              </div>
+              {COMPARISON.map(([a, k, s]) => (
+                <div
+                  role="row"
+                  key={a}
+                  className="grid grid-cols-1 gap-x-6 gap-y-1 border-b border-zinc-200 py-3 sm:grid-cols-[180px_1fr_1fr]"
+                >
+                  <span role="rowheader" className="kss-label text-zinc-500 sm:pt-0.5">{a}</span>
+                  <span role="cell" className="flex gap-2 font-medium text-zinc-950">
+                    <Check aria-hidden className="mt-0.5 h-4 w-4 shrink-0" />
+                    {k}
                   </span>
-                  <p className="mt-1 text-[11px] leading-relaxed text-zinc-600">{step}</p>
+                  <span role="cell" className="text-zinc-500">{s}</span>
                 </div>
               ))}
             </div>
-
-            <div className="mt-4 flex flex-col gap-2 sm:flex-row">
-              <a
-                href={generateCustomBuildWAMessage()}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="kss-btn-primary h-10 px-4"
-              >
-                <PhoneCall className="h-4 w-4" />
-                <span>Konsultasi Rakit via WA</span>
-              </a>
-              <Link
-                href="/paket-rakitan"
-                className="inline-flex h-10 items-center justify-center gap-2 rounded-md border border-zinc-300 bg-white px-4 text-xs font-bold text-zinc-800 transition-colors hover:bg-zinc-100"
-              >
-                <span>Paket Siap Pakai</span>
-              </Link>
-            </div>
           </div>
-        </div>
-
-        <div className="mt-4 flex flex-wrap items-center justify-center gap-4 text-[10px] font-mono text-zinc-500">
-          <span className="flex items-center gap-1"><ShieldCheck className="h-3 w-3" /> Garansi Resmi</span>
-          <span className="flex items-center gap-1"><Clock className="h-3 w-3" /> Senin - Sabtu 09.00 - 18.00</span>
-          <span className="flex items-center gap-1"><PhoneCall className="h-3 w-3" /> {DEFAULT_WHATSAPP_DISPLAY}</span>
         </div>
       </section>
     </div>

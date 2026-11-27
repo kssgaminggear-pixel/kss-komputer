@@ -6,21 +6,18 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
   Search,
-  Sparkles,
+  PcCase,
   Layers,
   Wrench,
   ShoppingBag,
-  PhoneCall,
   Menu,
   X,
-  Clock,
-  ShieldCheck,
   ChevronRight,
-  Database,
-  ExternalLink,
+  ArrowUpRight,
   Headphones,
   ClipboardList,
-  MessageSquareCheck,
+  MessageSquareText,
+  MessageCircle,
   Building2,
   MapPin,
 } from 'lucide-react';
@@ -68,135 +65,132 @@ export function Navbar({ searchProducts }: NavbarProps) {
 
   const navLinks = [
     { href: '/jasa', label: 'Jasa & Servis', icon: Wrench },
-    { href: '/paket-rakitan', label: 'Paket Siap Pakai', icon: Sparkles },
+    { href: '/paket-rakitan', label: 'Paket Siap Pakai', icon: PcCase },
     { href: '/cek-pesanan', label: 'Cek Pesanan', icon: ClipboardList },
     { href: '/komponen', label: 'Komponen', icon: Layers },
     { href: '/aksesoris', label: 'Aksesoris', icon: Headphones },
-    { href: '/konsultasi', label: 'Konsultasi', icon: MessageSquareCheck, desktopHidden: true },
+    { href: '/konsultasi', label: 'Konsultasi', icon: MessageSquareText, desktopHidden: true },
     { href: '/tentang-kami', label: 'Tentang Kami', icon: Building2, desktopHidden: true },
-    { href: '/admin/pricing', label: 'Admin', icon: Database, desktopHidden: true },
   ];
 
   const isActiveLink = (href: string) => pathname === href || (href !== '/' && pathname.startsWith(href));
 
   return (
     <>
-      <header className="sticky top-0 z-40 border-b border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-950">
-        {/* Utility bar */}
-        <div className="hidden border-b border-zinc-200 bg-zinc-100 text-zinc-600 sm:block">
-          <div className="kss-container flex h-8 items-center justify-between text-[11px]">
-            <div className="flex items-center gap-4">
-              <span className="flex items-center gap-1.5">
-                <MapPin className="h-3 w-3 text-orange-500" />
-                <span className="font-semibold text-zinc-800">Mangga Dua Mall, Jakarta</span>
-              </span>
-              <span className="hidden items-center gap-1 lg:flex">
-                <Clock className="h-3 w-3" />
-                <span>Senin - Sabtu, 09.00 - 18.00 WIB</span>
-              </span>
-            </div>
-
-            <div className="flex items-center gap-4">
-              <span className="hidden items-center gap-1 md:flex">
-                <ShieldCheck className="h-3 w-3 text-emerald-500" />
-                <span>Garansi Resmi Distributor</span>
-              </span>
-              <a
-                href={TOKOPEDIA_OFFICIAL_STORE_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-1 font-semibold text-emerald-700 transition-colors hover:text-emerald-700 dark:text-emerald-400"
-              >
-                <span>Tokopedia</span>
-                <ExternalLink className="h-3 w-3" />
-              </a>
-              <a
-                href={`https://wa.me/${DEFAULT_WHATSAPP_PHONE}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-1 font-mono text-zinc-700 transition-colors hover:text-orange-700"
-              >
-                <PhoneCall className="h-3 w-3 text-emerald-500" />
-                <span>{DEFAULT_WHATSAPP_DISPLAY}</span>
-              </a>
-            </div>
+      {/* Top bar: tidak sticky */}
+      <div className="hidden bg-zinc-950 text-zinc-400 sm:block">
+        <div className="kss-container flex h-8 items-center justify-between font-mono text-micro">
+          <div className="flex items-center gap-5">
+            <span className="flex items-center gap-1.5 text-zinc-200">
+              <MapPin aria-hidden className="h-3 w-3 text-orange-500" />
+              Mangga Dua Mall, Jakarta
+            </span>
+            <span className="hidden lg:inline">Sen–Sab · 09.00–18.00 WIB</span>
+          </div>
+          <div className="flex items-center gap-5">
+            <span className="hidden md:inline">Garansi resmi distributor</span>
+            <a
+              href={TOKOPEDIA_OFFICIAL_STORE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 text-zinc-200 transition-colors hover:text-white"
+            >
+              <span aria-hidden className="h-1.5 w-1.5 bg-tokopedia-brand" />
+              Tokopedia Official
+              <ArrowUpRight aria-hidden className="h-3 w-3" />
+            </a>
+            <a
+              href={`https://wa.me/${DEFAULT_WHATSAPP_PHONE}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="tabular-nums text-zinc-200 transition-colors hover:text-white"
+            >
+              WA {DEFAULT_WHATSAPP_DISPLAY}
+            </a>
           </div>
         </div>
+      </div>
 
-        {/* Main bar */}
-        <div className="kss-container flex h-16 items-center gap-3">
-          <Link href="/" className="flex shrink-0 items-center gap-2.5">
+      <header className="sticky top-0 z-40 border-b border-zinc-200 bg-white">
+        <div className="kss-container flex h-14 items-center gap-4 xl:gap-6">
+          <Link
+            href="/"
+            className="flex shrink-0 items-center gap-2.5"
+            aria-label="KSS Komputer — Beranda"
+          >
             <Image
               src="/images/brand/kss-logo-light.png"
-              width={36}
-              height={36}
-              alt="Logo KSS Komputer"
-              className="h-9 w-9 rounded-sm"
+              width={32}
+              height={32}
+              alt=""
+              className="h-8 w-8 rounded-xs"
               priority
             />
             <span className="hidden flex-col leading-none sm:flex">
-              <span className="font-mono text-sm font-black tracking-tight text-zinc-900 dark:text-zinc-50">
-                KSS KOMPUTER
+              <span className="text-[15px] font-bold tracking-[-0.02em] text-zinc-950">
+                KSS Komputer
               </span>
-              <span className="mt-0.5 text-[10px] font-medium text-zinc-500 dark:text-zinc-500">
-                PC Builder &amp; Hardware
+              <span className="mt-1 font-mono text-[11px] uppercase tracking-[0.06em] text-zinc-500">
+                PC Builder · Mangga Dua
               </span>
             </span>
           </Link>
 
-          <nav className="ml-2 hidden items-center gap-0.5 lg:flex">
-            {navLinks.map((item) => {
-              if ('desktopHidden' in item && item.desktopHidden) return null;
-              const isActive = isActiveLink(item.href);
-              const Icon = item.icon;
-              const isCompact = 'compact' in item && item.compact;
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={`${isCompact ? 'hidden xl:inline-flex' : 'inline-flex'} items-center gap-1.5 whitespace-nowrap rounded-md px-2 py-2 text-xs font-semibold transition-colors xl:px-2.5 ${
-                    isActive
-                      ? 'bg-orange-50 text-orange-700 dark:bg-orange-950/40 dark:text-orange-300'
-                      : 'text-zinc-600 hover:bg-zinc-50 hover:text-zinc-900 dark:text-zinc-300 dark:hover:bg-zinc-900 dark:hover:text-zinc-50'
-                  }`}
-                >
-                  <Icon className="h-3.5 w-3.5" />
-                  <span>{item.label}</span>
-                </Link>
-              );
-            })}
+          <nav aria-label="Navigasi utama" className="hidden h-full items-stretch lg:flex">
+            {navLinks
+              .filter((item) => !('desktopHidden' in item && item.desktopHidden))
+              .map((item) => {
+                const active = isActiveLink(item.href);
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    aria-current={active ? 'page' : undefined}
+                    className={`relative flex items-center whitespace-nowrap px-3 text-[13px] font-medium transition-colors duration-150 ${
+                      active ? 'text-zinc-950' : 'text-zinc-600 hover:text-zinc-950'
+                    }`}
+                  >
+                    {item.label}
+                    {active && (
+                      <span
+                        aria-hidden
+                        className="absolute inset-x-3 -bottom-px h-0.5 bg-orange-600"
+                      />
+                    )}
+                  </Link>
+                );
+              })}
           </nav>
 
           <div className="ml-auto flex items-center gap-2">
             <button
               type="button"
               onClick={() => setIsSearchOpen(true)}
-              className="flex h-9 items-center gap-2 rounded-md border border-zinc-200 bg-zinc-50 px-2.5 text-xs text-zinc-500 transition-colors hover:border-zinc-300 hover:bg-white dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-500 dark:hover:border-zinc-700 dark:hover:bg-zinc-800 xl:w-52 xl:justify-between"
-              title="Cari komponen, paket PC, atau aksesoris (Ctrl+K)"
+              aria-label="Cari (Ctrl+K)"
+              className="flex h-9 w-9 items-center justify-center gap-2 rounded-sm border border-zinc-300 bg-white text-zinc-500 transition-colors hover:border-zinc-900 hover:text-zinc-900 xl:w-60 xl:justify-between xl:px-3"
             >
-              <span className="flex items-center gap-1.5 truncate">
-                <Search className="h-3.5 w-3.5 shrink-0" />
-                <span className="hidden truncate xl:inline">Cari part, paket, gear...</span>
+              <span className="flex items-center gap-2">
+                <Search aria-hidden className="h-4 w-4" />
+                <span className="hidden text-[13px] xl:inline">Cari paket, part, gear</span>
               </span>
-              <kbd className="hidden rounded border border-zinc-300 bg-white px-1 font-mono text-[10px] text-zinc-500 dark:border-zinc-700 dark:bg-zinc-800 xl:inline-flex">
-                <span>⌘</span>K
+              <kbd className="hidden rounded-xs border border-zinc-200 bg-zinc-50 px-1.5 font-mono text-[11px] text-zinc-500 xl:inline">
+                Ctrl K
               </kbd>
             </button>
 
-            <Link href="/konsultasi" className="kss-btn-primary hidden h-9 px-3 xl:inline-flex">
-              <MessageSquareCheck className="h-3.5 w-3.5" />
-              <span>Konsultasi</span>
+            <Link href="/konsultasi" className="kss-btn-dark hidden h-9 px-3 xl:inline-flex">
+              Konsultasi
             </Link>
 
             <button
               type="button"
               onClick={openRetailCart}
-              className="relative inline-flex h-9 w-9 items-center justify-center rounded-md border border-zinc-200 bg-white text-zinc-700 transition-colors hover:bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-zinc-800"
-              title="Keranjang Belanja Eceran"
+              aria-label={`Keranjang eceran${retailCartCount ? `, ${retailCartCount} item` : ''}`}
+              className="relative inline-flex h-9 w-9 items-center justify-center rounded-sm border border-zinc-300 bg-white text-zinc-800 transition-colors hover:border-zinc-900"
             >
-              <ShoppingBag className="h-4 w-4" />
+              <ShoppingBag aria-hidden className="h-4 w-4" />
               {isMounted && retailCartCount > 0 && (
-                <span className="absolute -right-1.5 -top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-emerald-700 px-1 font-mono text-[10px] font-bold text-white">
+                <span className="absolute -right-1.5 -top-1.5 flex h-4 min-w-4 items-center justify-center rounded-xs bg-zinc-900 px-1 font-mono text-[11px] font-semibold tabular-nums text-white">
                   {retailCartCount}
                 </span>
               )}
@@ -205,60 +199,57 @@ export function Navbar({ searchProducts }: NavbarProps) {
             <button
               type="button"
               onClick={() => setIsMobileMenuOpen((prev) => !prev)}
-              className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-zinc-200 bg-white text-zinc-700 transition-colors hover:bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-zinc-800 lg:hidden"
-              aria-label="Toggle Menu"
+              className="inline-flex h-9 w-9 items-center justify-center rounded-sm border border-zinc-300 bg-white text-zinc-800 transition-colors hover:border-zinc-900 lg:hidden"
+              aria-label="Buka menu"
               aria-expanded={isMobileMenuOpen}
             >
-              {isMobileMenuOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
+              {isMobileMenuOpen ? (
+                <X aria-hidden className="h-4 w-4" />
+              ) : (
+                <Menu aria-hidden className="h-4 w-4" />
+              )}
             </button>
           </div>
         </div>
 
-        {/* Mobile menu */}
         {isMobileMenuOpen && (
-          <div className="border-t border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-950 lg:hidden">
-            <div className="kss-container py-3">
-              <nav className="grid grid-cols-1 gap-1 sm:grid-cols-2">
-                {navLinks.map((item) => {
-                  const isActive = isActiveLink(item.href);
-                  const Icon = item.icon;
-                  return (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      className={`flex items-center justify-between rounded-md px-3 py-2.5 text-xs font-semibold ${
-                        isActive
-                          ? 'bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-50'
-                          : 'text-zinc-600 hover:bg-zinc-50 dark:text-zinc-300 dark:hover:bg-zinc-900'
-                      }`}
-                    >
-                      <span className="flex items-center gap-2">
-                        <Icon className="h-4 w-4" />
-                        <span>{item.label}</span>
-                      </span>
-                      <span className="flex items-center gap-1.5">
-                        <ChevronRight className="h-3.5 w-3.5 text-zinc-500" />
-                      </span>
-                    </Link>
-                  );
-                })}
-              </nav>
-
-              <div className="mt-3 grid grid-cols-2 gap-2 border-t border-zinc-100 pt-3 dark:border-zinc-800">
-                <Link href="/konsultasi" className="kss-btn-primary">
-                  <MessageSquareCheck className="h-4 w-4" />
-                  <span>Konsultasi</span>
-                </Link>
-                <a
-                  href={`https://wa.me/${DEFAULT_WHATSAPP_PHONE}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="kss-btn-wa"
-                >
-                  <PhoneCall className="h-4 w-4" />
-                  <span>WhatsApp</span>
-                </a>
-              </div>
+          <div className="border-t border-zinc-200 bg-white lg:hidden">
+            <nav aria-label="Menu" className="kss-container divide-y divide-zinc-100">
+              {navLinks.map((item) => {
+                const Icon = item.icon;
+                const active = isActiveLink(item.href);
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    aria-current={active ? 'page' : undefined}
+                    className={`flex h-12 items-center gap-3 text-[15px] ${
+                      active ? 'font-semibold text-zinc-950' : 'text-zinc-700'
+                    }`}
+                  >
+                    <Icon
+                      aria-hidden
+                      className={`h-4 w-4 ${active ? 'text-orange-600' : 'text-zinc-400'}`}
+                    />
+                    {item.label}
+                    <ChevronRight aria-hidden className="ml-auto h-4 w-4 text-zinc-300" />
+                  </Link>
+                );
+              })}
+            </nav>
+            <div className="kss-container grid grid-cols-2 gap-2 border-t border-zinc-200 py-3">
+              <Link href="/konsultasi" className="kss-btn-primary">
+                Konsultasi
+              </Link>
+              <a
+                href={`https://wa.me/${DEFAULT_WHATSAPP_PHONE}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="kss-btn-wa"
+              >
+                <MessageCircle aria-hidden className="h-4 w-4" />
+                WhatsApp
+              </a>
             </div>
           </div>
         )}

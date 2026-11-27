@@ -24,7 +24,7 @@ const geistMono = Geist_Mono({
 });
 
 export const viewport: Viewport = {
-  themeColor: '#ea580c',
+  themeColor: '#09090b',
   width: 'device-width',
   initialScale: 1,
   maximumScale: 5,
@@ -86,7 +86,7 @@ export default function RootLayout({
       lang="id"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-zinc-50 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100 font-sans selection:bg-orange-700 selection:text-white pb-14 md:pb-0">
+      <body className="flex min-h-full flex-col bg-zinc-50 font-sans text-zinc-900 pb-[calc(3.5rem+env(safe-area-inset-bottom))] md:pb-0">
         <JsonLd data={[organizationSchema(), websiteSchema()]} />
         <Suspense fallback={null}>
           <Navbar searchProducts={searchProducts} />

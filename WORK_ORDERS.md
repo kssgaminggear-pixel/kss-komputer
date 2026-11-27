@@ -57,6 +57,9 @@ $env:VERCEL_TOKEN = (Get-Content .env.local | Select-String '^VERCEL_TOKEN=').Li
 
 ## 2. REFERENSI DESIGN SYSTEM (COPY-PASTE)
 
+> **DEPRECATED (v2).** Bagian ini (CTA biru, status PO biru, warna delta terbalik) sudah tidak berlaku.
+> Gunakan `DESIGN.md`, `UI_FIGCRAFT_SKILL.md`, dan `src/app/globals.css`. Jangan salin snippet dari bagian ini.
+
 ### 2.1 Palet Warna — WAJIB DIGUNAKAN
 
 ```
