@@ -11,7 +11,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "check:price": "node scripts/check-price-leak.mjs",
-    "validate:marketplace": "node scripts/validate-marketplace.mjs"
+    "validate:marketplace": "node scripts/validate-marketplace.mjs",
+    "sync:marketplace": "node scripts/sync/run.mjs"
   },
   "dependencies": {
     "@next/env": "16.4.6",

@@ -18,7 +18,7 @@
 ## Riset harga/produk Tokopedia (wajib pakai skrip ini)
 - Jangan pakai WebFetch/WebSearch untuk halaman Tokopedia (butuh JS, diblokir). Pakai `tools/tokopedia-scraper` yang dijalankan PEMILIK di PC-nya (Chrome asli, sesi login tersimpan).
 - Setup sekali: `cd tools\tokopedia-scraper && npm install`.
-- Katalog Toko: `node collect-store.mjs` (semua produk + etalase toko sendiri), lalu dari root `node scripts/marketplace/import-snapshot.mjs` dan `npm run validate:marketplace`.
+- Katalog Toko: `node collect-store.mjs` (semua produk + etalase toko sendiri), atau seluruh sinkron dari root `npm run sync:marketplace` (lihat docs/SYNC_PLAYBOOK.md).
 - Satu halaman/URL: `node scrape.mjs --url "<url toko/etalase/produk>"`; opsi `--max N`, `--debug`, `--cdp http://localhost:9222`. Jangan pakai `--query` (`/search?` dilarang robots.txt).
 - Jangan baca keluaran mentah `out/` ke konteks; ringkas dengan skrip. Olah teks massal pakai Hydrogen via 9router (key di `%USERPROFILE%\.kss-sync\.env`).
 - Captcha/blokir diselesaikan pemilik secara manual, jangan dilewati. Detail: `tools/tokopedia-scraper/README.md`.
