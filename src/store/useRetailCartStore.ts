@@ -8,7 +8,6 @@ export interface RetailCartInput {
   slug: string;
   name: string;
   unitPrice: number;
-  originalPrice?: number;
   tokopediaUrl: string;
 }
 
@@ -137,7 +136,7 @@ export const useRetailCartStore = create<RetailCartState>()(
       },
     }),
     {
-      name: 'kss-retail-cart-storage-v2',
+      name: 'kss-retail-cart-storage-v3',
       storage: createJSONStorage(() =>
         typeof window !== 'undefined' ? window.localStorage : memoryStorage
       ),
@@ -145,9 +144,10 @@ export const useRetailCartStore = create<RetailCartState>()(
   )
 );
 
-// Keranjang versi lama berisi data contoh dan harga komponen; hapus dari browser.
+// Keranjang versi lama berisi data contoh, harga komponen, atau harga diskon; hapus dari browser.
 if (typeof window !== 'undefined') {
   try {
+    window.localStorage.removeItem('kss-retail-cart-storage-v2');
     window.localStorage.removeItem('kss-retail-cart-storage-v1');
     window.localStorage.removeItem('kss-cart-storage');
   } catch {

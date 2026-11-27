@@ -23,7 +23,6 @@ import type { PublicPrebuiltPCDTO } from '@/lib/sanitizer';
 import type { ServicePackage } from '@/lib/types';
 import type { PublicMarketplaceProduct } from '@/lib/marketplace/types';
 import {
-  formatIDR,
   generateConsultationWAMessage,
   generateCustomBuildWAMessage,
   DEFAULT_WHATSAPP_PHONE,
@@ -528,9 +527,6 @@ export default function HomeClient({ prebuilts, topSellers, services }: HomeClie
                   </h3>
                   <div className="mt-0.5 flex flex-wrap items-baseline gap-x-2">
                     <Price value={item.priceIdr} className="text-[14px] text-zinc-950" />
-                    {item.originalPriceIdr && (
-                      <s className="kss-num text-meta text-zinc-500">{formatIDR(item.originalPriceIdr)}</s>
-                    )}
                     <span className="kss-num text-meta text-zinc-500">{item.soldLabel} terjual</span>
                   </div>
                 </div>
@@ -544,7 +540,6 @@ export default function HomeClient({ prebuilts, topSellers, services }: HomeClie
                       slug: item.slug,
                       name: item.name,
                       unitPrice: item.priceIdr,
-                      originalPrice: item.originalPriceIdr,
                       tokopediaUrl: item.tokopediaUrl,
                     });
                     showToast(`${item.name} ditambahkan ke keranjang`);

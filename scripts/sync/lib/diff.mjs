@@ -47,8 +47,8 @@ function toProduct(row, old, shelfIds, now) {
     slug: old?.slug || `${kebab(row.name)}-${row.id.slice(-6)}`,
     name: row.name.replace(/\s+/g, ' ').trim(),
     etalaseIds: row.etalaseIds.filter((id) => shelfIds.has(id)),
-    priceIdr: row.price,
-    ...(row.originalPrice > row.price ? { originalPriceIdr: row.originalPrice } : {}),
+    // Keputusan pemilik: situs memakai harga normal toko, bukan harga setelah diskon Tokopedia.
+    priceIdr: Math.max(row.price, row.originalPrice || 0),
     rating: Math.round(row.rating * 10) / 10,
     ...parseSold(row.soldLabel),
     stock: row.soldOut ? 'out_of_stock' : 'ready',
@@ -68,7 +68,7 @@ function toProduct(row, old, shelfIds, now) {
 }
 
 const comparable = (p) => [
-  p.name, p.etalaseIds, p.priceIdr, p.originalPriceIdr ?? null, p.rating, p.sold, p.soldLabel, p.stock, p.tokopediaUrl, p.status,
+  p.name, p.etalaseIds, p.priceIdr, p.rating, p.sold, p.soldLabel, p.stock, p.tokopediaUrl, p.status,
 ];
 
 export function diffCatalog(oldProducts, oldEtalase, snapshot) {

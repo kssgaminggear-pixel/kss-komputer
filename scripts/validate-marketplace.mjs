@@ -46,7 +46,7 @@ for (const p of products) {
   slugs.add(p.slug);
   if (typeof p.name !== 'string' || !p.name.trim()) fail(`${at}: nama kosong`);
   if (!Number.isInteger(p.priceIdr) || p.priceIdr <= 0 || p.priceIdr > 1_000_000_000) fail(`${at}: harga di luar batas`);
-  if (p.originalPriceIdr !== undefined && !(p.originalPriceIdr > p.priceIdr)) fail(`${at}: harga coret tidak lebih besar`);
+  if (p.originalPriceIdr !== undefined) fail(`${at}: harga coret tidak dipakai, priceIdr adalah harga normal`);
   if (!(p.rating >= 0 && p.rating <= 5)) fail(`${at}: rating di luar 0-5`);
   if (!Number.isInteger(p.sold) || p.sold < 0) fail(`${at}: jumlah terjual tidak valid`);
   if (!['ready', 'out_of_stock'].includes(p.stock)) fail(`${at}: stok tidak dikenal`);

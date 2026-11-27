@@ -6,7 +6,7 @@ import {
   getSearchEntries,
   isVisible,
 } from '@/lib/marketplace/server';
-import { discountPercent, matchesTokens, normalizeSearch, searchTokens, sortProducts } from '@/lib/marketplace/search';
+import { matchesTokens, normalizeSearch, searchTokens, sortProducts } from '@/lib/marketplace/search';
 import type { MarketplaceProduct } from '@/lib/marketplace/types';
 import { parseSold } from '../../../scripts/marketplace/parse-sold.mjs';
 
@@ -54,11 +54,9 @@ describe('pencarian dan urutan', () => {
     expect(matchesTokens(text, searchTokens('asus 27inch'))).toBe(false);
   });
 
-  it('mengurutkan harga dan menghitung diskon', () => {
+  it('mengurutkan harga', () => {
     const items = [{ ...base, name: 'b', priceIdr: 200 }, { ...base, name: 'a', priceIdr: 100 }];
     expect(sortProducts(items, 'termurah').map((p) => p.priceIdr)).toEqual([100, 200]);
-    expect(discountPercent({ priceIdr: 750, originalPriceIdr: 1000 })).toBe(25);
-    expect(discountPercent({ priceIdr: 750 })).toBe(0);
   });
 
   it('membaca label terjual Tokopedia', () => {

@@ -33,7 +33,6 @@ function toPublic(product: MarketplaceProduct): PublicMarketplaceProduct {
     name: product.name,
     etalaseIds: product.etalaseIds,
     priceIdr: product.priceIdr,
-    originalPriceIdr: product.originalPriceIdr,
     rating: product.rating,
     sold: product.sold,
     soldLabel: product.soldLabel,

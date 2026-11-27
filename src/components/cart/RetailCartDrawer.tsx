@@ -104,11 +104,6 @@ export function RetailCartDrawer() {
                     <span className="font-mono text-xs font-bold text-orange-700 dark:text-orange-400 tabular-nums">
                       {formatIDR(item.unitPrice)}
                     </span>
-                    {item.originalPrice && item.originalPrice > item.unitPrice && (
-                      <span className="font-mono text-micro text-zinc-500 line-through tabular-nums">
-                        {formatIDR(item.originalPrice)}
-                      </span>
-                    )}
                   </div>
                 </div>
 
