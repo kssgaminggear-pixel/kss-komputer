@@ -7,9 +7,9 @@
 > Aturan UI: `UI_FIGCRAFT_SKILL.md`. Aturan kerja: `AGENTS.md`.
 > Arsitektur: `ARCHITECTURE.md`.
 
-**Progress: 23 / 24 item (95.8%)** — Fase 1–4 dan 6–9 selesai; auto-deploy
-menunggu secret `VERCEL_TOKEN`. Fase 5 (simulator) dibatalkan: rakit custom kini
-ditangani via WhatsApp.
+**Progress: 24 / 24 item (100%)** — Fase 1–4 dan 6–9 selesai. Fase 5
+(simulator) dibatalkan: rakit custom kini ditangani via WhatsApp. Auto-deploy
+production sudah aktif lewat `VERCEL_TOKEN` di GitHub Actions.
 
 ---
 
@@ -146,9 +146,11 @@ ditangani via WhatsApp.
 - [x] **9.2 Uptime workflow**
   - `.github/workflows/uptime.yml` berjalan tiap 15 menit.
   - Retry 3×, membuka issue `[uptime]` saat gagal, menutup otomatis saat pulih.
-- [ ] **9.3 Auto-deploy production**
-  - Job `deploy` sudah ada di `ci.yml` dan hanya jalan setelah `verify` lulus.
-  - Menunggu repository secret `VERCEL_TOKEN`; tanpa secret job dilewati.
+- [x] **9.3 Auto-deploy production**
+  - Job `deploy` berjalan setelah `verify` lulus; sudah terbukti sukses pada
+    commit `936ade5` (verify + deploy hijau, produksi ikut ter-update).
+  - Membutuhkan repository secret `VERCEL_TOKEN`; tanpa secret job dilewati
+    dengan notice dan deploy manual tetap bisa dilakukan.
 
 ---
 
@@ -164,8 +166,8 @@ ditangani via WhatsApp.
 | 6 | 2 | 2 |
 | 7 | 8 | 8 |
 | 8 | 2 | 2 |
-| 9 | 3 | 2 |
-| **Total** | **24** | **23** |
+| 9 | 3 | 3 |
+| **Total** | **24** | **24** |
 
 ## Catatan Implementasi
 
