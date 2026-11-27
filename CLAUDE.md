@@ -15,6 +15,13 @@
 
 - File ini menimpa urutan baca di README.md & AGENTS.md §2 ("baca semua dokumen dulu"): baca dokumen hanya sesuai peta di bawah.
 
+## Riset harga/produk Tokopedia (wajib pakai skrip ini)
+- Jangan pakai WebFetch/WebSearch untuk halaman Tokopedia (butuh JS, diblokir). Pakai `tools/tokopedia-scraper` yang dijalankan PEMILIK di PC-nya (Chrome asli, sesi login tersimpan).
+- Setup sekali: `cd tools\tokopedia-scraper && npm install`.
+- Jalankan: `node scrape.mjs --query "rtx 4060" --pages 2` atau `--url "<url toko/etalase/produk>"`; opsi `--max N`, `--cdp http://localhost:9222` (tempel ke Chrome terbuka).
+- Keluaran: `tools/tokopedia-scraper/out/*.json|csv` (title, price, original_price, shop, location, rating, sold, url, image). Baca file hasilnya (stage), jangan scrape ulang.
+- Tanpa `device_bash` saya tidak bisa menjalankannya: minta pemilik menjalankan perintah lalu stage file `out/`. Captcha/blokir diselesaikan pemilik secara manual, jangan dilewati. Detail: `tools/tokopedia-scraper/README.md`.
+
 ## Aturan bisnis
 - Dilarang harga satuan part di publik; hanya total paket, delta upgrade, harga jasa. Data harga hanya lewat server-catalog/server-pricing + DTO tersanitasi (AGENTS.md §1.1).
 

@@ -1,0 +1,3 @@
+# Alat lokal (berisi cookie sesi di .profile/) tidak ikut diunggah saat deploy.
+/tools
+/Claude outputs

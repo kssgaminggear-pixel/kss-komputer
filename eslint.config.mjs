@@ -81,6 +81,9 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Profil Chrome dan hasil scraper (lokal, tidak di-commit).
+    "tools/**/.profile/**",
+    "tools/**/out/**",
   ]),
 ]);
 
