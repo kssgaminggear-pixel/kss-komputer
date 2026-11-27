@@ -54,7 +54,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'KSS Komputer — Paket PC Rakitan & Jasa Servis Jakarta',
     description:
-      'Paket PC siap pakai dengan satu harga total, upgrade berbasis delta, dan layanan jasa komputer bergaransi.',
+      'Paket PC siap pakai dengan satu harga total, pilihan upgrade, dan layanan jasa komputer bergaransi.',
     images: [
       {
         url: '/images/tokopedia/banner-pc-store.webp',

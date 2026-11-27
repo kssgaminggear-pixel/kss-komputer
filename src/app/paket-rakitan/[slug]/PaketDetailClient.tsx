@@ -16,7 +16,7 @@ import {
   Layers,
 } from 'lucide-react';
 import { ProductCategory, PublicHardwarePart } from '@/lib/types';
-import { formatIDR, formatDeltaIDR, formatWatt, generateWhatsAppOrderUrl, TOKOPEDIA_OFFICIAL_STORE_URL } from '@/lib/format';
+import { formatIDR, formatWatt, generateWhatsAppOrderUrl, TOKOPEDIA_OFFICIAL_STORE_URL } from '@/lib/format';
 import type { PublicPrebuiltDetailDTO } from '@/lib/sanitizer';
 import { getPackageImage } from '@/lib/package-images';
 import { PaymentInfo } from '@/components/payment/PaymentInfo';
@@ -104,7 +104,7 @@ export default function PaketDetailContent({ pkg }: { pkg: PublicPrebuiltDetailD
     window.open(url, '_blank', 'noopener,noreferrer');
   };
 
-  // Dapatkan opsi kandidat upgrade (delta sudah dihitung server)
+  // Dapatkan opsi kandidat upgrade
   const getCandidateOptions = (cat: ProductCategory) => {
     const basePartId = pkg.baseParts[cat]?.partId;
     const currentMobo = partsMap[selectedParts.motherboard || ''];
@@ -123,7 +123,6 @@ export default function PaketDetailContent({ pkg }: { pkg: PublicPrebuiltDetailD
       const isBase = basePartId === opt.part.id;
       return {
         part: opt.part,
-        delta: opt.deltaPrice,
         isSelected,
         isBase,
       };
@@ -238,12 +237,9 @@ export default function PaketDetailContent({ pkg }: { pkg: PublicPrebuiltDetailD
                   <span>Quick Spec Upgrader (Tukar / Upgrade Part)</span>
                 </h2>
                 <p className="text-xs text-zinc-500 mt-0.5">
-                  Klik opsi di bawah untuk upgrade kapasitas atau performa. Selisih harga dihitung otomatis tanpa membongkar modal part.
+                  Klik opsi di bawah untuk upgrade kapasitas atau performa. Total harga PC diperbarui otomatis.
                 </p>
               </div>
-              <span className="hidden shrink-0 rounded-sm bg-orange-500/10 border border-orange-500/20 px-2 py-1 font-mono text-micro font-bold text-orange-700 dark:text-orange-400 sm:inline-block">
-                Delta Pricing
-              </span>
             </div>
 
             <div className="space-y-6">
@@ -295,17 +291,11 @@ export default function PaketDetailContent({ pkg }: { pkg: PublicPrebuiltDetailD
                             <span className="truncate font-mono text-micro text-zinc-500">
                               {opt.part.sku} · {opt.part.warrantyYears} Th
                             </span>
-                            <span
-                              className={`shrink-0 rounded-md px-1.5 py-0.5 font-mono text-meta font-bold tabular-nums ${
-                                opt.delta === 0
-                                  ? 'bg-zinc-100 text-zinc-500 dark:bg-zinc-800/80 dark:text-zinc-500'
-                                  : opt.delta > 0
-                                  ? 'border border-amber-500/30 bg-amber-500/10 text-amber-600 dark:text-amber-400'
-                                  : 'border border-emerald-500/30 bg-emerald-500/10 text-emerald-700 dark:text-emerald-400'
-                              }`}
-                            >
-                              {opt.delta === 0 ? 'Termasuk' : formatDeltaIDR(opt.delta, true)}
-                            </span>
+                            {opt.isBase && (
+                              <span className="shrink-0 rounded-md bg-zinc-100 px-1.5 py-0.5 font-mono text-meta font-bold text-zinc-500 dark:bg-zinc-800/80">
+                                Bawaan paket
+                              </span>
+                            )}
                           </div>
                         </button>
                       ))}

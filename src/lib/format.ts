@@ -22,26 +22,6 @@ export function formatIDR(amount: number): string {
 }
 
 /**
- * Format selisih harga (Delta Pricing) untuk quick upgrader & konfigurator
- * - 0 => '[Termasuk dalam Paket]' atau 'Standar'
- * - > 0 => '+ Rp 450.000'
- * - < 0 => '- Rp 200.000'
- */
-export function formatDeltaIDR(diff: number, includeBrackets = false): string {
-  const safeDiff = Math.round(Number(diff) || 0);
-
-  if (safeDiff === 0) {
-    return includeBrackets ? '[Termasuk Paket]' : 'Termasuk Paket';
-  }
-
-  const sign = safeDiff > 0 ? '+ ' : '- ';
-  const absAmount = formatIDR(Math.abs(safeDiff));
-  const text = `${sign}${absAmount}`;
-
-  return includeBrackets ? `[${text}]` : text;
-}
-
-/**
  * Format angka Wattase (contoh: 450W)
  */
 export function formatWatt(watt: number): string {
