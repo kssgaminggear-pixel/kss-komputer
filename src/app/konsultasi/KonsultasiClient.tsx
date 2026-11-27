@@ -584,7 +584,7 @@ export default function KonsultasiClient({ prebuilts, services }: KonsultasiClie
         <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-emerald-500" />
         <span>
           Harga paket yang tampil adalah harga total siap pakai. Harga satuan komponen
-          tidak ditampilkan; penyesuaian upgrade dihitung sebagai selisih harga.
+          tidak ditampilkan; upgrade hanya mengubah total harga PC.
         </span>
       </div>
     </div>

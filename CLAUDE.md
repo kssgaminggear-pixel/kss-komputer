@@ -24,7 +24,7 @@
 - Captcha/blokir diselesaikan pemilik secara manual, jangan dilewati. Detail: `tools/tokopedia-scraper/README.md`.
 
 ## Aturan bisnis
-- Dilarang harga satuan part paket di publik; hanya total paket, delta upgrade, harga jasa, dan harga produk eceran /toko (data sinkron Tokopedia di `data/marketplace`, domain terpisah). Data paket hanya lewat server-catalog/server-pricing + DTO tanpa harga (AGENTS.md §1.1).
+- Dilarang harga satuan part paket di publik; hanya total paket (selisih upgrade juga tidak ditampilkan), harga jasa, dan harga produk eceran /toko (data sinkron Tokopedia di `data/marketplace`, domain terpisah). Data paket hanya lewat server-catalog/server-pricing + DTO tanpa harga (AGENTS.md §1.1).
 
 ## Visual v2 (detail: DESIGN.md; sumber kebenaran: src/app/globals.css)
 - Hero & footer chapter gelap `bg-zinc-950`, isi terang; hairline, bukan shadow besar.

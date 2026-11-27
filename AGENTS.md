@@ -21,10 +21,8 @@ harga apa pun.
 Yang boleh tampil di publik hanya:
 
 1. **Total Harga Paket Rakitan Jadi** — satu angka untuk seluruh unit.
-2. **Selisih harga upgrade** (`+ Rp xxx.xxx`, `- Rp xxx.xxx`, atau
-   `[Termasuk Paket]`) saat komponen diganti.
-3. Harga layanan jasa (`priceStartFrom`) dan biaya rakit.
-4. Harga produk eceran **Toko** (`/toko` dan section "Terlaris di toko" di
+2. Harga layanan jasa (`priceStartFrom`) dan biaya rakit.
+3. Harga produk eceran **Toko** (`/toko` dan section "Terlaris di toko" di
    beranda) yang bersumber dari listing Tokopedia resmi KSS
    (`data/marketplace/products.json`, field `priceIdr`). Data ini terpisah total
    dari `mock-data.ts`; dilarang menautkan atau menggabungkannya dengan komponen
@@ -38,7 +36,7 @@ DTO tersanitasi. Guard: `npm run check:price`.
 
 - Paket PC dijual sebagai satu unit siap pakai, termasuk rakit, cable management,
   stress test, dan garansi toko.
-- Upgrade dihitung sebagai delta terhadap komponen bawaan paket.
+- Upgrade hanya mengubah total harga paket; selisih per komponen tidak ditampilkan.
 - Jasa dijual per layanan, bukan per komponen.
 - Checkout resmi diarahkan ke Tokopedia atau WhatsApp; tidak ada pembayaran
   langsung di aplikasi.
