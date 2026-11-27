@@ -10,7 +10,8 @@
     "lint": "eslint",
     "test": "vitest run",
     "test:watch": "vitest",
-    "check:price": "node scripts/check-price-leak.mjs"
+    "check:price": "node scripts/check-price-leak.mjs",
+    "validate:marketplace": "node scripts/validate-marketplace.mjs"
   },
   "dependencies": {
     "@next/env": "16.4.6",

@@ -12,7 +12,8 @@ export const STORE_WARRANTY_TEXT =
 
 export const ADMIN_WHATSAPP = '6289675437066';
 export const TECHNICIAN_WHATSAPP = '6289675437066';
-export const TOKOPEDIA_URL = 'https://tk.tokopedia.com/ZSpeToWkH/';
+export const TOKOPEDIA_STORE_URL = 'https://www.tokopedia.com/ksskomputer';
+export const TOKOPEDIA_URL = TOKOPEDIA_STORE_URL;
 export const SITE_URL = 'https://kss-komputer-seven.vercel.app';
 
 export const DEFAULT_ASSEMBLY_FEE = 150000;

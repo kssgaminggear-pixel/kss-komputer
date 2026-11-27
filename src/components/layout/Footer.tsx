@@ -19,8 +19,7 @@ const FOOTER_LINKS = [
   { href: '/konsultasi', label: 'Konsultasi budget' },
   { href: '/paket-rakitan', label: 'Paket PC siap pakai' },
   { href: '/cek-pesanan', label: 'Cek status pengerjaan' },
-  { href: '/komponen', label: 'Katalog komponen' },
-  { href: '/aksesoris', label: 'Aksesoris & gaming gear' },
+  { href: '/toko', label: 'Toko produk' },
   { href: '/tentang-kami', label: 'Tentang KSS Komputer' },
 ];
 

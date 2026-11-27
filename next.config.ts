@@ -6,8 +6,12 @@ const nextConfig: NextConfig = {
   partialPrefetching: true,
   async redirects() {
     return [
-      { source: '/produk/:slug', destination: '/komponen/:slug', permanent: true },
-      { source: '/katalog', destination: '/komponen', permanent: true },
+      // Slug lama tidak sama dengan slug Tokopedia, jadi diarahkan ke pencarian Toko.
+      { source: '/komponen', destination: '/toko', permanent: true },
+      { source: '/aksesoris', destination: '/toko', permanent: true },
+      { source: '/komponen/:slug', destination: '/toko?q=:slug', permanent: true },
+      { source: '/produk/:slug', destination: '/toko?q=:slug', permanent: true },
+      { source: '/katalog', destination: '/toko', permanent: true },
       { source: '/simulasi', destination: '/paket-rakitan', permanent: true },
     ];
   },

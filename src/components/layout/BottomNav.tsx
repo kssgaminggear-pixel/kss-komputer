@@ -6,13 +6,12 @@ import { usePathname } from 'next/navigation';
 import {
   Home,
   PcCase,
-  Layers,
   ShoppingBag,
+  Store,
   Wrench,
   ClipboardList,
   Menu,
   X,
-  Headphones,
   MessageSquareText,
   Building2,
   ChevronRight,
@@ -44,18 +43,12 @@ export function BottomNav() {
       icon: PcCase,
       isActive: pathname.startsWith('/paket-rakitan'),
     },
-    {
-      href: '/cek-pesanan',
-      label: 'Pesanan',
-      icon: ClipboardList,
-      isActive: pathname.startsWith('/cek-pesanan'),
-    },
+    { href: '/toko', label: 'Toko', icon: Store, isActive: pathname.startsWith('/toko') },
   ];
 
   const moreItems = [
     { href: '/konsultasi', label: 'Konsultasi budget', icon: MessageSquareText },
-    { href: '/komponen', label: 'Komponen eceran', icon: Layers },
-    { href: '/aksesoris', label: 'Aksesoris & gear', icon: Headphones },
+    { href: '/cek-pesanan', label: 'Cek pesanan', icon: ClipboardList },
     { href: '/tentang-kami', label: 'Tentang kami', icon: Building2 },
   ];
 

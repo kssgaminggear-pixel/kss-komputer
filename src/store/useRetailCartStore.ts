@@ -1,19 +1,19 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
-import { PublicAccessory } from '../lib/types';
 import { formatIDR, DEFAULT_WHATSAPP_PHONE } from '../lib/format';
 
-export interface RetailCartItem {
+/** Produk eceran Toko yang bisa masuk keranjang. */
+export interface RetailCartInput {
   id: string;
-  sku: string;
+  slug: string;
   name: string;
-  brand: string;
-  category: string;
   unitPrice: number;
   originalPrice?: number;
+  tokopediaUrl: string;
+}
+
+export interface RetailCartItem extends RetailCartInput {
   quantity: number;
-  warrantyYears?: number;
-  isAccessory?: boolean;
 }
 
 export interface RetailCartState {
@@ -21,7 +21,7 @@ export interface RetailCartState {
   isOpen: boolean;
 
   // Actions
-  addItem: (product: PublicAccessory, quantity?: number) => void;
+  addItem: (product: RetailCartInput, quantity?: number) => void;
   removeItem: (itemId: string) => void;
   updateQuantity: (itemId: string, quantity: number) => void;
   clearCart: () => void;
@@ -49,46 +49,28 @@ export const useRetailCartStore = create<RetailCartState>()(
       items: [],
       isOpen: false,
 
-      addItem: (product: PublicAccessory, quantity = 1) => {
+      addItem: (product, quantity = 1) => {
         const safeQty = Math.max(1, Math.round(quantity));
-        const unitPrice = product.retailPrice || 0;
 
         set((state) => {
-          const existingIndex = state.items.findIndex((item) => item.id === product.id);
-
-          if (existingIndex >= 0) {
-            const updatedItems = [...state.items];
-            updatedItems[existingIndex] = {
-              ...updatedItems[existingIndex],
-              quantity: updatedItems[existingIndex].quantity + safeQty,
-            };
-            return { items: updatedItems, isOpen: true };
-          }
-
-          const newItem: RetailCartItem = {
-            id: product.id,
-            sku: product.sku,
-            name: product.name,
-            brand: product.brand,
-            category: product.category,
-            unitPrice,
-            originalPrice: product.originalPrice,
-            quantity: safeQty,
-            warrantyYears: product.warrantyYears,
-            isAccessory: true,
-          };
-
-          return { items: [...state.items, newItem], isOpen: true };
+          const exists = state.items.some((item) => item.id === product.id);
+          const items = exists
+            ? state.items.map((item) =>
+                // Harga diambil dari data terbaru saat produk ditambahkan lagi.
+                item.id === product.id ? { ...product, quantity: item.quantity + safeQty } : item
+              )
+            : [...state.items, { ...product, quantity: safeQty }];
+          return { items, isOpen: true };
         });
       },
 
-      removeItem: (itemId: string) => {
+      removeItem: (itemId) => {
         set((state) => ({
           items: state.items.filter((item) => item.id !== itemId),
         }));
       },
 
-      updateQuantity: (itemId: string, quantity: number) => {
+      updateQuantity: (itemId, quantity) => {
         const safeQty = Math.round(quantity);
         set((state) => {
           if (safeQty <= 0) {
@@ -119,60 +101,56 @@ export const useRetailCartStore = create<RetailCartState>()(
       },
 
       generateWhatsAppCheckoutUrl: (
-        phone: string = DEFAULT_WHATSAPP_PHONE,
-        customerName?: string,
-        notes?: string
+        phone = DEFAULT_WHATSAPP_PHONE,
+        customerName,
+        notes
       ) => {
         const cleanPhone = phone.replace(/[^0-9]/g, '');
         const items = get().items;
         const total = get().getTotalPrice();
 
-        const lines: string[] = [
-          `*PESANAN BELANJA ECERAN & AKSESORIS — KSS KOMPUTER*`,
-          `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`,
-        ];
+        const lines: string[] = [`*PESANAN TOKO — KSS KOMPUTER*`];
 
         if (customerName) {
-          lines.push(`*Nama Pemesan:* ${customerName}`);
+          lines.push(`*Nama pemesan:* ${customerName}`);
         }
 
         lines.push(`\n*DAFTAR BARANG:*`);
         items.forEach((item, index) => {
           const subtotal = item.unitPrice * item.quantity;
           lines.push(
-            `${index + 1}. *${item.name}* (${item.sku})\n   ${item.quantity}x @ ${formatIDR(
-              item.unitPrice
-            )} = *${formatIDR(subtotal)}*`
+            `${index + 1}. *${item.name}*\n   ${item.quantity}x @ ${formatIDR(item.unitPrice)} = *${formatIDR(subtotal)}*\n   ${item.tokopediaUrl}`
           );
         });
 
-        lines.push(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`);
-        lines.push(`*TOTAL BELANJA:* ${formatIDR(total)}`);
-        lines.push(`*Garansi:* Resmi Distributor Indonesia`);
+        lines.push(`\n*TOTAL:* ${formatIDR(total)}`);
 
         if (notes) {
           lines.push(`\n*Catatan:* ${notes}`);
         }
 
         lines.push(
-          `\nMohon konfirmasi ketersediaan stok fisik dan info ongkos kirim / no rekening pembayaran. Terima kasih!`
+          `\nMohon konfirmasi harga terbaru, ketersediaan stok, dan ongkos kirim. Terima kasih!`
         );
 
-        const message = lines.join('\n');
-        return `https://wa.me/${cleanPhone}?text=${encodeURIComponent(message)}`;
+        return `https://wa.me/${cleanPhone}?text=${encodeURIComponent(lines.join('\n'))}`;
       },
     }),
     {
-      name: 'kss-retail-cart-storage-v1',
-      version: 1,
-      // Keranjang lama bisa berisi komponen beserta harga satuannya; sisakan aksesoris saja.
-      migrate: (persisted) => {
-        const state = persisted as { items?: RetailCartItem[] } | undefined;
-        return { ...state, items: (state?.items ?? []).filter((item) => item.isAccessory) } as RetailCartState;
-      },
+      name: 'kss-retail-cart-storage-v2',
       storage: createJSONStorage(() =>
         typeof window !== 'undefined' ? window.localStorage : memoryStorage
       ),
     }
   )
 );
+
+// Keranjang versi lama berisi data contoh dan harga komponen; hapus dari browser.
+if (typeof window !== 'undefined') {
+  try {
+    window.localStorage.removeItem('kss-retail-cart-storage-v1');
+    window.localStorage.removeItem('kss-cart-storage');
+  } catch {
+    /* penyimpanan browser diblokir */
+  }
+}
