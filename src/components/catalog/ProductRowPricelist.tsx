@@ -8,7 +8,7 @@ import {
   Check,
   Shield,
   ExternalLink,
-  MessageSquareCheck,
+  MessageCircle,
 } from 'lucide-react';
 import { PublicHardwarePart } from '@/lib/types';
 import { formatIDR, generateCustomBuildWAMessage } from '@/lib/format';
@@ -77,16 +77,16 @@ export function ProductRowPricelist({
     >
       {/* Kolom 1: SKU & Brand */}
       <td className="py-2.5 px-3 align-top font-mono w-32 shrink-0">
-        <div className="text-[11px] font-bold text-zinc-900 dark:text-zinc-100 flex items-center gap-1.5">
+        <div className="text-meta font-bold text-zinc-900 dark:text-zinc-100 flex items-center gap-1.5">
           <span>{product.brand}</span>
           {showCategoryBadge && (
-            <span className="text-[9px] uppercase px-1 py-0.2 bg-zinc-200 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300 rounded-sm">
+            <span className="text-micro uppercase px-1 py-0.5 bg-zinc-200 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300 rounded-sm">
               {product.category}
             </span>
           )}
         </div>
         <div
-          className="text-[10px] text-zinc-500 dark:text-zinc-500 truncate max-w-[110px]"
+          className="text-micro text-zinc-500 dark:text-zinc-500 truncate max-w-[110px]"
           title={`SKU: ${product.sku}`}
         >
           {product.sku}
@@ -117,26 +117,26 @@ export function ProductRowPricelist({
           {/* Status Stok Badge */}
           <div>
             {product.stockStatus === 'ready' ? (
-              <span className="inline-flex items-center px-1.5 py-0.5 font-mono text-[10px] font-bold uppercase rounded-md bg-emerald-50 text-emerald-700 border border-emerald-500/20 dark:bg-emerald-950/40 dark:text-emerald-400">
+              <span className="inline-flex items-center px-1.5 py-0.5 font-mono text-micro font-bold uppercase rounded-md bg-emerald-50 text-emerald-700 border border-emerald-500/20 dark:bg-emerald-950/40 dark:text-emerald-400">
                 Ready Stock
               </span>
             ) : product.stockStatus === 'low' ? (
-              <span className="inline-flex items-center px-1.5 py-0.5 font-mono text-[10px] font-bold uppercase rounded-md bg-amber-50 text-amber-700 border border-amber-500/20 dark:bg-amber-950/40 dark:text-amber-400">
+              <span className="inline-flex items-center px-1.5 py-0.5 font-mono text-micro font-bold uppercase rounded-md bg-amber-50 text-amber-700 border border-amber-500/20 dark:bg-amber-950/40 dark:text-amber-400">
                 Stok Terbatas
               </span>
             ) : product.stockStatus === 'po' ? (
-              <span className="inline-flex items-center px-1.5 py-0.5 font-mono text-[10px] font-bold uppercase rounded-md bg-orange-50 text-orange-700 border border-orange-500/20 dark:bg-orange-950/40 dark:text-orange-400">
+              <span className="inline-flex items-center px-1.5 py-0.5 font-mono text-micro font-bold uppercase rounded-md bg-orange-50 text-orange-700 border border-orange-500/20 dark:bg-orange-950/40 dark:text-orange-400">
                 Pre-Order
               </span>
             ) : (
-              <span className="inline-flex items-center px-1.5 py-0.5 font-mono text-[10px] font-bold uppercase rounded-md bg-red-50 text-red-700 border border-red-500/20 dark:bg-red-950/40 dark:text-red-400">
+              <span className="inline-flex items-center px-1.5 py-0.5 font-mono text-micro font-bold uppercase rounded-md bg-red-50 text-red-700 border border-red-500/20 dark:bg-red-950/40 dark:text-red-400">
                 Habis
               </span>
             )}
           </div>
 
           {/* Garansi Resmi */}
-          <div className="flex items-center gap-1 text-[10px] font-mono text-zinc-500 dark:text-zinc-500">
+          <div className="flex items-center gap-1 text-micro font-mono text-zinc-500 dark:text-zinc-500">
             <Shield className="w-3 h-3 shrink-0 text-zinc-500" />
             <span className="truncate" title={`Garansi Resmi ${product.warrantyYears} Tahun ${distributor ? `(${distributor})` : ''}`}>
               Resmi {product.warrantyYears} Thn
@@ -152,7 +152,7 @@ export function ProductRowPricelist({
           {formatIDR(product.retailPrice)}
         </div>
         {hasDiscount && (
-          <div className="flex items-center justify-end gap-1 font-mono text-[10px]">
+          <div className="flex items-center justify-end gap-1 font-mono text-micro">
             <span className="text-zinc-500 line-through">
               {formatIDR(product.originalPrice!)}
             </span>
@@ -175,9 +175,9 @@ export function ProductRowPricelist({
             target="_blank"
             rel="noopener noreferrer"
             title="Konsultasi rakit PC custom dengan komponen ini via WhatsApp"
-            className="inline-flex items-center gap-1 px-2 py-1 font-mono text-[11px] font-semibold rounded-md border bg-zinc-100 text-zinc-800 hover:bg-zinc-200 border-zinc-200 dark:bg-zinc-800 dark:text-zinc-200 dark:hover:bg-zinc-700 dark:border-zinc-700 transition-colors"
+            className="inline-flex items-center gap-1 px-2 py-1 font-mono text-meta font-semibold rounded-md border bg-zinc-100 text-zinc-800 hover:bg-zinc-200 border-zinc-200 dark:bg-zinc-800 dark:text-zinc-200 dark:hover:bg-zinc-700 dark:border-zinc-700 transition-colors"
           >
-            <MessageSquareCheck className="w-3 h-3 text-emerald-700 dark:text-emerald-400" />
+            <MessageCircle className="w-3 h-3 text-emerald-700 dark:text-emerald-400" />
             <span>Rakit</span>
           </a>
 
@@ -205,7 +205,7 @@ export function ProductRowPricelist({
                 ? 'Stok produk habis'
                 : 'Tambahkan langsung ke Keranjang Belanja'
             }
-            className={`inline-flex items-center gap-1 px-2 py-1 font-mono text-[11px] font-semibold rounded-md border transition-colors ${
+            className={`inline-flex items-center gap-1 px-2 py-1 font-mono text-meta font-semibold rounded-md border transition-colors ${
               product.stockStatus === 'out_of_stock'
                 ? 'opacity-40 cursor-not-allowed bg-zinc-100 text-zinc-500 border-zinc-200 dark:bg-zinc-800 dark:border-zinc-700'
                 : justAddedCart

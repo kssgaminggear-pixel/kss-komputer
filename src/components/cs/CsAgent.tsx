@@ -262,8 +262,8 @@ export function CsAgent() {
               className="h-8 w-8 rounded-sm bg-white/10"
             />
             <div className="min-w-0 flex-1">
-              <div className="text-xs font-black tracking-tight">KSS CS Agent</div>
-              <div className="flex items-center gap-1.5 font-mono text-[10px] text-orange-100">
+              <div className="text-xs font-bold tracking-tight">KSS CS Agent</div>
+              <div className="flex items-center gap-1.5 font-mono text-micro text-orange-100">
                 <span className="h-1.5 w-1.5 rounded-full bg-emerald-300" />
                 <span>Online 24 Jam · AI + teknisi</span>
               </div>
@@ -272,7 +272,7 @@ export function CsAgent() {
               href={waUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex h-7 items-center gap-1 rounded-sm bg-white/15 px-2 text-[10px] font-bold text-white transition-colors hover:bg-white/25"
+              className="inline-flex h-7 items-center gap-1 rounded-sm bg-white/15 px-2 text-micro font-bold text-white transition-colors hover:bg-white/25"
             >
               <PhoneCall className="h-3 w-3" />
               WA
@@ -295,7 +295,7 @@ export function CsAgent() {
                 className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
               >
                 <div
-                  className={`max-w-[85%] rounded-md px-3 py-2 text-[11px] leading-relaxed ${
+                  className={`max-w-[85%] rounded-md px-3 py-2 text-meta leading-relaxed ${
                     message.role === 'user'
                       ? 'bg-orange-700 text-white'
                       : 'border border-zinc-200 bg-white text-zinc-700'
@@ -314,7 +314,7 @@ export function CsAgent() {
 
             {isLoading && !hasStreaming && (
               <div className="flex justify-start">
-                <div className="inline-flex items-center gap-1.5 rounded-md border border-zinc-200 bg-white px-3 py-2 text-[11px] text-zinc-500">
+                <div className="inline-flex items-center gap-1.5 rounded-md border border-zinc-200 bg-white px-3 py-2 text-meta text-zinc-500">
                   <Loader2 className="h-3 w-3 animate-spin" />
                   Mengetik...
                 </div>
@@ -328,7 +328,7 @@ export function CsAgent() {
                     key={prompt}
                     type="button"
                     onClick={() => void sendMessage(prompt)}
-                    className="rounded-sm border border-zinc-200 bg-white px-2 py-1 text-left text-[10px] font-semibold text-zinc-600 transition-colors hover:border-orange-300 hover:text-orange-700"
+                    className="rounded-sm border border-zinc-200 bg-white px-2 py-1 text-left text-micro font-semibold text-zinc-600 transition-colors hover:border-orange-300 hover:text-orange-700"
                   >
                     {prompt}
                   </button>
@@ -359,7 +359,7 @@ export function CsAgent() {
                 <Send className="h-3.5 w-3.5" />
               </button>
             </form>
-            <div className="mt-1.5 flex items-center justify-between gap-2 font-mono text-[9px] text-zinc-500">
+            <div className="mt-1.5 flex items-center justify-between gap-2 font-mono text-micro text-zinc-500">
               <span className="flex items-center gap-1">
                 <ShieldCheck className="h-3 w-3 text-emerald-500" />
                 Harga part tidak ditampilkan

@@ -59,7 +59,7 @@ export default function JasaLayananPage() {
           <div className="text-xs text-zinc-500">
             <span className="font-mono font-bold text-zinc-900 dark:text-zinc-100">{services.length}</span> layanan tersedia
           </div>
-          <div className="flex items-center gap-1.5 font-mono text-[11px] text-emerald-700 dark:text-emerald-400">
+          <div className="flex items-center gap-1.5 font-mono text-meta text-emerald-700 dark:text-emerald-400">
             <ShieldCheck className="h-3.5 w-3.5" />
             Garansi pengerjaan toko
           </div>
@@ -79,15 +79,15 @@ export default function JasaLayananPage() {
                   </span>
                   <div className="flex items-center gap-1.5">
                     {srv.badge && (
-                      <span className="rounded-md border border-amber-500/20 bg-amber-500/10 px-1.5 py-0.5 font-mono text-[9px] font-bold uppercase text-amber-700 dark:text-amber-400">
+                      <span className="rounded-md border border-amber-500/20 bg-amber-500/10 px-1.5 py-0.5 font-mono text-micro font-bold uppercase text-amber-700 dark:text-amber-400">
                         {srv.badge}
                       </span>
                     )}
-                    <span className="font-mono text-[10px] text-zinc-500">{srv.duration}</span>
+                    <span className="font-mono text-micro text-zinc-500">{srv.duration}</span>
                   </div>
                 </div>
 
-                <h2 className="text-base font-black leading-snug tracking-tight text-zinc-900 dark:text-zinc-100">
+                <h2 className="text-base font-bold leading-snug tracking-tight text-zinc-900 dark:text-zinc-100">
                   {srv.title}
                 </h2>
 
@@ -100,17 +100,17 @@ export default function JasaLayananPage() {
                   )}
                 </div>
 
-                <p className="mt-2 line-clamp-2 text-[11px] leading-relaxed text-zinc-500 dark:text-zinc-500">
+                <p className="mt-2 line-clamp-2 text-meta leading-relaxed text-zinc-500 dark:text-zinc-500">
                   {srv.description}
                 </p>
 
                 <div className="mt-3 border-t border-zinc-100 pt-3 dark:border-zinc-800">
-                  <div className="mb-1.5 font-mono text-[9px] font-bold uppercase tracking-wider text-zinc-500">
+                  <div className="mb-1.5 font-mono text-micro font-bold uppercase tracking-wider text-zinc-500">
                     Cakupan
                   </div>
                   <ul className="space-y-1">
                     {srv.features.slice(0, 3).map((feat, idx) => (
-                      <li key={idx} className="flex items-start gap-1.5 text-[11px] text-zinc-600 dark:text-zinc-500">
+                      <li key={idx} className="flex items-start gap-1.5 text-meta text-zinc-600 dark:text-zinc-500">
                         <Check className="mt-0.5 h-3 w-3 shrink-0 text-emerald-500" />
                         <span className="line-clamp-1">{feat}</span>
                       </li>
@@ -159,7 +159,7 @@ export default function JasaLayananPage() {
             </details>
           ))}
         </div>
-        <div className="mt-3 text-center text-[11px] text-zinc-500">
+        <div className="mt-3 text-center text-meta text-zinc-500">
           Butuh layanan lain?{' '}
           <a
             href={`https://wa.me/${DEFAULT_WHATSAPP_PHONE}`}
@@ -182,19 +182,19 @@ export default function JasaLayananPage() {
         <div className="grid grid-cols-1 gap-4 text-xs text-zinc-600 dark:text-zinc-500 sm:grid-cols-3">
           <div className="rounded-md border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-950">
             <div className="mb-1 font-bold text-zinc-900 dark:text-zinc-100">1. Anti-Static Handling</div>
-            <p className="text-[11px] leading-relaxed">
+            <p className="text-meta leading-relaxed">
               Peralatan antistatik digunakan untuk melindungi motherboard dan prosesor dari lonjakan listrik statis yang tidak kasat mata.
             </p>
           </div>
           <div className="rounded-md border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-950">
             <div className="mb-1 font-bold text-zinc-900 dark:text-zinc-100">2. Thermal Paste Berlisensi</div>
-            <p className="text-[11px] leading-relaxed">
+            <p className="text-meta leading-relaxed">
               Menggunakan pasta termal resmi Thermal Grizzly Kryonaut atau Arctic MX-4 dengan konduktivitas panas di atas 8.5 W/mK.
             </p>
           </div>
           <div className="rounded-md border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-950">
             <div className="mb-1 font-bold text-zinc-900 dark:text-zinc-100">3. Laporan Uji Suhu &amp; Beban</div>
-            <p className="text-[11px] leading-relaxed">
+            <p className="text-meta leading-relaxed">
               Setelah pengerjaan, unit melalui pengujian Cinebench &amp; Furmark dengan dokumentasi suhu idle dan full load sebelum diserahkan.
             </p>
           </div>

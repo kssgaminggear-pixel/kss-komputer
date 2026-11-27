@@ -165,7 +165,7 @@ export default function AdminQuotesClient({
     <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
       {/* Toast Feedback */}
       {toastMessage && (
-        <div className="fixed bottom-20 right-4 z-50 rounded-sm border border-zinc-800 bg-zinc-900 px-4 py-2.5 text-xs font-semibold text-white shadow-xl flex items-center gap-2">
+        <div className="fixed bottom-20 right-4 z-50 rounded-sm border border-zinc-800 bg-zinc-900 px-4 py-2.5 text-xs font-semibold text-white shadow-sm flex items-center gap-2">
           <CheckCircle2 className="h-4 w-4 text-emerald-400" />
           <span>{toastMessage}</span>
         </div>
@@ -173,9 +173,9 @@ export default function AdminQuotesClient({
 
       {/* Breadcrumb */}
       <nav className="flex items-center gap-1.5 text-xs text-zinc-500 mb-4 font-mono">
-        <Link href="/" className="hover:text-blue-600">Beranda</Link>
+        <Link href="/" className="hover:text-orange-700">Beranda</Link>
         <ChevronRight className="h-3.5 w-3.5 text-zinc-500" />
-        <Link href="/admin/pricing" className="hover:text-blue-600">Admin Portal</Link>
+        <Link href="/admin/pricing" className="hover:text-orange-700">Admin Portal</Link>
         <ChevronRight className="h-3.5 w-3.5 text-zinc-500" />
         <span className="text-zinc-900 dark:text-zinc-100 font-semibold">WA Consultation Quotation Maker</span>
         <AdminLogoutButton />
@@ -186,14 +186,14 @@ export default function AdminQuotesClient({
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
             <div className="flex items-center gap-2 mb-1">
-              <span className="rounded-xs bg-blue-500/10 border border-blue-500/20 px-2 py-0.5 text-[10px] font-mono font-bold text-blue-600 dark:text-blue-400 uppercase">
+              <span className="rounded-xs bg-orange-600/10 border border-orange-600/20 px-2 py-0.5 text-micro font-mono font-bold text-orange-700 dark:text-orange-400 uppercase">
                 Admin Quotation Generator
               </span>
               <span className="text-xs font-mono text-zinc-500">
                 {quotes.length} Dokumen Penawaran
               </span>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-zinc-900 dark:text-zinc-100">
+            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
               Generator Surat Penawaran Konsultasi WhatsApp
             </h1>
             <p className="mt-1 text-xs sm:text-sm text-zinc-600 dark:text-zinc-500 max-w-3xl leading-relaxed">
@@ -203,7 +203,7 @@ export default function AdminQuotesClient({
 
           <button
             onClick={() => setIsCreating(!isCreating)}
-            className="flex items-center gap-2 rounded-sm bg-blue-600 hover:bg-blue-700 text-white px-4 py-2.5 text-xs font-bold transition-colors shadow-xs shrink-0"
+            className="flex items-center gap-2 rounded-sm bg-orange-700 hover:bg-orange-800 text-white px-4 py-2.5 text-xs font-bold transition-colors shadow-xs shrink-0"
           >
             <Plus className="h-4 w-4" />
             <span>{isCreating ? 'Tutup Form' : '+ Buat Penawaran Baru'}</span>
@@ -215,14 +215,14 @@ export default function AdminQuotesClient({
       {isCreating && (
         <form
           onSubmit={handleCreateSubmit}
-          className="rounded-sm border border-blue-500/30 bg-blue-500/5 p-6 mb-8 space-y-6 dark:bg-blue-950/10"
+          className="rounded-sm border border-orange-600/30 bg-orange-600/5 p-6 mb-8 space-y-6 dark:bg-orange-950/10"
         >
-          <div className="flex items-center justify-between border-b border-blue-500/20 pb-3">
+          <div className="flex items-center justify-between border-b border-orange-600/20 pb-3">
             <h2 className="text-base font-bold text-zinc-900 dark:text-zinc-100 flex items-center gap-2">
-              <FileText className="h-4 w-4 text-blue-600" />
+              <FileText className="h-4 w-4 text-orange-700" />
               <span>Formulir Racikan Surat Penawaran Konsumen</span>
             </h2>
-            <span className="text-xs font-mono text-blue-600 font-bold">Auto Code Generated</span>
+            <span className="text-xs font-mono text-orange-700 font-bold">Auto Code Generated</span>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -236,7 +236,7 @@ export default function AdminQuotesClient({
                 placeholder="Contoh: Bima Satria"
                 value={custName}
                 onChange={(e) => setCustName(e.target.value)}
-                className="w-full rounded-sm border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950 px-3 py-1.5 text-xs text-zinc-900 dark:text-zinc-100 focus:outline-none focus:border-blue-600"
+                className="w-full rounded-sm border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950 px-3 py-1.5 text-xs text-zinc-900 dark:text-zinc-100 focus:outline-none focus:border-orange-700"
               />
             </div>
 
@@ -250,7 +250,7 @@ export default function AdminQuotesClient({
                 placeholder="0812xxxxxxxx"
                 value={custWa}
                 onChange={(e) => setCustWa(e.target.value)}
-                className="w-full rounded-sm border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950 px-3 py-1.5 text-xs text-zinc-900 dark:text-zinc-100 focus:outline-none focus:border-blue-600"
+                className="w-full rounded-sm border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950 px-3 py-1.5 text-xs text-zinc-900 dark:text-zinc-100 focus:outline-none focus:border-orange-700"
               />
             </div>
 
@@ -263,7 +263,7 @@ export default function AdminQuotesClient({
                 step={500000}
                 value={budget}
                 onChange={(e) => setBudget(Number(e.target.value))}
-                className="w-full rounded-sm border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950 px-3 py-1.5 text-xs font-mono text-zinc-900 dark:text-zinc-100 focus:outline-none focus:border-blue-600"
+                className="w-full rounded-sm border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950 px-3 py-1.5 text-xs font-mono text-zinc-900 dark:text-zinc-100 focus:outline-none focus:border-orange-700"
               />
             </div>
           </div>
@@ -278,13 +278,13 @@ export default function AdminQuotesClient({
                 const candidates = parts.filter((p) => p.category === slot.category);
                 return (
                   <div key={slot.category} className="space-y-1">
-                    <span className="text-[11px] font-mono text-zinc-500 uppercase">{slot.label}</span>
+                    <span className="text-micro font-mono text-zinc-500 uppercase">{slot.label}</span>
                     <select
                       value={selectedParts[slot.category] || ''}
                       onChange={(e) =>
                         setSelectedParts((prev) => ({ ...prev, [slot.category]: e.target.value }))
                       }
-                      className="w-full rounded-sm border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950 px-2 py-1.5 text-xs text-zinc-900 dark:text-zinc-100 focus:outline-none focus:border-blue-600"
+                      className="w-full rounded-sm border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950 px-2 py-1.5 text-xs text-zinc-900 dark:text-zinc-100 focus:outline-none focus:border-orange-700"
                     >
                       {candidates.map((c) => (
                         <option key={c.id} value={c.id}>
@@ -315,7 +315,7 @@ export default function AdminQuotesClient({
             </div>
 
             <div>
-              <label className="block text-[11px] font-mono text-zinc-500 mb-0.5">
+              <label className="block text-meta font-mono text-zinc-500 mb-0.5">
                 Harga Final Penawaran (IDR):
               </label>
               <input
@@ -323,7 +323,7 @@ export default function AdminQuotesClient({
                 step={50000}
                 value={finalPrice}
                 onChange={(e) => setCustomFinalPrice(Number(e.target.value))}
-                className="w-full rounded-sm border border-blue-500 bg-blue-50/20 dark:bg-blue-950/30 px-2 py-1 text-xs font-mono font-bold text-blue-600 dark:text-blue-400 tabular-nums"
+                className="w-full rounded-sm border border-orange-600 bg-orange-50/20 dark:bg-orange-950/30 px-2 py-1 text-xs font-mono font-bold text-orange-700 dark:text-orange-400 tabular-nums"
               />
             </div>
 
@@ -346,7 +346,7 @@ export default function AdminQuotesClient({
             </button>
             <button
               type="submit"
-              className="px-5 py-2 rounded-sm bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold shadow-xs"
+              className="px-5 py-2 rounded-sm bg-orange-700 hover:bg-orange-800 text-white text-xs font-bold shadow-xs"
             >
               Simpan &amp; Terbitkan Penawaran
             </button>
@@ -358,7 +358,7 @@ export default function AdminQuotesClient({
       <div className="rounded-sm border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900/60 shadow-xs overflow-x-auto">
         <table className="w-full text-left text-xs border-collapse">
           <thead>
-            <tr className="border-b border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 text-zinc-500 font-mono text-[11px] uppercase">
+            <tr className="border-b border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 text-zinc-500 font-mono text-micro uppercase">
               <th className="py-2.5 px-3">Kode Penawaran</th>
               <th className="py-2.5 px-3">Nama Konsumen &amp; WA</th>
               <th className="py-2.5 px-3">Target Budget</th>
@@ -371,15 +371,15 @@ export default function AdminQuotesClient({
             {quotes.map((quote) => (
               <tr key={quote.id} className="hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-colors">
                 <td className="py-3 px-3 whitespace-nowrap">
-                  <span className="font-bold text-blue-600 dark:text-blue-400 block">
+                  <span className="font-bold text-orange-700 dark:text-orange-400 block">
                     {quote.quoteCode}
                   </span>
-                  <span className="text-[10px] text-zinc-500">Dibuat: {quote.createdAt}</span>
+                  <span className="text-micro text-zinc-500">Dibuat: {quote.createdAt}</span>
                 </td>
 
                 <td className="py-3 px-3 font-sans whitespace-nowrap">
                   <div className="font-bold text-zinc-900 dark:text-zinc-100">{quote.customerName}</div>
-                  <div className="font-mono text-[11px] text-zinc-500">{quote.customerWa}</div>
+                  <div className="font-mono text-meta text-zinc-500">{quote.customerWa}</div>
                 </td>
 
                 <td className="py-3 px-3 whitespace-nowrap tabular-nums text-zinc-500">
@@ -392,11 +392,11 @@ export default function AdminQuotesClient({
 
                 <td className="py-3 px-3 text-center whitespace-nowrap">
                   <span
-                    className={`px-2 py-0.5 rounded-xs text-[10px] font-bold uppercase ${
+                    className={`px-2 py-0.5 rounded-xs text-micro font-bold uppercase ${
                       quote.status === 'accepted'
                         ? 'bg-emerald-500/10 text-emerald-700 border border-emerald-500/20'
                         : quote.status === 'sent'
-                        ? 'bg-blue-500/10 text-blue-600 border border-blue-500/20'
+                        ? 'bg-orange-50 text-orange-700 border border-orange-700/25'
                         : 'bg-zinc-100 dark:bg-zinc-800 text-zinc-500'
                     }`}
                   >
@@ -409,7 +409,7 @@ export default function AdminQuotesClient({
                     <button
                       type="button"
                       onClick={() => handleSendWA(quote)}
-                      className="flex items-center gap-1 px-2.5 py-1 rounded-sm bg-emerald-700 hover:bg-emerald-800 text-white text-[11px] font-bold transition-colors"
+                      className="flex items-center gap-1 px-2.5 py-1 rounded-sm bg-zinc-900 hover:bg-zinc-700 text-white text-meta font-bold transition-colors"
                       title="Kirim Link Penawaran Resmi via WhatsApp"
                     >
                       <Send className="h-3 w-3" />

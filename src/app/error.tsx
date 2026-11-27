@@ -21,10 +21,10 @@ export default function Error({
       <div className="inline-flex h-12 w-12 items-center justify-center rounded-md border border-red-200 bg-red-50 text-red-600 dark:border-red-900/50 dark:bg-red-950/40 dark:text-red-400">
         <AlertTriangle className="h-6 w-6" />
       </div>
-      <div className="mt-4 font-mono text-[11px] font-bold uppercase tracking-wider text-red-600 dark:text-red-400">
+      <div className="mt-4 font-mono text-micro font-bold uppercase tracking-wider text-red-600 dark:text-red-400">
         Gagal memuat
       </div>
-      <h1 className="mt-1 text-2xl font-black tracking-tight text-zinc-900 dark:text-zinc-100 sm:text-3xl">
+      <h1 className="mt-1 text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100 sm:text-3xl">
         Halaman ini gagal dimuat
       </h1>
       <p className="mt-2 max-w-md text-xs leading-relaxed text-zinc-600 dark:text-zinc-500">
@@ -32,7 +32,7 @@ export default function Error({
         Kalau masih gagal, tim KSS siap membantu lewat WhatsApp.
       </p>
       {error.digest && (
-        <p className="mt-3 font-mono text-[10px] text-zinc-500">
+        <p className="mt-3 font-mono text-micro text-zinc-500">
           Kode laporan: {error.digest}
         </p>
       )}
