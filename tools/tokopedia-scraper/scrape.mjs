@@ -24,6 +24,7 @@ function parseArgs(argv) {
     else if (k === '--out') a.out = path.resolve(v());
     else if (k === '--profile') a.profile = path.resolve(v());
     else if (k === '--wait') a.wait = Number(v()) || 180;
+    else if (k === '--debug') a.debug = true;
     else if (k === '-h' || k === '--help') a.help = true;
   }
   return a;
@@ -43,22 +44,26 @@ function num(v) {
 function toProduct(o) {
   if (!o || typeof o !== 'object') return null;
   const title = o.name || o.title || o.productName;
-  const url = o.url || o.productUrl || o.uri;
-  const priceRaw = o.price?.number ?? o.price?.text ?? o.priceInt ?? o.price ?? o.priceText;
+  const url = o.product_url || o.url || o.productUrl || o.uri;
+  const priceRaw = o.price?.number ?? o.price?.text_idr ?? o.price?.text ?? o.priceInt ?? o.price ?? o.priceText;
   const price = num(typeof priceRaw === 'object' ? null : priceRaw);
   if (!title || !url || price == null) return null;
-  const orig = num(o.price?.original ?? o.originalPrice ?? o.slashPriceInfo?.originalPrice ?? o.priceOriginal);
+  const orig = num(o.price?.original ?? o.campaign?.original_price_fmt ?? o.originalPrice ?? o.slashPriceInfo?.originalPrice ?? o.priceOriginal);
   let sold = o.countSold ?? o.sold ?? o.txStats?.countSold ?? null;
-  const lg = Array.isArray(o.labelGroups) ? o.labelGroups.find((l) => /terjual/i.test(l?.title || '')) : null;
+  const groups = o.label_groups || o.labelGroups;
+  const lg = Array.isArray(groups) ? groups.find((l) => /terjual/i.test(l?.title || '')) : null;
   if (lg) sold = lg.title;
-  const img = o.mediaURL?.image || o.mediaURL?.image300 || o.imageUrl || o.image?.url || o.media?.[0]?.urlOriginal || o.media?.[0]?.url300 || '';
+  const img = o.primary_image?.resize300 || o.primary_image?.original || o.mediaURL?.image || o.mediaURL?.image300 || o.imageUrl || o.image?.url || o.media?.[0]?.urlOriginal || o.media?.[0]?.url300 || '';
   return {
+    id: String(o.product_id ?? o.id ?? ''),
     title: String(title),
     price,
-    original_price: orig,
+    original_price: orig || null,
     shop: o.shop?.name || o.shopName || '',
     location: o.shop?.city || o.shop?.location || o.shopLocation || '',
-    rating: o.rating ?? o.ratingAverage ?? o.averageRating ?? '',
+    // Daftar produk toko menaruh rating di stats.averageRating (stats.rating bernilai 0).
+    rating: o.stats ? (o.stats.averageRating ?? '') : (o.rating ?? o.ratingAverage ?? o.averageRating ?? ''),
+    review_count: o.stats?.reviewCount ?? o.countReview ?? '',
     sold: sold ?? '',
     url: String(url).split('?')[0],
     image: String(img),
@@ -152,7 +157,7 @@ async function readDom(page) {
 }
 
 // ---------- output ----------
-const COLS = ['title', 'price', 'original_price', 'shop', 'location', 'rating', 'sold', 'url', 'image'];
+const COLS = ['id', 'review_count', 'title', 'price', 'original_price', 'shop', 'location', 'rating', 'sold', 'url', 'image'];
 const csvCell = (v) => {
   const s = v == null ? '' : String(v);
   return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
@@ -171,6 +176,11 @@ function save(items, outDir, label) {
 function pageUrl(base, n) {
   if (n === 1) return base;
   const u = new URL(base);
+  // Daftar produk toko memakai /<toko>/product/page/<n>, bukan ?page=.
+  if (/\/product\/?$/.test(u.pathname)) {
+    u.pathname = u.pathname.replace(/\/?$/, `/page/${n}`);
+    return u.toString();
+  }
   u.searchParams.set('page', String(n));
   return u.toString();
 }
@@ -197,10 +207,22 @@ async function main() {
 
   const found = new Map();
   const add = (p) => { if (!found.has(p.url)) found.set(p.url, p); };
+  const debugDir = path.join(args.out, 'debug');
+  let seq = 0;
+  if (args.debug) fs.mkdirSync(debugDir, { recursive: true });
+  let etalase = [];
   page.on('response', async (res) => {
     try {
       if (!/graphql/i.test(res.url()) || res.request().method() !== 'POST') return;
       const body = await res.json();
+      if (args.debug) {
+        const op = new URL(res.url()).pathname.split('/').pop().replace(/[^A-Za-z0-9_-]/g, '') || 'graphql';
+        fs.writeFileSync(path.join(debugDir, `${String(++seq).padStart(3, '0')}-${op}.json`), JSON.stringify(body));
+      }
+      for (const part of Array.isArray(body) ? body : [body]) {
+        const list = part?.data?.shopShowcasesByShopID?.result;
+        if (Array.isArray(list)) etalase = list.map((e, i) => ({ id: String(e.id), name: e.title, count: e.count, type: e.type, position: i, url: e.link }));
+      }
       const out = [];
       walk(body, out);
       out.forEach(add);
@@ -219,11 +241,23 @@ async function main() {
       if (!ok) { console.log('Berhenti: halaman masih terblokir. Hasil sebelumnya tetap disimpan.'); aborted = true; break; }
     }
     await autoScroll(page);
+    // Respons produk kadang baru selesai setelah scroll; tunggu maks 15 dtk sebelum fallback.
+    for (let i = 0; i < 30 && found.size === before; i++) await sleep(500);
     if (found.size === before) {
       console.log('  GraphQL tidak menghasilkan produk, pakai fallback DOM');
       (await readDom(page)).filter((p) => p.title && p.url).forEach(add);
     }
     console.log(`  total unik: ${found.size}`);
+    if (args.debug) {
+      const info = await page.evaluate(() => {
+        const ids = {};
+        document.querySelectorAll('[data-testid]').forEach((e) => { const k = e.getAttribute('data-testid'); ids[k] = (ids[k] || 0) + 1; });
+        const links = [...new Set([...document.querySelectorAll('a[href*="/ksskomputer/"]')].map((a) => a.href.split('?')[0]))];
+        return { url: location.href.split('?')[0], title: document.title, testids: ids, shopLinks: links, text: document.body.innerText.slice(0, 5000) };
+      });
+      fs.writeFileSync(path.join(debugDir, `page-${n}.json`), JSON.stringify(info, null, 2));
+      await page.screenshot({ path: path.join(debugDir, `page-${n}.png`) }).catch(() => {});
+    }
     if (args.max && found.size >= args.max) break;
     if (n < args.pages) await sleep(jitter());
   }
@@ -232,6 +266,7 @@ async function main() {
   if (args.max) items = items.slice(0, args.max);
   if (items.length) {
     const b = save(items, args.out, label);
+    if (etalase.length) fs.writeFileSync(b + '-etalase.json', JSON.stringify(etalase, null, 2));
     console.log(`\nSelesai: ${items.length} produk\n  ${b}.json\n  ${b}.csv`);
   } else {
     console.log('\nTidak ada produk terambil. Cek jendela Chrome dan selektor DOM di readDom().');

@@ -33,6 +33,10 @@ node scrape.mjs --url "<url>" --cdp http://localhost:9222
 
 ## Catatan
 - `out/` dan `.profile/` jangan di-commit (cookie sesi ada di `.profile/`).
-- Bentuk GraphQL dan selektor DOM Tokopedia bisa berubah. Penarik respons bersifat generik (mencari objek berisi name+url+price), tetapi selektor kartu di `readDom()` perlu dicek bila hasil kosong. [VERIFIKASI] belum diuji terhadap situs sungguhan.
+- Teruji 2026-11-27 pada `https://www.tokopedia.com/ksskomputer/product` (80 produk per halaman, halaman lanjut `/product/page/N`). Short link `tk.tokopedia.com` hanya membuka beranda toko (2 produk), jadi pakai URL daftar produk.
+- Data daftar produk: `rating` berasal dari `stats.averageRating`; `review_count` selalu 0 di respons ini sehingga tidak bisa dipakai sebagai jumlah ulasan. Daftar etalase toko disimpan di `out/<waktu>-<label>-etalase.json` bila halaman memuatnya.
+- `--debug` menyimpan respons GraphQL, info halaman, dan screenshot ke `out/debug/`.
+- `--query` membuka `/search?`, yang dilarang `robots.txt` Tokopedia. Jangan dipakai.
+- Bentuk GraphQL dan selektor DOM bisa berubah. Selektor kartu di `readDom()` tidak menghasilkan apa pun pada halaman toko saat diuji.
 - Hanya data publik toko sendiri/riset harga wajar. Patuhi ketentuan Tokopedia; jangan dijalankan dalam volume besar.
 - Hasil jangan langsung dipublikasikan di web KSS. Aturan harga AGENTS.md §1.1 tetap berlaku.
