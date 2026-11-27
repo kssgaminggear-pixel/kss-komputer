@@ -184,7 +184,11 @@ schtasks /Query /TN "KSS CS Proxy"    # cek autostart
 ```
 
 Autostart proxy terdaftar sebagai scheduled task "KSS CS Proxy" (on logon).
-9Router harus tetap berjalan agar CS aktif.
+Tugas ini tidak punya batas waktu eksekusi, mengulang tiap 5 menit, dan
+me-restart otomatis bila proses mati — jadi CS tidak lagi mati setelah 72 jam
+seperti batas default Windows. 9Router harus tetap berjalan agar CS aktif.
+Status kesehatan bisa dicek di `/api/health`; bila `checks.cs` bukan `ok`,
+pastikan 9Router (20128), proxy (20129), dan Funnel Tailscale hidup.
 
 ---
 

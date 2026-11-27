@@ -51,10 +51,17 @@ jobs:
             ].join('\n');
 
             if (data.total_count > 0) {
+              const issue = data.items[0];
+              const lastUpdate = new Date(issue.updated_at).getTime();
+              const oneHour = 60 * 60 * 1000;
+              if (Date.now() - lastUpdate < oneHour) {
+                console.log(`Insiden #${issue.number} baru diperbarui, komentar dilewati agar tidak spam.`);
+                return;
+              }
               await github.rest.issues.createComment({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                issue_number: data.items[0].number,
+                issue_number: issue.number,
                 body,
               });
             } else {
