@@ -155,12 +155,14 @@ Balasan memakai Server-Sent Events:
 Alur produksi:
 
 ```
-Browser -> Vercel /api/cs -> https://desktop-kqj59jg.tail588f47.ts.net
+Browser -> Vercel /api/cs -> tunnel HTTPS (alamatnya hanya di env, jangan ditulis di repo)
         -> scripts/cs-proxy.mjs (127.0.0.1:20129, wajib secret)
         -> 9Router (127.0.0.1:20128) -> combo New-Combo
 ```
 
 - Proxy hanya mengizinkan `POST /v1/chat/completions` dan `GET /v1/models`.
+- Proxy membatasi ukuran permintaan, `max_tokens`, dan jumlah permintaan per menit
+  (`scripts/cs-proxy-lib.mjs`). Setelah mengubahnya, jalankan ulang task "KSS CS Proxy".
 - Dashboard 9Router tidak ikut terekspos; root Funnel menjawab `401`.
 - Widget otomatis disembunyikan bila `/api/cs` melaporkan endpoint tidak siap,
   jadi tidak ada tombol CS mati saat laptop/9Router offline.
@@ -169,7 +171,7 @@ Env yang dibutuhkan (lokal di `.env.local`, produksi di Vercel):
 
 | Variabel | Isi |
 | --- | --- |
-| `NINEROUTER_BASE_URL` | `https://desktop-kqj59jg.tail588f47.ts.net/v1` |
+| `NINEROUTER_BASE_URL` | URL tunnel ke proxy, diakhiri `/v1` (rahasia operasional, jangan ditulis di repo) |
 | `NINEROUTER_API_KEY` | secret proxy (bukan API key 9Router) |
 | `NINEROUTER_MODEL` | `New-Combo` |
 | `NINEROUTER_TUNNEL_SECRET` | secret yang sama, dibaca proxy lokal |
