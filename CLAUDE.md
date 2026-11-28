@@ -2,7 +2,7 @@
 
 ## Hemat token (wajib)
 - Jangan list/rekursif/grep: node_modules, .next, .git, package-lock.json, tsconfig.tsbuildinfo. List hanya `src/<subfolder>` satu per satu.
-- File besar jangan dibaca utuh; pakai `grep -n` lalu `sed -n 'a,bp'`: src/lib/mock-data.ts (74KB), HomeClient.tsx (35KB), FilterSidebar.tsx (28KB), KonsultasiClient.tsx (25KB), PaketDetailClient.tsx (22KB). WORK_ORDERS.md (46KB, riwayat) jangan dibaca kecuali diminta.
+- File besar jangan dibaca utuh; pakai `grep -n` lalu `sed -n 'a,bp'`: src/lib/mock-data.ts (74KB), FilterSidebar.tsx (28KB), KonsultasiClient.tsx (25KB), PaketDetailClient.tsx (22KB). WORK_ORDERS.md (46KB, riwayat) jangan dibaca kecuali diminta.
 - Batch tool independen; jangan baca ulang file yang baru ditulis.
 - Eksplorasi/audit besar → sub-agent, ringkasan ≤15 baris. Hasil panjang ke file.
 - Laporan akhir: apa berubah + apa belum diverifikasi. Jangan ulangi isi dokumen.

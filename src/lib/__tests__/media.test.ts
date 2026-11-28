@@ -3,8 +3,11 @@ import path from 'node:path';
 import { describe, expect, it } from 'vitest';
 import products from '../../../data/marketplace/products.json';
 import { diffCatalog as diffUntyped } from '../../../scripts/sync/lib/diff.mjs';
+import { validateSlots } from '../../../scripts/media/validate-slots.mjs';
+import slots from '@/lib/media/slots.json';
 import { FALLBACK_ART, MEDIA_MANIFEST, mediaBlur, mediaCandidates } from '@/lib/media/resolve';
 
+const validate = validateSlots as unknown as (slots: object, manifest: object) => string[];
 const PUBLIC = path.join(process.cwd(), 'public');
 
 function publicImages(dir: string): string[] {
@@ -26,6 +29,26 @@ describe('media', () => {
   it('manifest cocok dengan isi public/images (jalankan npm run media:build bila gagal)', () => {
     expect(Object.keys(MEDIA_MANIFEST).sort()).toEqual(publicImages(path.join(PUBLIC, 'images')).sort());
     expect(MEDIA_MANIFEST[FALLBACK_ART]).toBeDefined();
+  });
+
+  it('slot gambar lolos aturan (npm run media:check)', () => {
+    expect(validate(slots, MEDIA_MANIFEST)).toEqual([]);
+  });
+
+  it('menolak ilustrasi di slot foto asli dan gambar yang terlalu kecil', () => {
+    const manifest = { '/images/ilustrasi/ilu-a.webp': { width: 300 } };
+    const errors = validate(
+      {
+        'paket.contoh': {
+          desktop: '/images/ilustrasi/ilu-a.webp',
+          alt: 'Ilustrasi',
+          kind: 'illustration',
+          maxCssWidth: 400,
+        },
+      },
+      manifest
+    );
+    expect(errors).toHaveLength(2);
   });
 
   it('placeholder blur kecil dan hanya untuk gambar raster', () => {

@@ -1,0 +1,54 @@
+{
+  "home.hero": {
+    "desktop": "/images/ilustrasi/ilu-home-hero-d-v1.webp",
+    "mobile": "/images/ilustrasi/ilu-home-hero-m-v1.webp",
+    "alt": "Ilustrasi PC rakitan terbuka di meja kerja",
+    "kind": "illustration",
+    "focus": { "desktop": "70% 50%", "mobile": "50% 20%" },
+    "maxCssWidth": 760
+  },
+  "home.bento.jasa": {
+    "desktop": "/images/ilustrasi/ilu-jasa-rakit-v1.webp",
+    "alt": "Ilustrasi perakitan PC di alas antistatis",
+    "kind": "illustration",
+    "focus": { "desktop": "50% 50%" },
+    "maxCssWidth": 360
+  },
+  "home.bento.konsultasi": {
+    "desktop": "/images/ilustrasi/ilu-konsultasi-v1.webp",
+    "alt": "Ilustrasi catatan kebutuhan dan komponen PC",
+    "kind": "illustration",
+    "focus": { "desktop": "78% 50%" },
+    "maxCssWidth": 360
+  },
+  "home.konsultasi": {
+    "desktop": "/images/ilustrasi/ilu-konsultasi-v1.webp",
+    "alt": "Ilustrasi catatan kebutuhan dan komponen PC",
+    "kind": "illustration",
+    "maxCssWidth": 760
+  },
+  "jasa.rakit-pc-custom": {
+    "desktop": "/images/ilustrasi/ilu-jasa-rakit-v1.webp",
+    "alt": "Ilustrasi perakitan PC di alas antistatis",
+    "kind": "illustration",
+    "maxCssWidth": 420
+  },
+  "jasa.rakit-pc-cable-management-premium": {
+    "desktop": "/images/ilustrasi/ilu-jasa-kabel-v1.webp",
+    "alt": "Ilustrasi kabel PC yang ditata rapi",
+    "kind": "illustration",
+    "maxCssWidth": 420
+  },
+  "jasa.deep-cleaning-repaste": {
+    "desktop": "/images/ilustrasi/ilu-jasa-cleaning-v1.webp",
+    "alt": "Ilustrasi pembersihan pendingin prosesor dan pasta termal",
+    "kind": "illustration",
+    "maxCssWidth": 420
+  },
+  "jasa.upgrade-ssd-nvme": {
+    "desktop": "/images/ilustrasi/ilu-jasa-upgrade-v1.webp",
+    "alt": "Ilustrasi pemasangan SSD NVMe di motherboard",
+    "kind": "illustration",
+    "maxCssWidth": 420
+  }
+}

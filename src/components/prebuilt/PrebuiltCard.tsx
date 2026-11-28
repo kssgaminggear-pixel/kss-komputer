@@ -12,6 +12,7 @@ import {
 } from '@/lib/format';
 import type { PublicPrebuiltPCDTO } from '@/lib/sanitizer';
 import { getPackageImage } from '@/lib/package-images';
+import { getSpecPills } from '@/lib/package-specs';
 import { Price } from '@/components/ui/Price';
 
 export interface PrebuiltCardProps {
@@ -63,16 +64,7 @@ export function PrebuiltCard({ pkg }: PrebuiltCardProps) {
     { label: 'SSD', value: ssdPart?.name || 'NVMe ready' },
   ];
 
-  const totalWattage = partsList.reduce(
-    (sum, item) => sum + (item.part.wattage || 0) * item.quantity,
-    0
-  );
-
-  const specPills = [
-    cpuPart?.specs.socket,
-    ramPart?.specs.ramType,
-    totalWattage > 0 ? `${totalWattage}W` : null,
-  ].filter(Boolean) as string[];
+  const specPills = getSpecPills(pkg);
 
   const packageImage = getPackageImage(pkg.slug);
 

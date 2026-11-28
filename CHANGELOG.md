@@ -33,9 +33,18 @@ ATURAN UNTUK SEMUA AGENT (baca sebelum menulis entri)
 - Audit visual otomatis (`npm run audit:visual`) untuk porsi gambar, gambar rusak, foto
   pecah, dan dinding teks di layar HP dan desktop.
 - Manifest media (`npm run media:build`) dan ukuran asli foto di data Toko.
+- Beranda baru dominan gambar: hero dengan gambar besar, empat kartu kategori, kartu jasa
+  bergambar, dan kartu konsultasi. Gambar buatan AI selalu berlabel "Ilustrasi".
+- Daftar slot gambar (`slots.json`) dengan pemeriksaan `npm run media:check`, agar gambar
+  bisa diganti dari satu tempat.
 
 ### Changed
 
+- Beranda menampilkan tiga paket dan delapan produk terlaris sebagai kartu foto. Filter paket,
+  form konsultasi, deretan pintasan, dan tombol keranjang di Beranda diganti tautan ke halaman
+  masing-masing.
+- Tabel perbandingan di Beranda dilipat dan bisa dibuka saat diperlukan.
+- Tombol "CS 24 Jam" berwarna gelap agar tidak bersaing dengan aksi utama.
 - Pengaturan optimasi gambar Next 16 dibatasi ke aset situs dan disimpan di cache 1 hari.
 - Gambar utama tiap halaman dimuat lebih dulu.
 
