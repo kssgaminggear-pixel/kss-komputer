@@ -4,6 +4,13 @@ const nextConfig: NextConfig = {
   /* config options here */
   cacheComponents: true,
   partialPrefetching: true,
+  images: {
+    // Wajib sejak Next 16; nilai di luar daftar dibulatkan ke yang terdekat.
+    qualities: [60, 75, 85],
+    localPatterns: [{ pathname: '/images/**', search: '' }],
+    // 1 hari, bukan lebih lama: sinkron menimpa foto Toko dengan nama file yang sama.
+    minimumCacheTTL: 86400,
+  },
   async redirects() {
     return [
       // Slug lama tidak sama dengan slug Tokopedia, jadi diarahkan ke pencarian Toko.

@@ -1,10 +1,10 @@
 import React from 'react';
 import type { Metadata } from 'next';
-import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { ChevronRight, ExternalLink, MessageCircle, Package } from 'lucide-react';
+import { ChevronRight, ExternalLink, MessageCircle } from 'lucide-react';
 import { JsonLd } from '@/components/seo/JsonLd';
+import { MediaImage } from '@/components/ui/MediaImage';
 import { AddToCartButton } from '@/components/toko/AddToCartButton';
 import { ProductCard, RatingLine } from '@/components/toko/ProductCard';
 import { Price } from '@/components/ui/Price';
@@ -97,18 +97,14 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
       <div className="grid gap-6 lg:grid-cols-2">
         <div className="relative aspect-square w-full overflow-hidden rounded-md border border-zinc-200 bg-white">
-          {product.image ? (
-            <Image
-              src={product.image}
-              alt={product.name}
-              fill
-              preload
-              sizes="(min-width:1024px) 600px, 100vw"
-              className="object-contain"
-            />
-          ) : (
-            <Package aria-hidden className="absolute inset-0 m-auto h-12 w-12 text-zinc-400" />
-          )}
+          <MediaImage
+            src={product.image}
+            alt={product.name}
+            lcp
+            sizes="(min-width:1024px) 600px, 100vw"
+            className="object-contain"
+            fallbackLabel="Foto menyusul"
+          />
         </div>
 
         <div className="min-w-0">

@@ -1,8 +1,8 @@
 'use client';
 
 import React from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
+import { MediaImage } from '@/components/ui/MediaImage';
 import { ShieldCheck, ExternalLink, MessageCircle, ArrowRight } from 'lucide-react';
 import { ProductCategory, PublicHardwarePart } from '@/lib/types';
 import {
@@ -80,16 +80,14 @@ export function PrebuiltCard({ pkg }: PrebuiltCardProps) {
     <article className="group flex flex-col rounded-md border border-zinc-200 bg-white transition-colors duration-150 hover:border-zinc-400">
       {/* 1. Header */}
       <div className="flex gap-4 p-5">
-        {packageImage && (
-          <Link
-            href={`/paket-rakitan/${pkg.slug}`}
-            tabIndex={-1}
-            aria-hidden
-            className="relative h-[120px] w-24 shrink-0 overflow-hidden rounded-sm border border-zinc-200 bg-zinc-100"
-          >
-            <Image src={packageImage} alt="" fill sizes="96px" className="object-cover" />
-          </Link>
-        )}
+        <Link
+          href={`/paket-rakitan/${pkg.slug}`}
+          tabIndex={-1}
+          aria-hidden
+          className="relative h-[120px] w-24 shrink-0 overflow-hidden rounded-sm border border-zinc-200 bg-zinc-100"
+        >
+          <MediaImage src={packageImage} alt="" sizes="96px" />
+        </Link>
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-1.5">
             <span className="kss-tag kss-tag-accent">{pkg.platform}</span>

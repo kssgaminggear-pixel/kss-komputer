@@ -1,9 +1,9 @@
 'use client';
 
 import React, { useState, useEffect, useMemo, useRef } from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
-import { Search, X, ArrowRight, Package } from 'lucide-react';
+import { Search, X, ArrowRight } from 'lucide-react';
+import { MediaImage } from '@/components/ui/MediaImage';
 import { matchesTokens, normalizeSearch, searchTokens } from '@/lib/marketplace/search';
 import type { SearchEntry } from '@/lib/marketplace/types';
 
@@ -118,11 +118,7 @@ export function CommandSearchModal({ isOpen, onClose, products }: CommandSearchM
                   <li key={entry.slug}>
                     <Link href={`/toko/${entry.slug}`} onClick={onClose} className="flex items-center gap-3 rounded-md px-3 py-2 hover:bg-zinc-100">
                       <span className="relative h-10 w-10 shrink-0 overflow-hidden rounded-md bg-zinc-100">
-                        {entry.image ? (
-                          <Image src={entry.image} alt="" fill sizes="40px" className="object-contain" />
-                        ) : (
-                          <Package aria-hidden className="absolute inset-0 m-auto h-4 w-4 text-zinc-400" />
-                        )}
+                        <MediaImage src={entry.image} alt="" sizes="40px" className="object-contain" />
                       </span>
                       <span className="min-w-0">
                         <span className="line-clamp-1 text-sm text-zinc-900">{entry.name}</span>

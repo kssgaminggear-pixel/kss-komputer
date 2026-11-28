@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useState, useMemo } from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
+import { MediaImage } from '@/components/ui/MediaImage';
 import {
   PcCase,
   Wrench,
@@ -14,7 +14,6 @@ import {
   Check,
   CheckCircle2,
   Clock,
-  Package,
   Store,
   Plus,
   BadgeCheck,
@@ -142,12 +141,10 @@ export default function HomeClient({ prebuilts, topSellers, services }: HomeClie
           {/* Foto */}
           <figure className="relative order-first overflow-hidden rounded-md border border-zinc-800 bg-zinc-900 lg:order-2 lg:col-span-7">
             <div className="relative aspect-[4/3] sm:aspect-[16/10] lg:aspect-auto lg:h-full lg:min-h-[480px]">
-              <Image
+              <MediaImage
                 src="/images/tokopedia/banner-pc-store.webp"
                 alt="Etalase PC rakitan KSS Komputer di Mangga Dua Mall"
-                fill
-                loading="eager"
-                fetchPriority="high"
+                lcp
                 sizes="(max-width: 1024px) 100vw, 720px"
                 className="object-cover object-center"
               />
@@ -515,11 +512,7 @@ export default function HomeClient({ prebuilts, topSellers, services }: HomeClie
             {topSellers.map((item) => (
               <li key={item.id} className="flex items-center gap-4 border-b border-zinc-200 py-4">
                 <span className="relative h-12 w-12 shrink-0 overflow-hidden rounded-sm bg-zinc-100">
-                  {item.image ? (
-                    <Image src={item.image} alt="" fill sizes="48px" className="object-contain" />
-                  ) : (
-                    <Package aria-hidden className="absolute inset-0 m-auto h-5 w-5 text-zinc-500" />
-                  )}
+                  <MediaImage src={item.image} alt="" sizes="48px" className="object-contain" />
                 </span>
                 <div className="min-w-0 flex-1">
                   <h3 className="truncate text-[14px] font-medium text-zinc-900">
@@ -565,12 +558,10 @@ export default function HomeClient({ prebuilts, topSellers, services }: HomeClie
 
           <div className="grid grid-cols-1 overflow-hidden rounded-md border border-zinc-200 bg-white lg:grid-cols-12">
             <div className="relative aspect-[4/3] border-b border-zinc-200 bg-zinc-100 lg:col-span-4 lg:aspect-auto lg:border-b-0 lg:border-r">
-              <Image
+              <MediaImage
                 src="/images/tokopedia/package-esports-case.webp"
                 alt="Unit PC rakitan KSS setelah QC"
-                fill
                 sizes="(max-width: 1024px) 100vw, 400px"
-                className="object-cover"
               />
             </div>
             <div className="p-5 sm:p-8 lg:col-span-8">
