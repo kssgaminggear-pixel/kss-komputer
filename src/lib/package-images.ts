@@ -1,3 +1,5 @@
+import { getSlot } from '@/lib/media/slots';
+
 /**
  * Foto unit paket rakitan KSS.
  * Aset berasal dari etalase resmi Tokopedia KSS Komputer, dipotong ke bagian
@@ -12,6 +14,7 @@ const PACKAGE_IMAGE_BY_SLUG: Record<string, string> = {
   'kss-valhalla-ultimate-4k-sultan': '/images/tokopedia/package-valhalla-case.webp',
 };
 
+/** Foto asli yang didaftarkan di slot `paket.<slug>` menggantikan potongan foto etalase. */
 export function getPackageImage(slug: string): string | undefined {
-  return PACKAGE_IMAGE_BY_SLUG[slug];
+  return getSlot(`paket.${slug}`)?.desktop ?? PACKAGE_IMAGE_BY_SLUG[slug];
 }

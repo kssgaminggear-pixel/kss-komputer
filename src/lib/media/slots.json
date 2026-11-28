@@ -22,20 +22,6 @@
     "focus": { "desktop": "75% 50%" },
     "maxCssWidth": 760
   },
-  "home.bento.jasa": {
-    "desktop": "/images/ilustrasi/ilu-jasa-rakit-v1.webp",
-    "alt": "Ilustrasi perakitan PC di alas antistatis",
-    "kind": "illustration",
-    "focus": { "desktop": "50% 50%" },
-    "maxCssWidth": 360
-  },
-  "home.bento.konsultasi": {
-    "desktop": "/images/ilustrasi/ilu-konsultasi-v1.webp",
-    "alt": "Ilustrasi catatan kebutuhan dan komponen PC",
-    "kind": "illustration",
-    "focus": { "desktop": "78% 50%" },
-    "maxCssWidth": 360
-  },
   "home.konsultasi": {
     "desktop": "/images/ilustrasi/ilu-konsultasi-v1.webp",
     "alt": "Ilustrasi catatan kebutuhan dan komponen PC",
