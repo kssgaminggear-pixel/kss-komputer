@@ -1,0 +1,170 @@
+{
+  "/images/brand/kss-app-icon.png": {
+    "width": 512,
+    "height": 512,
+    "kind": "brand",
+    "source": "logo-kss",
+    "alt": "",
+    "blurDataURL": "data:image/webp;base64,UklGRqoAAABXRUJQVlA4IJ4AAADQAwCdASoQABAAA4BaJbACdLoBEgNsBdgG8ZkR4Yoswo7g5InnuTAA+WGdst2u5OlrzYgVnyTzUr65V+AWcMInVB+mVoWaFdo/Lce64ACdxq1N40zxbO47xp8WwYJCK+YiCNODse89G0avbnsx0hc7ORX/c4vtuQxxo1W06FkwdqNkMS/g72H/fbr4EORNx+qeGax1KBD7sqbvMegAAA=="
+  },
+  "/images/brand/kss-logo-dark.png": {
+    "width": 512,
+    "height": 512,
+    "kind": "brand",
+    "source": "logo-kss",
+    "alt": "",
+    "blurDataURL": "data:image/webp;base64,UklGRgABAABXRUJQVlA4WAoAAAAQAAAADwAADwAAQUxQSMIAAAABgGJt2zLlfr/5p8+ZNkB1d5q7a3PZBdHdHRIk6SRvLnuALbg++BoiYgLA+KcBRmIawcbG+trGIj84YrRE9rs+9K5+nEenZsh+0W5jn47hxxRZ9+qlSceGR7dWKdVTFls6dvgo3l3rn92spuVNZw4jEJORnxuCHenc4dGto+n11w0ibnT6o0v9ufV3aqZfJ7/NkvOoccp0/ts02c9aIltn9sv18PaLVsnSKTgib/Wh1196cBhhhTn5heUxBNIcgPFPA1ZQOCAYAAAAMAEAnQEqEAAQAAOAWiWkAANwAP71CAAA"
+  },
+  "/images/brand/kss-logo-light.png": {
+    "width": 512,
+    "height": 512,
+    "kind": "brand",
+    "source": "logo-kss",
+    "alt": "",
+    "blurDataURL": "data:image/webp;base64,UklGRkgBAABXRUJQVlA4WAoAAAAQAAAADwAADwAAQUxQSMIAAAABgGJt2zLlfr/5p8+ZNkB1d5q7a3PZBdHdHRIk6SRvLnuALbg++BoiYgLA+KcBRmIawcbG+trGIj84YrRE9rs+9K5+nEenZsh+0W5jn47hxxRZ9+qlSceGR7dWKdVTFls6dvgo3l3rn92spuVNZw4jEJORnxuCHenc4dGto+n11w0ibnT6o0v9ufV3aqZfJ7/NkvOoccp0/ts02c9aIltn9sv18PaLVsnSKTgib/Wh1196cBhhhTn5heUxBNIcgPFPA1ZQOCBgAAAAcAIAnQEqEAAQAAOAWiWwAnS6AfgAgDMiFSGeQAD6djY2ZVOEa88xj3Li3abBJVHom/ZhhF86mEWQFNz2Vq+/+FW6/OlFhO1+9GLQu//LbWT3Hy6L0N6YMWpkq9TfoAAA"
+  },
+  "/images/brand/kss-shop-logo.webp": {
+    "width": 215,
+    "height": 215,
+    "kind": "brand",
+    "source": "logo-kss",
+    "alt": "",
+    "blurDataURL": "data:image/webp;base64,UklGRr4AAABXRUJQVlA4ILIAAAAwAwCdASoQABAAA4BaJbACdDsANQ2b4DIE8qx/lWojB/KAAP7yikw3orXfzwn9O7Co+t+r8zFh/sHjX+zDac+dbDvXWwWt+qzk5Gdg5ZTuTXT4gz/VD7CSwnICbXJ9n37n95/HuXL9ySOlXktNwRpMHUlx48c5c7Jstxl9l7nTd6GU85A1yGAzt99yedofFzu2rA1NPxMC0PevzoEv8f8afCk5ExZcBl2CUM+Jd3K8AAAA"
+  },
+  "/images/kss-pc-blueprint.svg": {
+    "width": 420,
+    "height": 460,
+    "kind": "illustration",
+    "source": "internal",
+    "alt": "Ilustrasi garis PC rakitan",
+    "blurDataURL": ""
+  },
+  "/images/tokopedia/banner-pc-store.webp": {
+    "width": 700,
+    "height": 600,
+    "kind": "photo",
+    "source": "katalog-toko-kss",
+    "alt": "Etalase PC rakitan KSS Komputer di Mangga Dua Mall",
+    "blurDataURL": "data:image/webp;base64,UklGRnYAAABXRUJQVlA4IGoAAAAwAgCdASoQAA4AA4BaJZQC7AYtBknmNgOVAAD+7J1gj1h+zo78Zlm+Zn5W3MG0NxLNg/FEhuGXOvxNVee+zc3xivXY4HVX+v44DjfOeOWDED7t80kVBx3vdJpUkHu0BWESW5iwnJ0gD+AA"
+  },
+  "/images/tokopedia/banner-store-1.webp": {
+    "width": 1200,
+    "height": 600,
+    "kind": "photo",
+    "source": "katalog-toko-kss",
+    "alt": "Banner promo KSS Komputer",
+    "blurDataURL": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAADwAQCdASoQAAgAA4BaJZAC7AEPhEc9bOAA/uYDR1sFuPsYgHMW04nquXp8YPcA7WKAzJ5mS5dOGsawREChAdXHlaI7hHae6Y8VG9WDvkwAAA=="
+  },
+  "/images/tokopedia/banner-store-2.webp": {
+    "width": 1200,
+    "height": 600,
+    "kind": "photo",
+    "source": "katalog-toko-kss",
+    "alt": "Banner pilihan casing PC rakitan KSS Komputer",
+    "blurDataURL": "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAADQAQCdASoQAAgAA4BaJYgCdADpnZQuAAD+CmKzF/NrkGVPKazo+4j4MABhHwQoq7PlCwzPjrYRNR5E9jGVYfrhcQqjqnQNel8uvN6noUREBcJp62YQAA=="
+  },
+  "/images/tokopedia/monitor-22.webp": {
+    "width": 1280,
+    "height": 960,
+    "kind": "photo",
+    "source": "katalog-toko-kss",
+    "alt": "Monitor 22 inci dari etalase KSS Komputer",
+    "blurDataURL": "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAAAwAgCdASoQAAwAA4BaJZwAD48Qd2r90Xx4AAD+6qY3vjz9hR9pB6qPTmS87NhXIk99/Y4WlmjcFieB3mipPTW85zJZNMfDqF9f3ev2vSa+TxkCphd0AA=="
+  },
+  "/images/tokopedia/package-apex-case.webp": {
+    "width": 240,
+    "height": 300,
+    "kind": "photo",
+    "source": "katalog-toko-kss",
+    "alt": "",
+    "blurDataURL": "data:image/webp;base64,UklGRngAAABXRUJQVlA4IGwAAADwAQCdASoNABAAA4BaJZQC7ADcGixnvlgA/uJLbbvtpT6wubqzHzQavIntft9Bo3r9V4FrObkaBBp6ncJON5p/0Ox2HWSXLpLL2H5tBCjcwyabTKKqWa3V2aM266VfY3pXG7ZMACI0k+vgAAA="
+  },
+  "/images/tokopedia/package-apex.webp": {
+    "width": 700,
+    "height": 700,
+    "kind": "photo",
+    "source": "katalog-toko-kss",
+    "alt": "",
+    "blurDataURL": "data:image/webp;base64,UklGRnQAAABXRUJQVlA4IGgAAADwAQCdASoQABAAA4BaJQBOgMXmthzhd4AA/vAW6oOs78U7DNzC0HbkRfD5teHBbZ4r8Ik6hvb5gEfyU6r+Xfa/rM5zPBLHwQ1RnbHnC52mxGNijLvOetWwn6CDX+yKKDLQQBACpYAAAA=="
+  },
+  "/images/tokopedia/package-esports-case.webp": {
+    "width": 240,
+    "height": 300,
+    "kind": "photo",
+    "source": "katalog-toko-kss",
+    "alt": "",
+    "blurDataURL": "data:image/webp;base64,UklGRnQAAABXRUJQVlA4IGgAAADwAQCdASoNABAAA4BaJYwC7ADwLHYuungA/uur8+54cj+urgLOm7didR5IhYe4H46fcAejo/Oav3pKesYwBKM/4k9z9Vv2l52W9qh+q40SEv+3GLcdBjRS2BnpmwgAmFLWlqWu42AAAA=="
+  },
+  "/images/tokopedia/package-esports.webp": {
+    "width": 700,
+    "height": 700,
+    "kind": "photo",
+    "source": "katalog-toko-kss",
+    "alt": "",
+    "blurDataURL": "data:image/webp;base64,UklGRngAAABXRUJQVlA4IGwAAADwAQCdASoQABAAA4BaJQBOgMXDub2lBAAA/u/8ZSI5t+8m+r1JHIisveyID/sL5SB/a7fcRSsYKL7SHHnc7f6fSZbCpnX8gnr1bPvfK9hATXJZm/f7eeRuJxLD64AO+3IkUUGXLXlGspeqAAA="
+  },
+  "/images/tokopedia/package-office-case.webp": {
+    "width": 240,
+    "height": 300,
+    "kind": "photo",
+    "source": "katalog-toko-kss",
+    "alt": "",
+    "blurDataURL": "data:image/webp;base64,UklGRmQAAABXRUJQVlA4IFgAAADwAQCdASoNABAAA4BaJZwC7AEN+r5aX3AA9rHBpBds4xpWW3L5WeBqzxW1nHr7HLYcSHKuMJ22zecVj4pV8sYrweZdu1jyyPjcmW/s6Ff55l1gBvzM2kwA"
+  },
+  "/images/tokopedia/package-office.webp": {
+    "width": 700,
+    "height": 700,
+    "kind": "photo",
+    "source": "katalog-toko-kss",
+    "alt": "",
+    "blurDataURL": "data:image/webp;base64,UklGRngAAABXRUJQVlA4IGwAAAAwAgCdASoQABAAA4BaJQBOgBwzCLzOLu2OAAD+8BbqiqMPzmS9D2fUiKy6pyLGzB1H5llbD9WfABVEBVC6nJ8TiKGFnc2A6R/UyjGe2MqwgMkOBgifHhe5KlXvpgak01DLS8QhgZul0Ii94AA="
+  },
+  "/images/tokopedia/package-studio-case.webp": {
+    "width": 240,
+    "height": 300,
+    "kind": "photo",
+    "source": "katalog-toko-kss",
+    "alt": "",
+    "blurDataURL": "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAADwAQCdASoNABAAA4BaJZwAAudF93AM+gAA/P320CacJLTBmh+GQFYpadyoLmCX2MhQdNmiaEyEMpRnqHX4QSXpGKmwxvHecj/WjoSK93uF/dc5UAFwAA=="
+  },
+  "/images/tokopedia/package-studio.webp": {
+    "width": 700,
+    "height": 700,
+    "kind": "photo",
+    "source": "katalog-toko-kss",
+    "alt": "",
+    "blurDataURL": "data:image/webp;base64,UklGRnoAAABXRUJQVlA4IG4AAADwAQCdASoQABAAA4BaJQBOgMYTsHeSPgAA/u/9GneuXqleX99a04DfvizrqgceTfADdrUzX66NFiMm4tcNrr0zhOuJhe+YB4o/4p8T/F6yqTJam5IjQxnyE+M4bH4sGnCVblpal4hDAzdLe0cAAA=="
+  },
+  "/images/tokopedia/package-titan-case.webp": {
+    "width": 240,
+    "height": 300,
+    "kind": "photo",
+    "source": "katalog-toko-kss",
+    "alt": "",
+    "blurDataURL": "data:image/webp;base64,UklGRmgAAABXRUJQVlA4IFwAAAAwAgCdASoNABAAA4BaJZwAD5Dwb5j+HAF78AD+CdyLpPsCR1ipfAd/0bjU7ddHGTCzrU517C0C/HlyUGGhUjaMD2Fil7q91cUnfY3q+bOh83ZKeUQ0BksxLMaAAA=="
+  },
+  "/images/tokopedia/package-titan.webp": {
+    "width": 700,
+    "height": 700,
+    "kind": "photo",
+    "source": "katalog-toko-kss",
+    "alt": "",
+    "blurDataURL": "data:image/webp;base64,UklGRnoAAABXRUJQVlA4IG4AAADQAQCdASoQABAAA4BaJQBOgMXhXxf1uAD+8BbqhIbopuQYctnKewkcUNc/M4GHg0UoU0MPi3Ia7BrT0O8rjMQp17SyvJAvDGwXP++DoMdsyhiqvxQI1Gag6fMhYRloMjkoJv+2RRQZcteUFCYAAA=="
+  },
+  "/images/tokopedia/package-valhalla-case.webp": {
+    "width": 240,
+    "height": 300,
+    "kind": "photo",
+    "source": "katalog-toko-kss",
+    "alt": "",
+    "blurDataURL": "data:image/webp;base64,UklGRnwAAABXRUJQVlA4IHAAAADwAQCdASoNABAAA4BaJYwCdADF+VMcIAAA/u1qdvUP71j0El1yhJmOXsGmlsEC+9sqn/pyd7mW3Uqo3seurgcW2fOZGW954L4nzs3jEnYFfw9MpTNxAikNGWBmJ9uccmFdm2ND6gQAtBNKmjk10AAA"
+  },
+  "/images/tokopedia/package-valhalla.webp": {
+    "width": 700,
+    "height": 700,
+    "kind": "photo",
+    "source": "katalog-toko-kss",
+    "alt": "",
+    "blurDataURL": "data:image/webp;base64,UklGRnoAAABXRUJQVlA4IG4AAAAwAgCdASoQABAAA4BaJQBOgBwzMUSxv4JcAAD+8BbqivVJaEtDu0kj3FlhaDWsd8z9DVUH1WHDoEv3NxrP2M8iImEmXLrAY4A/F0eR4D5VUKE96IfuRc649LrHjr8z0NRPjxusyKKDLlrygoTAAA=="
+  }
+}

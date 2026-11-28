@@ -1,7 +1,7 @@
 import React from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
-import { ExternalLink, Package, Star } from 'lucide-react';
+import { ExternalLink, Star } from 'lucide-react';
+import { MediaImage } from '@/components/ui/MediaImage';
 import { Price } from '@/components/ui/Price';
 import type { PublicMarketplaceProduct } from '@/lib/marketplace/types';
 import { AddToCartButton } from './AddToCartButton';
@@ -28,17 +28,13 @@ export function ProductCard({ product }: { product: PublicMarketplaceProduct }) 
     <article className="flex min-w-0 flex-col p-3">
       <Link href={`/toko/${product.slug}`} className="kss-focusable group block">
         <div className={`relative aspect-square overflow-hidden rounded-md bg-zinc-100 ${soldOut ? 'opacity-60' : ''}`}>
-          {product.image ? (
-            <Image
-              src={product.image}
-              alt=""
-              fill
-              sizes="(min-width:1280px) 240px, (min-width:640px) 30vw, 46vw"
-              className="object-contain"
-            />
-          ) : (
-            <Package aria-hidden className="absolute inset-0 m-auto h-8 w-8 text-zinc-400" />
-          )}
+          <MediaImage
+            src={product.image}
+            alt=""
+            sizes="(min-width:1280px) 240px, (min-width:640px) 30vw, 46vw"
+            className="object-contain"
+            fallbackLabel="Foto menyusul"
+          />
           {soldOut && <span className="kss-tag kss-tag-warn absolute left-1.5 top-1.5">Stok habis</span>}
         </div>
         <h3 className="mt-2 line-clamp-2 min-h-[2.5rem] text-sm leading-snug text-zinc-900 group-hover:underline">

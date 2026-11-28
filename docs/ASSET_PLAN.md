@@ -93,7 +93,7 @@ Dicek terhadap `node_modules/next/dist/docs/01-app/03-api-reference/02-component
 - `sizes` wajib untuk setiap `fill`; tanpa `sizes` browser menganggap 100vw.
 - `placeholder="blur"` butuh `blurDataURL` untuk gambar non-statis; ambil dari manifest.
 - Art direction hero (crop mobile 4:5, desktop 16:9): `getImageProps()` + `<picture>`.
-- `minimumCacheTTL` panjang (mis. 31 hari) aman karena nama file baru = URL baru.
+- `minimumCacheTTL` 1 hari. Jangan diperpanjang selama sinkron menimpa foto Toko dengan nama file yang sama (belum bernama hash).
 
 ### 4.3 Kuota hosting
 

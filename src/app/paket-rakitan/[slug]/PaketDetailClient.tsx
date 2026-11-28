@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useState, useMemo } from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
+import { MediaImage } from '@/components/ui/MediaImage';
 import {
   ChevronRight,
   ShieldCheck,
@@ -168,21 +168,14 @@ export default function PaketDetailContent({ pkg }: { pkg: PublicPrebuiltDetailD
                 </p>
               </div>
 
-              {(() => {
-                const image = getPackageImage(pkg.slug);
-                if (!image) return null;
-                return (
-                  <div className="relative h-28 w-20 shrink-0 overflow-hidden rounded-sm border border-zinc-200 bg-zinc-100 dark:border-zinc-800 dark:bg-zinc-950 sm:h-36 sm:w-28">
-                    <Image
-                      src={image}
-                      alt={`Foto unit ${pkg.name}`}
-                      fill
-                      sizes="(max-width: 640px) 80px, 112px"
-                      className="object-cover"
-                    />
-                  </div>
-                );
-              })()}
+              <div className="relative h-28 w-20 shrink-0 overflow-hidden rounded-sm border border-zinc-200 bg-zinc-100 dark:border-zinc-800 dark:bg-zinc-950 sm:h-36 sm:w-28">
+                <MediaImage
+                  src={getPackageImage(pkg.slug)}
+                  alt={`Foto unit ${pkg.name}`}
+                  lcp
+                  sizes="(max-width: 640px) 80px, 112px"
+                />
+              </div>
             </div>
 
             {/* Highlights */}

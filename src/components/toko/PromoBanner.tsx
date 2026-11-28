@@ -1,9 +1,9 @@
 'use client';
 
 import React, { useRef, useState } from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { MediaImage } from '@/components/ui/MediaImage';
 
 export interface PromoBannerItem {
   id: string;
@@ -56,13 +56,12 @@ export function PromoBanner({ banners }: { banners: PromoBannerItem[] }) {
             className="relative aspect-[2/1] w-full shrink-0 snap-center"
           >
             <Link href={banner.href} className="kss-focusable block h-full">
-              <Image
+              <MediaImage
                 src={banner.image}
                 alt={banner.alt}
-                fill
-                preload={index === 0}
+                lcp={index === 0}
                 sizes="(min-width:1100px) 1024px, 100vw"
-                className="object-cover"
+                fallbackLabel="Promo toko"
               />
             </Link>
           </div>

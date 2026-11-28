@@ -122,7 +122,7 @@ export function Navbar({ searchEntries }: NavbarProps) {
               height={32}
               alt=""
               className="h-8 w-8 rounded-xs"
-              priority
+              loading="eager"
             />
             <span className="hidden flex-col leading-none sm:flex">
               <span className="text-[15px] font-bold tracking-[-0.02em] text-zinc-950">

@@ -12,7 +12,9 @@
     "test:watch": "vitest",
     "check:price": "node scripts/check-price-leak.mjs",
     "validate:marketplace": "node scripts/validate-marketplace.mjs",
-    "sync:marketplace": "node scripts/sync/run.mjs"
+    "sync:marketplace": "node scripts/sync/run.mjs",
+    "media:build": "node scripts/media/build.mjs",
+    "audit:visual": "playwright test"
   },
   "dependencies": {
     "@next/env": "16.4.6",
@@ -26,6 +28,7 @@
     "zustand": "^5.0.16"
   },
   "devDependencies": {
+    "@playwright/test": "^1.65.1",
     "@tailwindcss/turbopack": "^4",
     "@types/node": "^20",
     "@types/react": "^19",

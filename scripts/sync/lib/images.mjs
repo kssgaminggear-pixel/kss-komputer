@@ -34,11 +34,13 @@ export async function syncImages(products, rows, { publicDir, stagingDir }) {
       }
       if (!response.ok) throw new Error(`status ${response.status}`);
       fs.mkdirSync(stagingDir, { recursive: true });
-      await sharp(Buffer.from(await response.arrayBuffer()))
+      const info = await sharp(Buffer.from(await response.arrayBuffer()))
         .resize(600, 600, { fit: 'inside', withoutEnlargement: true })
         .webp({ quality: 78 })
         .toFile(path.join(stagingDir, `${product.id}.webp`));
       product.image = `/images/marketplace/${product.id}.webp`;
+      product.imageWidth = info.width;
+      product.imageHeight = info.height;
       product.imageSourceHash = hash;
       downloaded += 1;
     } catch (error) {

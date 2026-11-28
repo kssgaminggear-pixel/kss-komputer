@@ -26,8 +26,22 @@ ATURAN UNTUK SEMUA AGENT (baca sebelum menulis entri)
 
 ## [Unreleased]
 
+### Added
+
+- Gambar kini punya placeholder buram dan cadangan berjenjang, sehingga foto yang gagal
+  dimuat tidak lagi meninggalkan kotak kosong atau ikon rusak.
+- Audit visual otomatis (`npm run audit:visual`) untuk porsi gambar, gambar rusak, foto
+  pecah, dan dinding teks di layar HP dan desktop.
+- Manifest media (`npm run media:build`) dan ukuran asli foto di data Toko.
+
+### Changed
+
+- Pengaturan optimasi gambar Next 16 dibatasi ke aset situs dan disimpan di cache 1 hari.
+- Gambar utama tiap halaman dimuat lebih dulu.
+
 ### Docs/Infra
 
+- Izinkan ikon garis monokrom 14–16 px tanpa latar untuk menjelaskan fitur/spesifikasi.
 - Tambah aturan multi-agent (Opus/Sonnet/Haiku), arah desain visual-first dominan
   gambar, dan struktur kerja wajib (changelog, checklist roadmap, uji visual
   Playwright/Mobile MCP) ke `CLAUDE.md`.
