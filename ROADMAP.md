@@ -203,27 +203,40 @@ aurora, neon, 3D) **ditolak** karena melanggar v2.
 | Kartu produk Toko | Foto 1:1 ≥ 65 % tinggi kartu; judul 2 baris; `Price`; aksi sekunder jadi ikon (`aria-label`) |
 | Galeri detail | Foto utama 1:1 + strip thumbnail; lightbox dengan zoom (pinch di mobile, klik/tombol di desktop, `Esc` menutup, fokus terjebak) |
 | Spesifikasi panjang | Tab/accordion (`details`/`summary` atau komponen ber-ARIA); ringkasan 3–5 spec pill di atas |
-| Micro-copy | Paragraf ≤ 2 kalimat; manfaat jadi baris ikon 16–20 px inline (lihat keputusan pemilik K-1) |
+| Micro-copy | Paragraf ≤ 2 kalimat; manfaat jadi baris ikon garis monokrom 14–16 px inline tanpa latar (K-1 disetujui) |
 
 ### V0 — Fondasi media & pengukuran
 
 **Tujuan:** setiap gambar punya ukuran nyata, placeholder, fallback, dan bisa diukur.
 **Delegasi:** Opus (kontrak manifest & komponen) · Sonnet (implementasi) · Haiku (isi alt text awal).
 
-- [ ] V0.1 Blok `images` di `next.config.ts`: `qualities`, `localPatterns: /images/**`,
-  `minimumCacheTTL`; `formats` AVIF menunggu keputusan K-2. Rujuk docs Next 16 lokal.
-- [ ] V0.2 Komponen `MediaFrame` / `ProductImage` (Server Component bila bisa): rasio
-  tetap, `sizes` wajib, `placeholder` dari manifest, fallback berjenjang
-  (`docs/ASSET_PLAN.md` §4.5). Hapus fallback ikon `Package`.
-- [ ] V0.3 Visual Audit Playwright (§0.2) + skrip `audit:visual` (instal `@playwright/test`
-  atas persetujuan pemilik); baseline VCR semua route dicatat di PR.
-- [ ] V0.4 Skrip `scripts/media/build.mjs` + `src/lib/media/manifest.json`
-  (lebar/tinggi/blur/kind). `products.json` menyimpan `width`/`height` foto.
-- [ ] V0.5 Ganti satu-satunya LCP per halaman ke `loading="eager"` + `fetchPriority="high"`
-  (tanpa `priority` yang deprecated).
+- [x] V0.1 Blok `images` di `next.config.ts`: `qualities`, `localPatterns: /images/**`,
+  `minimumCacheTTL` 1 hari (foto Toko ditimpa dengan nama sama); AVIF menunggu K-2.
+- [x] V0.2 Komponen `MediaImage` (Client, mengisi induk berasio tetap): `sizes` wajib,
+  `placeholder` dari manifest, fallback berjenjang (`docs/ASSET_PLAN.md` §4.5).
+  Fallback ikon `Package` untuk gambar dihapus.
+- [x] V0.3 Visual Audit Playwright (§0.2) + skrip `audit:visual` (Chrome terpasang; belum
+  jalan di CI). VCR, dinding teks, dan foto pecah dilaporkan; wajib lulus dengan
+  `VISUAL_STRICT=1` mulai V1. Pengukuran CLS belum ada.
+- [x] V0.4 `npm run media:build` → `src/lib/media/manifest.json`; `products.json`
+  menyimpan `imageWidth`/`imageHeight` dan sinkron mempertahankannya.
+- [x] V0.5 Gambar LCP memakai `loading="eager"` + `fetchPriority="high"`; `priority`
+  dan `preload` dihapus.
 
-**Quality Gate:** QG-W · semua `img` lulus kesehatan gambar §0.2.4 · tidak ada kotak kosong
-saat file gambar sengaja dihapus (uji fallback).
+**Quality Gate:** QG-W · tidak ada gambar rusak · tidak ada kotak kosong saat foto
+diblokir (uji fallback). Ambang ketajaman §0.2.4 dipindah ke Quality Gate V1+.
+
+**Baseline VCR 2026-11-28 (fold pertama / rata-rata, %):**
+
+| Route | Mobile | Desktop |
+|---|---|---|
+| `/` | 34 / 10 | 26 / 11 |
+| `/paket-rakitan` | 4 / 4 | 3 / 2 |
+| `/toko` | 22 / 29 | 41 / 32 |
+| `/toko/etalase/…` | 15 / 27 | 16 / 23 |
+| detail paket | 3 / 1 | 1 / 0 |
+| detail produk Toko | 45 / 18 | 28 / 15 |
+| `/jasa`, `/tentang-kami`, `/konsultasi` | 0 / 0 | 0 / 0 |
 
 ### V1 — Beranda visual-first
 
@@ -423,7 +436,7 @@ repo (web tetap di root agar sinkron harian & Vercel tidak berubah)
 
 | # | Keputusan | Rekomendasi |
 |---|---|---|
-| K-1 | DESIGN.md §1.5 membatasi ikon hanya untuk tombol/navigasi/status; visual-first butuh baris ikon fitur | Izinkan ikon fitur 16–20 px inline tanpa kotak tint. Belum diberlakukan |
+| K-1 | DESIGN.md §1.5 membatasi ikon hanya untuk tombol/navigasi/status; visual-first butuh baris ikon fitur | **Disetujui 2026-11-28:** ikon garis monokrom 14–16 px, tanpa kotak/lingkaran latar |
 | K-2 | Paket Vercel & kuota optimasi gambar; aktifkan AVIF? | Cek dashboard Usage dulu; thumbnail Toko `unoptimized`, optimizer untuk foto besar |
 | K-3 | Jadwal sesi foto: 6 paket, bengkel, proses QC, (opsional) teknisi | Satu sesi setengah hari sebelum V1/V2 |
 | K-4 | Izin pelanggan untuk lookbook | Formulir izin sederhana via WhatsApp; tanpa wajah/nama bila tidak diizinkan |
@@ -442,7 +455,7 @@ repo (web tetap di root agar sinkron harian & Vercel tidak berubah)
 | Bagian | Item | Selesai |
 |---|---|---|
 | A. Rekam jejak (Fase 1–12) | 32 | 32 |
-| C. Pilar V (MVP visual) | 37 | 0 |
+| C. Pilar V (MVP visual) | 37 | 5 |
 | D. Fondasi platform | 17 | 0 |
 | E. Web + aplikasi HP | 8 | 0 |
 | F. Scale-up | 7 | 0 |
