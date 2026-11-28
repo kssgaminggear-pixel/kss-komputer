@@ -16,7 +16,7 @@ import {
   Building2,
   ChevronRight,
 } from 'lucide-react';
-import { useRetailCartStore } from '@/store/useRetailCartStore';
+import { selectCartCount, useRetailCartStore } from '@/store/useRetailCartStore';
 import { useHydrated } from '@/lib/useHydrated';
 
 export function BottomNav() {
@@ -24,7 +24,7 @@ export function BottomNav() {
   const isHydrated = useHydrated();
   const [isMoreOpen, setIsMoreOpen] = useState(false);
 
-  const retailCartCount = useRetailCartStore((state) => state.getTotalItemsCount());
+  const retailCartCount = useRetailCartStore(selectCartCount);
   const openRetailCart = useRetailCartStore((state) => state.openCart);
 
   // Tutup panel "Lainnya" saat berpindah halaman

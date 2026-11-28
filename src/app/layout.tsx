@@ -90,10 +90,11 @@ export default function RootLayout({
 }>) {
   const searchEntries = getSearchEntries();
   const paketEntries = getPaketItems().map((item) => ({ slug: item.slug, name: item.name, specs: item.specs.join(' · ') }));
+  const serviceEntries = getPublicServices()
+    .filter((service) => service.isActive)
+    .map((service) => ({ slug: service.slug, name: service.title }));
   const serviceLinks = [
-    ...getPublicServices()
-      .filter((service) => service.isActive)
-      .map((service) => ({ href: `/jasa/${service.slug}`, label: service.title })),
+    ...serviceEntries.map((service) => ({ href: `/jasa/${service.slug}`, label: service.name })),
     { href: '/jasa', label: 'Semua layanan' },
     { href: '/konsultasi', label: 'Konsultasi gratis' },
   ];
@@ -117,6 +118,7 @@ export default function RootLayout({
           <Navbar
             searchEntries={searchEntries}
             paketEntries={paketEntries}
+            serviceEntries={serviceEntries}
             serviceLinks={serviceLinks}
             shopLinks={shopLinks}
           />

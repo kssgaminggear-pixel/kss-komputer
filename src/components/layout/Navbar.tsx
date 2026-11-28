@@ -20,7 +20,7 @@ import {
   Building2,
   MapPin,
 } from 'lucide-react';
-import { useRetailCartStore } from '@/store/useRetailCartStore';
+import { selectCartCount, useRetailCartStore } from '@/store/useRetailCartStore';
 import {
   TOKOPEDIA_OFFICIAL_STORE_URL,
   DEFAULT_WHATSAPP_PHONE,
@@ -29,17 +29,18 @@ import {
 import { CommandSearchModal } from '@/components/layout/CommandSearchModal';
 import { useHydrated } from '@/lib/useHydrated';
 import { NavDropdown, type NavDropdownLink } from '@/components/layout/NavDropdown';
-import type { PaketSearchEntry } from '@/components/layout/CommandSearchModal';
+import type { PaketSearchEntry, ServiceSearchEntry } from '@/components/layout/CommandSearchModal';
 import type { SearchEntry } from '@/lib/marketplace/types';
 
 export interface NavbarProps {
   searchEntries: SearchEntry[];
   paketEntries: PaketSearchEntry[];
+  serviceEntries: ServiceSearchEntry[];
   serviceLinks: NavDropdownLink[];
   shopLinks: NavDropdownLink[];
 }
 
-export function Navbar({ searchEntries, paketEntries, serviceLinks, shopLinks }: NavbarProps) {
+export function Navbar({ searchEntries, paketEntries, serviceEntries, serviceLinks, shopLinks }: NavbarProps) {
   const pathname = usePathname();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -52,7 +53,7 @@ export function Navbar({ searchEntries, paketEntries, serviceLinks, shopLinks }:
     setIsMobileMenuOpen(false);
   }
 
-  const retailCartCount = useRetailCartStore((state) => state.getTotalItemsCount());
+  const retailCartCount = useRetailCartStore(selectCartCount);
   const openRetailCart = useRetailCartStore((state) => state.openCart);
 
   // Keyboard shortcut Ctrl+K / Cmd+K
@@ -247,6 +248,7 @@ export function Navbar({ searchEntries, paketEntries, serviceLinks, shopLinks }:
         onClose={() => setIsSearchOpen(false)}
         products={searchEntries}
         packages={paketEntries}
+        services={serviceEntries}
       />
     </>
   );
