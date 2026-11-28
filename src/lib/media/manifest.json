@@ -1,4 +1,28 @@
 {
+  "/images/3d/ilu-bedah-pc-cleaning.webp": {
+    "width": 1200,
+    "height": 900,
+    "kind": "illustration",
+    "source": "internal",
+    "alt": "",
+    "blurDataURL": "data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAADQAQCdASoQAAwAA4BaJZwAAqsbRlS0AAD+9X9qe79PYBr5hoS0T+FPCLukKrwIh4AfhTHyqyPeOF3SUOAAAA=="
+  },
+  "/images/3d/ilu-bedah-pc-rakit.webp": {
+    "width": 1200,
+    "height": 900,
+    "kind": "illustration",
+    "source": "internal",
+    "alt": "",
+    "blurDataURL": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAACwAQCdASoQAAwAA4BaJZwAAupQsj0AAP70ng+FX/sNBiQi8lqXoW5LwvhVipdS4ShOUTaccMkQBHyskiezZRDDmEiJjYcHOK08ruJQFSBAAA=="
+  },
+  "/images/3d/ilu-bedah-pc-upgrade.webp": {
+    "width": 1200,
+    "height": 900,
+    "kind": "illustration",
+    "source": "internal",
+    "alt": "",
+    "blurDataURL": "data:image/webp;base64,UklGRkIAAABXRUJQVlA4IDYAAACwAQCdASoQAAwAA4BaJaQAAqo7eheAAP72k3223a9bs5InI95JEJJbynO7fjtUJJjlQeH7wgA="
+  },
   "/images/brand/kss-app-icon.png": {
     "width": 512,
     "height": 512,

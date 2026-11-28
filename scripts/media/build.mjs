@@ -34,6 +34,7 @@ function walk(dir) {
 function describe(url) {
   const name = path.posix.basename(url);
   if (url.startsWith('/images/brand/')) return { kind: 'brand', source: 'logo-kss' };
+  if (url.startsWith('/images/3d/')) return { kind: 'illustration', source: 'internal' };
   if (name.startsWith('ilu-')) return { kind: 'illustration', source: 'ai' };
   if (name.endsWith('.svg')) return { kind: 'illustration', source: 'internal' };
   return { kind: 'photo', source: 'katalog-toko-kss' };

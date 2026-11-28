@@ -2,6 +2,7 @@ import React from 'react';
 import { HomeHeroServices } from '@/components/home/HomeHeroServices';
 import { HomeServiceIntro } from '@/components/home/HomeServiceIntro';
 import { HomeServiceShelf } from '@/components/home/HomeServiceShelf';
+import { HomeBedahPc } from '@/components/home/HomeBedahPc';
 import { HomeFacts } from '@/components/home/HomeFacts';
 import { HomeConsultBanner } from '@/components/home/HomeConsultBanner';
 import { HomeFaqMosaic } from '@/components/home/HomeFaqMosaic';
@@ -26,6 +27,7 @@ export default function HomePage() {
       <HomeHeroServices services={services} />
       <HomeServiceIntro total={shelf.length} />
       <HomeServiceShelf services={shelf} />
+      <HomeBedahPc services={services} />
       <HomeFacts services={services.filter((service) => service.isActive)} />
       <HomeConsultBanner />
       <HomeShop
