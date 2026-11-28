@@ -4,8 +4,8 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --background: #fafafa; /* zinc-50 */
-  --foreground: #18181b; /* zinc-900 */
+  --background: #f6f2ea; /* paper: kanvas krem V3 */
+  --foreground: #141414; /* ink */
 }
 
 @theme inline {
@@ -17,7 +17,21 @@
 
 @theme {
   /* ---- Warna semantik (alias; boleh dipakai: bg-ink, text-accent, dll.) ---- */
-  --color-ink: #09090b;          /* zinc-950: chapter gelap, teks judul */
+  --color-ink: #141414;          /* teks judul, tombol ink */
+  --color-ink-soft: #3f3f46;     /* teks sekunder */
+  --color-paper: #f6f2ea;        /* kanvas utama */
+  --color-paper-deep: #ece5d8;   /* kartu/seksi lembut di atas paper */
+  --color-line: #ddd5c6;         /* hairline di paper */
+  /* Blok warna seksi (V3). Tidak ada blok hijau agar tidak rancu dengan Tokopedia. */
+  --color-block-clay: #f2dccb;   /* jasa */
+  --color-block-steel: #dbe3ea;  /* toko/katalog */
+  --color-block-butter: #f3e6bf; /* angka & proses */
+  --color-block-ink: #16181b;    /* 3D & footer */
+  --color-shape-clay: #ead0bb;
+  --color-shape-steel: #cfd8e1;
+  --color-shape-butter: #ead9a8;
+  /* zinc-500 digelapkan agar >= 4.5:1 di paper dan semua blok terang */
+  --color-zinc-500: #5f5f67;
   --color-canvas: #ffffff;
   --color-canvas-soft: #fafafa;  /* zinc-50 */
   --color-hairline: #e4e4e7;     /* zinc-200: border kontainer */
@@ -51,23 +65,31 @@
   --text-h3--font-weight: 600;
   --text-h2: clamp(1.625rem, 1.2rem + 1.4vw, 2.25rem);      /* 26→36px */
   --text-h2--line-height: 1.1;
-  --text-h2--letter-spacing: -0.03em;
+  --text-h2--letter-spacing: -0.02em;
   --text-h2--font-weight: 700;
   --text-h1-page: clamp(1.875rem, 1.4rem + 1.8vw, 2.75rem); /* 30→44px */
   --text-h1-page--line-height: 1.05;
-  --text-h1-page--letter-spacing: -0.035em;
+  --text-h1-page--letter-spacing: -0.02em;
   --text-h1-page--font-weight: 800;
   --text-h1: clamp(2.125rem, 1.4rem + 2.8vw, 3.5rem);       /* 34→56px */
   --text-h1--line-height: 1.02;
-  --text-h1--letter-spacing: -0.04em;
+  --text-h1--letter-spacing: -0.02em;
   --text-h1--font-weight: 800;
 
-  /* ---- Radius: guard agar radius besar tidak mungkin muncul ---- */
-  /* xs 2px = tag/pill, sm 4px = tombol/input, md 6px = kontainer/foto */
-  --radius-lg: 0.375rem;
-  --radius-xl: 0.375rem;
-  --radius-2xl: 0.375rem;
-  --radius-3xl: 0.375rem;
+  /* ---- Radius V3: tag 6, input 8, kartu 14, panel 20, blok besar 28; tombol & chip pil ---- */
+  --radius-xs: 0.375rem;
+  --radius-sm: 0.5rem;
+  --radius-md: 0.875rem;
+  --radius-lg: 1.25rem;
+  --radius-xl: 1.75rem;
+  --radius-2xl: 1.75rem;
+  --radius-3xl: 1.75rem;
+
+  /* ---- Bayangan: hanya kartu melayang di atas blok warna ---- */
+  --shadow-float: 0 1px 2px rgb(20 20 20 / 0.06), 0 12px 32px -16px rgb(20 20 20 / 0.28);
+
+  /* ---- Huruf judul ---- */
+  --font-display: var(--font-bricolage), var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
 
   /* ---- Motion ---- */
   --ease-snap: cubic-bezier(0.2, 0, 0, 1);
@@ -92,6 +114,13 @@ body {
 
 ::selection { background: #c2410c; color: #ffffff; }
 
+@layer base {
+  h1, h2 { font-family: var(--font-display); }
+}
+
+/* Di area gelap, abu-abu dikembalikan ke nada terang agar tetap terbaca. */
+.bg-zinc-950, .bg-zinc-900, .kss-chapter-dark, .kss-block-ink { --color-zinc-500: #8b8b94; }
+
 /* Fokus global: outline tidak butuh warna offset → aman di chapter gelap & terang. */
 :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
   outline: 2px solid var(--color-accent-mark);
@@ -110,9 +139,36 @@ body {
 @layer components {
   /* ---------- Layout ---------- */
   .kss-container { @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8; }
-  .kss-section   { @apply border-t border-zinc-200 py-12 lg:py-20; }
-  .kss-section-alt { @apply border-t border-zinc-200 bg-white py-12 lg:py-20; }
-  .kss-chapter-dark { @apply bg-zinc-950 text-zinc-100; }
+  .kss-section   { @apply border-t border-line py-12 lg:py-20; }
+  .kss-section-alt { @apply border-t border-line bg-white py-12 lg:py-20; }
+  .kss-chapter-dark { @apply bg-block-ink text-zinc-100; }
+
+  /* ---------- Blok warna V3 ---------- */
+  .kss-block { @apply md:mx-3 md:rounded-xl; }
+  .kss-block-clay { @apply bg-block-clay text-ink; }
+  .kss-block-steel { @apply bg-block-steel text-ink; }
+  .kss-block-butter { @apply bg-block-butter text-ink; }
+  .kss-block-ink { @apply bg-block-ink text-zinc-100; }
+
+  /* Pembatas gelombang halus di atas elemen; warnanya mengikuti latar elemen itu. */
+  .kss-wave-top { position: relative; }
+  .kss-wave-top::before {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: 100%;
+    left: 0;
+    height: 14px;
+    background-color: inherit;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 24' preserveAspectRatio='none'%3E%3Cpath d='M0 14C240 2 480 2 720 12s480 10 720-2v14H0Z'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+    pointer-events: none;
+  }
+  @media (min-width: 48rem) {
+    .kss-wave-top::before { height: 24px; }
+  }
+
+  .kss-card-float { @apply rounded-lg bg-white shadow-float; }
+  .kss-ring-selected { outline: 3px solid var(--color-accent-mark); outline-offset: -3px; }
 
   /* Grid hairline: hanya untuk jumlah item tetap (sel kosong akan tampak abu). */
   .kss-grid-hairline { @apply grid gap-px overflow-hidden rounded-md border border-zinc-200 bg-zinc-200; }
@@ -121,57 +177,58 @@ body {
   .kss-grid-hairline-dark > * { @apply bg-zinc-950; }
 
   /* ---------- Surface ---------- */
-  .kss-card { @apply rounded-md border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900/60; }
+  .kss-card { @apply rounded-md border border-line bg-white dark:border-zinc-800 dark:bg-zinc-900/60; }
   .kss-card-hover { @apply transition-colors duration-150 ease-snap hover:border-zinc-400 dark:hover:border-zinc-600; }
 
   /* ---------- Tipografi utilitas ---------- */
-  .kss-label   { @apply font-mono text-micro font-medium uppercase; }
-  .kss-eyebrow { @apply inline-flex items-center gap-2 font-mono text-micro font-semibold uppercase text-orange-700 dark:text-orange-400; }
+  .kss-label   { @apply text-meta font-semibold; }
+  /* orange-800: lolos kontras juga di atas blok warna */
+  .kss-eyebrow { @apply inline-flex items-center gap-2 text-meta font-semibold text-orange-800 dark:text-orange-400; }
   .kss-price   { @apply font-mono font-semibold tracking-tight tabular-nums; }
   .kss-num     { @apply font-mono tracking-tight tabular-nums; }
   .kss-link    { @apply font-medium text-zinc-900 underline decoration-zinc-300 underline-offset-4 transition-colors duration-150 hover:decoration-orange-600; }
 
-  /* ---------- Tombol (semua rounded-sm, h-10 default, 13px) ---------- */
+  /* ---------- Tombol (semua pil, h-10 default, 13px) ---------- */
   .kss-btn {
-    @apply inline-flex h-10 items-center justify-center gap-2 whitespace-nowrap rounded-sm px-4
+    @apply inline-flex h-10 items-center justify-center gap-2 whitespace-nowrap rounded-full px-4
            text-[13px] font-semibold transition-colors duration-150 ease-snap
            disabled:cursor-not-allowed disabled:opacity-40;
   }
   .kss-btn-primary {
-    @apply inline-flex h-10 items-center justify-center gap-2 whitespace-nowrap rounded-sm bg-orange-700 px-4
+    @apply inline-flex h-10 items-center justify-center gap-2 whitespace-nowrap rounded-full bg-orange-700 px-4
            text-[13px] font-semibold text-white transition-colors duration-150 ease-snap hover:bg-orange-800
            disabled:cursor-not-allowed disabled:opacity-40;
   }
   .kss-btn-dark {
-    @apply inline-flex h-10 items-center justify-center gap-2 whitespace-nowrap rounded-sm bg-zinc-900 px-4
+    @apply inline-flex h-10 items-center justify-center gap-2 whitespace-nowrap rounded-full bg-zinc-900 px-4
            text-[13px] font-semibold text-white transition-colors duration-150 ease-snap hover:bg-zinc-700
            dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-300;
   }
   /* WhatsApp = ink (bukan hijau). Nama class dipertahankan agar pemakai lama ikut berubah. */
   .kss-btn-wa {
-    @apply inline-flex h-10 items-center justify-center gap-2 whitespace-nowrap rounded-sm bg-zinc-900 px-4
+    @apply inline-flex h-10 items-center justify-center gap-2 whitespace-nowrap rounded-full bg-zinc-900 px-4
            text-[13px] font-semibold text-white transition-colors duration-150 ease-snap hover:bg-zinc-700;
   }
   .kss-btn-outline {
-    @apply inline-flex h-10 items-center justify-center gap-2 whitespace-nowrap rounded-sm border border-zinc-300 bg-white px-4
+    @apply inline-flex h-10 items-center justify-center gap-2 whitespace-nowrap rounded-full border border-zinc-300 bg-white px-4
            text-[13px] font-semibold text-zinc-900 transition-colors duration-150 ease-snap
            hover:border-zinc-900 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-200 dark:hover:border-zinc-400;
   }
   .kss-btn-tokopedia {
-    @apply inline-flex h-10 items-center justify-center gap-2 whitespace-nowrap rounded-sm bg-tokopedia px-4
+    @apply inline-flex h-10 items-center justify-center gap-2 whitespace-nowrap rounded-full bg-tokopedia px-4
            text-[13px] font-semibold text-white transition-colors duration-150 ease-snap hover:bg-tokopedia-hover;
   }
   /* Untuk chapter gelap */
   .kss-btn-inverse {
-    @apply inline-flex h-10 items-center justify-center gap-2 whitespace-nowrap rounded-sm bg-white px-4
+    @apply inline-flex h-10 items-center justify-center gap-2 whitespace-nowrap rounded-full bg-white px-4
            text-[13px] font-semibold text-zinc-950 transition-colors duration-150 ease-snap hover:bg-zinc-200;
   }
   .kss-btn-outline-dark {
-    @apply inline-flex h-10 items-center justify-center gap-2 whitespace-nowrap rounded-sm border border-zinc-700 px-4
+    @apply inline-flex h-10 items-center justify-center gap-2 whitespace-nowrap rounded-full border border-zinc-700 px-4
            text-[13px] font-semibold text-zinc-100 transition-colors duration-150 ease-snap hover:border-zinc-400 hover:bg-zinc-900;
   }
   .kss-icon-btn {
-    @apply inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-sm border border-zinc-300 bg-white text-zinc-800
+    @apply inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-zinc-300 bg-white text-zinc-800
            transition-colors duration-150 ease-snap hover:border-zinc-900;
   }
 
@@ -181,18 +238,18 @@ body {
            transition-colors duration-150 hover:border-zinc-400 focus:border-orange-700 focus:outline-none
            dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100;
   }
-  .kss-field-label { @apply mb-1.5 block font-mono text-micro font-medium uppercase text-zinc-600; }
+  .kss-field-label { @apply mb-1.5 block text-meta font-semibold text-zinc-600; }
 
   /* ---------- Chip filter (aktif = ink, BUKAN orange) ---------- */
   .kss-chip {
-    @apply inline-flex h-9 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-sm border border-zinc-300 bg-white px-3
+    @apply inline-flex h-9 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full border border-zinc-300 bg-white px-3
            text-[13px] font-medium text-zinc-700 transition-colors duration-150 ease-snap hover:border-zinc-900 hover:text-zinc-950
            dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-300;
   }
   .kss-chip-active { @apply border-zinc-900 bg-zinc-900 text-white hover:text-white dark:border-zinc-100 dark:bg-zinc-100 dark:text-zinc-900; }
 
   /* ---------- Tag / badge (satu sistem) ---------- */
-  .kss-tag { @apply inline-flex h-5 items-center gap-1 whitespace-nowrap rounded-xs border px-1.5 font-mono text-micro font-semibold uppercase leading-none; }
+  .kss-tag { @apply inline-flex h-5 items-center gap-1 whitespace-nowrap rounded-full border px-2 text-[11px] font-semibold leading-none; }
   .kss-tag-neutral { @apply border-zinc-200 bg-zinc-50 text-zinc-600; }
   .kss-tag-accent  { @apply border-orange-700/25 bg-orange-50 text-orange-700; }
   .kss-tag-ink     { @apply border-zinc-900 bg-zinc-900 text-white; }
@@ -202,7 +259,7 @@ body {
   .kss-tag-on-dark { @apply border-zinc-700 bg-zinc-950 text-zinc-200; }
 
   /* Spec pill (socket/RAM/watt) — tanpa harga */
-  .kss-spec-pill { @apply inline-flex h-5 items-center rounded-xs border border-zinc-200 bg-white px-1.5 font-mono text-micro uppercase leading-none text-zinc-700; }
+  .kss-spec-pill { @apply inline-flex h-5 items-center rounded-full border border-line bg-white px-2 text-[11px] font-medium leading-none tabular-nums text-zinc-700; }
 
   /* Delta tag upgrade (kontras sudah lolos 4.5:1) */
   .kss-delta-included { @apply inline-flex h-6 items-center rounded-xs bg-zinc-100 px-2 font-mono text-meta text-zinc-600 tabular-nums; }

@@ -181,6 +181,21 @@ VCR belum diukur (alat dibuat di V0.3); penilaian di bawah kualitatif.
 
 ---
 
+## C0. PRIORITAS AKTIF — Pilar V3 "Bengkel hangat" (disetujui pemilik 2026-11-28)
+
+Menggantikan aturan gaya v2 dan wireframe Beranda di bagian C; item bagian C yang
+belum selesai mengikuti rancangan ini. Aturan harga dan kejujuran gambar tetap berlaku.
+
+- [x] V3-0 Token warna, radius, huruf judul, header dan footer; uji kontras otomatis.
+- [ ] V3-1 Beranda: hero jasa 3 slide (bisa dijeda).
+- [ ] V3-2 Pengantar jasa, rak 10 kartu jasa, pita angka dan proses.
+- [ ] V3-3 Banner konsultasi dan kisi tanya jawab.
+- [ ] V3-4 DTO katalog gabungan dan bagian Toko di Beranda.
+- [ ] V3-5 `/toko` jadi katalog gabungan; menu dan menu bawah HP disesuaikan.
+- [ ] V3-6 "Bedah PC" 3D (three.js, dimuat belakangan, ada gambar cadangan).
+- [ ] V3-7 Gambar ilustrasi V3 dari Google Flow.
+- [ ] V3-8 Foto asli (6 unit paket diutamakan).
+
 ## C. PRIORITAS MVP VISUAL / GO-LIVE — Pilar V "Visual-first & image-dominant"
 
 Semua milestone tetap dalam Visual v2: hero & footer `bg-zinc-950`, satu aksi

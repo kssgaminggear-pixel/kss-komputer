@@ -58,7 +58,7 @@ export function Footer() {
   ];
 
   return (
-    <footer className="kss-chapter-dark">
+    <footer className="kss-chapter-dark kss-wave-top mt-3.5 md:mt-6">
       {/* CTA band */}
       <div className="border-b border-zinc-800">
         <div className="kss-container flex flex-col gap-6 py-12 lg:flex-row lg:items-end lg:justify-between lg:py-16">
@@ -96,7 +96,7 @@ export function Footer() {
       <div className="kss-container grid grid-cols-1 gap-10 py-12 sm:grid-cols-2 lg:grid-cols-12 lg:gap-8">
         <div className="lg:col-span-4">
           <div className="flex items-center gap-2.5">
-            <span className="rounded-xs bg-white p-1">
+            <span className="rounded-sm bg-white p-1">
               <Image
                 src="/images/brand/kss-logo-light.png"
                 width={28}

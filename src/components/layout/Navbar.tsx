@@ -109,8 +109,8 @@ export function Navbar({ searchEntries }: NavbarProps) {
         </div>
       </div>
 
-      <header className="sticky top-0 z-40 border-b border-zinc-200 bg-white">
-        <div className="kss-container flex h-14 items-center gap-4 xl:gap-6">
+      <header className="sticky top-0 z-40 border-b border-line bg-paper">
+        <div className="kss-container flex h-14 items-center gap-4 md:h-16 xl:gap-6">
           <Link
             href="/"
             className="flex shrink-0 items-center gap-2.5"
@@ -121,20 +121,20 @@ export function Navbar({ searchEntries }: NavbarProps) {
               width={32}
               height={32}
               alt=""
-              className="h-8 w-8 rounded-xs"
+              className="h-8 w-8 rounded-sm"
               loading="eager"
             />
             <span className="hidden flex-col leading-none sm:flex">
               <span className="text-[15px] font-bold tracking-[-0.02em] text-zinc-950">
                 KSS Komputer
               </span>
-              <span className="mt-1 font-mono text-[11px] uppercase tracking-[0.06em] text-zinc-500">
+              <span className="mt-1 text-[11px] text-zinc-500">
                 PC Builder · Mangga Dua
               </span>
             </span>
           </Link>
 
-          <nav aria-label="Navigasi utama" className="hidden h-full items-stretch lg:flex">
+          <nav aria-label="Navigasi utama" className="hidden items-center gap-1 lg:flex">
             {navLinks
               .filter((item) => !('desktopHidden' in item && item.desktopHidden))
               .map((item) => {
@@ -144,17 +144,11 @@ export function Navbar({ searchEntries }: NavbarProps) {
                     key={item.href}
                     href={item.href}
                     aria-current={active ? 'page' : undefined}
-                    className={`relative flex items-center whitespace-nowrap px-3 text-[13px] font-medium transition-colors duration-150 ${
-                      active ? 'text-zinc-950' : 'text-zinc-600 hover:text-zinc-950'
+                    className={`flex h-9 items-center whitespace-nowrap rounded-full px-3.5 text-[13px] font-semibold transition-colors duration-150 ${
+                      active ? 'bg-ink text-white' : 'text-zinc-700 hover:bg-paper-deep hover:text-ink'
                     }`}
                   >
                     {item.label}
-                    {active && (
-                      <span
-                        aria-hidden
-                        className="absolute inset-x-3 -bottom-px h-0.5 bg-orange-600"
-                      />
-                    )}
                   </Link>
                 );
               })}
@@ -165,13 +159,13 @@ export function Navbar({ searchEntries }: NavbarProps) {
               type="button"
               onClick={() => setIsSearchOpen(true)}
               aria-label="Cari (Ctrl+K)"
-              className="flex h-9 w-9 items-center justify-center gap-2 rounded-sm border border-zinc-300 bg-white text-zinc-500 transition-colors hover:border-zinc-900 hover:text-zinc-900 xl:w-60 xl:justify-between xl:px-3"
+              className="flex h-9 w-9 items-center justify-center gap-2 rounded-full border border-line bg-white text-zinc-500 transition-colors hover:border-zinc-900 hover:text-zinc-900 xl:w-60 xl:justify-between xl:px-3"
             >
               <span className="flex items-center gap-2">
                 <Search aria-hidden className="h-4 w-4" />
                 <span className="hidden text-[13px] xl:inline">Cari paket, part, gear</span>
               </span>
-              <kbd className="hidden rounded-xs border border-zinc-200 bg-zinc-50 px-1.5 font-mono text-[11px] text-zinc-500 xl:inline">
+              <kbd className="hidden rounded-xs border border-line bg-paper px-1.5 font-mono text-[11px] text-zinc-500 xl:inline">
                 Ctrl K
               </kbd>
             </button>
@@ -184,11 +178,11 @@ export function Navbar({ searchEntries }: NavbarProps) {
               type="button"
               onClick={openRetailCart}
               aria-label={`Keranjang eceran${retailCartCount ? `, ${retailCartCount} item` : ''}`}
-              className="relative inline-flex h-9 w-9 items-center justify-center rounded-sm border border-zinc-300 bg-white text-zinc-800 transition-colors hover:border-zinc-900"
+              className="relative inline-flex h-9 w-9 items-center justify-center rounded-full border border-line bg-white text-zinc-800 transition-colors hover:border-zinc-900"
             >
               <ShoppingBag aria-hidden className="h-4 w-4" />
               {isMounted && retailCartCount > 0 && (
-                <span className="absolute -right-1.5 -top-1.5 flex h-4 min-w-4 items-center justify-center rounded-xs bg-zinc-900 px-1 font-mono text-[11px] font-semibold tabular-nums text-white">
+                <span className="absolute -right-1.5 -top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-zinc-900 px-1 font-mono text-[11px] font-semibold tabular-nums text-white">
                   {retailCartCount}
                 </span>
               )}
@@ -197,7 +191,7 @@ export function Navbar({ searchEntries }: NavbarProps) {
             <button
               type="button"
               onClick={() => setIsMobileMenuOpen((prev) => !prev)}
-              className="inline-flex h-9 w-9 items-center justify-center rounded-sm border border-zinc-300 bg-white text-zinc-800 transition-colors hover:border-zinc-900 lg:hidden"
+              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-line bg-white text-zinc-800 transition-colors hover:border-zinc-900 lg:hidden"
               aria-label="Buka menu"
               aria-expanded={isMobileMenuOpen}
             >
@@ -211,7 +205,7 @@ export function Navbar({ searchEntries }: NavbarProps) {
         </div>
 
         {isMobileMenuOpen && (
-          <div className="border-t border-zinc-200 bg-white lg:hidden">
+          <div className="border-t border-line bg-paper lg:hidden">
             <nav aria-label="Menu" className="kss-container divide-y divide-zinc-100">
               {navLinks.map((item) => {
                 const Icon = item.icon;

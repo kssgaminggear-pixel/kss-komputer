@@ -1,42 +1,45 @@
-# DESIGN.md — KSS Komputer (v2 "Lembar Spesifikasi Bengkel")
+# DESIGN.md — KSS Komputer (V3 "Bengkel hangat")
 
 > Dibaca hanya saat mengubah UI. Sumber kebenaran kode: `src/app/globals.css`.
-> Pola komponen: `UI_FIGCRAFT_SKILL.md`. Rancangan lengkap v2: `design-spec.md`.
+> Pola komponen: `UI_FIGCRAFT_SKILL.md` (bila bertentangan, dokumen ini yang berlaku).
+> V3 menggantikan v2 atas persetujuan pemilik (2026-11-28).
 
 ## 1. Arah visual
 
-KSS adalah bengkel rakit di Mangga Dua, bukan startup SaaS. Rasa: datasheet hardware
-(Intel ARK, Noctua), nota servis, label rak gudang, dipadu foto produk gelap ala NVIDIA.
+KSS adalah meja kerja teknisi: kertas krem, logam baja, tinta hitam, sedikit orange merek.
+Ramah untuk orang awam yang datang membawa PC rusak, tetapi tetap terasa toko komputer.
 
-1. **Data adalah dekorasi.** Tabel spesifikasi rapi, angka mono, label mono uppercase kecil, hairline 1px. Tanpa ornamen kosong.
-2. **Dua chapter, satu aksen.** Ink (`zinc-950`) untuk top bar, hero, footer. Kanvas terang untuk isi. Orange hanya untuk satu aksi utama per layar dan tanda telemetri (bar FPS, garis aktif, corner square).
-3. **Hairline grid, bukan kartu mengambang.** Item sejajar berjumlah tetap memakai `kss-grid-hairline`. Kartu terpisah hanya untuk paket PC.
-4. **Tipografi besar, bobot terkendali.** H1 800, H2 700, judul kartu 600, harga mono 600.
-5. **Ikon fungsional.** Di tombol, navigasi, status, dan penjelas fitur/spesifikasi. Ikon penjelas: garis (outline) monokrom, 14–16px (`h-3.5`/`h-4`), sejajar teks, **tanpa kotak atau lingkaran latar berwarna**, `aria-hidden` bila teksnya sudah menjelaskan.
-6. **Gerak 150ms**, hanya warna/opacity. Tanpa translate kartu atau shadow hover.
+1. **Blok warna per seksi** (clay = jasa, steel = toko, butter = angka & proses, ink = penutup/3D), bukan deretan seksi berpola sama.
+2. **Bentuk lembut:** kartu 14px, panel 20px, blok besar 28px, tombol/chip/tab pil.
+3. **Gambar memimpin.** Motif dekoratif hanya dari dunia PC (kipas, baut, jalur PCB), bukan blob acak.
+4. **Satu aksi orange per layar.**
+5. **Ikon fungsional:** garis monokrom 14–16px tanpa kotak/lingkaran latar berwarna, `aria-hidden` bila teks sudah menjelaskan.
+6. **Gerak 150–450ms** dan selalu patuh `prefers-reduced-motion`. Carousel otomatis wajib punya tombol jeda.
+
+Diganti dari v2: radius maks 6px, hero/footer wajib `zinc-950`, label mono uppercase, larangan bayangan.
 
 ## 2. Warna & kontras
 
-| Peran | Terang | Chapter gelap |
-|---|---|---|
-| Judul | zinc-950 | zinc-50 |
-| Body | zinc-600 | zinc-400 |
-| Teks paling pudar | zinc-500 (hanya di putih/zinc-50) | zinc-400 |
-| Border kontainer / internal | zinc-200 / zinc-100 | zinc-800 / zinc-900 |
-| Aksi utama (fill + teks putih) | orange-700, hover orange-800 | sama |
-| Tanda non-teks (bar, garis aktif) | orange-600 | orange-500 |
-| Teks aksen (eyebrow) | orange-700 | orange-400 |
-| WhatsApp | tombol ink (`zinc-900`) + `MessageCircle` | `kss-btn-inverse` |
-| Tokopedia | `#00803F`, hover `#006B35` | sama |
-| Status | emerald-700 ok · amber-800 tambah biaya · red-700 error | |
+| Token | Pakai untuk |
+|---|---|
+| `paper` / `paper-deep` | kanvas utama / seksi dan kartu lembut |
+| `line` | hairline di paper |
+| `ink` / `ink-soft` | judul dan tombol ink / teks sekunder |
+| `block-clay` `block-steel` `block-butter` `block-ink` | latar blok seksi (`kss-block-*`) |
+| `shape-*` | motif dan latar media cutout di blok senada |
+| `accent` (orange-700) | fill satu aksi utama, teks putih |
+| `accent-hover` (orange-800) | eyebrow dan teks aksen kecil di paper/blok |
+| `tokopedia` `#00803F` | hanya tombol Tokopedia |
 
-- Orange-600 dengan teks putih hanya 3,56:1 dan `#00AA5B` dengan teks putih 3,04:1: keduanya **gagal**. Jangan dipakai sebagai fill tombol berteks.
-- `#00AA5B` hanya untuk tanda/ikon non-teks. Zinc-400 jangan dipakai di latar terang.
-- Dilarang: gradient dekoratif, aksen baru, hijau/emerald untuk hal selain Tokopedia dan status.
-
+- WhatsApp = tombol ink; `kss-btn-inverse` di area gelap.
+- `zinc-500` digelapkan di globals.css agar lolos di blok terang, dan diterangkan di area gelap. Jangan pakai `zinc-400` untuk teks di latar terang.
+- Teks `orange-700` hanya di paper atau putih; di atas blok warna pakai `orange-800`.
+- Pasangan warna baru ditambahkan ke `src/lib/__tests__/theme.test.ts`.
+- Dilarang: gradient dekoratif (satu-satunya pengecualian: scrim fungsional di bawah teks di atas foto), blur/glassmorphism, blok hijau/mint.
 ## 3. Tipografi
 
-Geist (sans) dan Geist Mono. Skala di `@theme` globals.css, minimum 11px:
+Bricolage Grotesque (`--font-display`) hanya untuk H1/H2; Geist untuk isi; Geist Mono **hanya untuk angka**.
+Skala di `@theme` globals.css, minimum 11px:
 
 | Token | Ukuran | Pakai untuk |
 |---|---|---|
@@ -55,29 +58,28 @@ Paragraf `max-w-[52ch]`–`[60ch]`, judul `text-balance`.
 
 ## 4. Layout
 
-- Container `kss-container` (maks 1280px). Section `kss-section` (zinc-50) dan `kss-section-alt` (putih) bergantian, `py-12 lg:py-20`.
-- Hero desktop 5/7 (copy kiri, foto kanan); mobile foto dulu.
-- Grid kartu 1/2/3 kolom. Tidak boleh ada horizontal overflow 390–1440px.
-- Anchor target diberi `scroll-mt-20`.
+- Container `kss-container` (maks 1280px). Blok warna: `kss-block` + `kss-block-*` (menjorok dan membulat di desktop).
+- Pembatas gelombang `kss-wave-top`, paling banyak 4 kali per halaman.
+- Tidak boleh ada horizontal overflow 390–1440px. Anchor target diberi `scroll-mt-20`.
 
 ## 5. Komponen (kelas di globals.css)
 
-- Tombol: `kss-btn-primary` (orange), `kss-btn-dark`, `kss-btn-wa` (ink), `kss-btn-outline`, `kss-btn-tokopedia`, `kss-btn-inverse` dan `kss-btn-outline-dark` (chapter gelap), `kss-icon-btn`. Tinggi 40px, `rounded-sm`.
+- Tombol pil 40px: `kss-btn-primary` (orange), `kss-btn-dark`, `kss-btn-wa` (ink), `kss-btn-outline`, `kss-btn-tokopedia`, `kss-btn-inverse` dan `kss-btn-outline-dark` (area gelap), `kss-icon-btn`.
+- Kartu: `kss-card` (di paper), `kss-card-float` (di atas blok warna), `kss-ring-selected` (kartu unggulan).
 - Tag: `kss-tag` + `-neutral|-accent|-ink|-ok|-warn|-danger|-on-dark`. Spec pill: `kss-spec-pill`.
-- Delta upgrade: `kss-delta-included|plus|minus`. Nol delta = `[Termasuk Paket]`.
 - FPS: `kss-fps-track` + `kss-fps-fill`.
 - Chip filter: `kss-chip`; aktif = ink (`kss-chip-active`), bukan orange.
 - Form: `kss-input`, `kss-field-label`.
-- Radius: tag 2px, tombol/input 4px, kontainer/foto 6px. `lg`–`3xl` dikunci 6px di `@theme`.
-- Corner square 12px orange hanya di foto hero. Penanda eyebrow = kotak 6px, bukan dot bulat.
+- Angka harga lewat komponen `Price`.
 
 **Peta ikon (lucide-react):** Paket `PcCase` · Jasa `Wrench` · Komponen `Cpu`/`Layers` · Aksesoris `Headphones` · Konsultasi `MessageSquareText` · WhatsApp `MessageCircle` · Pesanan `ClipboardList` · Tentang `Building2` · Link keluar `ArrowUpRight`/`ExternalLink`. **Jangan pakai `Sparkles`.**
 
 ## 6. Fotografi
 
-Foto produk asli di `public/images/tokopedia/` (lihat README di folder itu). Wadah `bg-zinc-100` (terang) / `bg-zinc-900` (gelap) + border hairline. Foto poster dipotong ke area unit. Overlay solid, bukan gradient. Slot berikutnya: foto asli bengkel dan teknisi.
+Foto produk asli di `public/images/tokopedia/` (lihat README di folder itu). Gambar yang bisa diganti pemilik wajib lewat `getSlot()` (`src/lib/media/slots.json`).
+Gambar buatan AI hanya ilustrasi, berlabel "Ilustrasi", tanpa orang, huruf, atau logo tiruan.
 
 ## 7. Do / Don't
 
-**Do:** hairline + border; kontras gelap/terang antar-chapter; label mono pendek; uji 390/768/1024/1440; `prefers-reduced-motion`.
-**Don't:** `rounded-xl` ke atas, `backdrop-blur`, `shadow-md` ke atas, gradient, emoji, ikon dalam kotak tint, harga satuan part di publik, lebih dari satu tombol orange per fold, teks di bawah 11px.
+**Do:** satu fokus per layar; blok warna berganti; uji 390/768/1024/1440; `prefers-reduced-motion`.
+**Don't:** blur, gradient dekoratif, emoji, ikon `Sparkles`, ikon dalam kotak tint, testimoni/penghargaan/logo media tanpa bukti, harga satuan part di publik, lebih dari satu tombol orange per layar, teks di bawah 11px.

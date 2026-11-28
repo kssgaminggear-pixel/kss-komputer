@@ -26,15 +26,15 @@
 ## Aturan bisnis
 - Dilarang harga satuan part paket di publik; hanya total paket (selisih upgrade juga tidak ditampilkan), harga jasa, dan harga produk eceran /toko (data sinkron Tokopedia di `data/marketplace`, domain terpisah). Data paket hanya lewat server-catalog/server-pricing + DTO tanpa harga (AGENTS.md §1.1).
 
-## Visual v2 (detail: DESIGN.md; sumber kebenaran: src/app/globals.css)
-- Hero & footer chapter gelap `bg-zinc-950`, isi terang; hairline, bukan shadow besar.
+## Visual V3 "Bengkel hangat" (detail: DESIGN.md; sumber kebenaran: src/app/globals.css)
+- Kanvas krem `paper`; seksi berganti blok warna clay/steel/butter/ink; pembatas gelombang halus.
+- Radius: kartu 14px, panel 20px, blok 28px; tombol/chip pil. Bayangan lembut hanya untuk kartu di atas blok warna.
+- Judul Bricolage Grotesque; mono hanya untuk angka, lewat komponen `Price`; pakai kelas `kss-*`.
 - Satu aksi orange-700 per layar. WhatsApp = tombol ink; hijau `#00803F` hanya Tokopedia.
-- Radius maks 6px. Tanpa gradient, blur, shadow besar, emoji, ikon `Sparkles`. Sentence case.
+- Tanpa gradient dekoratif (kecuali scrim fungsional di bawah teks di atas foto), blur, emoji, ikon `Sparkles`. Sentence case.
 - Ikon boleh untuk menjelaskan fitur/spesifikasi: garis (outline) monokrom 14–16px, TANPA kotak/lingkaran latar berwarna.
-- Angka `font-mono tabular-nums` via komponen `Price`; pakai kelas `kss-*` dari globals.css.
-- DESIGN.md & UI_FIGCRAFT_SKILL.md sudah v2. WORK_ORDERS.md §2 usang (CTA biru) — abaikan.
+- UI_FIGCRAFT_SKILL.md masih bergaya v2; bila bertentangan, DESIGN.md berlaku. WORK_ORDERS.md §2 usang — abaikan.
 - Profesional, modern, tidak "AI slop". Tanpa `// TODO`.
-
 ## Pola multi-agent
 - **Opus (orchestrator & architect):** perencanaan, arsitektur, redesign UI/UX, kontrak API/tipe, pemecahan task, code review akhir, debugging buntu.
 - **Sonnet (main builder):** implementasi web & mobile, UI/UX visual, edit banyak file, integrasi state/API, perbaikan error TypeScript/lint/build.
@@ -44,7 +44,7 @@
 ## Desain visual-first (dominan gambar) — fokus web dulu
 - Tanpa dinding teks. Tiap section utama dipimpin visual: foto produk, banner, galeri/carousel, atau kartu bergambar berasio konsisten (1:1 atau 4:3). Target 65–75% area viewport berupa visual pada halaman etalase.
 - Micro-copy ringkas, badge/pill spesifikasi, ikon; detail panjang di tab, accordion, atau drawer.
-- Tetap tunduk pada Visual v2 dan Aturan bisnis di atas (tanpa gradient/blur/emoji; tanpa harga part atau selisih upgrade).
+- Tetap tunduk pada Visual V3 dan Aturan bisnis di atas (tanpa gradient dekoratif/blur/emoji; tanpa harga part atau selisih upgrade).
 - Gambar nyata (foto produk toko/scrape katalog sendiri) untuk produk. Gambar buatan AI hanya ilustrasi/dekorasi; jangan disajikan sebagai foto produk, stok, toko, hasil rakitan, atau pelanggan asli, dan tanpa logo merek tiruan.
 
 ## Struktur kerja (wajib)
