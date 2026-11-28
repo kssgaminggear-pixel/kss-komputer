@@ -195,6 +195,8 @@ belum selesai mengikuti rancangan ini. Aturan harga dan kejujuran gambar tetap b
 - [x] V3-5 `/toko` jadi katalog gabungan; menu dan menu bawah HP disesuaikan.
 - [x] V3-6 "Bedah PC" 3D (three.js, dimuat belakangan, ada gambar cadangan). Belum diuji di HP asli.
 - [x] Perbaikan pasca-tinjauan: domain resmi untuk mesin pencari, pencarian jasa, keranjang, warna tombol.
+- [x] Rapikan klaim sesuai konfirmasi pemilik, seragamkan alamat, tandai Cek pesanan sebagai contoh.
+- [ ] Ganti email contoh dengan email resmi yang aktif.
 - [ ] Daftarkan www.kssgo.com di Google Search Console dan kirim sitemap (oleh pemilik).
 - [ ] V3-7 Gambar ilustrasi V3 dari Google Flow.
 - [ ] V3-8 Foto asli (6 unit paket diutamakan).

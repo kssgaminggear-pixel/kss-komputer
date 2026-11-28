@@ -5,7 +5,11 @@
 
 export const STORE_NAME = 'KSS Komputer';
 export const STORE_TAGLINE = 'Jasa Rakit PC Custom & Service Komputer Profesional';
-export const STORE_ADDRESS = 'Mangga Dua Mall, Jakarta, Indonesia';
+export const STORE_STREET = 'Mangga Dua Orion Dusit Lt 1 No 8';
+export const STORE_AREA = 'Mangga Dua Orion Dusit, Jakarta';
+export const STORE_ADDRESS = `${STORE_STREET}, Jakarta`;
+/** Email contoh: kotak surat belum aktif, jadi ditampilkan berlabel "contoh" tanpa tautan. */
+export const STORE_EMAIL_SAMPLE = 'halo@kssgo.com';
 export const STORE_OPERATIONAL_HOURS = 'Senin - Sabtu, 09:00 - 18:00 WIB';
 export const STORE_WARRANTY_TEXT =
   'Garansi resmi distributor + garansi toko KSS Komputer. Stress-tested & QC verified.';

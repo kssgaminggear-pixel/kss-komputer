@@ -87,7 +87,7 @@ export function Navbar({ searchEntries, paketEntries, serviceEntries, serviceLin
           <div className="flex items-center gap-5">
             <span className="flex items-center gap-1.5 text-zinc-200">
               <MapPin aria-hidden className="h-3 w-3 text-orange-500" />
-              Mangga Dua Mall, Jakarta
+              Mangga Dua Orion Dusit, Jakarta
             </span>
             <span className="hidden lg:inline">Sen–Sab · 09.00–18.00 WIB</span>
           </div>
@@ -100,7 +100,7 @@ export function Navbar({ searchEntries, paketEntries, serviceEntries, serviceLin
               className="flex items-center gap-1.5 text-zinc-200 transition-colors hover:text-white"
             >
               <span aria-hidden className="h-1.5 w-1.5 bg-tokopedia-brand" />
-              Tokopedia Official
+              Tokopedia
               <ArrowUpRight aria-hidden className="h-3 w-3" />
             </a>
             <a

@@ -23,7 +23,7 @@ export async function generateMetadata({ params }: EtalasePageProps): Promise<Me
   if (!shelf) return { title: 'Etalase tidak ditemukan' };
   return {
     title: `${shelf.name} — Toko KSS Komputer`,
-    description: `${shelf.count} produk di etalase ${shelf.name} toko resmi KSS Komputer.`,
+    description: `${shelf.count} produk di etalase ${shelf.name} toko Tokopedia KSS Komputer.`,
     alternates: { canonical: `/toko/etalase/${shelf.slug}` },
   };
 }

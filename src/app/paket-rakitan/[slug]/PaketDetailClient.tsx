@@ -12,11 +12,10 @@ import {
   Check,
   Gamepad2,
   Clock,
-  Truck,
   Layers,
 } from 'lucide-react';
 import { ProductCategory, PublicHardwarePart } from '@/lib/types';
-import { formatIDR, formatWatt, generateWhatsAppOrderUrl, TOKOPEDIA_OFFICIAL_STORE_URL } from '@/lib/format';
+import { formatIDR, formatWatt, warrantyLabel, generateWhatsAppOrderUrl, TOKOPEDIA_OFFICIAL_STORE_URL } from '@/lib/format';
 import type { PublicPrebuiltDetailDTO } from '@/lib/sanitizer';
 import { getPackageImage } from '@/lib/package-images';
 import { PaymentInfo } from '@/components/payment/PaymentInfo';
@@ -282,7 +281,7 @@ export default function PaketDetailContent({ pkg }: { pkg: PublicPrebuiltDetailD
 
                           <div className="flex items-center justify-between gap-2">
                             <span className="truncate font-mono text-micro text-zinc-500">
-                              {opt.part.sku} · {opt.part.warrantyYears} Th
+                              {opt.part.sku} · {warrantyLabel(opt.part.warrantyYears)}
                             </span>
                             {opt.isBase && (
                               <span className="shrink-0 rounded-md bg-zinc-100 px-1.5 py-0.5 font-mono text-meta font-bold text-zinc-500 dark:bg-zinc-800/80">
@@ -317,7 +316,7 @@ export default function PaketDetailContent({ pkg }: { pkg: PublicPrebuiltDetailD
                       {item.part.name} {item.quantity > 1 ? `(${item.quantity}x)` : ''}
                     </span>
                     <span className="text-meta text-zinc-500 block">
-                      Distributor Resmi ID ({item.part.officialDistributor || 'Astrindo/EMD'}) • Garansi {item.part.warrantyYears} Tahun
+                      Distributor Resmi ID ({item.part.officialDistributor || 'Astrindo/EMD'}) • {warrantyLabel(item.part.warrantyYears)}
                     </span>
                   </div>
                   <span className="rounded-md bg-zinc-50 border border-zinc-200 px-2 py-0.5 font-mono text-micro font-bold text-zinc-800 dark:text-zinc-200 shrink-0">
@@ -411,7 +410,7 @@ export default function PaketDetailContent({ pkg }: { pkg: PublicPrebuiltDetailD
                 rel="noopener noreferrer"
                 className="flex items-center justify-center gap-2 w-full rounded-md bg-zinc-900 hover:bg-zinc-700 text-white py-2.5 text-xs font-bold transition-colors"
               >
-                <span>Beli di Tokopedia Resmi</span>
+                <span>Beli di Tokopedia</span>
                 <ExternalLink className="h-3.5 w-3.5" />
               </a>
               <PaymentInfo />
@@ -422,10 +421,6 @@ export default function PaketDetailContent({ pkg }: { pkg: PublicPrebuiltDetailD
               <div className="flex items-center gap-2">
                 <ShieldCheck className="h-3.5 w-3.5 text-orange-700" />
                 <span>Garansi Resmi Toko &amp; Distributor Indonesia</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Truck className="h-3.5 w-3.5 text-orange-700" />
-                <span>Gratis Packing Kayu &amp; Asuransi Pengiriman</span>
               </div>
               <div className="flex items-center gap-2">
                 <Clock className="h-3.5 w-3.5 text-orange-700" />

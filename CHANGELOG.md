@@ -26,6 +26,12 @@ ATURAN UNTUK SEMUA AGENT (baca sebelum menulis entri)
 
 ## [Unreleased]
 
+### Changed (klaim dan kontak)
+
+- Klaim yang belum dipastikan pemilik dihapus atau dibuat netral: antistatik, pengalaman 8+ tahun, 2.500+ unit, rating 4.9, label toko resmi Tokopedia, gratis packing kayu, garansi 99 tahun, bebas biaya rakitan, dan merek thermal paste tertentu.
+- Alamat diseragamkan menjadi Mangga Dua Orion Dusit Lt 1 No 8; email ditampilkan sebagai contoh tanpa tautan.
+- Cek pesanan diberi tanda contoh, tidak diindeks, dan keluar dari sitemap.
+
 ### Fixed
 
 - Alamat kanonis, sitemap, robots, dan data terstruktur memakai https://www.kssgo.com; alamat lama Vercel diarahkan ke sana.

@@ -94,8 +94,8 @@ ${services}
 
 KONTAK & INFO:
 - WhatsApp: https://wa.me/${DEFAULT_WHATSAPP_PHONE}
-- Tokopedia resmi: ${TOKOPEDIA_OFFICIAL_STORE_URL}
-- Lokasi: Mangga Dua Mall Lt. 4, Jakarta Pusat
+- Toko Tokopedia: ${TOKOPEDIA_OFFICIAL_STORE_URL}
+- Lokasi: Mangga Dua Orion Dusit Lt 1 No 8, Jakarta
 - Jam toko: Senin-Sabtu 09.00-18.00 WIB (CS AI aktif 24 jam)
 - Halaman: /paket-rakitan, /jasa, /konsultasi, /cek-pesanan, /toko
 

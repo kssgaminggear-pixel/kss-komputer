@@ -13,7 +13,6 @@ const STATIC_ROUTES = [
   '/toko',
   '/konsultasi',
   '/tentang-kami',
-  '/cek-pesanan',
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {

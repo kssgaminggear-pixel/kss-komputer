@@ -1493,7 +1493,7 @@ export const MOCK_SERVICES: ServicePackage[] = [
     features: [
       'Bongkar total komponen & casing',
       'Pembersihan debu dengan compressed air & brush',
-      'Ganti thermal paste CPU (Arctic MX-6 / Noctua NT-H2)',
+      'Ganti thermal paste CPU premium',
       'Ganti thermal paste GPU (opsional)',
       'Tes suhu sebelum & sesudah',
     ],
@@ -1676,7 +1676,7 @@ export const MOCK_BUILD_TRACKINGS: BuildOrderTracking[] = [
     stageHistory: [
       { stage: 'payment_verified', timestamp: '2026-11-08T10:00:00Z' },
       { stage: 'diagnosis', timestamp: '2026-11-08T11:00:00Z', notes: 'Suhu CPU idle 85°C, thermal paste kering' },
-      { stage: 'assembling', timestamp: '2026-11-08T13:00:00Z', notes: 'Cleaning selesai, repaste Arctic MX-6' },
+      { stage: 'assembling', timestamp: '2026-11-08T13:00:00Z', notes: 'Cleaning selesai, ganti thermal paste' },
       { stage: 'qc_final', timestamp: '2026-11-08T15:00:00Z', notes: 'Suhu setelah repaste: idle 42°C, load 68°C' },
       { stage: 'completed', timestamp: '2026-11-08T16:00:00Z', notes: 'Sudah diambil customer' },
     ],

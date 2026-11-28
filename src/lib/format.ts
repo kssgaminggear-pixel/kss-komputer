@@ -3,6 +3,10 @@ import { PAYMENT_WA_LINE } from './payment';
 import { ProductCategory } from './types';
 
 export const TOKOPEDIA_OFFICIAL_STORE_URL = TOKOPEDIA_STORE_URL;
+
+/** Nilai 99 di data berarti garansi seumur produk; angka itu tidak ditampilkan sebagai jumlah tahun. */
+export const warrantyLabel = (years: number) =>
+  years >= 99 ? 'Garansi distributor' : `Garansi ${years} tahun`;
 /** Alias resmi sesuai kontrak bisnis KSS Komputer. */
 export const TOKOPEDIA_URL = TOKOPEDIA_OFFICIAL_STORE_URL;
 export const DEFAULT_WHATSAPP_PHONE = '6289675437066'; // Nomor CS WhatsApp KSS Komputer
@@ -126,7 +130,7 @@ export function generateBuildPlainText(
 
   lines.push(`------------------------------------------`);
   lines.push(`TOTAL HARGA RAKITAN: ${formatIDR(totalPrice)} (Siap Pakai)`);
-  lines.push(`Toko Resmi Tokopedia: ${TOKOPEDIA_OFFICIAL_STORE_URL}`);
+  lines.push(`Toko Tokopedia: ${TOKOPEDIA_OFFICIAL_STORE_URL}`);
   lines.push(`==========================================`);
 
   return lines.join('\n');

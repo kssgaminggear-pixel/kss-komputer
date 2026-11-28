@@ -65,14 +65,22 @@ function TrackingStatusContent({ trackings }: { trackings: BuildOrderTracking[] 
         <div className="kss-container py-8 sm:py-10">
           <div className="kss-eyebrow mb-2">
             <ClipboardList className="h-3.5 w-3.5" />
-            <span>Tracking Pengerjaan</span>
+            <span>Halaman contoh</span>
           </div>
           <h1 className="text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50 sm:text-3xl">
-            Cek Status Rakit &amp; Servis PC
+            Contoh cek status rakit &amp; servis PC
           </h1>
           <p className="mt-2 max-w-2xl text-xs leading-relaxed text-zinc-600 dark:text-zinc-500 sm:text-sm">
-            Masukkan kode resi internal dari teknisi KSS untuk melihat progres pengerjaan
-            secara real-time, dari verifikasi pembayaran sampai unit siap diambil.
+            Ini contoh tampilan pelacakan. Datanya bukan pesanan asli. Untuk status pengerjaan Anda,{' '}
+            <a
+              href={`https://wa.me/${TECHNICIAN_WHATSAPP}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="kss-link"
+            >
+              tanyakan ke teknisi lewat WhatsApp
+            </a>
+            .
           </p>
 
           <form onSubmit={handleSubmit} className="mt-5 flex max-w-2xl flex-col gap-2 sm:flex-row">
@@ -93,7 +101,7 @@ function TrackingStatusContent({ trackings }: { trackings: BuildOrderTracking[] 
             </button>
           </form>
           <p className="mt-2 font-mono text-meta text-zinc-500">
-            Kode demo: TRK-KSS-001 · TRK-KSS-002 · TRK-KSS-003
+            Kode contoh: TRK-KSS-001 · TRK-KSS-002 · TRK-KSS-003
           </p>
         </div>
       </section>
@@ -133,7 +141,7 @@ function TrackingStatusContent({ trackings }: { trackings: BuildOrderTracking[] 
             <div className="rounded-md border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-900/60 shadow-xs">
               <div className="flex items-center justify-between mb-3">
                 <span className="font-mono text-micro font-bold uppercase tracking-wider text-zinc-500">
-                  Kode Resi
+                  Kode Resi (contoh)
                 </span>
                 <span className="rounded-md border border-emerald-500/20 bg-emerald-500/10 px-2 py-0.5 font-mono text-micro font-bold text-emerald-700 dark:text-emerald-400">
                   {tracking.trackingCode}

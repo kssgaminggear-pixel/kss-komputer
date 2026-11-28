@@ -36,7 +36,7 @@ export const SERVICE_FAQS: FaqItem[] = [
 export const STORE_FAQS: FaqItem[] = [
   {
     q: 'Apakah KSS Komputer hanya toko online?',
-    a: 'Bukan. KSS Komputer adalah bengkel rakit dan servis PC dengan lokasi fisik di Mangga Dua Mall, Jakarta. Anda bisa datang langsung untuk konsultasi, perakitan, maupun klaim garansi.',
+    a: 'Bukan. KSS Komputer adalah bengkel rakit dan servis PC dengan lokasi fisik di Mangga Dua Orion Dusit, Jakarta. Anda bisa datang langsung untuk konsultasi, perakitan, maupun klaim garansi.',
   },
   {
     q: 'Bagaimana prosedur klaim garansi?',

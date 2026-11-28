@@ -205,7 +205,7 @@ export function RetailCartDrawer() {
                   className="flex flex-1 items-center justify-center gap-1.5 rounded-md border border-zinc-200 bg-white px-3 py-2 text-meta font-semibold text-zinc-700 hover:bg-zinc-100 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-200"
                 >
                   <ExternalLink className="h-3.5 w-3.5 text-emerald-700" />
-                  Buka Tokopedia Resmi
+                  Buka Tokopedia
                 </a>
                 <button
                   onClick={clearCart}
