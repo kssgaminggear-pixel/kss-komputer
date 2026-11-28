@@ -141,7 +141,7 @@ export default function JasaLayananPage() {
         </div>
 
       {/* FAQ Jasa */}
-      <section className="mb-8">
+      <section id="faq" className="mb-8 scroll-mt-24">
         <h2 className="text-sm font-bold uppercase tracking-tight text-zinc-900 dark:text-zinc-100 mb-4 flex items-center gap-2">
           <Clock className="h-4 w-4 text-orange-700" />
           <span>Pertanyaan yang Sering Diajukan</span>
