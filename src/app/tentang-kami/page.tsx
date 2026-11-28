@@ -113,7 +113,7 @@ export default function TentangKamiPage() {
               href={generateCustomBuildWAMessage()}
               target="_blank"
               rel="noopener noreferrer"
-              className="kss-btn-primary"
+              className="kss-btn-dark"
             >
               <MessageCircle aria-hidden className="h-4 w-4" />
               Konsultasi via WhatsApp

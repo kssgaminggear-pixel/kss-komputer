@@ -52,6 +52,8 @@ describe('pencarian dan urutan', () => {
     const text = normalizeSearch('Monitor ASUS VP227HFY 22" Full-HD');
     expect(matchesTokens(text, searchTokens('asus full hd'))).toBe(true);
     expect(matchesTokens(text, searchTokens('asus 27inch'))).toBe(false);
+    expect(matchesTokens(normalizeSearch('KSS E-Sports Champion'), searchTokens('esports'))).toBe(true);
+    expect(matchesTokens(normalizeSearch('Service Troubleshoot'), searchTokens('servis'))).toBe(true);
   });
 
   it('mengurutkan harga', () => {

@@ -1,4 +1,4 @@
-import { TOKOPEDIA_STORE_URL } from './constants';
+import { SITE_URL, TOKOPEDIA_STORE_URL } from './constants';
 import { PAYMENT_WA_LINE } from './payment';
 import { ProductCategory } from './types';
 
@@ -302,7 +302,7 @@ export function generateQuoteShareWAMessage(
   quoteCode: string,
   customerName: string,
   finalPrice: number,
-  siteUrl: string = 'https://kss-komputer-seven.vercel.app'
+  siteUrl: string = SITE_URL
 ): string {
   const cleanPhone = phone.replace(/[^0-9]/g, '');
   const lines: string[] = [

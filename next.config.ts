@@ -13,6 +13,13 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
+      // Alamat lama Vercel diarahkan ke domain resmi; /api dibiarkan agar pemanggil lama tidak putus.
+      {
+        source: '/:path((?!api/).*)',
+        has: [{ type: 'host', value: 'kss-komputer-seven.vercel.app' }],
+        destination: 'https://www.kssgo.com/:path',
+        permanent: true,
+      },
       // Slug lama tidak sama dengan slug Tokopedia, jadi diarahkan ke pencarian Toko.
       { source: '/komponen', destination: '/toko', permanent: true },
       { source: '/aksesoris', destination: '/toko', permanent: true },

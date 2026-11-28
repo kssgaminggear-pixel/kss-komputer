@@ -75,7 +75,7 @@ export function Footer() {
             </p>
           </div>
           <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row">
-            <Link href="/konsultasi" className="kss-btn-primary h-11 px-5 text-sm">
+            <Link href="/konsultasi" className="kss-btn-dark h-11 bg-paper px-5 text-sm text-ink hover:bg-white">
               Konsultasi budget
               <ArrowRight aria-hidden className="h-4 w-4" />
             </Link>

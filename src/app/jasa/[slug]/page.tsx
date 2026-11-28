@@ -154,7 +154,7 @@ export default async function JasaDetailPage({ params }: JasaDetailPageProps) {
                   )}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-md border border-emerald-500/30 bg-emerald-500/10 px-3 py-2 text-xs font-bold text-emerald-700 transition-colors hover:bg-emerald-500/15 dark:text-emerald-400"
+                  className="kss-btn-dark px-3 py-2"
                 >
                   <PhoneCall className="h-3.5 w-3.5" />
                   <span>Tanya Teknisi</span>

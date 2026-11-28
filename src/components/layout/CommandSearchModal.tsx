@@ -12,6 +12,13 @@ export interface CommandSearchModalProps {
   onClose: () => void;
   products: SearchEntry[];
   packages: PaketSearchEntry[];
+  services: ServiceSearchEntry[];
+}
+
+/** Layanan jasa dalam pencarian global. */
+export interface ServiceSearchEntry {
+  slug: string;
+  name: string;
 }
 
 /** Paket dalam pencarian global: tanpa harga. */
@@ -30,7 +37,7 @@ const PAGES = [
 ];
 
 /** Pencarian lintas situs. Sengaja tanpa harga: indeksnya ikut di setiap halaman. */
-export function CommandSearchModal({ isOpen, onClose, products, packages }: CommandSearchModalProps) {
+export function CommandSearchModal({ isOpen, onClose, products, packages, services }: CommandSearchModalProps) {
   const [query, setQuery] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -74,6 +81,11 @@ export function CommandSearchModal({ isOpen, onClose, products, packages }: Comm
     matchesTokens(normalizeSearch(`paket pc rakitan ${item.name} ${item.specs}`), tokens)
   );
 
+  // Jasa hanya muncul saat dicari agar daftar awal tetap ringkas.
+  const jasa = tokens.length
+    ? services.filter((item) => matchesTokens(normalizeSearch(`jasa layanan ${item.name} ${item.slug}`), tokens))
+    : [];
+
   if (!isOpen) return null;
 
   return (
@@ -102,7 +114,7 @@ export function CommandSearchModal({ isOpen, onClose, products, packages }: Comm
         </div>
 
         <div className="overflow-y-auto p-1">
-          {pages.length === 0 && results.length === 0 && paket.length === 0 && (
+          {pages.length === 0 && results.length === 0 && paket.length === 0 && jasa.length === 0 && (
             <p className="py-12 text-center text-sm text-zinc-500">Tidak ada hasil untuk &quot;{query}&quot;.</p>
           )}
 
@@ -115,6 +127,22 @@ export function CommandSearchModal({ isOpen, onClose, products, packages }: Comm
                     <Link href={page.href} onClick={onClose} className="flex h-10 items-center justify-between rounded-md px-3 text-sm text-zinc-800 hover:bg-zinc-100">
                       {page.name}
                       <ArrowRight aria-hidden className="h-3.5 w-3.5 text-zinc-400" />
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
+
+          {jasa.length > 0 && (
+            <>
+              <p className="kss-label px-3 py-2 text-zinc-500">Jasa</p>
+              <ul>
+                {jasa.map((item) => (
+                  <li key={item.slug}>
+                    <Link href={`/jasa/${item.slug}`} onClick={onClose} className="flex min-h-10 items-center justify-between gap-3 rounded-md px-3 text-sm text-zinc-900 hover:bg-zinc-100">
+                      <span className="line-clamp-1">{item.name}</span>
+                      <ArrowRight aria-hidden className="h-3.5 w-3.5 shrink-0 text-zinc-400" />
                     </Link>
                   </li>
                 ))}

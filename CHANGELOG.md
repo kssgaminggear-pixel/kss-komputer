@@ -26,6 +26,14 @@ ATURAN UNTUK SEMUA AGENT (baca sebelum menulis entri)
 
 ## [Unreleased]
 
+### Fixed
+
+- Alamat kanonis, sitemap, robots, dan data terstruktur memakai https://www.kssgo.com; alamat lama Vercel diarahkan ke sana.
+- Pencarian menemukan layanan jasa serta nama bertanda hubung (misalnya "esports").
+- Angka jumlah barang di ikon keranjang tidak lagi hilang setelah halaman dimuat ulang.
+- Keranjang tidak lagi terbuka sendiri setelah muat ulang; panelnya diberi peran dialog dan fokus pindah ke tombol tutup.
+- Tombol orange ganda dan tombol WhatsApp orange diganti warna ink; hijau non-Tokopedia di detail paket dan keranjang dibuat netral.
+
 ### Changed
 
 - Tahap 7: bagian "Bedah PC" 3D di Beranda (Rakit, Cleaning, Upgrade) dengan model buatan kode berlabel ilustrasi. Pustaka three dimuat hanya saat bagian didekati; perangkat lemah, hemat data, gerak dikurangi, atau tanpa WebGL melihat gambar dari scene yang sama.

@@ -37,6 +37,13 @@ export interface RetailCartState {
   generateWhatsAppCheckoutUrl: (phone?: string, customerName?: string, notes?: string) => string;
 }
 
+/**
+ * Pakai ini untuk menampilkan jumlah barang. Selector harus menghitung dari state yang diterima:
+ * getTotalItemsCount() membaca data terbaru saat hidrasi sehingga tampilan tidak diperbarui.
+ */
+export const selectCartCount = (state: RetailCartState) =>
+  state.items.reduce((sum, item) => sum + item.quantity, 0);
+
 const memoryStorage = {
   getItem: () => null,
   setItem: () => {},
@@ -137,6 +144,12 @@ export const useRetailCartStore = create<RetailCartState>()(
     }),
     {
       name: 'kss-retail-cart-storage-v3',
+      // Hanya isi keranjang yang disimpan; panel tidak boleh terbuka sendiri setelah muat ulang.
+      partialize: (state) => ({ items: state.items }),
+      merge: (persisted, current) => ({
+        ...current,
+        items: (persisted as Partial<RetailCartState> | undefined)?.items ?? current.items,
+      }),
       storage: createJSONStorage(() =>
         typeof window !== 'undefined' ? window.localStorage : memoryStorage
       ),

@@ -155,7 +155,7 @@ export default function PaketDetailContent({ pkg }: { pkg: PublicPrebuiltDetailD
                   <span className="rounded-md bg-zinc-100 dark:bg-zinc-800 px-2 py-0.5 text-micro font-mono text-zinc-700 dark:text-zinc-300">
                     {pkg.targetResolution}
                   </span>
-                  <span className="rounded-md bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 text-micro font-mono font-bold text-emerald-700 dark:text-emerald-400">
+                  <span className="rounded-md bg-zinc-50 border border-zinc-200 px-2 py-0.5 text-micro font-mono font-bold text-zinc-800 dark:text-zinc-200">
                     {pkg.tier}
                   </span>
                 </div>
@@ -183,7 +183,7 @@ export default function PaketDetailContent({ pkg }: { pkg: PublicPrebuiltDetailD
               <div className="mt-4 pt-4 border-t border-zinc-100 dark:border-zinc-800 grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {pkg.highlights.map((h, i) => (
                   <div key={i} className="flex items-center gap-2 text-xs text-zinc-700 dark:text-zinc-300">
-                    <Check className="h-3.5 w-3.5 text-emerald-500 shrink-0" />
+                    <Check className="h-3.5 w-3.5 text-zinc-700 shrink-0" />
                     <span>{h}</span>
                   </div>
                 ))}
@@ -201,12 +201,12 @@ export default function PaketDetailContent({ pkg }: { pkg: PublicPrebuiltDetailD
                     {formatIDR(totalBundlePrice)}
                   </span>
                 </div>
-                <span className="rounded-sm border border-emerald-500/20 bg-emerald-500/10 px-1.5 py-0.5 font-mono text-micro font-bold text-emerald-700 dark:text-emerald-400">
+                <span className="rounded-sm border border-zinc-200 bg-zinc-50 px-1.5 py-0.5 font-mono text-micro font-bold text-zinc-800 dark:text-zinc-200">
                   Termasuk Rakit
                 </span>
               </div>
               <div className="grid grid-cols-2 gap-2">
-                <button type="button" onClick={handleWhatsAppCheckout} className="kss-btn-primary h-10">
+                <button type="button" onClick={handleWhatsAppCheckout} className="kss-btn-dark h-10">
                   <MessageCircle className="h-4 w-4" />
                   <span>Pesan WA</span>
                 </button>
@@ -320,7 +320,7 @@ export default function PaketDetailContent({ pkg }: { pkg: PublicPrebuiltDetailD
                       Distributor Resmi ID ({item.part.officialDistributor || 'Astrindo/EMD'}) • Garansi {item.part.warrantyYears} Tahun
                     </span>
                   </div>
-                  <span className="rounded-md bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 font-mono text-micro font-bold text-emerald-700 dark:text-emerald-400 shrink-0">
+                  <span className="rounded-md bg-zinc-50 border border-zinc-200 px-2 py-0.5 font-mono text-micro font-bold text-zinc-800 dark:text-zinc-200 shrink-0">
                     Termasuk Paket
                   </span>
                 </div>
@@ -371,7 +371,7 @@ export default function PaketDetailContent({ pkg }: { pkg: PublicPrebuiltDetailD
               <div className="kss-price mt-0.5 text-2xl text-zinc-900 dark:text-zinc-100">
                 {formatIDR(totalBundlePrice)}
               </div>
-              <span className="text-meta text-emerald-700 dark:text-emerald-400 font-semibold block mt-0.5">
+              <span className="text-meta text-zinc-800 dark:text-zinc-200 font-semibold block mt-0.5">
                 Sudah termasuk jasa rakit rapi, OS test &amp; stress test
               </span>
             </div>
@@ -390,7 +390,7 @@ export default function PaketDetailContent({ pkg }: { pkg: PublicPrebuiltDetailD
               </div>
               <div className="flex justify-between items-center bg-zinc-50 dark:bg-zinc-950 p-2.5 rounded-md border border-zinc-200 dark:border-zinc-800">
                 <span className="text-zinc-500">Status Perakitan:</span>
-                <span className="font-bold text-emerald-700 dark:text-emerald-400">100% Kompatibel</span>
+                <span className="font-bold text-zinc-800 dark:text-zinc-200">100% Kompatibel</span>
               </div>
             </div>
 
@@ -399,7 +399,7 @@ export default function PaketDetailContent({ pkg }: { pkg: PublicPrebuiltDetailD
               <button
                 type="button"
                 onClick={handleWhatsAppCheckout}
-                className="flex items-center justify-center gap-2 w-full rounded-md bg-orange-700 hover:bg-orange-800 text-white py-3 text-xs font-bold transition-colors"
+                className="flex items-center justify-center gap-2 kss-btn-dark h-11 w-full text-xs"
               >
                 <MessageCircle className="h-4 w-4" />
                 <span>Pesan Paket Ini via WhatsApp</span>

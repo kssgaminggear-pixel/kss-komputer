@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   X,
   Trash2,
@@ -29,6 +29,15 @@ export function RetailCartDrawer() {
 
   const [customerName, setCustomerName] = useState('');
   const [notes, setNotes] = useState('');
+
+  // Fokus pindah ke tombol tutup saat panel dibuka, lalu kembali ke pemicunya.
+  const closeButton = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    if (!isOpen) return;
+    const trigger = document.activeElement as HTMLElement | null;
+    closeButton.current?.focus();
+    return () => trigger?.focus();
+  }, [isOpen]);
 
   // Close with Esc key
   useEffect(() => {
@@ -61,19 +70,26 @@ export function RetailCartDrawer() {
       />
 
       {/* Drawer */}
-      <div className="relative z-10 flex h-full w-full max-w-md flex-col border-l border-zinc-200 bg-white shadow-sm dark:border-zinc-800 dark:bg-zinc-950">
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-label="Keranjang toko"
+        className="relative z-10 flex h-full w-full max-w-md flex-col border-l border-zinc-200 bg-white shadow-sm dark:border-zinc-800 dark:bg-zinc-950">
         {/* Header */}
         <div className="flex items-center justify-between border-b border-zinc-200 px-4 py-3 dark:border-zinc-800">
           <div className="flex items-center gap-2">
-            <ShoppingBag className="h-5 w-5 text-emerald-700 dark:text-emerald-400" />
+            <ShoppingBag aria-hidden className="h-5 w-5 text-ink" />
             <h2 className="text-sm font-bold uppercase tracking-tight text-zinc-900 dark:text-zinc-100">
               Keranjang toko
             </h2>
-            <span className="rounded-md border border-emerald-500/20 bg-emerald-500/10 px-1.5 py-0.5 font-mono text-meta font-semibold text-emerald-700 dark:text-emerald-400">
+            <span className="rounded-full border border-line bg-paper px-2 py-0.5 text-meta font-semibold text-ink">
               {totalCount} item
             </span>
           </div>
           <button
+            ref={closeButton}
+            type="button"
+            aria-label="Tutup keranjang"
             onClick={closeCart}
             className="rounded-md p-1.5 text-zinc-500 hover:bg-zinc-100 hover:text-zinc-700 dark:hover:bg-zinc-800 dark:hover:text-zinc-200"
             title="Tutup (Esc)"

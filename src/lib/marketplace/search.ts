@@ -4,6 +4,7 @@ const SYNONYMS: Record<string, string> = {
   vga: 'graphic',
   memori: 'ram',
   tetikus: 'mouse',
+  servis: 'service',
 };
 
 /** Huruf kecil, tanpa diakritik, selain huruf/angka menjadi spasi. */
@@ -23,9 +24,13 @@ export function searchTokens(query: string): string[] {
 
 /** Semua token harus cocok (langsung atau lewat sinonim). */
 export function matchesTokens(haystack: string, tokens: string[]): boolean {
+  // Kata panjang juga dicocokkan tanpa spasi: "esports" menemukan "E-Sports".
+  const compact = haystack.replaceAll(' ', '');
   return tokens.every(
     (token) =>
-      haystack.includes(token) || (token in SYNONYMS && haystack.includes(SYNONYMS[token]))
+      haystack.includes(token) ||
+      (token.length >= 5 && compact.includes(token)) ||
+      (token in SYNONYMS && haystack.includes(SYNONYMS[token]))
   );
 }
 
