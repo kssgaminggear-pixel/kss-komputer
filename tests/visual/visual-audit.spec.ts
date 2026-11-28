@@ -115,6 +115,15 @@ async function loadEverything(page: Page) {
     await page.evaluate((top) => scrollTo({ top, behavior: 'instant' }), y);
     await page.waitForTimeout(60);
   }
+  // Gambar lazy di rak geser baru dimuat setelah digeser ke layar; yang benar-benar rusak tetap terdeteksi.
+  await page.evaluate(async () => {
+    for (const img of document.images) {
+      if (img.complete || img.offsetParent === null) continue;
+      img.scrollIntoView({ block: 'center', inline: 'center', behavior: 'instant' });
+      await new Promise((resolve) => setTimeout(resolve, 150));
+    }
+    for (const rack of document.querySelectorAll('ul')) rack.scrollTo({ left: 0, behavior: 'instant' });
+  });
   await page
     .waitForFunction(() => [...document.images].every((i) => i.offsetParent === null || i.complete), null, {
       timeout: 30_000,

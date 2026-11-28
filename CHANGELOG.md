@@ -28,6 +28,9 @@ ATURAN UNTUK SEMUA AGENT (baca sebelum menulis entri)
 
 ### Changed
 
+- Beranda tahap 3: tambah pengantar jasa, rak geser 10 kartu layanan, serta ringkasan angka dan empat langkah kerja. Bagian "Kenapa KSS" dan empat kartu jasa lama diganti.
+- Slide Servis tampil pertama dengan ilustrasi baru untuk komputer dan HP.
+- Audit visual menggeser ke gambar yang belum dimuat di rak sebelum menilai gambar rusak.
 - Terapkan gaya V3 "Bengkel hangat" tahap 1: kanvas krem, huruf judul Bricolage Grotesque, tombol dan menu pil, sudut lembut, footer bergelombang.
 - Gelapkan teks abu di latar terang dan uji kontras warna secara otomatis.
 - Ganti tampilan awal Beranda dengan carousel jasa tiga slide yang bisa dijeda, digeser, dan dipakai dengan keyboard; harga yang tampil hanya biaya jasa.

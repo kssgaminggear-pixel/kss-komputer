@@ -3,10 +3,10 @@ import { HeroCarousel, type HeroSlide } from '@/components/home/HeroCarousel';
 import { DEFAULT_WHATSAPP_PHONE } from '@/lib/format';
 import type { ServicePackage } from '@/lib/types';
 
-/** Urutan slide. "Rakit" sementara di depan sampai gambar hero servis tersedia. */
+/** Urutan slide: servis di depan karena Beranda berfokus pada jasa. */
 const HERO_SLIDES = [
-  { slug: 'rakit-pc-custom', tab: 'Rakit PC custom', slot: 'home.hero.rakit' },
   { slug: 'service-troubleshoot-hardware', tab: 'Servis & troubleshoot', slot: 'home.hero.servis' },
+  { slug: 'rakit-pc-custom', tab: 'Rakit PC custom', slot: 'home.hero.rakit' },
   { slug: 'deep-cleaning-repaste', tab: 'Perawatan & upgrade', slot: 'home.hero.rawat' },
 ];
 
