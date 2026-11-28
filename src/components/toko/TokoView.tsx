@@ -48,7 +48,7 @@ export async function TokoView({ activeEtalaseSlug }: { activeEtalaseSlug?: stri
       <header>
         <div className="kss-container flex flex-col gap-4 pb-2 pt-8 sm:pt-10 lg:flex-row lg:items-end lg:justify-between">
           <div className="min-w-0">
-            <p className="kss-eyebrow">Toko resmi di Tokopedia</p>
+            <p className="kss-eyebrow">Toko KSS di Tokopedia</p>
             <h1 className="mt-2 text-h1-page text-balance text-ink">
               {activeShelf ? activeShelf.name : 'Toko KSS Komputer'}
             </h1>

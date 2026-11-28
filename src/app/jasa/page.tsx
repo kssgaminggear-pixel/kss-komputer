@@ -18,7 +18,7 @@ import { SERVICE_FAQS } from '@/lib/faq';
 export const metadata: Metadata = {
   title: 'Jasa Rakit, Servis & Maintenance PC — KSS Komputer',
   description:
-    'Layanan rakit PC, servis, upgrade, instalasi ulang, dan maintenance oleh teknisi KSS Komputer di Mangga Dua Mall Jakarta. Booking via WhatsApp.',
+    'Layanan rakit PC, servis, upgrade, instalasi ulang, dan maintenance oleh teknisi KSS Komputer di Mangga Dua, Jakarta. Booking via WhatsApp.',
   alternates: {
     canonical: '/jasa',
   },
@@ -33,7 +33,7 @@ export default function JasaLayananPage() {
       <PageHeader
         eyebrow="Service & Assembly Center"
         title="Layanan Jasa Rakit, Servis & Maintenance"
-        description="Dikerjakan teknisi KSS dengan penanganan antistatik, thermal paste premium, dan pengujian stabilitas sebelum serah terima."
+        description="Dikerjakan teknisi KSS dengan thermal paste premium dan pengujian stabilitas sebelum serah terima."
         actions={
           <>
             <a
@@ -179,21 +179,15 @@ export default function JasaLayananPage() {
           <span>Standar Mutu Layanan Teknisi KSS</span>
         </h3>
 
-        <div className="grid grid-cols-1 gap-4 text-xs text-zinc-600 dark:text-zinc-500 sm:grid-cols-3">
+        <div className="grid grid-cols-1 gap-4 text-xs text-zinc-600 dark:text-zinc-500 sm:grid-cols-2">
           <div className="rounded-md border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-950">
-            <div className="mb-1 font-bold text-zinc-900 dark:text-zinc-100">1. Anti-Static Handling</div>
+            <div className="mb-1 font-bold text-zinc-900 dark:text-zinc-100">1. Thermal paste premium</div>
             <p className="text-meta leading-relaxed">
-              Peralatan antistatik digunakan untuk melindungi motherboard dan prosesor dari lonjakan listrik statis yang tidak kasat mata.
+              Pemasangan ulang pendingin prosesor memakai thermal paste premium.
             </p>
           </div>
           <div className="rounded-md border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-950">
-            <div className="mb-1 font-bold text-zinc-900 dark:text-zinc-100">2. Thermal Paste Berlisensi</div>
-            <p className="text-meta leading-relaxed">
-              Menggunakan pasta termal resmi Thermal Grizzly Kryonaut atau Arctic MX-4 dengan konduktivitas panas di atas 8.5 W/mK.
-            </p>
-          </div>
-          <div className="rounded-md border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-950">
-            <div className="mb-1 font-bold text-zinc-900 dark:text-zinc-100">3. Laporan Uji Suhu &amp; Beban</div>
+            <div className="mb-1 font-bold text-zinc-900 dark:text-zinc-100">2. Laporan uji suhu &amp; beban</div>
             <p className="text-meta leading-relaxed">
               Setelah pengerjaan, unit melalui pengujian Cinebench &amp; Furmark dengan dokumentasi suhu idle dan full load sebelum diserahkan.
             </p>

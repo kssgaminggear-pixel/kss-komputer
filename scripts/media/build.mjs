@@ -13,7 +13,7 @@ const PRODUCTS = path.join(ROOT, 'data', 'marketplace', 'products.json');
 
 /** Teks alternatif awal. Suntingan di manifest dipertahankan pada build berikutnya. */
 const DEFAULT_ALT = {
-  '/images/tokopedia/banner-pc-store.webp': 'Etalase PC rakitan KSS Komputer di Mangga Dua Mall',
+  '/images/tokopedia/banner-pc-store.webp': 'Etalase PC rakitan KSS Komputer',
   '/images/tokopedia/banner-store-1.webp': 'Banner promo KSS Komputer',
   '/images/tokopedia/banner-store-2.webp': 'Banner pilihan casing PC rakitan KSS Komputer',
   '/images/tokopedia/monitor-22.webp': 'Monitor 22 inci dari etalase KSS Komputer',

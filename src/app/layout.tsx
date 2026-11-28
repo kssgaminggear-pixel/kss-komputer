@@ -78,7 +78,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'KSS Komputer — Paket PC Rakitan & Jasa Servis Jakarta',
     description:
-      'Paket PC siap pakai, upgrade terukur, dan jasa servis bergaransi di Mangga Dua Mall.',
+      'Paket PC siap pakai, upgrade terukur, dan jasa servis bergaransi di Mangga Dua, Jakarta.',
     images: ['/images/tokopedia/banner-pc-store.webp'],
   },
 };

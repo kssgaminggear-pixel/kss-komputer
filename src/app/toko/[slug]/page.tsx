@@ -33,7 +33,7 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
   if (!product) return { title: 'Produk tidak ditemukan', robots: { index: false } };
   return {
     title: `${product.name} — Toko KSS Komputer`,
-    description: `${product.name}. ${product.soldLabel} terjual di toko resmi KSS Komputer.`,
+    description: `${product.name}. ${product.soldLabel} terjual di toko Tokopedia KSS Komputer.`,
     alternates: { canonical: `/toko/${product.slug}` },
     openGraph: product.image ? { images: [product.image] } : undefined,
   };

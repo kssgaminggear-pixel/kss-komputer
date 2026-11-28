@@ -1,4 +1,4 @@
-import { SITE_URL, STORE_NAME, TOKOPEDIA_URL, STORE_ADDRESS } from './constants';
+import { SITE_URL, STORE_NAME, TOKOPEDIA_URL, STORE_STREET } from './constants';
 import { DEFAULT_WHATSAPP_PHONE } from './format';
 import { getPackageImage } from './package-images';
 import type { PublicPrebuiltPCDTO } from './sanitizer';
@@ -37,12 +37,12 @@ export function organizationSchema() {
     logo: absoluteUrl('/images/brand/kss-logo-light.png'),
     image: absoluteUrl('/images/tokopedia/banner-pc-store.webp'),
     description:
-      'Custom PC system integrator dan pusat layanan jasa komputer di Mangga Dua Mall, Jakarta. Paket PC rakitan siap pakai, upgrade terukur, dan servis bergaransi.',
+      'Custom PC system integrator dan pusat layanan jasa komputer di Mangga Dua, Jakarta. Paket PC rakitan siap pakai, upgrade terukur, dan servis bergaransi.',
     telephone: `+${DEFAULT_WHATSAPP_PHONE}`,
     address: {
       '@type': 'PostalAddress',
-      streetAddress: STORE_ADDRESS,
-      addressLocality: 'Jakarta Pusat',
+      streetAddress: STORE_STREET,
+      addressLocality: 'Jakarta',
       addressRegion: 'DKI Jakarta',
       addressCountry: 'ID',
     },

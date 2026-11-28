@@ -90,10 +90,10 @@ export default function CustomerQuotationContent({ quote }: { quote: PublicQuote
                 KSS KOMPUTER
               </div>
               <div className="text-xs text-zinc-600">
-                Pusat System Integrator &amp; Perakitan PC Spesialis Harco Mangga Dua
+                Pusat System Integrator &amp; Perakitan PC di Mangga Dua
               </div>
               <div className="text-meta text-zinc-500 font-mono">
-                Mangga Dua Mall Lt. 4 Blok A No. 12-14, Jakarta Pusat • WA: {DEFAULT_WHATSAPP_DISPLAY}
+                Mangga Dua Orion Dusit Lt 1 No 8, Jakarta • WA: {DEFAULT_WHATSAPP_DISPLAY}
               </div>
             </div>
           </div>

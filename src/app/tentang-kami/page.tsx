@@ -4,6 +4,7 @@ import type { Metadata } from 'next';
 import { MapPin, Truck, MessageCircle, ArrowUpRight, Plus } from 'lucide-react';
 import {
   STORE_ADDRESS,
+  STORE_AREA,
   STORE_OPERATIONAL_HOURS,
   STORE_WARRANTY_TEXT,
   ADMIN_WHATSAPP,
@@ -14,11 +15,12 @@ import { PageHeader } from '@/components/ui/PageHeader';
 import { SectionHeader } from '@/components/ui/SectionHeader';
 import { faqSchema } from '@/lib/seo';
 import { STORE_FAQS } from '@/lib/faq';
+import { getPublicServices } from '@/lib/server-catalog';
 
 export const metadata: Metadata = {
   title: 'Tentang Kami — Bengkel Rakit & Servis PC KSS Komputer',
   description:
-    'Profil KSS Komputer: bengkel rakit dan servis PC di Mangga Dua Mall Jakarta. Teknisi berpengalaman, standar QC, garansi toko, dan alur klaim yang jelas.',
+    'Profil KSS Komputer: bengkel rakit dan servis PC di Mangga Dua, Jakarta. Standar QC, garansi toko, dan alur klaim yang jelas.',
   alternates: {
     canonical: '/tentang-kami',
   },
@@ -40,23 +42,22 @@ const TEAM = [
 ];
 
 const AREAS = [
-  { title: 'Meja perakitan', text: 'Area kerja antistatik dengan pencahayaan merata.' },
+  { title: 'Meja perakitan', text: 'Area kerja untuk merakit dan menata kabel.' },
   { title: 'Bench diagnosis', text: 'Pengecekan komponen, memori, dan storage.' },
   { title: 'Stress test station', text: 'Uji beban dan pemantauan suhu sebelum QC.' },
   { title: 'Packing & serah terima', text: 'Packing aman untuk pickup maupun ekspedisi.' },
 ];
 
 const STATS = [
-  { value: '8+', label: 'Tahun pengalaman' },
-  { value: '2.500+', label: 'Unit dirakit' },
-  { value: '3', label: 'Teknisi inti' },
-  { value: '4.9/5', label: 'Rating konsumen' },
+  { value: '24 jam', label: 'Stress test rakitan' },
+  { value: '24 jam', label: 'CS online' },
+  { value: String(getPublicServices().length), label: 'Layanan jasa' },
 ];
 
 const STANDARDS = [
   {
     title: 'Standar perakitan',
-    body: 'Penanganan antistatik, routing kabel rapi, dan pengecekan ulang setiap konektor sebelum unit dinyalakan.',
+    body: 'Routing kabel rapi, dan pengecekan ulang setiap konektor sebelum unit dinyalakan.',
   },
   {
     title: 'Stress test & QC',
@@ -106,7 +107,7 @@ export default function TentangKamiPage() {
         breadcrumb={<Breadcrumb />}
         eyebrow="Bengkel rakit & servis PC"
         title="Kami merakit, menguji, dan merawat PC Anda."
-        description="KSS Komputer adalah system integrator dan service center di Mangga Dua Mall, Jakarta. Setiap unit melewati cek kompatibilitas, perakitan rapi, stress test, dan QC sebelum diserahkan."
+        description="KSS Komputer adalah system integrator dan service center di Mangga Dua, Jakarta. Setiap unit melewati cek kompatibilitas, perakitan rapi, stress test, dan QC sebelum diserahkan."
         actions={
           <>
             <a
@@ -127,7 +128,7 @@ export default function TentangKamiPage() {
 
       {/* Stat */}
       <div className="border-b border-zinc-200 bg-white">
-        <dl className="kss-container grid grid-cols-2 divide-zinc-200 sm:grid-cols-4 sm:divide-x">
+        <dl className="kss-container grid grid-cols-2 divide-zinc-200 sm:grid-cols-3 sm:divide-x">
           {STATS.map((s) => (
             <div key={s.label} className="border-b border-zinc-200 py-6 sm:border-b-0 sm:px-6 sm:first:pl-0">
               <dt className="kss-label text-zinc-500">{s.label}</dt>
@@ -208,8 +209,8 @@ export default function TentangKamiPage() {
         <div className="kss-container grid grid-cols-1 gap-6 lg:grid-cols-12">
           <div className="overflow-hidden rounded-md border border-zinc-200 lg:col-span-8">
             <iframe
-              title="Lokasi KSS Komputer di Mangga Dua Mall Jakarta"
-              src="https://www.google.com/maps?q=Mangga%20Dua%20Mall%20Jakarta&output=embed"
+              title={`Lokasi KSS Komputer di ${STORE_AREA}`}
+              src={`https://www.google.com/maps?q=${encodeURIComponent(STORE_ADDRESS)}&output=embed`}
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
               className="h-80 w-full border-0"

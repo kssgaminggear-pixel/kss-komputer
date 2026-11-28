@@ -3,7 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight, Check, MessageCircle } from 'lucide-react';
 import { DEFAULT_WHATSAPP_PHONE, DEFAULT_WHATSAPP_DISPLAY } from '@/lib/format';
-import { STORE_OPERATIONAL_HOURS } from '@/lib/constants';
+import { STORE_ADDRESS, STORE_EMAIL_SAMPLE, STORE_OPERATIONAL_HOURS } from '@/lib/constants';
 
 const DISTRIBUTORS = [
   { name: 'PT Astrindo Senayasa', brands: 'ASUS, Intel, ASRock' },
@@ -18,14 +18,13 @@ const FOOTER_LINKS = [
   { href: '/jasa', label: 'Layanan jasa & servis' },
   { href: '/konsultasi', label: 'Konsultasi budget' },
   { href: '/paket-rakitan', label: 'Paket PC siap pakai' },
-  { href: '/cek-pesanan', label: 'Cek status pengerjaan' },
+  { href: '/cek-pesanan', label: 'Cek status pengerjaan (contoh)' },
   { href: '/toko', label: 'Toko produk' },
   { href: '/tentang-kami', label: 'Tentang KSS Komputer' },
 ];
 
 const POLICIES = [
   'Garansi 1 to 1 replacement (7 hari pertama)',
-  'Bebas biaya rakitan dan instalasi OS trial',
   'Dukungan faktur pajak untuk pengadaan kantor',
 ];
 
@@ -33,7 +32,7 @@ export function Footer() {
   const currentYear = 2026;
 
   const contact: Array<[string, React.ReactNode]> = [
-    ['Alamat', 'Mangga Dua Mall Lt. 4 Blok A No. 12-14, Jakarta Pusat'],
+    ['Alamat', STORE_ADDRESS],
     ['Jam', STORE_OPERATIONAL_HOURS],
     [
       'WhatsApp',
@@ -47,13 +46,9 @@ export function Footer() {
     ],
     [
       'Email',
-      <a
-        key="mail"
-        href="mailto:sales@ksskomputer.id"
-        className="kss-num transition-colors hover:text-white"
-      >
-        sales@ksskomputer.id
-      </a>,
+      <span key="mail">
+        <span className="kss-num">{STORE_EMAIL_SAMPLE}</span> (contoh)
+      </span>,
     ],
   ];
 
