@@ -1,7 +1,8 @@
 import { expect, test, type Page } from '@playwright/test';
 
 const section = (page: Page) => page.locator('section[aria-labelledby="judul-bedah"]');
-const stage = (page: Page) => page.locator('[data-bedah-stage]');
+// Halaman sebelumnya tetap ada (tersembunyi) di DOM, jadi dibatasi ke bagian Beranda.
+const stage = (page: Page) => section(page).locator('[data-bedah-stage]');
 
 test('bedah PC: 3D baru dimuat saat didekati, tab dan jeda berfungsi, konsol bersih', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'no-preference' });

@@ -278,3 +278,9 @@ body {
 
   .kss-focusable { @apply focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600; }
 }
+
+/* Bar aksi HP: beri ruang di bawah halaman dan angkat tombol CS agar tidak tertutup. */
+@media (max-width: 767px) {
+  body:has([data-action-bar-active]) [data-cs-fab] { bottom: calc(7.75rem + env(safe-area-inset-bottom)); }
+  body:has([data-action-bar]) main:has([data-action-bar-active]) ~ footer { padding-bottom: 4rem; }
+}

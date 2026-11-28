@@ -234,6 +234,7 @@ export function CsAgent() {
         <button
           type="button"
           onClick={() => setIsOpen(true)}
+          data-cs-fab
           className="fixed bottom-20 right-4 z-40 inline-flex items-center gap-2 rounded-md border border-zinc-700 bg-zinc-900 px-3 py-2.5 text-xs font-bold text-white shadow-sm transition-colors hover:bg-zinc-800 md:bottom-6 print:hidden"
           aria-label="Buka CS 24 Jam"
         >

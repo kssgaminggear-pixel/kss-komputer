@@ -2,10 +2,9 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import { ChevronLeft, ChevronRight, Wrench } from 'lucide-react';
-import { SlotImage } from '@/components/ui/SlotImage';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ServiceMedia } from '@/components/service/ServiceMedia';
 import { Price } from '@/components/ui/Price';
-import { getSlot } from '@/lib/media/slots';
 import type { ServicePackage } from '@/lib/types';
 
 export type ShelfService = Pick<ServicePackage, 'slug' | 'title' | 'duration' | 'price' | 'badge'>;
@@ -74,7 +73,7 @@ export function HomeServiceShelf({ services }: { services: ShelfService[] }) {
               }`}
             >
               <Link href={`/jasa/${service.slug}`} className="flex h-full flex-col">
-                <ShelfMedia slug={service.slug} />
+                <ServiceMedia slug={service.slug} sizes="(min-width: 768px) 320px, 280px" />
                 <span className="flex flex-1 flex-col p-4">
                   <span className="flex min-h-5 flex-wrap items-center gap-2">
                     {service.badge && (
@@ -118,19 +117,5 @@ export function HomeServiceShelf({ services }: { services: ShelfService[] }) {
         )}
       </div>
     </section>
-  );
-}
-
-/** Urutan gambar: cutout khusus, lalu ilustrasi layanan, lalu ikon bila belum ada gambar. */
-function ShelfMedia({ slug }: { slug: string }) {
-  const slot = [`jasa.${slug}.cutout`, `jasa.${slug}`].find((id) => getSlot(id));
-  return (
-    <span className="relative flex aspect-[4/3] items-center justify-center bg-shape-clay">
-      {slot ? (
-        <SlotImage slot={slot} sizes="(min-width: 768px) 320px, 280px" />
-      ) : (
-        <Wrench aria-hidden className="h-10 w-10 text-ink/55" strokeWidth={1.5} />
-      )}
-    </span>
   );
 }
