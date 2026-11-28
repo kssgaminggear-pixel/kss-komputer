@@ -28,6 +28,7 @@ ATURAN UNTUK SEMUA AGENT (baca sebelum menulis entri)
 
 ### Changed
 
+- Tahap 7: bagian "Bedah PC" 3D di Beranda (Rakit, Cleaning, Upgrade) dengan model buatan kode berlabel ilustrasi. Pustaka three dimuat hanya saat bagian didekati; perangkat lemah, hemat data, gerak dikurangi, atau tanpa WebGL melihat gambar dari scene yang sama.
 - Tahap 6: halaman Toko menjadi katalog gabungan paket dan produk dengan tab jenis, pencarian, urutan, dan kategori berbentuk tombol. Paket hanya menampilkan harga total.
 - Menu komputer memakai dropdown Layanan dan Toko dengan logo di tengah; menu bawah HP menjadi Beranda, Jasa, Toko, Konsultasi, Lainnya. Pencarian global menemukan paket PC (tanpa harga).
 - Beranda tahap 5: paket siap pakai dan produk terlaris digabung menjadi satu bagian Toko bergaya marketplace dengan pencarian dan tombol kategori. Bagian kategori, paket, dan terlaris lama dihapus. Paket hanya menampilkan harga total.
