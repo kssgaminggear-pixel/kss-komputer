@@ -22,6 +22,9 @@ export interface MarketplaceProduct {
   description: string;
   /** Path lokal; kosong bila gambar belum berhasil diunduh. */
   image: string;
+  /** Ukuran asli file foto; diisi sinkron saat mengunduh. */
+  imageWidth?: number;
+  imageHeight?: number;
   tokopediaUrl: string;
   status: 'active' | 'hidden';
   missingRuns: number;

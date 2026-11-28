@@ -56,6 +56,7 @@ function toProduct(row, old, shelfIds, now) {
     ...(old?.descriptionHash ? { descriptionHash: old.descriptionHash, descriptionBy: old.descriptionBy } : {}),
     image: old?.image || '',
     ...(old?.imageSourceHash ? { imageSourceHash: old.imageSourceHash } : {}),
+    ...(old?.imageWidth ? { imageWidth: old.imageWidth, imageHeight: old.imageHeight } : {}),
     tokopediaUrl: row.url,
     status: 'active',
     missingRuns: 0,
