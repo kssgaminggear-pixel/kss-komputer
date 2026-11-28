@@ -12,7 +12,7 @@ KSS adalah bengkel rakit di Mangga Dua, bukan startup SaaS. Rasa: datasheet hard
 2. **Dua chapter, satu aksen.** Ink (`zinc-950`) untuk top bar, hero, footer. Kanvas terang untuk isi. Orange hanya untuk satu aksi utama per layar dan tanda telemetri (bar FPS, garis aktif, corner square).
 3. **Hairline grid, bukan kartu mengambang.** Item sejajar berjumlah tetap memakai `kss-grid-hairline`. Kartu terpisah hanya untuk paket PC.
 4. **Tipografi besar, bobot terkendali.** H1 800, H2 700, judul kartu 600, harga mono 600.
-5. **Ikon fungsional.** Hanya di tombol, navigasi, status. Tidak ada ikon di dalam kotak tint.
+5. **Ikon fungsional.** Di tombol, navigasi, status, dan penjelas fitur/spesifikasi. Ikon penjelas: garis (outline) monokrom, 14–16px (`h-3.5`/`h-4`), sejajar teks, **tanpa kotak atau lingkaran latar berwarna**, `aria-hidden` bila teksnya sudah menjelaskan.
 6. **Gerak 150ms**, hanya warna/opacity. Tanpa translate kartu atau shadow hover.
 
 ## 2. Warna & kontras

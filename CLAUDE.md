@@ -30,6 +30,7 @@
 - Hero & footer chapter gelap `bg-zinc-950`, isi terang; hairline, bukan shadow besar.
 - Satu aksi orange-700 per layar. WhatsApp = tombol ink; hijau `#00803F` hanya Tokopedia.
 - Radius maks 6px. Tanpa gradient, blur, shadow besar, emoji, ikon `Sparkles`. Sentence case.
+- Ikon boleh untuk menjelaskan fitur/spesifikasi: garis (outline) monokrom 14–16px, TANPA kotak/lingkaran latar berwarna.
 - Angka `font-mono tabular-nums` via komponen `Price`; pakai kelas `kss-*` dari globals.css.
 - DESIGN.md & UI_FIGCRAFT_SKILL.md sudah v2. WORK_ORDERS.md §2 usang (CTA biru) — abaikan.
 - Profesional, modern, tidak "AI slop". Tanpa `// TODO`.
