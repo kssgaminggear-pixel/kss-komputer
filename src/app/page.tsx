@@ -6,7 +6,8 @@ import { HomeFacts } from '@/components/home/HomeFacts';
 import { HomeCategories } from '@/components/home/HomeCategories';
 import { HomePackages } from '@/components/home/HomePackages';
 import { HomeTopSellers } from '@/components/home/HomeTopSellers';
-import { HomeConsultation } from '@/components/home/HomeConsultation';
+import { HomeConsultBanner } from '@/components/home/HomeConsultBanner';
+import { HomeFaqMosaic } from '@/components/home/HomeFaqMosaic';
 import { getTopSellers } from '@/lib/marketplace/server';
 import { getPackageImage } from '@/lib/package-images';
 import { getPublicPrebuilts, getPublicServices } from '@/lib/server-catalog';
@@ -33,10 +34,11 @@ export default function HomePage() {
       <HomeServiceIntro total={shelf.length} />
       <HomeServiceShelf services={shelf} />
       <HomeFacts services={services.filter((service) => service.isActive)} />
+      <HomeConsultBanner />
       <HomeCategories packageImage={second && getPackageImage(second.slug)} tokoImage={topSellers[0]?.image} />
       <HomePackages packages={packages} total={prebuilts.length} />
       <HomeTopSellers products={topSellers} />
-      <HomeConsultation />
+      <HomeFaqMosaic />
     </div>
   );
 }

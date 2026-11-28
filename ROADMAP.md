@@ -190,7 +190,7 @@ belum selesai mengikuti rancangan ini. Aturan harga dan kejujuran gambar tetap b
 - [x] V3-1 Beranda: hero jasa 3 slide (bisa dijeda). Slide servis di depan dengan gambar baru;
   gambar slide rakit dan perawatan masih sementara (V3-7).
 - [x] V3-2 Pengantar jasa, rak 10 kartu jasa, pita angka dan proses. Gambar cutout kartu menyusul (V3-7).
-- [ ] V3-3 Banner konsultasi dan kisi tanya jawab.
+- [x] V3-3 Banner konsultasi dan kisi tanya jawab.
 - [ ] V3-4 DTO katalog gabungan dan bagian Toko di Beranda.
 - [ ] V3-5 `/toko` jadi katalog gabungan; menu dan menu bawah HP disesuaikan.
 - [ ] V3-6 "Bedah PC" 3D (three.js, dimuat belakangan, ada gambar cadangan).
