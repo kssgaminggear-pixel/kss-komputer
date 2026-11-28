@@ -31,6 +31,62 @@
     "alt": "",
     "blurDataURL": "data:image/webp;base64,UklGRr4AAABXRUJQVlA4ILIAAAAwAwCdASoQABAAA4BaJbACdDsANQ2b4DIE8qx/lWojB/KAAP7yikw3orXfzwn9O7Co+t+r8zFh/sHjX+zDac+dbDvXWwWt+qzk5Gdg5ZTuTXT4gz/VD7CSwnICbXJ9n37n95/HuXL9ySOlXktNwRpMHUlx48c5c7Jstxl9l7nTd6GU85A1yGAzt99yedofFzu2rA1NPxMC0PevzoEv8f8afCk5ExZcBl2CUM+Jd3K8AAAA"
   },
+  "/images/ilustrasi/ilu-home-hero-d-v1.webp": {
+    "width": 1200,
+    "height": 896,
+    "kind": "illustration",
+    "source": "ai",
+    "alt": "",
+    "blurDataURL": "data:image/webp;base64,UklGRkQAAABXRUJQVlA4IDgAAACwAQCdASoQAAwAA4BaJZwAAuP5tXAAAP7zH//OVPlhfUpeptVh91Wsf+gJLYA1Sh41diHJEIAAAA=="
+  },
+  "/images/ilustrasi/ilu-home-hero-m-v1.webp": {
+    "width": 768,
+    "height": 1376,
+    "kind": "illustration",
+    "source": "ai",
+    "alt": "",
+    "blurDataURL": "data:image/webp;base64,UklGRkYAAABXRUJQVlA4IDoAAADQAQCdASoJABAAA4BaJZwAAlxdaSfgAAD+7ukCrT+n9+tLrGzolMAUGpqPs3FwDoFLTZ7/7rLXehAA"
+  },
+  "/images/ilustrasi/ilu-jasa-cleaning-v1.webp": {
+    "width": 1200,
+    "height": 896,
+    "kind": "illustration",
+    "source": "ai",
+    "alt": "",
+    "blurDataURL": "data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAACwAQCdASoQAAwAA4BaJZwAAjWmtyYAAP724WIH+TaHpliHLONZMY5zQfr+8nA2JTyAQe7RyAqTrJw1I8WV1kjouM/ETI0pdgqcCAAA"
+  },
+  "/images/ilustrasi/ilu-jasa-kabel-v1.webp": {
+    "width": 1200,
+    "height": 896,
+    "kind": "illustration",
+    "source": "ai",
+    "alt": "",
+    "blurDataURL": "data:image/webp;base64,UklGRjwAAABXRUJQVlA4IDAAAADwAQCdASoQAAwAA4BaJZwAAxYTrG2KywAA/vWXN5s5YZzbFSzNu/A71FX4ideBAAA="
+  },
+  "/images/ilustrasi/ilu-jasa-rakit-v1.webp": {
+    "width": 1200,
+    "height": 896,
+    "kind": "illustration",
+    "source": "ai",
+    "alt": "",
+    "blurDataURL": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAACwAQCdASoQAAwAA4BaJZwAAuQ148dgAP71ywzklmlb6wrnwcsLixLnyZce4iXZCxbvhIS40hBl/VzJQ4Yg1ZZKSEAAAA=="
+  },
+  "/images/ilustrasi/ilu-jasa-upgrade-v1.webp": {
+    "width": 1200,
+    "height": 896,
+    "kind": "illustration",
+    "source": "ai",
+    "alt": "",
+    "blurDataURL": "data:image/webp;base64,UklGRj4AAABXRUJQVlA4IDIAAADwAQCdASoQAAwAA4BaJZwAAqFoI67jkAAA/uzEcoBvXccRT8umO01wSPvl32J2wgAAAA=="
+  },
+  "/images/ilustrasi/ilu-konsultasi-v1.webp": {
+    "width": 1376,
+    "height": 768,
+    "kind": "illustration",
+    "source": "ai",
+    "alt": "",
+    "blurDataURL": "data:image/webp;base64,UklGRjwAAABXRUJQVlA4IDAAAADQAQCdASoQAAkAA4BaJaQAAupCNt1YwAD+9o1ns/165Zrp6kg0ihK9vHebwukdQAA="
+  },
   "/images/kss-pc-blueprint.svg": {
     "width": 420,
     "height": 460,

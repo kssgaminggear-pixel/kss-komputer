@@ -244,11 +244,13 @@ diblokir (uji fallback). Ambang ketajaman §0.2.4 dipindah ke Quality Gate V1+.
 **Delegasi:** Opus (wireframe & urutan seksi) · Sonnet (implementasi).
 
 - [ ] V1.1 Hero full-bleed A-01/A-02 (foto sendiri; ilustrasi H-1 hanya sebagai cadangan).
-- [ ] V1.2 Bento kategori: Paket PC, Toko, Jasa, Konsultasi (A-03).
-- [ ] V1.3 Paket unggulan: 3 kartu besar 4:3 (B-01).
-- [ ] V1.4 "Terlaris di toko" jadi grid kartu foto 1:1 (8 item, A-04), bukan daftar teks.
+  Tahap awal: hero bento memakai ilustrasi berlabel lewat slot `home.hero`; foto asli menyusul.
+- [x] V1.2 Bento kategori: Paket PC, Toko, Jasa, Konsultasi (A-03).
+- [ ] V1.3 Paket unggulan: 3 kartu besar 4:3 (B-01). Kartu sudah ada, tetapi foto unit baru
+  240×300 sehingga ditampilkan kecil; butuh foto unit asli.
+- [x] V1.4 "Terlaris di toko" jadi grid kartu foto 1:1 (8 item, A-04), bukan daftar teks.
 - [ ] V1.5 Proses QC: 4 foto asli bernomor (A-05), teks ≤ 1 kalimat per langkah.
-- [ ] V1.6 Form konsultasi di beranda diganti satu kartu visual menuju `/konsultasi`.
+- [x] V1.6 Form konsultasi di beranda diganti satu kartu visual menuju `/konsultasi`.
 - [ ] V1.7 Strip lookbook (A-06), tampil otomatis hanya bila manifest berisi ≥ 6 foto asli.
 
 **Quality Gate:** QG-W · QG-V (etalase ≥ 65 %, fold pertama ≥ 70 %) · QG-A · LCP lab mobile
