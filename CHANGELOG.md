@@ -30,6 +30,7 @@ ATURAN UNTUK SEMUA AGENT (baca sebelum menulis entri)
 
 - Terapkan gaya V3 "Bengkel hangat" tahap 1: kanvas krem, huruf judul Bricolage Grotesque, tombol dan menu pil, sudut lembut, footer bergelombang.
 - Gelapkan teks abu di latar terang dan uji kontras warna secara otomatis.
+- Ganti tampilan awal Beranda dengan carousel jasa tiga slide yang bisa dijeda, digeser, dan dipakai dengan keyboard; harga yang tampil hanya biaya jasa.
 
 ### Added
 

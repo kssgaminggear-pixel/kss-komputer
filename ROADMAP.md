@@ -187,7 +187,8 @@ Menggantikan aturan gaya v2 dan wireframe Beranda di bagian C; item bagian C yan
 belum selesai mengikuti rancangan ini. Aturan harga dan kejujuran gambar tetap berlaku.
 
 - [x] V3-0 Token warna, radius, huruf judul, header dan footer; uji kontras otomatis.
-- [ ] V3-1 Beranda: hero jasa 3 slide (bisa dijeda).
+- [x] V3-1 Beranda: hero jasa 3 slide (bisa dijeda). Gambar masih sementara; slide rakit di depan
+  sampai gambar hero servis tersedia (V3-7).
 - [ ] V3-2 Pengantar jasa, rak 10 kartu jasa, pita angka dan proses.
 - [ ] V3-3 Banner konsultasi dan kisi tanya jawab.
 - [ ] V3-4 DTO katalog gabungan dan bagian Toko di Beranda.
