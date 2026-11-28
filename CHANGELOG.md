@@ -28,6 +28,7 @@ ATURAN UNTUK SEMUA AGENT (baca sebelum menulis entri)
 
 ### Changed
 
+- Beranda tahap 5: paket siap pakai dan produk terlaris digabung menjadi satu bagian Toko bergaya marketplace dengan pencarian dan tombol kategori. Bagian kategori, paket, dan terlaris lama dihapus. Paket hanya menampilkan harga total.
 - Beranda tahap 4: banner konsultasi baru dan kisi tanya jawab bergambar; tautan menuju bagian tanya jawab di halaman Jasa.
 - Beranda tahap 3: tambah pengantar jasa, rak geser 10 kartu layanan, serta ringkasan angka dan empat langkah kerja. Bagian "Kenapa KSS" dan empat kartu jasa lama diganti.
 - Slide Servis tampil pertama dengan ilustrasi baru untuk komputer dan HP.
