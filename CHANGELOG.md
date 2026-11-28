@@ -26,6 +26,12 @@ ATURAN UNTUK SEMUA AGENT (baca sebelum menulis entri)
 
 ## [Unreleased]
 
+### Changed (detail paket dan Tentang kami)
+
+- Detail paket bergaya V3: foto unit di awal, kartu total harga menempel, pilihan upgrade dan rincian bagian dilipat, bar pesan di HP.
+- Kode SKU tidak lagi tampil di pilihan upgrade; label "100% Kompatibel" diganti "Dicek sebelum dirakit"; perkiraan FPS diberi keterangan.
+- Tentang kami bergaya V3 dan dipimpin ilustrasi berlabel; tim dan area kerja dilipat.
+
 ### Changed (halaman jasa)
 
 - Halaman Jasa dan detail jasa memakai tampilan V3 yang dipimpin gambar; cakupan pekerjaan dilipat.
