@@ -26,6 +26,11 @@ ATURAN UNTUK SEMUA AGENT (baca sebelum menulis entri)
 
 ## [Unreleased]
 
+### Changed
+
+- Terapkan gaya V3 "Bengkel hangat" tahap 1: kanvas krem, huruf judul Bricolage Grotesque, tombol dan menu pil, sudut lembut, footer bergelombang.
+- Gelapkan teks abu di latar terang dan uji kontras warna secara otomatis.
+
 ### Added
 
 - Gambar kini punya placeholder buram dan cadangan berjenjang, sehingga foto yang gagal

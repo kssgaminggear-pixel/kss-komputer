@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react';
 import type { Metadata, Viewport } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
+import { Bricolage_Grotesque, Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
@@ -22,8 +22,16 @@ const geistMono = Geist_Mono({
   subsets: ['latin'],
 });
 
+// Huruf judul (h1/h2). Variabel, jadi cukup satu berkas.
+const bricolage = Bricolage_Grotesque({
+  variable: '--font-bricolage',
+  subsets: ['latin'],
+  axes: ['opsz'],
+  display: 'swap',
+});
+
 export const viewport: Viewport = {
-  themeColor: '#09090b',
+  themeColor: '#141414',
   width: 'device-width',
   initialScale: 1,
   maximumScale: 5,
@@ -83,9 +91,9 @@ export default function RootLayout({
   return (
     <html
       lang="id"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${bricolage.variable} h-full antialiased`}
     >
-      <body className="flex min-h-full flex-col bg-zinc-50 font-sans text-zinc-900 pb-[calc(3.5rem+env(safe-area-inset-bottom))] md:pb-0">
+      <body className="flex min-h-full flex-col bg-paper font-sans text-zinc-900 pb-[calc(3.5rem+env(safe-area-inset-bottom))] md:pb-0">
         <JsonLd data={[organizationSchema(), websiteSchema()]} />
         <Suspense fallback={null}>
           <Navbar searchEntries={searchEntries} />
