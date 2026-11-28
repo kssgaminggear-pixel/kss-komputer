@@ -100,6 +100,12 @@
   }
 }
 
+/* Di luar @theme: dipakai lewat style inline, jadi Tailwind akan membuangnya bila di dalam. */
+@keyframes hero-progress {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
 html {
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;

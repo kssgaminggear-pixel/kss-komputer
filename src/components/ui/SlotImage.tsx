@@ -11,13 +11,15 @@ export interface SlotImageProps {
   sizes: string;
   /** Hanya untuk satu gambar LCP per halaman. */
   lcp?: boolean;
+  /** Posisi label "Ilustrasi" bila pojok kiri atas tertutup atau membulat besar. */
+  labelClassName?: string;
 }
 
 /**
  * Gambar yang bisa diganti lewat src/lib/media/slots.json. Mengisi induknya
  * (induk wajib `relative` dan berasio tetap). Ilustrasi selalu diberi label.
  */
-export function SlotImage({ slot: id, sizes, lcp = false }: SlotImageProps) {
+export function SlotImage({ slot: id, sizes, lcp = false, labelClassName = 'left-2 top-2' }: SlotImageProps) {
   const slot = getSlot(id);
   return (
     <>
@@ -27,7 +29,7 @@ export function SlotImage({ slot: id, sizes, lcp = false }: SlotImageProps) {
         <PositionedImage slot={slot} sizes={sizes} lcp={lcp} />
       )}
       {slot?.kind === 'illustration' && (
-        <span aria-hidden className="kss-tag kss-tag-on-dark absolute left-2 top-2">
+        <span aria-hidden className={`kss-tag kss-tag-on-dark absolute z-10 ${labelClassName}`}>
           Ilustrasi
         </span>
       )}
