@@ -7,8 +7,10 @@ import { getPublicPrebuilts } from '@/lib/server-catalog';
 import { getTopSellers } from '@/lib/marketplace/server';
 import { getPackageImage } from '@/lib/package-images';
 import type { PublicPrebuiltPCDTO } from '@/lib/sanitizer';
-import type { PublicMarketplaceProduct } from '@/lib/marketplace/types';
+import { toProdukItem } from './produk';
 import type { CatalogPaketItem, CatalogProdukItem } from './types';
+
+export { toProdukItem };
 
 export function toPaketItem(pkg: PublicPrebuiltPCDTO): CatalogPaketItem {
   return {
@@ -26,33 +28,17 @@ export function toPaketItem(pkg: PublicPrebuiltPCDTO): CatalogPaketItem {
   };
 }
 
-export function toProdukItem(product: PublicMarketplaceProduct): CatalogProdukItem {
-  return {
-    kind: 'produk',
-    key: `produk:${product.id}`,
-    productId: product.id,
-    slug: product.slug,
-    href: `/toko/${product.slug}`,
-    name: product.name,
-    image: product.image,
-    priceIdr: product.priceIdr,
-    tokopediaUrl: product.tokopediaUrl,
-    rating: product.rating,
-    sold: product.sold,
-    soldLabel: product.soldLabel,
-    stock: product.stock,
-    etalaseIds: product.etalaseIds,
-    firstSeenAt: product.firstSeenAt,
-  };
+/** Semua paket, unggulan di depan. */
+export function getPaketItems(): CatalogPaketItem[] {
+  return getPublicPrebuilts()
+    .map(toPaketItem)
+    .sort((a, b) => Number(b.featured) - Number(a.featured));
 }
 
-/** Isi bagian Toko di Beranda: semua paket (unggulan di depan) dan produk terlaris. */
+/** Isi bagian Toko di Beranda: paket dan produk terlaris. */
 export function getHomeCatalog(productLimit = 12): { paket: CatalogPaketItem[]; produk: CatalogProdukItem[] } {
   return {
-    paket: getPublicPrebuilts()
-      .map(toPaketItem)
-      .sort((a, b) => Number(b.featured) - Number(a.featured))
-      .slice(0, 6),
+    paket: getPaketItems().slice(0, 6),
     produk: getTopSellers(productLimit).map(toProdukItem),
   };
 }

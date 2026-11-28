@@ -28,6 +28,8 @@ ATURAN UNTUK SEMUA AGENT (baca sebelum menulis entri)
 
 ### Changed
 
+- Tahap 6: halaman Toko menjadi katalog gabungan paket dan produk dengan tab jenis, pencarian, urutan, dan kategori berbentuk tombol. Paket hanya menampilkan harga total.
+- Menu komputer memakai dropdown Layanan dan Toko dengan logo di tengah; menu bawah HP menjadi Beranda, Jasa, Toko, Konsultasi, Lainnya. Pencarian global menemukan paket PC (tanpa harga).
 - Beranda tahap 5: paket siap pakai dan produk terlaris digabung menjadi satu bagian Toko bergaya marketplace dengan pencarian dan tombol kategori. Bagian kategori, paket, dan terlaris lama dihapus. Paket hanya menampilkan harga total.
 - Beranda tahap 4: banner konsultasi baru dan kisi tanya jawab bergambar; tautan menuju bagian tanya jawab di halaman Jasa.
 - Beranda tahap 3: tambah pengantar jasa, rak geser 10 kartu layanan, serta ringkasan angka dan empat langkah kerja. Bagian "Kenapa KSS" dan empat kartu jasa lama diganti.

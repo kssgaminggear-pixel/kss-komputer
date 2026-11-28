@@ -28,13 +28,18 @@ import {
 } from '@/lib/format';
 import { CommandSearchModal } from '@/components/layout/CommandSearchModal';
 import { useHydrated } from '@/lib/useHydrated';
+import { NavDropdown, type NavDropdownLink } from '@/components/layout/NavDropdown';
+import type { PaketSearchEntry } from '@/components/layout/CommandSearchModal';
 import type { SearchEntry } from '@/lib/marketplace/types';
 
 export interface NavbarProps {
   searchEntries: SearchEntry[];
+  paketEntries: PaketSearchEntry[];
+  serviceLinks: NavDropdownLink[];
+  shopLinks: NavDropdownLink[];
 }
 
-export function Navbar({ searchEntries }: NavbarProps) {
+export function Navbar({ searchEntries, paketEntries, serviceLinks, shopLinks }: NavbarProps) {
   const pathname = usePathname();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -67,8 +72,8 @@ export function Navbar({ searchEntries }: NavbarProps) {
     { href: '/paket-rakitan', label: 'Paket Siap Pakai', icon: PcCase },
     { href: '/toko', label: 'Toko', icon: Store },
     { href: '/cek-pesanan', label: 'Cek Pesanan', icon: ClipboardList },
-    { href: '/konsultasi', label: 'Konsultasi', icon: MessageSquareText, desktopHidden: true },
-    { href: '/tentang-kami', label: 'Tentang Kami', icon: Building2, desktopHidden: true },
+    { href: '/konsultasi', label: 'Konsultasi', icon: MessageSquareText },
+    { href: '/tentang-kami', label: 'Tentang Kami', icon: Building2 },
   ];
 
   const isActiveLink = (href: string) => pathname === href || (href !== '/' && pathname.startsWith(href));
@@ -110,10 +115,10 @@ export function Navbar({ searchEntries }: NavbarProps) {
       </div>
 
       <header className="sticky top-0 z-40 border-b border-line bg-paper">
-        <div className="kss-container flex h-14 items-center gap-4 md:h-16 xl:gap-6">
+        <div className="kss-container flex h-14 items-center gap-4 md:h-16 lg:grid lg:grid-cols-[1fr_auto_1fr]">
           <Link
             href="/"
-            className="flex shrink-0 items-center gap-2.5"
+            className="flex shrink-0 items-center gap-2.5 lg:order-2"
             aria-label="KSS Komputer — Beranda"
           >
             <Image
@@ -134,43 +139,33 @@ export function Navbar({ searchEntries }: NavbarProps) {
             </span>
           </Link>
 
-          <nav aria-label="Navigasi utama" className="hidden items-center gap-1 lg:flex">
-            {navLinks
-              .filter((item) => !('desktopHidden' in item && item.desktopHidden))
-              .map((item) => {
-                const active = isActiveLink(item.href);
-                return (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    aria-current={active ? 'page' : undefined}
-                    className={`flex h-9 items-center whitespace-nowrap rounded-full px-3.5 text-[13px] font-semibold transition-colors duration-150 ${
-                      active ? 'bg-ink text-white' : 'text-zinc-700 hover:bg-paper-deep hover:text-ink'
-                    }`}
-                  >
-                    {item.label}
-                  </Link>
-                );
-              })}
+          {/* Desktop: dropdown di kiri, logo di tengah, aksi di kanan. */}
+          <nav aria-label="Navigasi utama" className="hidden items-center gap-2 lg:order-1 lg:flex">
+            <NavDropdown label="Layanan" links={serviceLinks} active={isActiveLink('/jasa')} />
+            <NavDropdown
+              label="Toko"
+              links={shopLinks}
+              active={isActiveLink('/toko') || isActiveLink('/paket-rakitan')}
+            />
           </nav>
 
-          <div className="ml-auto flex items-center gap-2">
+          <div className="ml-auto flex items-center gap-2 lg:order-3 lg:ml-0 lg:justify-end">
+            <Link
+              href="/cek-pesanan"
+              aria-current={isActiveLink('/cek-pesanan') ? 'page' : undefined}
+              className="hidden h-9 items-center whitespace-nowrap rounded-full px-3 text-[13px] font-semibold text-zinc-700 hover:bg-paper-deep hover:text-ink aria-[current=page]:bg-ink aria-[current=page]:text-white lg:flex"
+            >
+              Cek pesanan
+            </Link>
             <button
               type="button"
               onClick={() => setIsSearchOpen(true)}
               aria-label="Cari (Ctrl+K)"
-              className="flex h-9 w-9 items-center justify-center gap-2 rounded-full border border-line bg-white text-zinc-500 transition-colors hover:border-zinc-900 hover:text-zinc-900 xl:w-60 xl:justify-between xl:px-3"
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-line bg-white text-zinc-500 transition-colors hover:border-zinc-900 hover:text-zinc-900"
             >
-              <span className="flex items-center gap-2">
-                <Search aria-hidden className="h-4 w-4" />
-                <span className="hidden text-[13px] xl:inline">Cari paket, part, gear</span>
-              </span>
-              <kbd className="hidden rounded-xs border border-line bg-paper px-1.5 font-mono text-[11px] text-zinc-500 xl:inline">
-                Ctrl K
-              </kbd>
+              <Search aria-hidden className="h-4 w-4" />
             </button>
-
-            <Link href="/konsultasi" className="kss-btn-dark hidden h-9 px-3 xl:inline-flex">
+            <Link href="/konsultasi" className="kss-btn-dark hidden h-9 px-3 lg:inline-flex">
               Konsultasi
             </Link>
 
@@ -251,6 +246,7 @@ export function Navbar({ searchEntries }: NavbarProps) {
         isOpen={isSearchOpen}
         onClose={() => setIsSearchOpen(false)}
         products={searchEntries}
+        packages={paketEntries}
       />
     </>
   );

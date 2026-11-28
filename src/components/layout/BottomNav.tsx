@@ -38,16 +38,21 @@ export function BottomNav() {
     { href: '/', label: 'Beranda', icon: Home, isActive: pathname === '/' },
     { href: '/jasa', label: 'Jasa', icon: Wrench, isActive: pathname.startsWith('/jasa') },
     {
-      href: '/paket-rakitan',
-      label: 'Paket',
-      icon: PcCase,
-      isActive: pathname.startsWith('/paket-rakitan'),
+      href: '/toko',
+      label: 'Toko',
+      icon: Store,
+      isActive: pathname.startsWith('/toko') || pathname.startsWith('/paket-rakitan'),
     },
-    { href: '/toko', label: 'Toko', icon: Store, isActive: pathname.startsWith('/toko') },
+    {
+      href: '/konsultasi',
+      label: 'Konsultasi',
+      icon: MessageSquareText,
+      isActive: pathname.startsWith('/konsultasi'),
+    },
   ];
 
   const moreItems = [
-    { href: '/konsultasi', label: 'Konsultasi budget', icon: MessageSquareText },
+    { href: '/paket-rakitan', label: 'Paket PC siap pakai', icon: PcCase },
     { href: '/cek-pesanan', label: 'Cek pesanan', icon: ClipboardList },
     { href: '/tentang-kami', label: 'Tentang kami', icon: Building2 },
   ];

@@ -11,6 +11,14 @@ export interface CommandSearchModalProps {
   isOpen: boolean;
   onClose: () => void;
   products: SearchEntry[];
+  packages: PaketSearchEntry[];
+}
+
+/** Paket dalam pencarian global: tanpa harga. */
+export interface PaketSearchEntry {
+  slug: string;
+  name: string;
+  specs: string;
 }
 
 const PAGES = [
@@ -22,7 +30,7 @@ const PAGES = [
 ];
 
 /** Pencarian lintas situs. Sengaja tanpa harga: indeksnya ikut di setiap halaman. */
-export function CommandSearchModal({ isOpen, onClose, products }: CommandSearchModalProps) {
+export function CommandSearchModal({ isOpen, onClose, products, packages }: CommandSearchModalProps) {
   const [query, setQuery] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -62,6 +70,10 @@ export function CommandSearchModal({ isOpen, onClose, products }: CommandSearchM
     .slice(0, tokens.length ? 20 : 6)
     .map((item) => item.entry);
 
+  const paket = packages.filter((item) =>
+    matchesTokens(normalizeSearch(`paket pc rakitan ${item.name} ${item.specs}`), tokens)
+  );
+
   if (!isOpen) return null;
 
   return (
@@ -90,7 +102,7 @@ export function CommandSearchModal({ isOpen, onClose, products }: CommandSearchM
         </div>
 
         <div className="overflow-y-auto p-1">
-          {pages.length === 0 && results.length === 0 && (
+          {pages.length === 0 && results.length === 0 && paket.length === 0 && (
             <p className="py-12 text-center text-sm text-zinc-500">Tidak ada hasil untuk &quot;{query}&quot;.</p>
           )}
 
@@ -103,6 +115,25 @@ export function CommandSearchModal({ isOpen, onClose, products }: CommandSearchM
                     <Link href={page.href} onClick={onClose} className="flex h-10 items-center justify-between rounded-md px-3 text-sm text-zinc-800 hover:bg-zinc-100">
                       {page.name}
                       <ArrowRight aria-hidden className="h-3.5 w-3.5 text-zinc-400" />
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
+
+          {paket.length > 0 && (
+            <>
+              <p className="kss-label px-3 py-2 text-zinc-500">Paket PC</p>
+              <ul>
+                {paket.map((item) => (
+                  <li key={item.slug}>
+                    <Link href={`/paket-rakitan/${item.slug}`} onClick={onClose} className="flex min-h-10 items-center justify-between gap-3 rounded-md px-3 py-1.5 hover:bg-zinc-100">
+                      <span className="min-w-0">
+                        <span className="line-clamp-1 text-sm text-zinc-900">{item.name}</span>
+                        <span className="line-clamp-1 text-meta text-zinc-500">{item.specs}</span>
+                      </span>
+                      <ArrowRight aria-hidden className="h-3.5 w-3.5 shrink-0 text-zinc-400" />
                     </Link>
                   </li>
                 ))}
