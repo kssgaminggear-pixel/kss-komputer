@@ -9,6 +9,7 @@ import {
   getMarketplaceMeta,
   getMarketplaceProducts,
 } from '@/lib/marketplace/server';
+import { getPaketItems } from '@/lib/catalog/server';
 import { PromoBanner, type PromoBannerItem } from './PromoBanner';
 import { TokoCatalog, TokoCatalogFromUrl } from './TokoCatalog';
 import { formatRating } from './ProductCard';
@@ -34,7 +35,7 @@ export async function TokoView({ activeEtalaseSlug }: { activeEtalaseSlug?: stri
   const meta = getMarketplaceMeta();
   const { banners, stale } = await getTimeBound(meta.lastSuccessAt);
   const activeShelf = etalase.find((shelf) => shelf.slug === activeEtalaseSlug);
-  const catalog = { products, etalase, activeEtalaseSlug };
+  const catalog = { products, paket: activeEtalaseSlug ? [] : getPaketItems(), etalase, activeEtalaseSlug };
 
   const stats = [
     { label: 'Produk tampil', value: String(products.length) },
@@ -44,31 +45,35 @@ export async function TokoView({ activeEtalaseSlug }: { activeEtalaseSlug?: stri
 
   return (
     <div>
-      <header className="kss-chapter-dark">
-        <div className="kss-container flex flex-col gap-6 py-8 sm:py-10 lg:flex-row lg:items-end lg:justify-between">
+      <header>
+        <div className="kss-container flex flex-col gap-4 pb-2 pt-8 sm:pt-10 lg:flex-row lg:items-end lg:justify-between">
           <div className="min-w-0">
-            <p className="kss-label text-orange-500">Toko resmi di Tokopedia</p>
-            <h1 className="mt-3 text-h1-page text-balance text-white">
+            <p className="kss-eyebrow">Toko resmi di Tokopedia</p>
+            <h1 className="mt-2 text-h1-page text-balance text-ink">
               {activeShelf ? activeShelf.name : 'Toko KSS Komputer'}
             </h1>
             <dl className="mt-4 flex flex-wrap gap-x-8 gap-y-2">
               {stats.map((stat) => (
                 <div key={stat.label}>
-                  <dt className="kss-label text-zinc-400">{stat.label}</dt>
-                  <dd className="kss-num mt-1 text-sm text-zinc-100">{stat.value}</dd>
+                  <dt className="kss-label text-zinc-500">{stat.label}</dt>
+                  <dd className="kss-num mt-1 text-sm text-ink">{stat.value}</dd>
                 </div>
               ))}
             </dl>
           </div>
-          <a href={TOKOPEDIA_STORE_URL} target="_blank" rel="noopener noreferrer" className="kss-btn-outline-dark shrink-0">
+          <a href={TOKOPEDIA_STORE_URL} target="_blank" rel="noopener noreferrer" className="kss-btn-outline w-fit shrink-0">
             Kunjungi toko di Tokopedia
             <ExternalLink aria-hidden className="h-3.5 w-3.5" />
           </a>
         </div>
       </header>
 
-      <div className="kss-container space-y-6 py-6">
-        {!activeEtalaseSlug && <PromoBanner banners={banners} />}
+      <div className="kss-container space-y-4 py-4">
+        {!activeEtalaseSlug && (
+          <div className="mx-auto max-w-2xl">
+            <PromoBanner banners={banners} />
+          </div>
+        )}
         {stale && (
           <p className="rounded-md border border-amber-700/30 bg-amber-50 px-3 py-2 text-sm text-amber-800">
             Harga terakhir diperbarui {formatDate(meta.lastSuccessAt)}. Cek Tokopedia untuk harga terkini.
@@ -77,7 +82,7 @@ export async function TokoView({ activeEtalaseSlug }: { activeEtalaseSlug?: stri
         <Suspense fallback={<TokoCatalog {...catalog} />}>
           <TokoCatalogFromUrl {...catalog} />
         </Suspense>
-        <p className="border-t border-zinc-200 pt-4 text-meta text-zinc-500">
+        <p className="border-t border-line pt-4 text-meta text-zinc-500">
           Harga normal toko dan stok mengikuti listing Tokopedia pada tanggal data di atas. Harga di Tokopedia
           dapat berbeda karena promo.
         </p>

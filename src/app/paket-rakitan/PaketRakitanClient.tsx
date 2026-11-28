@@ -81,6 +81,15 @@ export default function PaketRakitanPage({ packages }: PaketRakitanClientProps) 
   return (
     <div>
       <PageHeader
+        breadcrumb={
+          <nav aria-label="Breadcrumb" className="text-body-sm text-zinc-500">
+            <Link href="/toko" className="kss-link">
+              Toko
+            </Link>
+            <span aria-hidden className="px-2">›</span>
+            <span aria-current="page">Paket PC siap pakai</span>
+          </nav>
+        }
         eyebrow="Katalog paket PC"
         title="Paket PC rakitan siap pakai"
         description="Part baru bergaransi resmi. Sudah termasuk perakitan, cable management, update BIOS, instalasi OS, dan stress test."

@@ -1,5 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { getHomeCatalog } from '@/lib/catalog/server';
+import { filterCatalog, searchText, sortCatalog } from '@/lib/catalog/search';
+import type { CatalogItem } from '@/lib/catalog/types';
 import { getPublicPrebuilts } from '@/lib/server-catalog';
 
 /** Daftar putih: field baru di DTO paket harus ditambahkan di sini dengan sadar. */
@@ -23,6 +25,28 @@ describe('katalog gabungan', () => {
       expect(Object.keys(item).sort()).toEqual(PAKET_KEYS);
       expect(item.priceIdr).toBe(totals.get(item.slug));
     }
+  });
+
+  const items: CatalogItem[] = [...catalog.produk, ...catalog.paket];
+
+  it('urutan terlaris menaruh paket di depan, rating menaruhnya di belakang', () => {
+    const kinds = (sort: 'terlaris' | 'rating') => sortCatalog(items, sort).map((item) => item.kind);
+    expect(kinds('terlaris').slice(0, 6)).toEqual(Array(6).fill('paket'));
+    expect(kinds('rating').slice(-6)).toEqual(Array(6).fill('paket'));
+  });
+
+  it('urutan harga berlaku lintas jenis', () => {
+    const cheap = sortCatalog(items, 'termurah').map((item) => item.priceIdr);
+    expect(cheap).toEqual([...cheap].sort((a, b) => a - b));
+    const expensive = sortCatalog(items, 'termahal').map((item) => item.priceIdr);
+    expect(expensive).toEqual([...expensive].sort((a, b) => b - a));
+  });
+
+  it('pencarian menemukan paket lewat nama dan label', () => {
+    const index = new Map(items.map((item) => [item.key, searchText(item, new Map())]));
+    const found = filterCatalog(items, index, 'siap pakai 4K');
+    expect(found.length).toBeGreaterThan(0);
+    expect(found.every((item) => item.kind === 'paket')).toBe(true);
   });
 
   it('tidak memuat rincian komponen paket', () => {

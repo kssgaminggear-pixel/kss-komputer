@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import { ExternalLink } from 'lucide-react';
 import { MediaImage } from '@/components/ui/MediaImage';
 import { Price } from '@/components/ui/Price';
 import { AddToCartButton } from '@/components/toko/AddToCartButton';
@@ -11,12 +12,28 @@ const CARD =
 const NAME = 'mt-2 line-clamp-2 min-h-10 text-body-sm font-medium leading-5 text-ink group-hover:underline';
 
 /** `highlight` memberi bingkai orange; pakai untuk satu kartu saja agar tetap menonjol. */
-export function CatalogCard({ item, highlight = false }: { item: CatalogItem; highlight?: boolean }) {
-  return item.kind === 'paket' ? <PaketCard item={item} highlight={highlight} /> : <ProdukCard item={item} />;
+export function CatalogCard({
+  item,
+  highlight = false,
+  showTokopedia = false,
+  heading = 'h4',
+}: {
+  item: CatalogItem;
+  highlight?: boolean;
+  /** Tampilkan tombol beli Tokopedia di kartu produk (dipakai di halaman Toko). */
+  showTokopedia?: boolean;
+  /** Tingkat judul kartu mengikuti judul kelompok di atasnya. */
+  heading?: 'h3' | 'h4';
+}) {
+  return item.kind === 'paket' ? (
+    <PaketCard item={item} highlight={highlight} Name={heading} />
+  ) : (
+    <ProdukCard item={item} showTokopedia={showTokopedia} Name={heading} />
+  );
 }
 
 /** Paket hanya menampilkan harga total dan tidak masuk keranjang eceran. */
-function PaketCard({ item, highlight }: { item: CatalogPaketItem; highlight: boolean }) {
+function PaketCard({ item, highlight, Name }: { item: CatalogPaketItem; highlight: boolean; Name: 'h3' | 'h4' }) {
   return (
     <article className={`${CARD} ${highlight ? 'kss-ring-selected' : ''}`}>
       <Link href={item.href} className="kss-focusable group flex h-full flex-col">
@@ -28,7 +45,7 @@ function PaketCard({ item, highlight }: { item: CatalogPaketItem; highlight: boo
           <span className="kss-tag kss-tag-ink absolute left-2 top-2">PC siap pakai</span>
         </span>
         <div className="flex flex-1 flex-col p-3">
-          <h4 className={NAME}>{item.name}</h4>
+          <Name className={`font-sans ${NAME}`}>{item.name}</Name>
           <span className="mt-2 flex flex-wrap gap-1">
             {item.specs.map((spec) => (
               <span key={spec} className="kss-spec-pill">{spec}</span>
@@ -45,7 +62,15 @@ function PaketCard({ item, highlight }: { item: CatalogPaketItem; highlight: boo
   );
 }
 
-function ProdukCard({ item }: { item: CatalogProdukItem }) {
+function ProdukCard({
+  item,
+  showTokopedia,
+  Name,
+}: {
+  item: CatalogProdukItem;
+  showTokopedia: boolean;
+  Name: 'h3' | 'h4';
+}) {
   const soldOut = item.stock === 'out_of_stock';
   return (
     <article className={CARD}>
@@ -61,7 +86,7 @@ function ProdukCard({ item }: { item: CatalogProdukItem }) {
           {soldOut && <span className="kss-tag kss-tag-warn absolute left-2 top-2">Stok habis</span>}
         </span>
         <div className="px-3">
-          <h4 className={NAME}>{item.name}</h4>
+          <Name className={`font-sans ${NAME}`}>{item.name}</Name>
         </div>
       </Link>
       <div className="flex flex-1 flex-col px-3 pb-3">
@@ -69,6 +94,18 @@ function ProdukCard({ item }: { item: CatalogProdukItem }) {
           <Price value={item.priceIdr} className="text-base text-ink" />
           <RatingLine rating={item.rating} soldLabel={item.soldLabel} />
         </div>
+        {showTokopedia && item.tokopediaUrl && (
+          <a
+            href={item.tokopediaUrl}
+            target="_blank"
+            rel="noopener noreferrer nofollow"
+            aria-label={`${soldOut ? 'Lihat' : 'Beli'} ${item.name} di Tokopedia (tab baru)`}
+            className="kss-btn-tokopedia mt-2 h-9 w-full px-2 text-meta"
+          >
+            <span>{soldOut ? 'Lihat di Tokopedia' : 'Beli di Tokopedia'}</span>
+            <ExternalLink aria-hidden className="h-3.5 w-3.5" />
+          </a>
+        )}
         <AddToCartButton
           disabled={soldOut}
           className="mt-2 h-9 w-full px-2 text-meta"

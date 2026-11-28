@@ -8,7 +8,9 @@ import { BottomNav } from '@/components/layout/BottomNav';
 import { RetailCartDrawer } from '@/components/cart/RetailCartDrawer';
 import { CsAgent } from '@/components/cs/CsAgent';
 import { JsonLd } from '@/components/seo/JsonLd';
-import { getSearchEntries } from '@/lib/marketplace/server';
+import { getMarketplaceEtalase, getSearchEntries } from '@/lib/marketplace/server';
+import { getPaketItems } from '@/lib/catalog/server';
+import { getPublicServices } from '@/lib/server-catalog';
 import { SITE_URL } from '@/lib/constants';
 import { organizationSchema, websiteSchema } from '@/lib/seo';
 
@@ -87,6 +89,22 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const searchEntries = getSearchEntries();
+  const paketEntries = getPaketItems().map((item) => ({ slug: item.slug, name: item.name, specs: item.specs.join(' · ') }));
+  const serviceLinks = [
+    ...getPublicServices()
+      .filter((service) => service.isActive)
+      .map((service) => ({ href: `/jasa/${service.slug}`, label: service.title })),
+    { href: '/jasa', label: 'Semua layanan' },
+    { href: '/konsultasi', label: 'Konsultasi gratis' },
+  ];
+  const shopLinks = [
+    { href: '/paket-rakitan', label: 'Paket PC siap pakai' },
+    ...[...getMarketplaceEtalase()]
+      .sort((a, b) => b.count - a.count)
+      .slice(0, 6)
+      .map((shelf) => ({ href: `/toko/etalase/${shelf.slug}`, label: shelf.name })),
+    { href: '/toko', label: 'Semua produk' },
+  ];
 
   return (
     <html
@@ -96,7 +114,12 @@ export default function RootLayout({
       <body className="flex min-h-full flex-col bg-paper font-sans text-zinc-900 pb-[calc(3.5rem+env(safe-area-inset-bottom))] md:pb-0">
         <JsonLd data={[organizationSchema(), websiteSchema()]} />
         <Suspense fallback={null}>
-          <Navbar searchEntries={searchEntries} />
+          <Navbar
+            searchEntries={searchEntries}
+            paketEntries={paketEntries}
+            serviceLinks={serviceLinks}
+            shopLinks={shopLinks}
+          />
         </Suspense>
         <main className="flex-1 w-full">{children}</main>
         <Footer />
