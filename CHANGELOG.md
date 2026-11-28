@@ -26,6 +26,11 @@ ATURAN UNTUK SEMUA AGENT (baca sebelum menulis entri)
 
 ## [Unreleased]
 
+### Fixed (jadwal dan pembayaran)
+
+- Detail paket tidak lagi menjanjikan rakit Same-Day; jadwal selesai dikonfirmasi lewat WhatsApp. Same-Day hanya untuk servis ringan.
+- Label BCA, Mandiri, QRIS, dan Shopee di footer diganti keterangan pembayaran dikonfirmasi lewat WhatsApp.
+
 ### Changed (detail paket dan Tentang kami)
 
 - Detail paket bergaya V3: foto unit di awal, kartu total harga menempel, pilihan upgrade dan rincian bagian dilipat, bar pesan di HP.
