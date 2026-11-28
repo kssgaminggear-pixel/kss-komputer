@@ -80,7 +80,7 @@ function Breadcrumb() {
   return (
     <nav
       aria-label="Breadcrumb"
-      className="flex items-center gap-1.5 font-mono text-micro uppercase text-zinc-500"
+      className="flex items-center gap-1.5 text-micro text-zinc-500"
     >
       <Link href="/" className="transition-colors hover:text-zinc-950">
         Beranda

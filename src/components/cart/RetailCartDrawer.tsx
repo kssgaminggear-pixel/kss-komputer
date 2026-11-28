@@ -39,6 +39,32 @@ export function RetailCartDrawer() {
     return () => trigger?.focus();
   }, [isOpen]);
 
+  const panel = useRef<HTMLDivElement>(null);
+
+  // Tab berputar di dalam panel selama keranjang terbuka.
+  useEffect(() => {
+    if (!isOpen) return;
+    const keepFocus = (event: KeyboardEvent) => {
+      if (event.key !== 'Tab' || !panel.current) return;
+      const items = panel.current.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), input:not([disabled]), textarea:not([disabled]), select:not([disabled])'
+      );
+      if (!items.length) return;
+      const first = items[0];
+      const last = items[items.length - 1];
+      const outside = !panel.current.contains(document.activeElement);
+      if (event.shiftKey && (document.activeElement === first || outside)) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && (document.activeElement === last || outside)) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+    window.addEventListener('keydown', keepFocus);
+    return () => window.removeEventListener('keydown', keepFocus);
+  }, [isOpen]);
+
   // Close with Esc key
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -71,6 +97,7 @@ export function RetailCartDrawer() {
 
       {/* Drawer */}
       <div
+        ref={panel}
         role="dialog"
         aria-modal="true"
         aria-label="Keranjang toko"
@@ -79,7 +106,7 @@ export function RetailCartDrawer() {
         <div className="flex items-center justify-between border-b border-zinc-200 px-4 py-3 dark:border-zinc-800">
           <div className="flex items-center gap-2">
             <ShoppingBag aria-hidden className="h-5 w-5 text-ink" />
-            <h2 className="text-sm font-bold uppercase tracking-tight text-zinc-900 dark:text-zinc-100">
+            <h2 className="text-sm font-bold text-zinc-900 dark:text-zinc-100">
               Keranjang toko
             </h2>
             <span className="rounded-full border border-line bg-paper px-2 py-0.5 text-meta font-semibold text-ink">

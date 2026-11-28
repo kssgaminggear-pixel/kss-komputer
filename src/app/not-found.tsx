@@ -7,7 +7,7 @@ export default function NotFound() {
       <div className="inline-flex h-12 w-12 items-center justify-center rounded-md border border-zinc-200 bg-white text-orange-700">
         <Compass className="h-6 w-6" />
       </div>
-      <div className="mt-4 font-mono text-micro font-bold uppercase tracking-wider text-orange-700">
+      <div className="mt-4 text-micro font-bold text-orange-700">
         Error 404
       </div>
       <h1 className="mt-1 text-2xl font-bold tracking-tight text-zinc-900 sm:text-3xl">
@@ -27,7 +27,7 @@ export default function NotFound() {
           href="/paket-rakitan"
           className="inline-flex h-10 items-center justify-center gap-2 rounded-md border border-zinc-300 bg-white px-4 text-xs font-bold text-zinc-800 transition-colors hover:bg-zinc-100"
         >
-          Lihat Paket Rakitan
+          Lihat paket rakitan
         </Link>
       </div>
     </div>

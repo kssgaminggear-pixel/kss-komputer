@@ -41,9 +41,9 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: 'KSS Komputer — System Integrator PC Rakitan & Hardware Eceran Jakarta',
+  title: 'Servis, Rakit & Upgrade PC di Mangga Dua Jakarta — KSS Komputer',
   description:
-    'Pusat PC rakitan jadi siap pakai (gaming, workstation, office), konsultasi dan rakit PC custom via WhatsApp, serta hardware eceran bergaransi resmi.',
+    'Jasa servis, rakit, cleaning, dan upgrade PC di Mangga Dua Jakarta. Paket PC siap pakai dengan satu harga total, plus toko komponen dan aksesori.',
   manifest: '/manifest.json',
   alternates: {
     canonical: '/',
@@ -58,11 +58,11 @@ export const metadata: Metadata = {
     'rakit pc custom whatsapp',
     'pc gaming mangga dua',
     'konsultasi rakit pc whatsapp',
-    'hardware eceran resmi',
+    'servis komputer mangga dua',
     'pc workstation ryzen 7000',
   ],
   openGraph: {
-    title: 'KSS Komputer — Paket PC Rakitan & Jasa Servis Jakarta',
+    title: 'KSS Komputer — Servis, Rakit & Upgrade PC di Jakarta',
     description:
       'Paket PC siap pakai dengan satu harga total, pilihan upgrade, dan layanan jasa komputer bergaransi.',
     images: [
@@ -76,7 +76,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'KSS Komputer — Paket PC Rakitan & Jasa Servis Jakarta',
+    title: 'KSS Komputer — Servis, Rakit & Upgrade PC di Jakarta',
     description:
       'Paket PC siap pakai, upgrade terukur, dan jasa servis bergaransi di Mangga Dua, Jakarta.',
     images: ['/images/tokopedia/banner-pc-store.webp'],
@@ -113,6 +113,12 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} ${bricolage.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col bg-paper font-sans text-zinc-900 pb-[calc(3.5rem+env(safe-area-inset-bottom))] md:pb-0">
+        <a
+          href="#konten"
+          className="sr-only rounded-full bg-ink px-4 py-2 text-sm font-semibold text-white focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-[60]"
+        >
+          Lewati ke konten
+        </a>
         <JsonLd data={[organizationSchema(), websiteSchema()]} />
         <Suspense fallback={null}>
           <Navbar
@@ -123,7 +129,7 @@ export default function RootLayout({
             shopLinks={shopLinks}
           />
         </Suspense>
-        <main className="flex-1 w-full">{children}</main>
+        <main id="konten" tabIndex={-1} className="flex-1 w-full focus:outline-none">{children}</main>
         <Footer />
         <Suspense fallback={null}>
           <BottomNav />

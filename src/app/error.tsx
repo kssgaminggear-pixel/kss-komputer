@@ -21,7 +21,7 @@ export default function Error({
       <div className="inline-flex h-12 w-12 items-center justify-center rounded-md border border-red-200 bg-red-50 text-red-600 dark:border-red-900/50 dark:bg-red-950/40 dark:text-red-400">
         <AlertTriangle className="h-6 w-6" />
       </div>
-      <div className="mt-4 font-mono text-micro font-bold uppercase tracking-wider text-red-600 dark:text-red-400">
+      <div className="mt-4 text-micro font-bold text-red-600 dark:text-red-400">
         Gagal memuat
       </div>
       <h1 className="mt-1 text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100 sm:text-3xl">
@@ -40,7 +40,7 @@ export default function Error({
       <div className="mt-5 flex flex-col gap-2 sm:flex-row">
         <button type="button" onClick={reset} className="kss-btn-primary h-10 px-4">
           <RefreshCw className="h-4 w-4" />
-          <span>Coba Lagi</span>
+          <span>Coba lagi</span>
         </button>
         <a
           href={`https://wa.me/${DEFAULT_WHATSAPP_PHONE}`}
@@ -49,7 +49,7 @@ export default function Error({
           className="inline-flex h-10 items-center justify-center gap-2 rounded-md border border-zinc-300 bg-white px-4 text-xs font-bold text-zinc-800 transition-colors hover:bg-zinc-100 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:bg-zinc-800"
         >
           <MessageCircle className="h-4 w-4 text-emerald-500" />
-          <span>Chat Teknisi</span>
+          <span>Chat teknisi</span>
         </a>
       </div>
     </div>

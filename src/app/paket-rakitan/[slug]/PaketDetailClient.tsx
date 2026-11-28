@@ -131,10 +131,12 @@ export default function PaketDetailContent({ pkg }: { pkg: PublicPrebuiltDetailD
   return (
     <div className="kss-container py-8">
       {/* Breadcrumb */}
-      <nav className="flex items-center gap-1.5 text-xs text-zinc-500 mb-4 font-mono">
+      <nav className="flex items-center gap-1.5 text-xs text-zinc-500 mb-4">
         <Link href="/" className="hover:text-orange-700">Beranda</Link>
         <ChevronRight className="h-3.5 w-3.5 text-zinc-500" />
-        <Link href="/paket-rakitan" className="hover:text-orange-700">Paket PC Rakitan</Link>
+        <Link href="/toko" className="hover:text-orange-700">Toko</Link>
+        <ChevronRight className="h-3.5 w-3.5 text-zinc-500" />
+        <Link href="/paket-rakitan" className="hover:text-orange-700">Paket PC siap pakai</Link>
         <ChevronRight className="h-3.5 w-3.5 text-zinc-500" />
         <span className="text-zinc-900 dark:text-zinc-100 font-semibold truncate">{pkg.name}</span>
       </nav>
@@ -148,13 +150,13 @@ export default function PaketDetailContent({ pkg }: { pkg: PublicPrebuiltDetailD
             <div className="flex items-start gap-4">
               <div className="min-w-0 flex-1">
                 <div className="flex flex-wrap items-center gap-2 mb-3">
-                  <span className="rounded-md bg-orange-500/10 border border-orange-500/20 px-2 py-0.5 text-micro font-mono font-bold text-orange-700 dark:text-orange-400 uppercase">
+                  <span className="rounded-md bg-orange-500/10 border border-orange-500/20 px-2 py-0.5 text-micro font-bold text-orange-700 dark:text-orange-400">
                     {pkg.platform}
                   </span>
-                  <span className="rounded-md bg-zinc-100 dark:bg-zinc-800 px-2 py-0.5 text-micro font-mono text-zinc-700 dark:text-zinc-300">
+                  <span className="rounded-md bg-zinc-100 dark:bg-zinc-800 px-2 py-0.5 text-micro text-zinc-700 dark:text-zinc-300">
                     {pkg.targetResolution}
                   </span>
-                  <span className="rounded-md bg-zinc-50 border border-zinc-200 px-2 py-0.5 text-micro font-mono font-bold text-zinc-800 dark:text-zinc-200">
+                  <span className="rounded-md bg-zinc-50 border border-zinc-200 px-2 py-0.5 text-micro font-bold text-zinc-800 dark:text-zinc-200">
                     {pkg.tier}
                   </span>
                 </div>
@@ -193,15 +195,15 @@ export default function PaketDetailContent({ pkg }: { pkg: PublicPrebuiltDetailD
             <div className="mt-4 space-y-2 border-t border-zinc-100 pt-3 dark:border-zinc-800 lg:hidden">
               <div className="flex items-end justify-between gap-2">
                 <div>
-                  <span className="block font-mono text-micro uppercase tracking-tight text-zinc-500">
-                    Total Harga Paket
+                  <span className="block text-micro text-zinc-500">
+                    Total harga paket
                   </span>
                   <span className="kss-price text-xl text-zinc-900 dark:text-zinc-100">
                     {formatIDR(totalBundlePrice)}
                   </span>
                 </div>
-                <span className="rounded-sm border border-zinc-200 bg-zinc-50 px-1.5 py-0.5 font-mono text-micro font-bold text-zinc-800 dark:text-zinc-200">
-                  Termasuk Rakit
+                <span className="rounded-sm border border-zinc-200 bg-zinc-50 px-1.5 py-0.5 text-micro font-bold text-zinc-800 dark:text-zinc-200">
+                  Termasuk rakit
                 </span>
               </div>
               <div className="grid grid-cols-2 gap-2">
@@ -302,14 +304,14 @@ export default function PaketDetailContent({ pkg }: { pkg: PublicPrebuiltDetailD
           <div className="rounded-md border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-900/60 shadow-xs">
             <h2 className="text-base font-bold text-zinc-900 dark:text-zinc-100 mb-4 flex items-center gap-2">
               <Layers className="h-4 w-4 text-orange-700 dark:text-orange-400" />
-              <span>Rincian Spesifikasi Terpasang</span>
+              <span>Rincian spesifikasi terpasang</span>
             </h2>
 
             <div className="divide-y divide-zinc-100 dark:divide-zinc-800/80 text-xs">
               {currentPartsList.map((item) => (
                 <div key={item.part.id} className="py-2.5 flex items-start justify-between gap-4">
                   <div className="flex-1 min-w-0">
-                    <span className="text-micro font-mono text-zinc-500 uppercase block mb-0.5">
+                    <span className="text-micro text-zinc-500 block mb-0.5">
                       {item.category}
                     </span>
                     <span className="font-semibold text-zinc-900 dark:text-zinc-100">
@@ -320,7 +322,7 @@ export default function PaketDetailContent({ pkg }: { pkg: PublicPrebuiltDetailD
                     </span>
                   </div>
                   <span className="rounded-md bg-zinc-50 border border-zinc-200 px-2 py-0.5 font-mono text-micro font-bold text-zinc-800 dark:text-zinc-200 shrink-0">
-                    Termasuk Paket
+                    Termasuk paket
                   </span>
                 </div>
               ))}
@@ -335,7 +337,7 @@ export default function PaketDetailContent({ pkg }: { pkg: PublicPrebuiltDetailD
                   <Gamepad2 className="h-4 w-4 text-orange-700 dark:text-orange-400" />
                   <span>Estimasi Performa Gaming (Benchmark Rata-Rata)</span>
                 </h2>
-                <span className="font-mono text-xs text-zinc-500">{pkg.targetResolution}</span>
+                <span className="text-xs text-zinc-500">{pkg.targetResolution}</span>
               </div>
 
               <div className="space-y-3">
@@ -364,7 +366,7 @@ export default function PaketDetailContent({ pkg }: { pkg: PublicPrebuiltDetailD
         <div className="space-y-4 lg:col-span-4 lg:sticky lg:top-24">
           <div className="rounded-md border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-900/90 shadow-sm space-y-4">
             <div className="border-b border-zinc-100 dark:border-zinc-800 pb-3">
-              <span className="text-micro font-mono text-zinc-500 uppercase tracking-tight block">
+              <span className="text-micro text-zinc-500 block">
                 Total Harga Paket (Siap Pakai)
               </span>
               <div className="kss-price mt-0.5 text-2xl text-zinc-900 dark:text-zinc-100">
@@ -420,7 +422,7 @@ export default function PaketDetailContent({ pkg }: { pkg: PublicPrebuiltDetailD
             <div className="pt-3 border-t border-zinc-100 dark:border-zinc-800 space-y-2 text-meta text-zinc-500">
               <div className="flex items-center gap-2">
                 <ShieldCheck className="h-3.5 w-3.5 text-orange-700" />
-                <span>Garansi Resmi Toko &amp; Distributor Indonesia</span>
+                <span>Garansi resmi toko &amp; distributor Indonesia</span>
               </div>
               <div className="flex items-center gap-2">
                 <Clock className="h-3.5 w-3.5 text-orange-700" />

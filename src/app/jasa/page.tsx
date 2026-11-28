@@ -45,10 +45,10 @@ export default function JasaLayananPage() {
               className="kss-btn-wa"
             >
               <PhoneCall className="h-4 w-4" />
-              <span>Chat Teknisi</span>
+              <span>Chat teknisi</span>
             </a>
             <Link href="/konsultasi" className="kss-btn-outline">
-              Konsultasi Budget
+              Konsultasi budget
             </Link>
           </>
         }
@@ -59,7 +59,7 @@ export default function JasaLayananPage() {
           <div className="text-xs text-zinc-500">
             <span className="font-mono font-bold text-zinc-900 dark:text-zinc-100">{services.length}</span> layanan tersedia
           </div>
-          <div className="flex items-center gap-1.5 font-mono text-meta text-emerald-700 dark:text-emerald-400">
+          <div className="flex items-center gap-1.5 text-meta text-emerald-700 dark:text-emerald-400">
             <ShieldCheck className="h-3.5 w-3.5" />
             Garansi pengerjaan toko
           </div>
@@ -79,11 +79,11 @@ export default function JasaLayananPage() {
                   </span>
                   <div className="flex items-center gap-1.5">
                     {srv.badge && (
-                      <span className="rounded-md border border-amber-500/20 bg-amber-500/10 px-1.5 py-0.5 font-mono text-micro font-bold uppercase text-amber-700 dark:text-amber-400">
+                      <span className="rounded-md border border-amber-500/20 bg-amber-500/10 px-1.5 py-0.5 text-micro font-bold text-amber-700 dark:text-amber-400">
                         {srv.badge}
                       </span>
                     )}
-                    <span className="font-mono text-micro text-zinc-500">{srv.duration}</span>
+                    <span className="text-micro text-zinc-500">{srv.duration}</span>
                   </div>
                 </div>
 
@@ -105,7 +105,7 @@ export default function JasaLayananPage() {
                 </p>
 
                 <div className="mt-3 border-t border-zinc-100 pt-3 dark:border-zinc-800">
-                  <div className="mb-1.5 font-mono text-micro font-bold uppercase tracking-wider text-zinc-500">
+                  <div className="mb-1.5 text-micro font-bold text-zinc-500">
                     Cakupan
                   </div>
                   <ul className="space-y-1">
@@ -121,7 +121,7 @@ export default function JasaLayananPage() {
 
               <div className="mt-4 grid grid-cols-2 gap-2">
                 <Link href={`/jasa/${srv.slug}`} className="kss-btn-outline h-9 px-2">
-                  <span>Lihat Detail</span>
+                  <span>Lihat detail</span>
                   <ChevronRight className="h-3.5 w-3.5" />
                 </Link>
                 <a
@@ -142,7 +142,7 @@ export default function JasaLayananPage() {
 
       {/* FAQ Jasa */}
       <section id="faq" className="mb-8 scroll-mt-24">
-        <h2 className="text-sm font-bold uppercase tracking-tight text-zinc-900 dark:text-zinc-100 mb-4 flex items-center gap-2">
+        <h2 className="text-sm font-bold text-zinc-900 dark:text-zinc-100 mb-4 flex items-center gap-2">
           <Clock className="h-4 w-4 text-orange-700" />
           <span>Pertanyaan yang Sering Diajukan</span>
         </h2>
@@ -174,7 +174,7 @@ export default function JasaLayananPage() {
 
       {/* Standar Prosedur Operasional (SOP) Teknisi KSS */}
       <div className="rounded-md border border-zinc-200 bg-zinc-50 p-6 dark:border-zinc-800 dark:bg-zinc-900/40">
-        <h3 className="mb-4 flex items-center gap-2 text-sm font-bold uppercase tracking-tight text-zinc-900 dark:text-zinc-100">
+        <h3 className="mb-4 flex items-center gap-2 text-sm font-bold text-zinc-900 dark:text-zinc-100">
           <ShieldCheck className="h-4 w-4 text-orange-700" />
           <span>Standar Mutu Layanan Teknisi KSS</span>
         </h3>
