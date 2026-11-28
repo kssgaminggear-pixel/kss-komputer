@@ -137,7 +137,7 @@ export function Footer() {
             {DISTRIBUTORS.map((d) => (
               <li key={d.name} className="py-2.5">
                 <div className="text-body-sm text-zinc-200">{d.name}</div>
-                <div className="font-mono text-micro text-zinc-400">{d.brands}</div>
+                <div className="text-micro text-zinc-400">{d.brands}</div>
               </li>
             ))}
           </ul>
@@ -166,7 +166,7 @@ export function Footer() {
 
       {/* Bottom bar */}
       <div className="border-t border-zinc-800">
-        <div className="kss-container flex flex-col gap-2 py-4 font-mono text-micro text-zinc-400 sm:flex-row sm:items-center sm:justify-between">
+        <div className="kss-container flex flex-col gap-2 py-4 text-micro text-zinc-400 sm:flex-row sm:items-center sm:justify-between">
           <span>© {currentYear} KSS Komputer · Jakarta</span>
           <span>Garansi resmi · Faktur pajak</span>
         </div>

@@ -48,8 +48,8 @@ export function BookingForm({ serviceTitle }: BookingFormProps) {
   return (
     <form onSubmit={handleSubmit} className="space-y-3">
       <div>
-        <label htmlFor="booking-name" className="mb-1 block font-mono text-micro font-bold uppercase tracking-tight text-zinc-500">
-          Nama Lengkap
+        <label htmlFor="booking-name" className="mb-1 block text-micro font-bold text-zinc-500">
+          Nama lengkap
         </label>
         <input
           id="booking-name"
@@ -62,7 +62,7 @@ export function BookingForm({ serviceTitle }: BookingFormProps) {
       </div>
 
       <div>
-        <label htmlFor="booking-wa" className="mb-1 block font-mono text-micro font-bold uppercase tracking-tight text-zinc-500">
+        <label htmlFor="booking-wa" className="mb-1 block text-micro font-bold text-zinc-500">
           No. WhatsApp
         </label>
         <input
@@ -76,8 +76,8 @@ export function BookingForm({ serviceTitle }: BookingFormProps) {
       </div>
 
       <div>
-        <label htmlFor="booking-device" className="mb-1 block font-mono text-micro font-bold uppercase tracking-tight text-zinc-500">
-          Tipe Perangkat
+        <label htmlFor="booking-device" className="mb-1 block text-micro font-bold text-zinc-500">
+          Tipe perangkat
         </label>
         <select
           id="booking-device"
@@ -94,7 +94,7 @@ export function BookingForm({ serviceTitle }: BookingFormProps) {
       </div>
 
       <div>
-        <label htmlFor="booking-problem" className="mb-1 block font-mono text-micro font-bold uppercase tracking-tight text-zinc-500">
+        <label htmlFor="booking-problem" className="mb-1 block text-micro font-bold text-zinc-500">
           Keluhan / Kebutuhan
         </label>
         <textarea
@@ -109,7 +109,7 @@ export function BookingForm({ serviceTitle }: BookingFormProps) {
 
       <div className="grid grid-cols-2 gap-2">
         <div>
-          <label htmlFor="booking-date" className="mb-1 block font-mono text-micro font-bold uppercase tracking-tight text-zinc-500">
+          <label htmlFor="booking-date" className="mb-1 block text-micro font-bold text-zinc-500">
             Tanggal
           </label>
           <input
@@ -121,7 +121,7 @@ export function BookingForm({ serviceTitle }: BookingFormProps) {
           />
         </div>
         <div>
-          <label htmlFor="booking-time" className="mb-1 block font-mono text-micro font-bold uppercase tracking-tight text-zinc-500">
+          <label htmlFor="booking-time" className="mb-1 block text-micro font-bold text-zinc-500">
             Jam
           </label>
           <select
@@ -162,7 +162,7 @@ export function BookingForm({ serviceTitle }: BookingFormProps) {
         </span>
       </div>
 
-      <div className="flex items-center gap-1.5 font-mono text-micro text-zinc-500">
+      <div className="flex items-center gap-1.5 text-micro text-zinc-500">
         <CalendarClock className="h-3 w-3" />
         <span>Senin - Sabtu, 09:00 - 18:00 WIB</span>
       </div>

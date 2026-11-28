@@ -156,7 +156,7 @@ export function PrebuiltCard({ pkg }: PrebuiltCardProps) {
               className="mt-0.5 text-[22px] leading-none text-zinc-950"
             />
           </div>
-          <div className="text-right font-mono text-micro uppercase leading-4 text-zinc-500">
+          <div className="text-right text-micro leading-4 text-zinc-500">
             <div>Termasuk rakit</div>
             <div className="flex items-center justify-end gap-1 text-emerald-700">
               <ShieldCheck aria-hidden className="h-3 w-3" />

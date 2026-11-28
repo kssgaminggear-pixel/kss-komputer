@@ -55,7 +55,7 @@ function MediaImageInner({
         {fallbackLabel && (
           <span
             aria-hidden
-            className="absolute inset-x-0 bottom-1.5 truncate px-2 text-center font-mono text-micro uppercase text-zinc-400"
+            className="absolute inset-x-0 bottom-1.5 truncate px-2 text-center text-micro text-zinc-400"
           >
             {fallbackLabel}
           </span>

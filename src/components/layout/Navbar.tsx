@@ -83,7 +83,7 @@ export function Navbar({ searchEntries, paketEntries, serviceEntries, serviceLin
     <>
       {/* Top bar: tidak sticky */}
       <div className="hidden bg-zinc-950 text-zinc-400 sm:block">
-        <div className="kss-container flex h-8 items-center justify-between font-mono text-micro">
+        <div className="kss-container flex h-8 items-center justify-between text-micro">
           <div className="flex items-center gap-5">
             <span className="flex items-center gap-1.5 text-zinc-200">
               <MapPin aria-hidden className="h-3 w-3 text-orange-500" />

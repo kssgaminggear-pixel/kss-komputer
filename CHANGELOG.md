@@ -26,6 +26,12 @@ ATURAN UNTUK SEMUA AGENT (baca sebelum menulis entri)
 
 ## [Unreleased]
 
+### Fixed (aksesibilitas, judul, gaya)
+
+- Tautan "Lewati ke konten", fokus yang tetap di dalam panel keranjang, dan halaman Cek pesanan yang tidak lagi bergeser saat dimuat.
+- Judul dan deskripsi berfokus pada jasa; tiap halaman jasa punya gambar pratinjau tautan.
+- Label di halaman dalam memakai sentence case dan huruf biasa; remah roti detail paket dan hitungan langkah konsultasi diseragamkan.
+
 ### Changed (klaim dan kontak)
 
 - Klaim yang belum dipastikan pemilik dihapus atau dibuat netral: antistatik, pengalaman 8+ tahun, 2.500+ unit, rating 4.9, label toko resmi Tokopedia, gratis packing kayu, garansi 99 tahun, bebas biaya rakitan, dan merek thermal paste tertentu.

@@ -196,6 +196,10 @@ belum selesai mengikuti rancangan ini. Aturan harga dan kejujuran gambar tetap b
 - [x] V3-6 "Bedah PC" 3D (three.js, dimuat belakangan, ada gambar cadangan). Belum diuji di HP asli.
 - [x] Perbaikan pasca-tinjauan: domain resmi untuk mesin pencari, pencarian jasa, keranjang, warna tombol.
 - [x] Rapikan klaim sesuai konfirmasi pemilik, seragamkan alamat, tandai Cek pesanan sebagai contoh.
+- [x] Aksesibilitas dasar, judul dan pratinjau tautan, sentence case di halaman dalam.
+- [ ] Halaman Privasi, Syarat, Garansi, dan Cara bayar (draf perlu dibaca pemilik).
+- [ ] Halaman dalam bergaya V3 dan dipimpin visual (jasa, detail jasa, detail paket, tentang kami) serta bar aksi di HP.
+- [ ] Ringankan skrip awal (widget CS dan pencarian dimuat saat dipakai).
 - [ ] Ganti email contoh dengan email resmi yang aktif.
 - [ ] Daftarkan www.kssgo.com di Google Search Console dan kirim sitemap (oleh pemilik).
 - [ ] V3-7 Gambar ilustrasi V3 dari Google Flow.

@@ -97,10 +97,10 @@ function TrackingStatusContent({ trackings }: { trackings: BuildOrderTracking[] 
             </div>
             <button type="submit" className="kss-btn-primary px-5 py-2.5">
               <ClipboardList className="h-3.5 w-3.5" />
-              <span>Cek Status</span>
+              <span>Cek status</span>
             </button>
           </form>
-          <p className="mt-2 font-mono text-meta text-zinc-500">
+          <p className="mt-2 text-meta text-zinc-500">
             Kode contoh: TRK-KSS-001 · TRK-KSS-002 · TRK-KSS-003
           </p>
         </div>
@@ -109,7 +109,7 @@ function TrackingStatusContent({ trackings }: { trackings: BuildOrderTracking[] 
       <div className="kss-container py-6">
       {/* Hasil */}
       {!isHydrated ? (
-        <div className="rounded-md border border-zinc-200 bg-white p-8 text-center text-xs text-zinc-500 font-mono dark:border-zinc-800 dark:bg-zinc-900/60">
+        <div className="rounded-md border border-zinc-200 bg-white p-8 text-center text-xs text-zinc-500 dark:border-zinc-800 dark:bg-zinc-900/60">
           Memuat data pengerjaan...
         </div>
       ) : !searchedCode ? (
@@ -140,7 +140,7 @@ function TrackingStatusContent({ trackings }: { trackings: BuildOrderTracking[] 
           <div className="lg:col-span-1 flex flex-col gap-4">
             <div className="rounded-md border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-900/60 shadow-xs">
               <div className="flex items-center justify-between mb-3">
-                <span className="font-mono text-micro font-bold uppercase tracking-wider text-zinc-500">
+                <span className=" text-micro font-bold text-zinc-500">
                   Kode Resi (contoh)
                 </span>
                 <span className="rounded-md border border-emerald-500/20 bg-emerald-500/10 px-2 py-0.5 font-mono text-micro font-bold text-emerald-700 dark:text-emerald-400">
@@ -179,8 +179,8 @@ function TrackingStatusContent({ trackings }: { trackings: BuildOrderTracking[] 
 
               {tracking.adminNotes && (
                 <div className="mt-4 rounded-md border border-zinc-200 bg-zinc-50 p-3 dark:border-zinc-800 dark:bg-zinc-950">
-                  <div className="font-mono text-micro font-bold uppercase tracking-wider text-zinc-500 mb-1">
-                    Catatan Teknisi
+                  <div className=" text-micro font-bold text-zinc-500 mb-1">
+                    Catatan teknisi
                   </div>
                   <p className="text-xs text-zinc-600 dark:text-zinc-500 leading-relaxed">
                     {tracking.adminNotes}
@@ -204,8 +204,8 @@ function TrackingStatusContent({ trackings }: { trackings: BuildOrderTracking[] 
 
           {/* Stepper Pengerjaan */}
           <div className="lg:col-span-2 rounded-md border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-900/60 shadow-xs">
-            <h3 className="font-mono text-xs font-bold uppercase tracking-wider text-zinc-900 dark:text-zinc-200 mb-4">
-              Progres Pengerjaan
+            <h3 className=" text-xs font-bold text-zinc-900 dark:text-zinc-200 mb-4">
+              Progres pengerjaan
             </h3>
 
             <ol className="relative">
@@ -257,8 +257,8 @@ function TrackingStatusContent({ trackings }: { trackings: BuildOrderTracking[] 
                           {TRACKING_STAGE_LABELS[stage] ?? stage}
                         </span>
                         {isActive && (
-                          <span className="rounded-md border border-orange-500/20 bg-orange-500/10 px-1.5 py-0.5 font-mono text-micro font-bold uppercase text-orange-700 dark:text-orange-400">
-                            Sedang Dikerjakan
+                          <span className="rounded-md border border-orange-500/20 bg-orange-500/10 px-1.5 py-0.5 text-micro font-bold text-orange-700 dark:text-orange-400">
+                            Sedang dikerjakan
                           </span>
                         )}
                         {entry?.timestamp && (
@@ -287,14 +287,16 @@ function TrackingStatusContent({ trackings }: { trackings: BuildOrderTracking[] 
 
 export default function CekPesananClient({ trackings }: { trackings: BuildOrderTracking[] }) {
   return (
+    <div className="min-h-screen">
     <Suspense
       fallback={
-        <div className="mx-auto max-w-7xl px-4 py-16 text-center text-xs text-zinc-500 font-mono">
+        <div className="mx-auto max-w-7xl px-4 py-16 text-center text-xs text-zinc-500 ">
           Memuat halaman tracking...
         </div>
       }
     >
       <TrackingStatusContent trackings={trackings} />
     </Suspense>
+    </div>
   );
 }

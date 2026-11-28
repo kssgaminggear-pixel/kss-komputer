@@ -174,19 +174,19 @@ export default function KonsultasiClient({ prebuilts, services }: KonsultasiClie
 
   return (
     <div className="kss-container max-w-4xl py-8">
-      <nav className="mb-4 flex items-center gap-1.5 font-mono text-xs text-zinc-500">
+      <nav className="mb-4 flex items-center gap-1.5 text-xs text-zinc-500">
         <Link href="/" className="hover:text-orange-700">Beranda</Link>
         <ChevronRight className="h-3.5 w-3.5 text-zinc-500" />
-        <span className="font-semibold text-zinc-900 dark:text-zinc-100">Konsultasi Budget</span>
+        <span className="font-semibold text-zinc-900 dark:text-zinc-100">Konsultasi budget</span>
       </nav>
 
       <header className="mb-6">
-        <div className="mb-1 flex items-center gap-2 font-mono text-micro font-bold uppercase tracking-tight text-orange-700 dark:text-orange-400">
+        <div className="mb-1 flex items-center gap-2 text-micro font-bold text-orange-700 dark:text-orange-400">
           <MessageCircle className="h-3.5 w-3.5" />
-          <span>Wizard Konsultasi</span>
+          <span>Wizard konsultasi</span>
         </div>
         <h1 className="text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100 sm:text-3xl">
-          Konsultasi Rakit &amp; Servis Sesuai Budget
+          Konsultasi rakit &amp; servis sesuai budget
         </h1>
         <p className="mt-1 max-w-2xl text-xs leading-relaxed text-zinc-600 dark:text-zinc-500 sm:text-sm">
           Jawab 4 pertanyaan singkat. Kami tampilkan rekomendasi terdekat dan siapkan
@@ -196,8 +196,8 @@ export default function KonsultasiClient({ prebuilts, services }: KonsultasiClie
 
       {/* Progress */}
       <div className="mb-5">
-        <div className="mb-2 flex items-center justify-between font-mono text-micro font-bold uppercase tracking-tight text-zinc-500">
-          <span>Langkah {step} dari 5</span>
+        <div className="mb-2 flex items-center justify-between text-micro font-bold text-zinc-500">
+          <span>{step < 5 ? `Pertanyaan ${step} dari 4` : 'Rekomendasi'}</span>
           <span>{Math.round((step / 5) * 100)}%</span>
         </div>
         <div className="grid grid-cols-5 gap-1.5">
@@ -339,8 +339,8 @@ export default function KonsultasiClient({ prebuilts, services }: KonsultasiClie
 
             {goal === 'servis' ? (
               <div>
-                <label htmlFor="device-type" className="mb-1 block font-mono text-micro font-bold uppercase tracking-tight text-zinc-500">
-                  Tipe Perangkat
+                <label htmlFor="device-type" className="mb-1 block text-micro font-bold text-zinc-500">
+                  Tipe perangkat
                 </label>
                 <select
                   id="device-type"
@@ -358,7 +358,7 @@ export default function KonsultasiClient({ prebuilts, services }: KonsultasiClie
             ) : (
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
                 <div>
-                  <span className="mb-1 block font-mono text-micro font-bold uppercase tracking-tight text-zinc-500">
+                  <span className="mb-1 block text-micro font-bold text-zinc-500">
                     Platform
                   </span>
                   <div className="flex flex-wrap gap-1.5">
@@ -380,8 +380,8 @@ export default function KonsultasiClient({ prebuilts, services }: KonsultasiClie
                 </div>
 
                 <div>
-                  <span className="mb-1 block font-mono text-micro font-bold uppercase tracking-tight text-zinc-500">
-                    Warna Casing
+                  <span className="mb-1 block text-micro font-bold text-zinc-500">
+                    Warna casing
                   </span>
                   <div className="flex flex-wrap gap-1.5">
                     {['Bebas', 'Hitam', 'Putih'].map((value) => (
@@ -402,7 +402,7 @@ export default function KonsultasiClient({ prebuilts, services }: KonsultasiClie
                 </div>
 
                 <div>
-                  <span className="mb-1 block font-mono text-micro font-bold uppercase tracking-tight text-zinc-500">
+                  <span className="mb-1 block text-micro font-bold text-zinc-500">
                     Kelengkapan
                   </span>
                   <div className="flex flex-wrap gap-1.5">
@@ -426,7 +426,7 @@ export default function KonsultasiClient({ prebuilts, services }: KonsultasiClie
             )}
 
             <div className="mt-4">
-              <label htmlFor="consult-name" className="mb-1 block font-mono text-micro font-bold uppercase tracking-tight text-zinc-500">
+              <label htmlFor="consult-name" className="mb-1 block text-micro font-bold text-zinc-500">
                 Nama (opsional)
               </label>
               <input
@@ -474,7 +474,7 @@ export default function KonsultasiClient({ prebuilts, services }: KonsultasiClie
                         <span className="font-mono text-xs font-bold text-zinc-900 tabular-nums dark:text-zinc-100">
                           {srv.price === 0 ? 'GRATIS' : formatIDR(srv.price)}
                         </span>
-                        <span className="font-mono text-micro text-zinc-500">{srv.duration}</span>
+                        <span className="text-micro text-zinc-500">{srv.duration}</span>
                       </div>
                     </Link>
                   );
@@ -491,13 +491,13 @@ export default function KonsultasiClient({ prebuilts, services }: KonsultasiClie
                       className="flex flex-col justify-between rounded-md border border-zinc-200 bg-zinc-50 p-4 transition-colors hover:border-zinc-300 dark:border-zinc-800 dark:bg-zinc-950 dark:hover:border-zinc-700"
                     >
                       <div>
-                        <div className="mb-1 font-mono text-micro font-bold uppercase tracking-tight text-orange-700 dark:text-orange-400">
+                        <div className="mb-1 text-micro font-bold text-orange-700 dark:text-orange-400">
                           {prebuilt.categoryTag.replace(/-/g, ' ')}
                         </div>
                         <div className="text-xs font-bold text-zinc-900 dark:text-zinc-100">
                           {prebuilt.name}
                         </div>
-                        <div className="mt-1 font-mono text-micro text-zinc-500">
+                        <div className="mt-1 text-micro text-zinc-500">
                           {prebuilt.parts.length} komponen · {prebuilt.targetResolution}
                         </div>
                       </div>
