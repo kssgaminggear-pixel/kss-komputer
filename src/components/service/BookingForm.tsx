@@ -48,7 +48,7 @@ export function BookingForm({ serviceTitle }: BookingFormProps) {
   return (
     <form onSubmit={handleSubmit} className="space-y-3">
       <div>
-        <label htmlFor="booking-name" className="mb-1 block text-micro font-bold text-zinc-500">
+        <label htmlFor="booking-name" className="mb-1 block text-meta font-semibold text-ink">
           Nama lengkap
         </label>
         <input
@@ -57,12 +57,12 @@ export function BookingForm({ serviceTitle }: BookingFormProps) {
           value={customerName}
           onChange={(event) => setCustomerName(event.target.value)}
           placeholder="Contoh: Budi Santoso"
-          className="w-full rounded-md border border-zinc-300 bg-white px-3 py-2 text-xs text-zinc-900 placeholder:text-zinc-500 focus:border-orange-600 focus:outline-none dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100"
+          className="kss-input w-full"
         />
       </div>
 
       <div>
-        <label htmlFor="booking-wa" className="mb-1 block text-micro font-bold text-zinc-500">
+        <label htmlFor="booking-wa" className="mb-1 block text-meta font-semibold text-ink">
           No. WhatsApp
         </label>
         <input
@@ -71,19 +71,19 @@ export function BookingForm({ serviceTitle }: BookingFormProps) {
           value={customerWa}
           onChange={(event) => setCustomerWa(event.target.value)}
           placeholder="08xxxxxxxxxx"
-          className="w-full rounded-md border border-zinc-300 bg-white px-3 py-2 font-mono text-xs tabular-nums text-zinc-900 placeholder:text-zinc-500 focus:border-orange-600 focus:outline-none dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100"
+          className="kss-input w-full tabular-nums"
         />
       </div>
 
       <div>
-        <label htmlFor="booking-device" className="mb-1 block text-micro font-bold text-zinc-500">
+        <label htmlFor="booking-device" className="mb-1 block text-meta font-semibold text-ink">
           Tipe perangkat
         </label>
         <select
           id="booking-device"
           value={deviceType}
           onChange={(event) => setDeviceType(event.target.value)}
-          className="w-full rounded-md border border-zinc-300 bg-white px-3 py-2 text-xs text-zinc-900 focus:border-orange-600 focus:outline-none dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100"
+          className="kss-input w-full"
         >
           {SERVICE_DEVICE_TYPES.map((type) => (
             <option key={type} value={type}>
@@ -94,8 +94,8 @@ export function BookingForm({ serviceTitle }: BookingFormProps) {
       </div>
 
       <div>
-        <label htmlFor="booking-problem" className="mb-1 block text-micro font-bold text-zinc-500">
-          Keluhan / Kebutuhan
+        <label htmlFor="booking-problem" className="mb-1 block text-meta font-semibold text-ink">
+          Keluhan / kebutuhan
         </label>
         <textarea
           id="booking-problem"
@@ -103,13 +103,13 @@ export function BookingForm({ serviceTitle }: BookingFormProps) {
           value={problemDescription}
           onChange={(event) => setProblemDescription(event.target.value)}
           placeholder="Ceritakan gejala kerusakan atau kebutuhan Anda..."
-          className="w-full rounded-md border border-zinc-300 bg-white px-3 py-2 text-xs text-zinc-900 placeholder:text-zinc-500 focus:border-orange-600 focus:outline-none dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100"
+          className="kss-input h-auto w-full py-2"
         />
       </div>
 
       <div className="grid grid-cols-2 gap-2">
         <div>
-          <label htmlFor="booking-date" className="mb-1 block text-micro font-bold text-zinc-500">
+          <label htmlFor="booking-date" className="mb-1 block text-meta font-semibold text-ink">
             Tanggal
           </label>
           <input
@@ -117,18 +117,18 @@ export function BookingForm({ serviceTitle }: BookingFormProps) {
             type="date"
             value={preferredDate}
             onChange={(event) => setPreferredDate(event.target.value)}
-            className="w-full rounded-md border border-zinc-300 bg-white px-2.5 py-2 font-mono text-xs text-zinc-900 focus:border-orange-600 focus:outline-none dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100"
+            className="kss-input w-full tabular-nums"
           />
         </div>
         <div>
-          <label htmlFor="booking-time" className="mb-1 block text-micro font-bold text-zinc-500">
+          <label htmlFor="booking-time" className="mb-1 block text-meta font-semibold text-ink">
             Jam
           </label>
           <select
             id="booking-time"
             value={preferredTime}
             onChange={(event) => setPreferredTime(event.target.value)}
-            className="w-full rounded-md border border-zinc-300 bg-white px-2.5 py-2 font-mono text-xs text-zinc-900 focus:border-orange-600 focus:outline-none dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100"
+            className="kss-input w-full tabular-nums"
           >
             <option value="">Fleksibel</option>
             {TIME_OPTIONS.map((time) => (
@@ -148,23 +148,23 @@ export function BookingForm({ serviceTitle }: BookingFormProps) {
 
       <button
         type="submit"
-        className="flex w-full items-center justify-center gap-2 rounded-md bg-zinc-900 hover:bg-zinc-700 py-2.5 text-xs font-bold text-white transition-colors"
+        className="kss-btn-dark h-12 w-full text-sm"
       >
         <MessageCircle className="h-4 w-4" />
-        <span>Kirim Booking via WhatsApp</span>
+        <span>Kirim booking via WhatsApp</span>
       </button>
 
-      <div className="flex items-start gap-2 border-t border-zinc-100 pt-3 text-micro text-zinc-500 dark:border-zinc-800">
-        <ShieldCheck className="mt-0.5 h-3.5 w-3.5 shrink-0 text-emerald-500" />
+      <div className="flex items-start gap-2 border-t border-zinc-100 pt-3 text-meta text-zinc-500 dark:border-zinc-800">
+        <ShieldCheck className="mt-0.5 h-3.5 w-3.5 shrink-0 text-ink" />
         <span>
           Pesan akan dibuat otomatis dan dikirim ke teknisi KSS. Jadwal dikonfirmasi
           manual sebelum pengerjaan.
         </span>
       </div>
 
-      <div className="flex items-center gap-1.5 text-micro text-zinc-500">
+      <div className="flex items-center gap-1.5 text-meta text-zinc-500">
         <CalendarClock className="h-3 w-3" />
-        <span>Senin - Sabtu, 09:00 - 18:00 WIB</span>
+        <span>Jam toko: Senin - Sabtu, 09:00 - 18:00 WIB</span>
       </div>
     </form>
   );

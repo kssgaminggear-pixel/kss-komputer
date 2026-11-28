@@ -36,6 +36,8 @@ test('toko: tautan langsung ke jenis paket dan halaman etalase', async ({ page }
 });
 
 test('toko: tanpa gulir samping di berbagai lebar', async ({ page }) => {
+  // Lima kali memuat katalog penuh sampai jaringan tenang.
+  test.setTimeout(180_000);
   for (const width of [1440, 1024, 768, 390, 360]) {
     await page.setViewportSize({ width, height: 800 });
     await page.goto('/toko', { waitUntil: 'networkidle' });

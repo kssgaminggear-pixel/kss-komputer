@@ -2,26 +2,22 @@ import React from 'react';
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import {
-  ChevronRight,
-  Clock,
-  Check,
-  X,
-  ShieldCheck,
-  PhoneCall,
-  Wrench,
-  CalendarClock,
-} from 'lucide-react';
+import { CalendarClock, Check, ChevronRight, Clock, MessageCircle, ShieldCheck, X } from 'lucide-react';
 import {
   getPublicServiceBySlug,
   getPublicServiceSlugs,
   getPublicServices,
 } from '@/lib/server-catalog';
-import { formatIDR, DEFAULT_WHATSAPP_PHONE } from '@/lib/format';
+import { DEFAULT_WHATSAPP_PHONE } from '@/lib/format';
 import { BookingForm } from '@/components/service/BookingForm';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { breadcrumbSchema, serviceSchema } from '@/lib/seo';
 import { getSlot } from '@/lib/media/slots';
+import { ServiceMedia } from '@/components/service/ServiceMedia';
+import { PcStage } from '@/components/three/PcStage';
+import type { SceneMode } from '@/components/three/PcExplodeScene';
+import { MobileActionBar } from '@/components/ui/MobileActionBar';
+import { Price } from '@/components/ui/Price';
 
 interface JasaDetailPageProps {
   params: Promise<{ slug: string }>;
@@ -65,12 +61,34 @@ export async function generateMetadata({ params }: JasaDetailPageProps): Promise
   };
 }
 
-function getPriceLabel(price: number, priceMax?: number) {
-  if (price === 0) return 'GRATIS';
-  if (priceMax && priceMax > price) {
-    return `${formatIDR(price)} — ${formatIDR(priceMax)}`;
-  }
-  return `Mulai ${formatIDR(price)}`;
+/** Jasa yang bagian kerjanya ada pada model 3D. Jasa lain tidak menampilkan model. */
+const MODEL_BY_SLUG: Record<string, { mode: SceneMode; note: string }> = {
+  'rakit-pc-custom': { mode: 'rakit', note: 'Semua bagian dipasang dan kabel ditata.' },
+  'rakit-pc-cable-management-premium': { mode: 'rakit', note: 'Jalur kabel disorot warna oranye.' },
+  'deep-cleaning-repaste': { mode: 'cleaning', note: 'Pendingin prosesor dan kipas disorot warna oranye.' },
+  'upgrade-ssd-nvme': { mode: 'upgrade', note: 'Slot RAM dan SSD disorot warna oranye.' },
+  'upgrade-tambah-ram': { mode: 'upgrade', note: 'Slot RAM dan SSD disorot warna oranye.' },
+};
+
+const WORK_STEPS = [
+  'Konfirmasi jadwal & keluhan via WhatsApp',
+  'Pemeriksaan awal dan estimasi biaya',
+  'Pengerjaan oleh teknisi + quality check',
+  'Serah terima, garansi, dan laporan hasil',
+];
+
+function ServicePrice({ price, priceMax, className }: { price: number; priceMax?: number; className: string }) {
+  if (price === 0) return <span className={`kss-price ${className}`}>Gratis</span>;
+  return (
+    <span className="inline-flex flex-wrap items-baseline gap-x-2">
+      <Price value={price} className={className} />
+      {priceMax && priceMax > price ? (
+        <span className="text-body-sm text-zinc-600">
+          sampai <Price value={priceMax} className="text-ink" />
+        </span>
+      ) : null}
+    </span>
+  );
 }
 
 // Detail layanan hanya berisi data statis; tidak perlu validasi instant navigation.
@@ -92,7 +110,13 @@ export default async function JasaDetailPage({ params }: JasaDetailPageProps) {
     .filter((item, index, list) => list.findIndex((entry) => entry.slug === item.slug) === index)
     .slice(0, 3);
 
-  const priceLabel = getPriceLabel(service.price, service.priceMax);
+  const model = MODEL_BY_SLUG[service.slug];
+  // Unik per jasa: Next menyimpan halaman sebelumnya secara tersembunyi di DOM.
+  const formId = `booking-${service.slug}`;
+  const askUrl = `https://wa.me/${DEFAULT_WHATSAPP_PHONE}?text=${encodeURIComponent(
+    `Halo KSS Komputer, saya ingin tanya layanan: *${service.title}*`
+  )}`;
+  const excludes = service.excludes?.length ? service.excludes : ['Biaya komponen pengganti (dihitung terpisah)'];
 
   return (
     <>
@@ -106,208 +130,182 @@ export default async function JasaDetailPage({ params }: JasaDetailPageProps) {
           ]),
         ]}
       />
-      <div className="kss-container py-8">
-      <nav className="mb-4 flex flex-wrap items-center gap-1.5 text-xs text-zinc-500">
-        <Link href="/" className="hover:text-orange-700">
-          Beranda
-        </Link>
-        <ChevronRight className="h-3.5 w-3.5 text-zinc-500" />
-        <Link href="/jasa" className="hover:text-orange-700">
-          Jasa &amp; servis
-        </Link>
-        <ChevronRight className="h-3.5 w-3.5 text-zinc-500" />
-        <span className="font-semibold text-zinc-900 dark:text-zinc-100">{service.title}</span>
-      </nav>
 
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_360px]">
-        <div className="space-y-6">
-          <header className="rounded-md border border-zinc-200 bg-white p-6 shadow-xs dark:border-zinc-800 dark:bg-zinc-900/60">
-            <div className="mb-3 flex flex-wrap items-center gap-2">
-              <span className="rounded-md border border-orange-500/20 bg-orange-500/10 px-2 py-0.5 text-micro font-bold text-orange-700 dark:text-orange-400">
-                Layanan teknisi
-              </span>
-              {service.badge && (
-                <span className="rounded-md border border-amber-500/20 bg-amber-500/10 px-2 py-0.5 font-mono text-micro font-bold text-amber-700 dark:text-amber-400">
-                  {service.badge}
-                </span>
-              )}
-              <span className="flex items-center gap-1 text-meta text-zinc-500">
-                <Clock className="h-3.5 w-3.5" />
-                {service.duration}
-              </span>
-            </div>
-
-            <h1 className="text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100 sm:text-3xl">
+      <section className="mx-2 mt-2 rounded-lg bg-block-clay md:mx-3 md:mt-3 md:rounded-xl">
+        <div className="kss-container py-6 lg:py-10">
+          <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-1.5 text-body-sm text-zinc-600">
+            <Link href="/" className="hover:text-ink">
+              Beranda
+            </Link>
+            <ChevronRight aria-hidden className="h-3.5 w-3.5" />
+            <Link href="/jasa" className="hover:text-ink">
+              Jasa &amp; servis
+            </Link>
+            <ChevronRight aria-hidden className="h-3.5 w-3.5" />
+            <span aria-current="page" className="font-semibold text-ink">
               {service.title}
-            </h1>
-            <p className="mt-2 max-w-3xl text-xs leading-relaxed text-zinc-600 dark:text-zinc-500 sm:text-sm">
-              {service.description}
-            </p>
+            </span>
+          </nav>
 
-            <div className="mt-4 flex flex-wrap items-end justify-between gap-3 border-t border-zinc-100 pt-4 dark:border-zinc-800">
-              <div>
-                <div className=" text-micro font-bold text-zinc-500">
-                  Estimasi biaya jasa
-                </div>
-                <div className="kss-price whitespace-nowrap text-xl text-zinc-900 dark:text-zinc-100 sm:text-2xl">
-                  {priceLabel}
-                </div>
+          <div className="mt-4 grid gap-6 lg:grid-cols-12 lg:items-center">
+            <div className="order-2 lg:order-1 lg:col-span-7">
+              <div className="flex flex-wrap items-center gap-2">
+                {service.badge && <span className="kss-tag kss-tag-neutral bg-white">{service.badge}</span>}
+                <span className="kss-label flex items-center gap-1.5 text-ink">
+                  <Clock aria-hidden className="h-4 w-4" />
+                  {service.duration}
+                </span>
               </div>
-              <div className="flex w-full flex-wrap gap-2 sm:w-auto">
-                <a
-                  href={`https://wa.me/${DEFAULT_WHATSAPP_PHONE}?text=${encodeURIComponent(
-                    `Halo KSS Komputer, saya ingin tanya layanan: *${service.title}*`
-                  )}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="kss-btn-dark px-3 py-2"
-                >
-                  <PhoneCall className="h-3.5 w-3.5" />
-                  <span>Tanya teknisi</span>
+              <h1 className="mt-3 text-[clamp(1.875rem,4vw,3rem)] font-extrabold leading-[1.08] tracking-[-0.02em] text-ink">
+                {service.title}
+              </h1>
+              <p className="mt-3 max-w-[56ch] text-body text-ink">{service.description}</p>
+              <div className="mt-5">
+                <span className="kss-label block text-zinc-600">Biaya jasa mulai</span>
+                <ServicePrice price={service.price} priceMax={service.priceMax} className="text-2xl text-ink" />
+              </div>
+              <div className="mt-5 hidden gap-2 md:flex">
+                <a href={askUrl} target="_blank" rel="noopener noreferrer" className="kss-btn-dark h-12 px-6 text-sm">
+                  <MessageCircle aria-hidden className="h-4 w-4" />
+                  Tanya teknisi
                 </a>
-                <a href="#booking-form" className="kss-btn-primary px-3 py-2 lg:hidden">
-                  <CalendarClock className="h-3.5 w-3.5" />
-                  <span>Booking</span>
+                <a href={`#${formId}`} className="kss-btn-primary h-12 px-6 text-sm lg:hidden">
+                  <CalendarClock aria-hidden className="h-4 w-4" />
+                  Booking
                 </a>
               </div>
             </div>
-          </header>
+            <div className="order-1 overflow-hidden rounded-lg lg:order-2 lg:col-span-5">
+              <ServiceMedia slug={service.slug} sizes="(min-width: 1024px) 520px, 100vw" lcp />
+            </div>
+          </div>
+        </div>
+      </section>
 
-          <section className="rounded-md border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-900/60">
-            <h2 className="mb-3 flex items-center gap-2 text-sm font-bold text-zinc-900 dark:text-zinc-100">
-              <Wrench className="h-4 w-4 text-orange-700 dark:text-orange-400" />
-              <span>Cakupan pekerjaan</span>
+      <div className="kss-container grid grid-cols-1 gap-6 py-8 lg:grid-cols-[minmax(0,1fr)_360px] lg:py-12">
+        <div className="space-y-8">
+          <section aria-labelledby="cakupan">
+            <h2 id="cakupan" className="font-display text-2xl font-bold text-ink">
+              Cakupan pekerjaan
             </h2>
-            <ul className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-              {service.features.map((feature, index) => (
-                <li
-                  key={index}
-                  className="flex items-start gap-2 text-xs text-zinc-700 dark:text-zinc-300"
-                >
-                  <Check className="mt-0.5 h-3.5 w-3.5 shrink-0 text-emerald-500" />
-                  <span>{feature}</span>
+            <ul className="mt-4 grid grid-cols-1 gap-2 sm:grid-cols-2">
+              {service.features.map((feature) => (
+                <li key={feature} className="flex items-start gap-2.5 rounded-md border border-line bg-white p-3 text-body-sm text-ink">
+                  <Check aria-hidden className="mt-0.5 h-4 w-4 shrink-0" />
+                  {feature}
                 </li>
               ))}
             </ul>
+            <div className="mt-3 space-y-2">
+              {[
+                { title: 'Yang termasuk', items: service.includes || service.features, Icon: Check },
+                { title: 'Yang tidak termasuk', items: excludes, Icon: X },
+              ].map(({ title, items, Icon }) => (
+                <details key={title} className="group rounded-md border border-line bg-white px-4">
+                  <summary className="flex min-h-12 cursor-pointer list-none items-center justify-between gap-3 text-[15px] font-semibold text-ink [&::-webkit-details-marker]:hidden">
+                    {title}
+                    <ChevronRight aria-hidden className="h-4 w-4 shrink-0 transition-transform group-open:rotate-90" />
+                  </summary>
+                  <ul className="space-y-1.5 pb-4">
+                    {items.map((item) => (
+                      <li key={item} className="flex items-start gap-2 text-body-sm text-zinc-600">
+                        <Icon aria-hidden className="mt-0.5 h-4 w-4 shrink-0 text-ink" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </details>
+              ))}
+            </div>
           </section>
 
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <section className="rounded-md border border-emerald-500/20 bg-emerald-500/5 p-5">
-              <h2 className="mb-3 flex items-center gap-2 text-micro font-bold text-emerald-700 dark:text-emerald-400">
-                <Check className="h-3.5 w-3.5" />
-                <span>Termasuk</span>
+          {model && (
+            <section aria-labelledby="bagian-dikerjakan" className="rounded-lg bg-block-ink p-4 text-zinc-100 sm:p-6">
+              <h2 id="bagian-dikerjakan" className="font-display text-2xl font-bold text-white">
+                Bagian yang dikerjakan
               </h2>
-              <ul className="space-y-1.5">
-                {(service.includes || service.features).map((item, index) => (
-                  <li key={index} className="flex items-start gap-2 text-xs text-zinc-700 dark:text-zinc-300">
-                    <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-emerald-500" />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
+              <p className="mt-1 text-body-sm text-zinc-300">{model.note}</p>
+              <div className="mx-auto mt-3 max-w-2xl">
+                <PcStage mode={model.mode} label={service.title} sizes="(min-width: 1024px) 672px, 100vw" />
+              </div>
             </section>
+          )}
 
-            <section className="rounded-md border border-amber-500/20 bg-amber-500/5 p-5">
-              <h2 className="mb-3 flex items-center gap-2 text-micro font-bold text-amber-700 dark:text-amber-400">
-                <X className="h-3.5 w-3.5" />
-                <span>Tidak termasuk</span>
-              </h2>
-              <ul className="space-y-1.5">
-                {(service.excludes && service.excludes.length > 0
-                  ? service.excludes
-                  : ['Biaya komponen pengganti (dihitung terpisah)']
-                ).map((item, index) => (
-                  <li key={index} className="flex items-start gap-2 text-xs text-zinc-700 dark:text-zinc-300">
-                    <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-amber-500" />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </section>
-          </div>
-
-          <section className="rounded-md border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-900/60">
-            <h2 className="mb-4 text-sm font-bold text-zinc-900 dark:text-zinc-100">
-              Alur Pengerjaan Standar KSS
+          <section aria-labelledby="alur">
+            <h2 id="alur" className="font-display text-2xl font-bold text-ink">
+              Alur pengerjaan
             </h2>
-            <ol className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-              {[
-                'Konfirmasi jadwal & keluhan via WhatsApp',
-                'Pemeriksaan awal dan estimasi biaya',
-                'Pengerjaan oleh teknisi + quality check',
-                'Serah terima, garansi, dan laporan hasil',
-              ].map((step, index) => (
-                <li
-                  key={step}
-                  className="flex items-start gap-3 rounded-md border border-zinc-200 bg-zinc-50 p-3 dark:border-zinc-800 dark:bg-zinc-950"
-                >
-                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-zinc-900 font-mono text-meta font-bold text-white dark:bg-zinc-100 dark:text-zinc-900">
-                    {index + 1}
-                  </span>
-                  <span className="text-xs text-zinc-700 dark:text-zinc-300">{step}</span>
+            <ol className="mt-4 grid grid-cols-1 gap-2 sm:grid-cols-2">
+              {WORK_STEPS.map((step, index) => (
+                <li key={step} className="flex items-start gap-3 rounded-md bg-block-butter p-4">
+                  <span className="kss-num text-body-sm font-semibold text-orange-800">0{index + 1}</span>
+                  <span className="text-body-sm text-ink">{step}</span>
                 </li>
               ))}
             </ol>
           </section>
-
-          {relatedServices.length > 0 && (
-            <section>
-              <h2 className="mb-3 flex items-center gap-2 text-sm font-bold text-zinc-900 dark:text-zinc-100">
-                <Wrench className="h-4 w-4 text-orange-700 dark:text-orange-400" />
-                <span>Layanan terkait</span>
-              </h2>
-              <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-                {relatedServices.map((related) => (
-                  <Link
-                    key={related.id}
-                    href={`/jasa/${related.slug}`}
-                    className="flex flex-col justify-between rounded-md border border-zinc-200 bg-white p-4 transition-colors hover:border-zinc-300 dark:border-zinc-800 dark:bg-zinc-900/60 dark:hover:border-zinc-700"
-                  >
-                    <div>
-                      <div className="mb-1 text-micro font-bold text-zinc-500">
-                        {related.duration}
-                      </div>
-                      <div className="text-xs font-bold text-zinc-900 dark:text-zinc-100">
-                        {related.title}
-                      </div>
-                    </div>
-                    <div className="mt-3 font-mono text-xs font-bold text-orange-700 tabular-nums dark:text-orange-400">
-                      {getPriceLabel(related.price, related.priceMax)}
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            </section>
-          )}
         </div>
 
-        <aside className="space-y-4 lg:sticky lg:top-24 lg:self-start">
-          <div id="booking-form" className="scroll-mt-24 rounded-md border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-900/60">
-            <h2 className="mb-1 flex items-center gap-2 text-sm font-bold text-zinc-900 dark:text-zinc-100">
-              <Clock className="h-4 w-4 text-orange-700 dark:text-orange-400" />
-              <span>Booking jadwal</span>
-            </h2>
-            <p className="mb-4 text-meta text-zinc-500 dark:text-zinc-500">
-              Isi form singkat, pesan WhatsApp terformat akan terbuka otomatis.
-            </p>
+        <aside className="space-y-3 lg:sticky lg:top-24 lg:self-start">
+          <div id={formId} data-booking-form className="scroll-mt-24 rounded-lg border border-line bg-white p-5">
+            <h2 className="font-display text-xl font-bold text-ink">Booking jadwal</h2>
+            <p className="mb-4 mt-1 text-body-sm text-zinc-600">Isi form singkat, lalu pesan WhatsApp terbuka otomatis.</p>
             <BookingForm serviceTitle={service.title} />
           </div>
-
-          <div className="rounded-md border border-zinc-200 bg-zinc-50 p-4 dark:border-zinc-800 dark:bg-zinc-900/40">
-            <div className="flex items-start gap-2">
-              <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-emerald-500" />
-              <div className="text-meta leading-relaxed text-zinc-600 dark:text-zinc-500">
-                <span className="font-bold text-zinc-900 dark:text-zinc-100">
-                  Garansi pengerjaan KSS.
-                </span>{' '}
-                Jika masalah yang sama muncul kembali dalam masa garansi, pengecekan ulang
-                tidak dikenakan biaya jasa.
-              </div>
-            </div>
+          <div className="flex items-start gap-2.5 rounded-md border border-line bg-white p-4 text-body-sm text-zinc-600">
+            <ShieldCheck aria-hidden className="mt-0.5 h-4 w-4 shrink-0 text-ink" />
+            <p>
+              <span className="font-semibold text-ink">Garansi pengerjaan KSS.</span> Jika masalah yang sama muncul
+              kembali dalam masa garansi, pengecekan ulang tidak dikenakan biaya jasa.
+            </p>
           </div>
         </aside>
       </div>
-      </div>
+
+      {relatedServices.length > 0 && (
+        <section aria-labelledby="terkait" className="kss-container pb-10 lg:pb-14">
+          <h2 id="terkait" className="font-display text-2xl font-bold text-ink">
+            Layanan terkait
+          </h2>
+          <ul className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-3">
+            {relatedServices.map((related) => (
+              <li key={related.slug} className="overflow-hidden rounded-md border border-line bg-white">
+                <Link href={`/jasa/${related.slug}`} className="flex h-full flex-col">
+                  <ServiceMedia slug={related.slug} sizes="(min-width: 640px) 33vw, 100vw" />
+                  <span className="flex flex-1 flex-col p-4">
+                    <span className="kss-label text-zinc-500">{related.duration}</span>
+                    <span className="mt-1 font-display text-lg font-bold leading-snug text-ink">{related.title}</span>
+                    <span className="mt-auto block pt-3">
+                      <ServicePrice price={related.price} className="text-lg text-ink" />
+                    </span>
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      <MobileActionBar hideNear={formId}>
+        <div className="min-w-0">
+          <span className="block text-meta text-zinc-600">Biaya jasa mulai</span>
+          <ServicePrice price={service.price} className="text-lg text-ink" />
+        </div>
+        <div className="flex shrink-0 gap-2">
+          <a
+            href={askUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Tanya teknisi lewat WhatsApp"
+            className="kss-btn-dark h-11 w-11 px-0"
+          >
+            <MessageCircle aria-hidden className="h-4 w-4" />
+          </a>
+          <a href={`#${formId}`} className="kss-btn-primary h-11 px-5 text-sm">
+            Booking
+          </a>
+        </div>
+      </MobileActionBar>
     </>
   );
 }

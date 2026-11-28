@@ -26,6 +26,12 @@ ATURAN UNTUK SEMUA AGENT (baca sebelum menulis entri)
 
 ## [Unreleased]
 
+### Changed (halaman jasa)
+
+- Halaman Jasa dan detail jasa memakai tampilan V3 yang dipimpin gambar; cakupan pekerjaan dilipat.
+- Model 3D dipakai ulang di detail jasa rakit, kabel, cleaning, dan upgrade.
+- Di HP, detail jasa punya bar harga dan booking yang menempel di bawah.
+
 ### Fixed (aksesibilitas, judul, gaya)
 
 - Tautan "Lewati ke konten", fokus yang tetap di dalam panel keranjang, dan halaman Cek pesanan yang tidak lagi bergeser saat dimuat.
