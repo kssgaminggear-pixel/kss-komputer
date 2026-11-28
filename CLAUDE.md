@@ -34,12 +34,32 @@
 - DESIGN.md & UI_FIGCRAFT_SKILL.md sudah v2. WORK_ORDERS.md §2 usang (CTA biru) — abaikan.
 - Profesional, modern, tidak "AI slop". Tanpa `// TODO`.
 
+## Pola multi-agent
+- **Opus (orchestrator & architect):** perencanaan, arsitektur, redesign UI/UX, kontrak API/tipe, pemecahan task, code review akhir, debugging buntu.
+- **Sonnet (main builder):** implementasi web & mobile, UI/UX visual, edit banyak file, integrasi state/API, perbaikan error TypeScript/lint/build.
+- **Haiku (scout & utility):** pencarian codebase, mock data, boilerplate ringan, dokumentasi, refactor berulang.
+- Delegasikan hanya bila manfaatnya melebihi biaya token (aturan Hemat token tetap berlaku).
+
+## Desain visual-first (dominan gambar) — fokus web dulu
+- Tanpa dinding teks. Tiap section utama dipimpin visual: foto produk, banner, galeri/carousel, atau kartu bergambar berasio konsisten (1:1 atau 4:3). Target 65–75% area viewport berupa visual pada halaman etalase.
+- Micro-copy ringkas, badge/pill spesifikasi, ikon; detail panjang di tab, accordion, atau drawer.
+- Tetap tunduk pada Visual v2 dan Aturan bisnis di atas (tanpa gradient/blur/emoji; tanpa harga part atau selisih upgrade).
+- Gambar nyata (foto produk toko/scrape katalog sendiri) untuk produk. Gambar buatan AI hanya ilustrasi/dekorasi; jangan disajikan sebagai foto produk, stok, toko, hasil rakitan, atau pelanggan asli, dan tanpa logo merek tiruan.
+
+## Struktur kerja (wajib)
+- Sebelum commit: perbarui `CHANGELOG.md` bagian `[Unreleased]` dan checklist `ROADMAP.md`.
+- Context7 untuk library versi baru; untuk Next.js, `node_modules/next/dist/docs/` tetap sumber utama.
+- Sebelum push: `npx tsc --noEmit`, `npm run lint`, `npm test`, `npm run build`, `npm run check:price`.
+- Uji visual & fungsional: Playwright (web; gambar termuat `naturalWidth > 0`, desktop & mobile) atau Mobile MCP (aplikasi HP).
+- Repo publik: jangan commit rincian celah keamanan yang belum diperbaiki, detail infrastruktur, atau isi `Claude outputs/`.
+
 ## Baca hanya bila relevan
 - AGENTS.md (±5KB): aturan kerja & bisnis — saat ragu soal harga/alur.
 - DESIGN.md: token — hanya saat mengubah UI.
 - UI_FIGCRAFT_SKILL.md: pola komponen — saat membuat/mengubah komponen.
 - ARCHITECTURE.md: arsitektur data — hanya saat menyentuh data/route/harga.
-- ROADMAP.md: progres — saat ditanya status/fase.
+- ROADMAP.md: progres — saat ditanya status/fase, dan saat memperbarui checklist.
+- CHANGELOG.md: hanya bagian `[Unreleased]` dan blok aturan di atasnya.
 - README.md: fitur & route — jarang perlu.
 - design/figcraft: sumber desain — hanya bila diminta.
 - public/images/tokopedia/README.md: daftar foto — saat memilih foto.
