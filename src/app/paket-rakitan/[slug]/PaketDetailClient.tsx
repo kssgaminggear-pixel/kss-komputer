@@ -340,7 +340,7 @@ export default function PaketDetailContent({ pkg }: { pkg: PublicPrebuiltDetailD
             </li>
             <li className="flex items-start gap-2">
               <Clock aria-hidden className="mt-0.5 h-4 w-4 shrink-0 text-ink" />
-              Proses Rakit &amp; Test Cepat (Same-Day / 1 Hari)
+              Jadwal selesai dikonfirmasi lewat WhatsApp
             </li>
           </ul>
         </aside>

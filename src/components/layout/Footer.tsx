@@ -154,13 +154,8 @@ export function Footer() {
             ))}
           </ul>
           <h3 className="kss-label mt-8 text-zinc-400">Pembayaran</h3>
-          <div className="mt-3 flex flex-wrap gap-1.5">
-            {['BCA', 'Mandiri', 'QRIS', 'Tokopedia', 'Shopee'].map((p) => (
-              <span key={p} className="kss-tag kss-tag-on-dark">
-                {p}
-              </span>
-            ))}
-          </div>
+          <p className="mt-3 text-body-sm text-zinc-300">Pembayaran dikonfirmasi lewat WhatsApp.</p>
+          <span className="kss-tag kss-tag-on-dark mt-3">Tokopedia</span>
         </div>
       </div>
 

@@ -200,6 +200,7 @@ belum selesai mengikuti rancangan ini. Aturan harga dan kejujuran gambar tetap b
 - [ ] Halaman Privasi, Syarat, Garansi, dan Cara bayar (draf perlu dibaca pemilik).
 - [x] Jasa dan detail jasa bergaya V3, 3D dipakai ulang, bar aksi di HP.
 - [x] Detail paket dan Tentang kami bergaya V3.
+- [x] Jawaban pemilik diterapkan: Same-Day hanya servis ringan; label pembayaran footer diganti keterangan WhatsApp.
 - [ ] Ringankan skrip awal (widget CS dan pencarian dimuat saat dipakai).
 - [ ] Ganti email contoh dengan email resmi yang aktif.
 - [ ] Daftarkan www.kssgo.com di Google Search Console dan kirim sitemap (oleh pemilik).

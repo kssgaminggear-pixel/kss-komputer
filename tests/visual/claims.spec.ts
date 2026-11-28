@@ -1,4 +1,4 @@
-﻿import { expect, test } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 
 /** Klaim yang tidak dikonfirmasi pemilik tidak boleh muncul lagi. */
 const REMOVED =
@@ -41,4 +41,12 @@ test('cek pesanan diberi tanda contoh dan tidak diindeks', async ({ page, reques
   await expect(page.getByText('Kode Resi (contoh)')).toBeVisible();
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', /noindex/);
   expect(await (await request.get('/sitemap.xml')).text()).not.toContain('/cek-pesanan');
+});
+
+test('pembayaran lewat WhatsApp dan janji same-day tidak berlaku untuk rakitan', async ({ page }) => {
+  await page.goto('/paket-rakitan/kss-esports-champion-1080p', { waitUntil: 'networkidle' });
+  await expect(page.locator('main')).not.toContainText(/same.?day|1 hari/i);
+  const footer = page.locator('footer');
+  await expect(footer).toContainText('Pembayaran dikonfirmasi lewat WhatsApp');
+  await expect(footer).not.toContainText(/\b(BCA|Mandiri|QRIS|Shopee)\b/);
 });
